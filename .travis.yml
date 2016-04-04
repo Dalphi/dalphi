@@ -4,3 +4,6 @@ language: ruby
 rvm:
   - 2.3.0
 script: ./bin/ci
+addons:
+  code_climate:
+    repo_token: cf9635ed40660b7a9c9476bdef62b2171849bb8f05db2f3c9cdfb347ede317ad
