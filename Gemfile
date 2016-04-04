@@ -27,7 +27,7 @@ end
 
 group :test do
   gem 'brakeman', require: false
-  gem 'codeclimate-test-reporter', group: :test, require: nil
+  gem 'codeclimate-test-reporter', require: false
   gem 'coffeelint'
   gem 'factory_girl_rails'
   gem 'rails_best_practices'
