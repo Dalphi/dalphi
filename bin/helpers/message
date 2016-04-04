@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PURPLE='\033[0;35m'
+CLEAR='\033[0m'
+ROBOT=''
+PREFIX="\n${ROBOT}${PURPLE}  "
+SUFFIX="${CLEAR}\n"
+
+echo -e "${PREFIX}$1${SUFFIX}"

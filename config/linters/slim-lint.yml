@@ -1,0 +1,23 @@
+linters:
+  LineLength:
+    enabled: false
+  RuboCop:
+    ignored_cops:
+      - Lint/BlockAlignment
+      - Lint/EndAlignment
+      - Lint/UselessAssignment
+      - Lint/Void
+      - Metrics/LineLength
+      - Style/AlignHash
+      - Style/AlignParameters
+      - Style/BlockNesting
+      - Style/FileName
+      - Style/FirstParameterIndentation
+      - Style/IfUnlessModifier
+      - Style/IndentationConsistency
+      - Style/IndentationWidth
+      - Style/Next
+      - Style/SpaceInsideHashLiteralBraces
+      - Style/TrailingBlankLines
+      - Style/TrailingWhitespace
+      - Style/WhileUntilModifier

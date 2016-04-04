@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./bin/helpers/message "REEK"
+bundle exec reek -c "config/linters/reek.yml" ./app/controllers ./app/models ./lib && \
+bundle exec reek -c "config/linters/reek.helpers.yml" ./app/helpers

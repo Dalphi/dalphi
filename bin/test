@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./bin/helpers/migration &&\
+./bin/helpers/rspec

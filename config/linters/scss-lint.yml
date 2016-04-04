@@ -1,0 +1,10 @@
+scss_files: 'app/assets/stylesheets/**/*'
+
+linters:
+  Indentation:
+    severity: warning
+    width: 2
+  Comment:
+    enabled: false
+  VendorPrefixes:
+    enabled: false

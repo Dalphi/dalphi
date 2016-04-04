@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./bin/helpers/message "BRAKEMAN"
+bundle exec brakeman -q

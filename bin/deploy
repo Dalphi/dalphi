@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./bin/helpers/message "DEPLOYMENT"
+
+echo "skipping due to no present configuration"

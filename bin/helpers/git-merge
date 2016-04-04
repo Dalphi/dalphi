@@ -1,0 +1,11 @@
+#!/bin/bash
+
+./bin/helpers/message "GIT MERGE"
+
+if [ "`grep -R '<<<<<<< HEAD' * | wc -l | tr -d '[[:space:]]'`" == "1" ]; then
+	echo "no unsolved merge requestes detected"
+	true
+else
+	echo "unsolved merge requestes detected"
+	false
+fi

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./bin/helpers/message "RAILS BEST PRACTICES"
+bundle exec rails_best_practices app lib spec -x app/controllers/application_controller.rb,app/controllers/legal_controller.rb,app/helpers/cache_helper.rb,app/helpers/analytics_helper.rb

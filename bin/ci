@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./bin/code-analyzers && \
+./bin/linters && \
+./bin/test
