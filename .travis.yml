@@ -1,5 +1,6 @@
 env:
   - RAILS_ENV=test
+  - CODECLIMATE_REPO_TOKEN=cf9635ed40660b7a9c9476bdef62b2171849bb8f05db2f3c9cdfb347ede317ad
 language: ruby
 rvm:
   - 2.3.0
