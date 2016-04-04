@@ -1,4 +1,5 @@
 #!/bin/bash
 
 ./bin/helpers/message "SLIM LINT"
-slim-lint -c config/linters/slim-lint.yml app/views/
+
+bundle exec slim-lint -c config/linters/slim-lint.yml app/views/
