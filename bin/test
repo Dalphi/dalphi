@@ -1,4 +1,4 @@
 #!/bin/bash
 
 ./bin/helpers/migration &&\
-./bin/helpers/rspec
+CODECLIMATE_REPO_TOKEN=cf9635ed40660b7a9c9476bdef62b2171849bb8f05db2f3c9cdfb347ede317ad ./bin/helpers/rspec
