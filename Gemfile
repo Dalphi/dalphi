@@ -27,7 +27,7 @@ end
 
 group :test do
   gem 'brakeman', require: false
-  gem 'codeclimate-test-reporter', group: :test, require: nil
+  gem 'codeclimate-test-reporter', require: false
   gem 'coffeelint'
   gem 'factory_girl_rails'
   gem 'rails_best_practices'
@@ -44,6 +44,7 @@ group :development do
   gem 'awesome_print'
   gem 'better_errors'
   gem 'byebug'
+  gem 'foreman'
   gem 'i18n-tasks'
   gem 'rack-mini-profiler', require: false
   gem 'spring'
