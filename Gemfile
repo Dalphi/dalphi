@@ -44,6 +44,7 @@ group :development do
   gem 'awesome_print'
   gem 'better_errors'
   gem 'byebug'
+  gem 'foreman'
   gem 'i18n-tasks'
   gem 'rack-mini-profiler', require: false
   gem 'spring'
