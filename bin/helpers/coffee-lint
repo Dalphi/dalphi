@@ -1,5 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env ruby
+require 'bundler/setup'
+require 'coffeelint'
 
-./bin/helpers/message "COFFEE LINT"
+system './bin/helpers/message "COFFEE LINT"'
 
-bundle exec rake lint:coffee
+exit 1 if Coffeelint.run_test_suite(
+  'app/assets/javascripts',
+  config_file: 'config/linters/coffeelint.json'
+) > 0

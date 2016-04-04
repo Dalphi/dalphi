@@ -1,5 +1,4 @@
 #!/bin/bash
 
 ./bin/helpers/message "RUBOCOP"
-
 bundle exec rubocop --rails -c config/linters/rubocop.yml app lib vendor

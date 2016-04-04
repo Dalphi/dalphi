@@ -27,13 +27,16 @@ end
 
 group :test do
   gem 'brakeman', require: false
+  gem 'codeclimate-test-reporter', require: false
   gem 'coffeelint'
+  gem 'factory_girl_rails'
   gem 'rails_best_practices'
   gem 'reek'
   gem 'rspec-rails'
-  gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop', require: false
   gem 'scss_lint', require: false
+  gem 'shoulda-matchers', require: false
   gem 'slim_lint'
 end
 
