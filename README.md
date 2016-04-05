@@ -8,7 +8,7 @@
 [![Dependency Status](https://gemnasium.com/implisense/dalphi.svg)](https://gemnasium.com/implisense/dalphi)
 [![Issue Count](https://codeclimate.com/github/implisense/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/implisense/dalphi)
 
-![Dalphi](https://raw.githubusercontent.com/implisense/dalphi/master/app/assets/images/dalphi-logo.png)
+![Dalphi](https://github.com/implisense/dalphi/blob/master/app/assets/images/dalphi-logo.png)
 Dalphi - Active Learning Platform for Human Interaction
 
 ## Getting started
