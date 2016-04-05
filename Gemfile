@@ -50,7 +50,7 @@ group :development do
   gem 'rack-mini-profiler', require: false
   gem 'spring'
   gem 'sqlite3'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
 end
 
 group :production do
