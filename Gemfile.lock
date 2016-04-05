@@ -170,6 +170,7 @@ GEM
     parser (2.3.0.7)
       ast (~> 2.2)
     powerpack (0.1.1)
+    puma (3.2.0)
     rack (2.0.0.alpha)
       json
     rack-mini-profiler (0.9.9.2)
@@ -359,6 +360,7 @@ DEPENDENCIES
   modernizr_rails
   mysql2
   normalize-rails
+  puma
   rack-mini-profiler
   rails (= 5.0.0.beta3)
   rails_best_practices
