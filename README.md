@@ -1,4 +1,4 @@
-# dalphi [![Build Status](https://travis-ci.org/implisense/dalphi.svg?branch=master)](https://travis-ci.org/implisense/dalphi) [![Code Climate](https://codeclimate.com/github/implisense/dalphi/badges/gpa.svg)](https://codeclimate.com/github/implisense/dalphi) [![Test Coverage](https://codeclimate.com/github/implisense/dalphi/badges/coverage.svg)](https://codeclimate.com/github/implisense/dalphi/coverage) [![Dependency Status](https://gemnasium.com/implisense/dalphi.svg)](https://gemnasium.com/implisense/dalphi) [![Issue Count](https://codeclimate.com/github/implisense/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/implisense/dalphi)
+# dalphi [![Build Status](https://travis-ci.org/implisense/dalphi.svg?branch=master)](https://travis-ci.org/implisense/dalphi) [![Code Climate](https://codeclimate.com/github/implisense/dalphi/badges/gpa.svg)](https://codeclimate.com/github/implisense/dalphi) [![codebeat badge](https://codebeat.co/badges/c3c6b8d5-8ef4-4a81-9d37-6ee06383fc85)](https://codebeat.co/projects/github-com-implisense-dalphi) [![Codacy Badge](https://api.codacy.com/project/badge/grade/312f3902da6d4e0687483b51a8bcbe4c)](https://www.codacy.com/app/robert_10/dalphi) [![Test Coverage](https://codeclimate.com/github/implisense/dalphi/badges/coverage.svg)](https://codeclimate.com/github/implisense/dalphi/coverage) [![Dependency Status](https://gemnasium.com/implisense/dalphi.svg)](https://gemnasium.com/implisense/dalphi) [![Issue Count](https://codeclimate.com/github/implisense/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/implisense/dalphi)
 
 Dalphi - Active Learning Platform for Human Interaction
 
@@ -30,4 +30,18 @@ Start the application with `foreman`, so that every component is started correct
 
 ```bash
 foreman start
+```
+
+## Testing & Continuous Integration
+
+Dalphi is developed applying the [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) paradigm. Therefore we're using [RSpec](https://en.wikipedia.org/wiki/RSpec) to specify the expected behavior of the software. Migrate the database and run RSpec by using the following script:
+
+```bash
+./bin/test
+```
+
+The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) server ([Travis CI](https://travis-ci.org/)) is utilizing the following script to additionally run a set of code analyzers ([Brakeman](http://brakemanscanner.org/), [Rails Best Practices](http://rails-bestpractices.com/), [Reek](https://github.com/troessner/reek)) and linters ([Slim-Lint](https://github.com/sds/slim-lint), [SCSS-Lint](https://github.com/brigade/scss-lint), [CoffeeLint](http://www.coffeelint.org/), [RuboCop](https://github.com/bbatsov/rubocop)).
+
+```bash
+./bin/ci
 ```
