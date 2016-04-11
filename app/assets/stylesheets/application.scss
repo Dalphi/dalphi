@@ -90,6 +90,18 @@ h6 {
   font-size: $h6-font-size;
 }
 
+p {
+  span {
+    display: block;
+  }
+}
+
 .inline-block {
   display: inline-block;
+}
+
+.dalphi-logo {
+  path {
+    fill: $color-4;
+  }
 }

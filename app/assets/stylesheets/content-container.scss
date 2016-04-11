@@ -1,7 +1,8 @@
 .content-container {
   min-height: 100%;
+  padding: $container-padding;
   position: absolute;
-  top: 0;
   right: 0;
-  width: calc(100% - $sidebar-width);
+  top: 0;
+  width: calc(100% - #{$sidebar-width});
 }
