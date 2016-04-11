@@ -120,6 +120,7 @@ GEM
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
     fastclick-rails (1.0.1)
+    ffi (1.9.10)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
     foreman (0.78.0)
@@ -154,6 +155,9 @@ GEM
     json (1.8.3)
     kgio (2.10.0)
     libv8 (3.16.14.13)
+    listen (3.0.6)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9.7)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -221,6 +225,9 @@ GEM
     rainbow (2.1.0)
     raindrops (0.16.0)
     rake (10.5.0)
+    rb-fsevent (0.9.7)
+    rb-inotify (0.9.7)
+      ffi (>= 0.5.0)
     rdoc (4.2.2)
       json (~> 1.4)
     reek (4.0.1)
@@ -371,6 +378,7 @@ DEPENDENCIES
   i18n-tasks
   jbuilder
   jquery-rails
+  listen
   modernizr_rails
   mysql2
   normalize-rails
