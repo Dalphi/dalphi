@@ -1,17 +1,17 @@
 .sidebar {
   background-color: $color-3;
-  color: $color-1;
-  top: $topbar-height;
   bottom: 0;
+  color: $color-1;
   padding: $container-padding;
   position: absolute;
+  top: $topbar-height;
   width: 100%;
 
   &.md-up-screens {
     height: 100%;
-    top: 0;
     padding: $container-padding;
     position: fixed;
+    top: 0;
     width: $sidebar-width;
   }
 
