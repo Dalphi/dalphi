@@ -3,6 +3,11 @@
   padding: $container-padding;
   position: absolute;
   right: 0;
-  top: 0;
-  width: calc(100% - #{$sidebar-width});
+  top: #{$topbar-height + $content-container-top-margin};
+  width: 100%;
+
+  @include media-breakpoint-up(md) {
+    top: $content-container-top-margin;
+    width: calc(100% - #{$sidebar-width});
+  }
 }

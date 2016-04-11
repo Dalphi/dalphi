@@ -1,0 +1,14 @@
+.topbar {
+  background-color: $color-3;
+  border-radius: 0;
+  color: $color-4;
+  height: $topbar-height;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  line-height: $topbar-height;
+
+  .fa {
+    font-size: $h2-icon-size;
+  }
+}

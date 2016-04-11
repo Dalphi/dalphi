@@ -8,6 +8,10 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
   body
+    = render partial: 'shared/topbar'
     .content-container.container-fluid
       = yield
     = render partial: 'shared/sidebar', locals: { current_year: @current_year }
+
+    coffee:
+      window.navigationHandler = new window.NavigationHandler()
