@@ -2,6 +2,6 @@
 
 ./bin/helpers/message "DB MIGRATION"
 rm -f db/schema.rb && \
-bundle exec rake db:drop RAILS_ENV=test && \
-bundle exec rake db:create RAILS_ENV=test && \
-bundle exec rake db:migrate RAILS_ENV=test
+bundle exec rails db:drop RAILS_ENV=test && \
+bundle exec rails db:create RAILS_ENV=test && \
+bundle exec rails db:migrate RAILS_ENV=test
