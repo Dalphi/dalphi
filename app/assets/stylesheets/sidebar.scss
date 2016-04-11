@@ -1,0 +1,25 @@
+.sidebar {
+  background-color: $color-2;
+  color: $color-1;
+  height: 100%;
+  padding: $container-padding;
+  position: fixed;
+  width: $sidebar-width;
+
+  .footer {
+    font-size: $small-font-size;
+    bottom: 0;
+    text-align: center;
+    position: absolute;
+    width: calc(100% - #{2 * $container-padding});
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        margin: 0 3px;
+      }
+    }
+  }
+}

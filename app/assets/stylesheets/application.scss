@@ -15,7 +15,6 @@
  */
 
 // gems & dependencies
-@import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'font-awesome';
 
@@ -24,7 +23,8 @@
 @import 'fonts';
 
 // partial styling
-@import 'navigation';
+@import 'content-container';
+@import 'sidebar';
 
 html,
 body {
@@ -36,6 +36,18 @@ body {
 
 body {
   background-color: $color-1;
+}
+
+a {
+  color: $color-4;
+}
+
+a:hover,
+a:active,
+a:focus {
+  color: $color-5;
+  outline: 0;
+  text-decoration: none;
 }
 
 h1,
@@ -78,14 +90,6 @@ h6 {
   font-size: $h6-font-size;
 }
 
-a {
-  color: $color-4;
-}
-
-a:hover,
-a:active,
-a:focus {
-  color: $color-5;
-  outline: 0;
-  text-decoration: none;
+.inline-block {
+  display: inline-block;
 }

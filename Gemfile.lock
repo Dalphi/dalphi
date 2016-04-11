@@ -51,9 +51,9 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
-    bootstrap-sass (3.3.6)
-      autoprefixer-rails (>= 5.2.1)
-      sass (>= 3.3.4)
+    bootstrap (4.0.0.alpha3)
+      autoprefixer-rails (>= 6.0.3)
+      sass (>= 3.4.19)
     brakeman (3.2.1)
       erubis (~> 2.6)
       haml (>= 3.0, < 5.0)
@@ -338,7 +338,7 @@ DEPENDENCIES
   autoprefixer-rails
   awesome_print
   better_errors
-  bootstrap-sass
+  bootstrap (~> 4.0.0.alpha3)
   brakeman
   byebug
   codeclimate-test-reporter
@@ -372,6 +372,7 @@ DEPENDENCIES
   slim-rails
   slim_lint
   spring
+  sprockets-rails
   sqlite3
   therubyracer
   turbolinks
