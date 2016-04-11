@@ -11,10 +11,97 @@
  * file per style scope.
  *
  *= require normalize-rails
- *= require_tree .
  *= require_self
  */
 
-@import 'bootstrap-sprockets';
+// gems & dependencies
 @import 'bootstrap';
 @import 'font-awesome';
+
+// general definitions
+@import 'variables';
+@import 'fonts';
+
+// partial styling
+@import 'content-container';
+@import 'sidebar';
+
+html,
+body {
+  color: $color-2;
+  font-family: 'Roboto Light', sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: $color-1;
+}
+
+a {
+  color: $color-4;
+}
+
+a:hover,
+a:active,
+a:focus {
+  color: $color-5;
+  outline: 0;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $color-2;
+  font-family: 'RobotoCondensed Regular', sans-serif;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  color: $color-4;
+}
+
+h1 {
+  font-size: $h1-font-size;
+}
+
+h2 {
+  font-size: $h2-font-size;
+}
+
+h3 {
+  font-size: $h3-font-size;
+}
+
+h4 {
+  font-size: $h4-font-size;
+}
+
+h5 {
+  font-size: $h5-font-size;
+}
+
+h6 {
+  font-size: $h6-font-size;
+}
+
+p {
+  span {
+    display: block;
+  }
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.dalphi-logo {
+  path {
+    fill: $color-4;
+  }
+}

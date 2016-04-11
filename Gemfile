@@ -11,6 +11,7 @@ gem 'dotenv-rails'
 gem 'fastclick-rails'
 gem 'font-awesome-rails'
 gem 'hammerjs-rails'
+gem 'inline_svg'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'modernizr_rails'
@@ -20,6 +21,7 @@ gem 'rails', '5.0.0.beta3'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'therubyracer'
 gem 'turbolinks'
 gem 'uglifier'
@@ -33,11 +35,12 @@ group :test do
   gem 'codeclimate-test-reporter', require: false
   gem 'coffeelint'
   gem 'factory_girl_rails'
+  gem 'listen'
   gem 'rails_best_practices'
   gem 'reek'
   gem 'rspec-rails'
-  gem 'rubocop-rspec', require: false
   gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
   gem 'scss_lint', require: false
   gem 'shoulda-matchers', require: false
   gem 'slim_lint'
