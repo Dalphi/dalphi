@@ -6,7 +6,7 @@ gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'coffee-rails'
 gem 'cookies_eu'
-gem 'devise', git: 'git@github.com:plataformatec/devise.git'
+gem 'devise', git: 'https://github.com/plataformatec/devise.git'
 gem 'dotenv-rails'
 gem 'fastclick-rails'
 gem 'font-awesome-rails'
@@ -49,7 +49,7 @@ group :development do
   gem 'byebug'
   gem 'foreman'
   gem 'i18n-tasks'
-  gem 'protected_attributes'
+  # gem 'protected_attributes'
   gem 'rack-mini-profiler', require: false
   gem 'spring'
   gem 'sqlite3'
@@ -58,7 +58,7 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.5.0.beta3'
 end
 
 group :production do
