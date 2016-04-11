@@ -49,7 +49,6 @@ group :development do
   gem 'byebug'
   gem 'foreman'
   gem 'i18n-tasks'
-  # gem 'protected_attributes'
   gem 'rack-mini-profiler', require: false
   gem 'spring'
   gem 'sqlite3'
