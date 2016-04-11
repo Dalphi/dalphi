@@ -1,0 +1,18 @@
+// fonts
+$roboto-light: url('<%= asset_path('roboto-light.ttf') %>');
+$robotocondensed-regular: url('<%= asset_path('robotocondensed-regular.ttf') %>');
+
+// global color definitions; color description; general use for
+$color-1: #FBFCFC; // alabaster; general background
+$color-2: #1F2634; // black pearl; text color
+$color-3: #586681; // dark electric blue; navigation background
+$color-4: #93B449; // green smoke; highlight special words
+$color-5: #B6CD82; // pine glade; color-1 / color-4 hover
+
+// global size definitions
+$h1-font-size: 38px;
+$h2-font-size: 32px;
+$h3-font-size: 22px;
+$h4-font-size: 18px;
+$h5-font-size: 16px;
+$h6-font-size: 14px;
