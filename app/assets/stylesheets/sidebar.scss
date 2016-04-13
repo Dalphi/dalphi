@@ -1,18 +1,22 @@
 .sidebar {
   background-color: $color-3;
   bottom: 0;
+  box-shadow: 0 5px $navigation-box-shaddow;
   color: $color-1;
+  height: calc(100% - #{$topbar-height});
   padding: $container-padding;
-  position: absolute;
+  position: fixed;
   top: $topbar-height;
   width: 100%;
 
-  &.md-up-screens {
-    height: 100%;
+  @include media-breakpoint-up(sm) {
     padding: $container-padding;
-    position: fixed;
-    top: 0;
     width: $sidebar-width;
+  }
+
+  @include media-breakpoint-up(md) {
+    height: 100%;
+    top: 0;
   }
 
   > div {

@@ -1,14 +1,43 @@
 .topbar {
   background-color: $color-3;
   border-radius: 0;
+  box-shadow: 0 2px $navigation-box-shaddow;
   color: $color-4;
   height: $topbar-height;
-  line-height: $topbar-height;
   position: fixed;
   top: 0;
   width: 100%;
 
+  .sidebar-expanded {
+    .toggle-sidebar {
+      transform: rotate(90deg);
+    }
+
+    h2 {
+      opacity: 0;
+    }
+  }
+
+  .sidebar-not-expanded {
+    .toggle-sidebar {
+      transform: rotate(0);
+    }
+
+    h2 {
+      opacity: 1;
+    }
+  }
+
+  .toggle-sidebar {
+    padding: 3px 0 0;
+    transition: transform $default-transition-duration;
+  }
+
   .fa {
     font-size: $h2-icon-size;
+  }
+
+  h2 {
+    transition: opacity $default-transition-duration;
   }
 }
