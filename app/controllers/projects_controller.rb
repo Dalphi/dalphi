@@ -6,6 +6,10 @@ class ProjectsController < ApplicationController
     @projects = Project.all
   end
 
+  # GET /projects/1
+  def show
+  end
+
   # GET /projects/new
   def new
     @project = Project.new

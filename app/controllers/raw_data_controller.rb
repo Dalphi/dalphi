@@ -8,10 +8,6 @@ class RawDataController < ApplicationController
     @raw_data = RawDatum.all
   end
 
-  # GET /raw_data/1
-  def show
-  end
-
   # GET /raw_data/new
   def new
     @raw_datum = RawDatum.new
