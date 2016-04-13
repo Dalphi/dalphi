@@ -1,8 +1,6 @@
 h1 Editing raw_datum
 
-== render 'form'
+== render 'form', project: @project, raw_datum: @raw_datum, raw_data_shapes: @raw_data_shapes
 
-= link_to 'Show', raw_datum: raw_datum
-'|
-= link_to 'Back', raw_data_path
+= link_to 'Back', project_raw_data_path(@project)
 

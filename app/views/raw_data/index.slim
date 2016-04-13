@@ -12,10 +12,9 @@ table
     - @raw_data.each do |raw_datum|
       tr
         td = raw_datum.shape
-        td = link_to 'Show', raw_datum
-        td = link_to 'Edit', edit_raw_datum_path(raw_datum)
-        td = link_to 'Destroy', raw_datum, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Edit', edit_project_raw_datum_path(@project, raw_datum)
+        td = link_to 'Destroy', project_raw_datum_path(@project, raw_datum), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
-= link_to 'New Raw datum', new_raw_datum_path
+= link_to 'New Raw datum', new_project_raw_datum_path(@project)
