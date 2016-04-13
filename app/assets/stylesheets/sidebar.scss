@@ -4,23 +4,23 @@
   box-shadow: 0 5px $navigation-box-shaddow;
   color: $color-1;
   height: calc(100% - #{$topbar-height});
+  left: -100%;
   padding: $container-padding;
   position: fixed;
   top: $topbar-height;
-  width: 100%;
-  left: -100%;
   transition: left $default-transition-duration;
+  width: 100%;
 
   @include media-breakpoint-up(sm) {
+    left: -$sidebar-width;
     padding: $container-padding;
     width: $sidebar-width;
-    left: -$sidebar-width;
   }
 
   @include media-breakpoint-up(md) {
     height: 100%;
-    top: 0;
     left: 0;
+    top: 0;
   }
 
   &.expanded {
