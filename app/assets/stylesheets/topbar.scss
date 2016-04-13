@@ -8,23 +8,13 @@
   top: 0;
   width: 100%;
 
-  .sidebar-expanded {
+  &.expanded {
     .toggle-sidebar {
       transform: rotate(90deg);
     }
 
     h2 {
       opacity: 0;
-    }
-  }
-
-  .sidebar-not-expanded {
-    .toggle-sidebar {
-      transform: rotate(0);
-    }
-
-    h2 {
-      opacity: 1;
     }
   }
 

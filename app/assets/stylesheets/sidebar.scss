@@ -8,15 +8,23 @@
   position: fixed;
   top: $topbar-height;
   width: 100%;
+  left: -100%;
+  transition: left $default-transition-duration;
 
   @include media-breakpoint-up(sm) {
     padding: $container-padding;
     width: $sidebar-width;
+    left: -$sidebar-width;
   }
 
   @include media-breakpoint-up(md) {
     height: 100%;
     top: 0;
+    left: 0;
+  }
+
+  &.expanded {
+    left: 0;
   }
 
   > div {
