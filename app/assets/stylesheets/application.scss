@@ -24,6 +24,7 @@
 
 // partial styling
 @import 'content-container';
+@import 'topbar';
 @import 'sidebar';
 
 html,
@@ -40,6 +41,7 @@ body {
 
 a {
   color: $color-4;
+  cursor: pointer;
 }
 
 a:hover,

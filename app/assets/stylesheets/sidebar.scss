@@ -1,10 +1,31 @@
 .sidebar {
-  background-color: $color-2;
+  background-color: $color-3;
+  bottom: 0;
+  box-shadow: 0 5px $navigation-box-shaddow;
   color: $color-1;
-  height: 100%;
+  height: calc(100% - #{$topbar-height});
+  left: -100%;
   padding: $container-padding;
   position: fixed;
-  width: $sidebar-width;
+  top: $topbar-height;
+  transition: left $default-transition-duration;
+  width: 100%;
+
+  @include media-breakpoint-up(sm) {
+    left: -$sidebar-width;
+    padding: $container-padding;
+    width: $sidebar-width;
+  }
+
+  @include media-breakpoint-up(md) {
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  &.expanded {
+    left: 0;
+  }
 
   > div {
     width: calc(100% - #{2 * $container-padding});
