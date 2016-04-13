@@ -11,22 +11,22 @@
 
   &.expanded {
     .dark-curtain {
+      height: 100%;
       opacity: 1;
       width: 100%;
-      height: 100%;
     }
   }
 
   .dark-curtain {
     background-color: $dark-curtain-color;
     display: block;
-    opacity: 0;
-    transition: opacity $default-transition-duration;
-    top: 0;
-    left: 0;
-    position: fixed;
-    width: 0;
     height: 0;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    transition: opacity $default-transition-duration;
+    width: 0;
   }
 
   .toggle-sidebar {
@@ -59,12 +59,12 @@
     border-radius: 0;
     display: inline-block;
     margin: 0 0 0 1rem;
-    padding: 0.4rem 0 0;
+    padding: .4rem 0 0;
   }
 
   .icon-bar {
     float: right;
-    font-size: 0.65rem;
+    font-size: .65rem;
 
     .nav-link {
       padding: .5rem 0;
