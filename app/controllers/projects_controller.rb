@@ -20,7 +20,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user = current_user
     if @project.save
-      redirect_to project_raw_data_path(@project), notice: 'Project was successfully created.'
+      redirect_to project_raw_data_path(@project), notice: I18n.t('projects.action.create.success')
     else
       render :new
     end
@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to projects_path, notice: 'Project was successfully updated.'
+      redirect_to projects_path, notice: I18n.t('projects.action.update.success')
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_path, notice: 'Project was successfully destroyed.'
+    redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
   end
 
   private

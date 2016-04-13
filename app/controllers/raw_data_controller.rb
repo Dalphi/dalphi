@@ -26,7 +26,7 @@ class RawDataController < ApplicationController
     @raw_datum = RawDatum.new(raw_datum_params)
     @raw_datum.project = @project
     if @raw_datum.save
-      redirect_to project_raw_data_path(@project), notice: 'Raw datum was successfully created.'
+      redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.create.success')
     else
       render :new
     end
@@ -35,7 +35,7 @@ class RawDataController < ApplicationController
   # PATCH/PUT /raw_data/1
   def update
     if @raw_datum.update(raw_datum_params)
-      redirect_to project_raw_data_path(@project), notice: 'Raw datum was successfully updated.'
+      redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.update.success')
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class RawDataController < ApplicationController
   # DELETE /raw_data/1
   def destroy
     @raw_datum.destroy
-    redirect_to project_raw_data_path(@project), notice: 'Raw datum was successfully destroyed.'
+    redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.destroy.success')
   end
 
   private
