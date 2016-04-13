@@ -1,8 +1,25 @@
 nav.topbar.navbar.hidden-md-up
+  .dark-curtain
+
   ul.nav.navbar-nav
     li.nav-item
-      a.nav-link.toggle-sidebar href='#'
-        = fa_icon 'angle-down'
-    li.nav-item
+      a.toggle-sidebar href='#'
+        = fa_icon 'bars'
+    li.nav-item.hidden-xs-down
       h2
         | Dalphi
+
+  ol.breadcrumb
+    li
+      a href="#"
+        | Home
+    li
+      a href="#"
+        | Library
+    li.active
+      | Data
+    
+  ul.nav.navbar-nav.icon-bar
+    li.nav-item
+      a.nav-link.sign-out href='#'
+        = fa_icon 'sign-out'

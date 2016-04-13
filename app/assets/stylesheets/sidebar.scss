@@ -1,15 +1,16 @@
 .sidebar {
   background-color: $color-3;
   bottom: 0;
-  box-shadow: 0 5px $navigation-box-shaddow;
+  box-shadow: 0 2px $navigation-box-shaddow;
   color: $color-1;
-  height: calc(100% - #{$topbar-height});
+  height: 100%;
   left: -100%;
   padding: $container-padding;
   position: fixed;
-  top: $topbar-height;
+  top: 0;
   transition: left $default-transition-duration;
   width: 100%;
+  z-index: 10;
 
   @include media-breakpoint-up(sm) {
     left: -$sidebar-width;
@@ -18,9 +19,7 @@
   }
 
   @include media-breakpoint-up(md) {
-    height: 100%;
     left: 0;
-    top: 0;
   }
 
   &.expanded {
@@ -49,6 +48,15 @@
     position: absolute;
     text-align: center;
     top: 0;
+
+    .toggle-sidebar {
+      color: $color-1;
+      font-size: 1.3rem;
+      margin-top: -0.4rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
 
     h1 {
       margin-top: 8px;
