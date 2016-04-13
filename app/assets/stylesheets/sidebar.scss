@@ -1,0 +1,43 @@
+.sidebar {
+  background-color: $color-2;
+  color: $color-1;
+  height: 100%;
+  padding: $container-padding;
+  position: fixed;
+  width: $sidebar-width;
+
+  > div {
+    width: calc(100% - #{2 * $container-padding});
+  }
+
+  p {
+    font-size: $small-font-size;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      margin: 0 3px;
+    }
+  }
+
+  .header {
+    margin-top: $default-margin;
+    position: absolute;
+    text-align: center;
+    top: 0;
+
+    h1 {
+      margin-top: 8px;
+    }
+  }
+
+  .footer {
+    bottom: 0;
+    font-size: $small-font-size;
+    position: absolute;
+    text-align: center;
+  }
+}
