@@ -1,0 +1,9 @@
+en:
+  projects:
+    action:
+      create:
+        success: Project was successfully created.
+      update:
+        success: Project was successfully updated.
+      destroy:
+        success: Project was successfully destroyed.

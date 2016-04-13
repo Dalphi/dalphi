@@ -23,7 +23,7 @@ class RawDataController < ApplicationController
   # POST /raw_data
   def create
     if @raw_datum.save
-      redirect_to @raw_datum, notice: 'Raw datum was successfully created.'
+      redirect_to @raw_datum, notice: I18n.t('raw-data.action.create.success')
     else
       render :new
     end
@@ -32,7 +32,7 @@ class RawDataController < ApplicationController
   # PATCH/PUT /raw_data/1
   def update
     if @raw_datum.update(raw_datum_params)
-      redirect_to @raw_datum, notice: 'Raw datum was successfully updated.'
+      redirect_to @raw_datum, notice: I18n.t('raw-data.action.update.success')
     else
       render :edit
     end
@@ -41,7 +41,7 @@ class RawDataController < ApplicationController
   # DELETE /raw_data/1
   def destroy
     @raw_datum.destroy
-    redirect_to raw_data_url, notice: 'Raw datum was successfully destroyed.'
+    redirect_to raw_data_url, notice: I18n.t('raw-data.action.destroy.success')
   end
 
   private

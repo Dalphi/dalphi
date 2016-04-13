@@ -1,0 +1,9 @@
+de:
+  raw-data:
+    action:
+      create:
+        success: Rohdatum wurde erfolgreich erstellt.
+      update:
+        success: Rohdatum wurde erfolgreich aktualisiert.
+      destroy:
+        success: Rohdatum wurde erfolgreich entfernt.
