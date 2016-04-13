@@ -53,7 +53,7 @@ RSpec.describe Project, :type => :model do
     end
   end
 
-  it { should have_many(:raw_data) }
+  it { should have_many(:raw_data).dependent(:destroy) }
 
   it { should belong_to(:user) }
 end

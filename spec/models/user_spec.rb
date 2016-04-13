@@ -9,5 +9,5 @@ RSpec.describe User, :type => :model do
     expect(@user).to be_valid
   end
 
-  it { should have_many(:projects) }
+  it { should have_many(:projects).dependent(:destroy) }
 end

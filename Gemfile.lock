@@ -49,6 +49,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (7.0.0)
     ast (2.2.0)
     autoprefixer-rails (6.3.6)
@@ -107,6 +108,11 @@ GEM
       jquery-cookie-rails
       jquery-rails
     debug_inspector (0.0.2)
+    delayed_job (4.1.1)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_active_record (4.1.0)
+      activerecord (>= 3.0, < 5)
+      delayed_job (>= 3.0, < 5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
@@ -162,6 +168,10 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     kgio (2.10.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     libv8 (3.16.14.13)
     listen (3.0.6)
       rb-fsevent (>= 0.9.3)
@@ -384,6 +394,7 @@ DEPENDENCIES
   coffee-rails
   coffeelint
   cookies_eu
+  delayed_job_active_record
   devise!
   dotenv-rails
   factory_girl_rails
@@ -394,6 +405,7 @@ DEPENDENCIES
   i18n-tasks
   jbuilder
   jquery-rails
+  letter_opener
   listen
   modernizr_rails
   mysql2
