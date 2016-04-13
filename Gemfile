@@ -6,7 +6,7 @@ gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'coffee-rails'
 gem 'cookies_eu'
-gem 'devise'
+gem 'devise', git: 'https://github.com/plataformatec/devise.git'
 gem 'dotenv-rails'
 gem 'fastclick-rails'
 gem 'font-awesome-rails'
@@ -16,6 +16,7 @@ gem 'jbuilder'
 gem 'jquery-rails'
 gem 'modernizr_rails'
 gem 'normalize-rails'
+gem 'paperclip'
 gem 'puma'
 gem 'rails', '5.0.0.beta3'
 gem 'sass-rails'
@@ -34,15 +35,13 @@ group :test do
   gem 'brakeman', require: false
   gem 'codeclimate-test-reporter', require: false
   gem 'coffeelint'
-  gem 'factory_girl_rails'
   gem 'listen'
   gem 'rails_best_practices'
   gem 'reek'
-  gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
   gem 'scss_lint', require: false
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers'
   gem 'slim_lint'
 end
 
@@ -56,6 +55,11 @@ group :development do
   gem 'spring'
   gem 'sqlite3'
   gem 'web-console'
+end
+
+group :development, :test do
+  gem 'factory_girl_rails'
+  gem 'rspec-rails', '~> 3.5.0.beta3'
 end
 
 group :production do

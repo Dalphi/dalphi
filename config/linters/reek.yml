@@ -2,3 +2,5 @@ IrresponsibleModule:
   enabled: false
 NestedIterators:
   max_allowed_nesting: 2
+TooManyStatements:
+  max_statements: 10
