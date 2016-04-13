@@ -1,18 +1,14 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_action :set_new_project, only: [:new, :create]
+  before_action :set_project, only: [:edit, :update, :destroy]
 
   # GET /projects
   def index
     @projects = Project.all
   end
 
-  # GET /projects/1
-  def show
-  end
-
   # GET /projects/new
   def new
+    @project = Project.new
   end
 
   # GET /projects/1/edit
@@ -21,8 +17,9 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
+    @project = Project.new(project_params)
     if @project.save
-      redirect_to @project, notice: 'Project was successfully created.'
+      redirect_to project_raw_data_path(@project), notice: 'Project was successfully created.'
     else
       render :new
     end
@@ -31,7 +28,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to @project, notice: 'Project was successfully updated.'
+      redirect_to projects_path, notice: 'Project was successfully updated.'
     else
       render :edit
     end
@@ -40,7 +37,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_url, notice: 'Project was successfully destroyed.'
+    redirect_to projects_path, notice: 'Project was successfully destroyed.'
   end
 
   private
@@ -49,12 +46,8 @@ class ProjectsController < ApplicationController
       @project = Project.find(params[:id])
     end
 
-    def set_new_project
-      @project = Project.new(project_params)
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:title, :description)
+      params.require(:project).permit(:title, :description, :data)
     end
 end

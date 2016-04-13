@@ -14,7 +14,7 @@ table
       tr
         td = project.title
         td = project.description
-        td = link_to 'Show', project
+        td = link_to 'Show', project_raw_data_path(project)
         td = link_to 'Edit', edit_project_path(project)
         td = link_to 'Destroy', project, data: { confirm: 'Are you sure?' }, method: :delete
 

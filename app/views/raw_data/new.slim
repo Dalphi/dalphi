@@ -1,5 +1,5 @@
 h1 New raw_datum
 
-== render 'form'
+== render 'form', project: @project, raw_datum: @raw_datum
 
-= link_to 'Back', raw_data_path
+= link_to 'Back', project_raw_data_path(@project)

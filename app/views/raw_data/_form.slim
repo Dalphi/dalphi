@@ -1,8 +1,9 @@
-= simple_form_for(raw_datum) do |f|
+= simple_form_for [project, raw_datum] do |f|
   = f.error_notification
 
   .form-inputs
-    = f.input :shape
+    = f.input :shape, as: :select, collection: @raw_data_shapes, selected: @raw_data_shapes.first
+    = f.input :data, as: :file
 
   .form-actions
     = f.button :submit

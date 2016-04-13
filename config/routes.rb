@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :projects do
-    resources :raw_data
+  resources :projects, except: [:show] do
+    resources :raw_data, except: [:show]
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

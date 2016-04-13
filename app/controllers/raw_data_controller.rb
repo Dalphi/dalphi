@@ -1,6 +1,7 @@
 class RawDataController < ApplicationController
   before_action :set_raw_datum, only: [:show, :edit, :update, :destroy]
-  before_action :set_new_raw_datum, only: [:new, :create]
+  before_action :set_project
+  before_action :set_raw_data_shapes
 
   # GET /raw_data
   def index
@@ -22,8 +23,9 @@ class RawDataController < ApplicationController
 
   # POST /raw_data
   def create
+    @raw_datum = RawDatum.new(raw_datum_params)
     if @raw_datum.save
-      redirect_to @raw_datum, notice: 'Raw datum was successfully created.'
+      redirect_to project_raw_data_path(@project), notice: 'Raw datum was successfully created.'
     else
       render :new
     end
@@ -32,7 +34,7 @@ class RawDataController < ApplicationController
   # PATCH/PUT /raw_data/1
   def update
     if @raw_datum.update(raw_datum_params)
-      redirect_to @raw_datum, notice: 'Raw datum was successfully updated.'
+      redirect_to project_raw_data_path(@project), notice: 'Raw datum was successfully updated.'
     else
       render :edit
     end
@@ -41,7 +43,7 @@ class RawDataController < ApplicationController
   # DELETE /raw_data/1
   def destroy
     @raw_datum.destroy
-    redirect_to raw_data_url, notice: 'Raw datum was successfully destroyed.'
+    redirect_to project_raw_data_path(@project), notice: 'Raw datum was successfully destroyed.'
   end
 
   private
@@ -50,8 +52,12 @@ class RawDataController < ApplicationController
       @raw_datum = RawDatum.find(params[:id])
     end
 
-    def set_new_raw_datum
-      @raw_datum = RawDatum.new(raw_datum_params)
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
+
+    def set_raw_data_shapes
+      @raw_data_shapes = RawDatum::SHAPES
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
