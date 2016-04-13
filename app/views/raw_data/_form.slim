@@ -2,7 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :shape, as: :select, collection: @raw_data_shapes, selected: @raw_data_shapes.first
+    = f.input :shape, as: :select, collection: raw_data_shapes, selected: raw_data_shapes.first
     = f.input :data, as: :file
 
   .form-actions

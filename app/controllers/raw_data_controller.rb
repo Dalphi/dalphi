@@ -24,6 +24,7 @@ class RawDataController < ApplicationController
   # POST /raw_data
   def create
     @raw_datum = RawDatum.new(raw_datum_params)
+    @raw_datum.project = @project
     if @raw_datum.save
       redirect_to project_raw_data_path(@project), notice: 'Raw datum was successfully created.'
     else
@@ -62,6 +63,6 @@ class RawDataController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def raw_datum_params
-      params.require(:raw_datum).permit(:shape)
+      params.require(:raw_datum).permit(:shape, :data)
     end
 end

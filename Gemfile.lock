@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/plataformatec/devise.git
-  revision: 728bf0c9561a6ecc1f17fb878a4ca473a4d99867
+  revision: 57d150e535f65c9b408504fa6f279a5417fa3de5
   specs:
     devise (4.0.0.rc2)
       bcrypt (~> 3.0)
@@ -135,7 +135,7 @@ GEM
       railties (>= 3.0.0)
     fastclick-rails (1.0.1)
     ffi (1.9.10)
-    font-awesome-rails (4.5.0.1)
+    font-awesome-rails (4.6.1.0)
       railties (>= 3.2, < 5.1)
     foreman (0.78.0)
       thor (~> 0.19.1)
@@ -184,7 +184,7 @@ GEM
     mime-types (3.0)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0221)
-    mimemagic (0.3.0)
+    mimemagic (0.3.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     modernizr_rails (2.6.2.1)
@@ -197,12 +197,12 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     normalize-rails (4.0.0)
     orm_adapter (0.5.0)
-    paperclip (4.3.6)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
+    paperclip (5.0.0.beta1)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
       cocaine (~> 0.5.5)
       mime-types
-      mimemagic (= 0.3.0)
+      mimemagic (~> 0.3.0)
     parser (2.3.0.7)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -354,7 +354,7 @@ GEM
     thread (0.2.2)
     thread_safe (0.3.5)
     tilt (2.0.2)
-    tins (1.9.0)
+    tins (1.10.0)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -410,7 +410,7 @@ DEPENDENCIES
   modernizr_rails
   mysql2
   normalize-rails
-  paperclip
+  paperclip (= 5.0.0.beta1)
   puma
   rack-mini-profiler
   rails (= 5.0.0.beta3)
