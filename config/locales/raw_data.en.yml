@@ -1,0 +1,9 @@
+en:
+  raw-data:
+    action:
+      create:
+        success: Raw data was successfully created.
+      update:
+        success: Raw data was successfully updated.
+      destroy:
+        success: Raw data was successfully destroyed.
