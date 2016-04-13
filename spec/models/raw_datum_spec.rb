@@ -33,8 +33,5 @@ RSpec.describe RawDatum, :type => :model do
     end
   end
 
-  it 'should belong to a project' do
-    pending 'TODO'
-    raise 'TODO'
-  end
+  it { should belong_to(:project) }
 end

@@ -53,13 +53,7 @@ RSpec.describe Project, :type => :model do
     end
   end
 
-  it 'should have many raw_data' do
-    pending 'TODO'
-    raise 'TODO'
-  end
+  it { should have_many(:raw_data) }
 
-  it 'should belong to user' do
-    pending 'TODO'
-    raise 'TODO'
-  end
+  it { should belong_to(:user) }
 end

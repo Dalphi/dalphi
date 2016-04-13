@@ -9,8 +9,5 @@ RSpec.describe User, :type => :model do
     expect(@user).to be_valid
   end
 
-  it 'should have many projects' do
-    pending 'TODO'
-    raise 'TODO'
-  end
+  it { should have_many(:projects) }
 end
