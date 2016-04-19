@@ -19,7 +19,9 @@ nav.topbar.navbar
     li.active
       | Data
 
-  ul.nav.navbar-nav.icon-bar
-    li.nav-item
-      a.nav-link.sign-out href='#'
-        = fa_icon 'sign-out'
+
+  - if user_signed_in?
+    ul.nav.navbar-nav.icon-bar
+      li.nav-item
+        a.nav-link.sign-out href="#{destroy_user_session_path}" data-method='delete' rel='nofollow'
+          = fa_icon 'sign-out'

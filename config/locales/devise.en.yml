@@ -2,6 +2,22 @@
 
 en:
   devise:
+    sign-in: Sign in
+    sign-up: Sign up
+    password-forgotten: Forgot password?
+    reset-password: Reset password
+    reset-password-instructions:
+      salutation: Hello
+      info-1: Someone has requested a link to change your password. You can do this through the link below.
+      info-2: "If you didn't request this, please ignore this email."
+      info-3: "Your password won't change until you access the link above and create a new one."
+      link-label: Change my password
+    change-password: Change password
+    edit-password:
+      new-password: New password
+      confirm-new-password: Confirm new password
+    no-confirmation-instructions: "Didn't receive confirmation instructions?"
+    no-unlock-instructions: "Didn't receive unlock instructions?"
     confirmations:
       confirmed: "Your email address has been successfully confirmed."
       send_instructions: "You will receive an email with instructions for how to confirm your email address in a few minutes."

@@ -1,0 +1,13 @@
+.container
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+    .row
+      .col-xs-12.col-sm-push-3.col-sm-6.col-lg-push-4.col-lg-4
+        h2
+          = t('devise.password-forgotten')
+        = f.error_notification
+        .form-inputs
+          = f.input :email, required: true, autofocus: true
+    .row.btn-row
+      .col-xs-12.col-sm-push-3.col-sm-6.col-lg-push-4.col-lg-4
+        = render 'devise/shared/links'
+        = render 'shared/button', type: 'submit', label: t('devise.reset-password'), icon: 'unlock-alt'
