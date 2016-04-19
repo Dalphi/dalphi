@@ -4,6 +4,12 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = Project.all
+
+    rr = RouteRecognizer.new(project_params)
+
+    ap rr.get_all_paths
+    ap 'SECOND'
+    ap rr.initial_path_segments
   end
 
   # GET /projects/1
