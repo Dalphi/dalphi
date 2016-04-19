@@ -1,0 +1,10 @@
+// overwrite bootstrap defaults
+// https://github.com/twbs/bootstrap/blob/v4.0.0-alpha.2/scss/_variables.scss
+
+// colors
+$brand-primary: $color-4; // bootstrap blue e.g. for primary button
+
+// tables
+$table-bg-accent: $color-1-1; // bg color of every second table row
+$table-bg-hover: $color-1-2; // bg color of row hover
+$table-border-color: $color-1-3; // bg color of table head
