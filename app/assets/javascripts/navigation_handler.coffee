@@ -7,7 +7,7 @@ class NavigationHandler
     this.$topbar = $('.topbar')
     this.$sidebar = $('.sidebar')
 
-    $('.toggle-sidebar').click (event) ->
+    $('.toggle-sidebar, .dark-curtain').click (event) ->
       event.preventDefault()
       _this.toggleSidebar()
 

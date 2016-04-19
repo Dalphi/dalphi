@@ -1,5 +1,5 @@
 .topbar {
-  background-color: $color-3;
+  background-color: $color-1;
   border-radius: 0;
   box-shadow: 0 2px $navigation-box-shaddow;
   color: $color-4;
@@ -7,27 +7,75 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 10;
+
+  @include media-breakpoint-up(md) {
+    padding: $navbar-padding-vertical $navbar-padding-horizontal-md-up $navbar-padding-vertical #{$navbar-padding-horizontal-md-up + $sidebar-width};
+  }
 
   &.expanded {
-    .toggle-sidebar {
-      transform: rotate(90deg);
+    .dark-curtain {
+      height: 100%;
+      opacity: 1;
+      width: 100%;
     }
+  }
 
-    h2 {
-      opacity: 0;
-    }
+  .dark-curtain {
+    background-color: $dark-curtain-color;
+    display: block;
+    height: 0;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    transition: opacity $default-transition-duration;
+    width: 0;
   }
 
   .toggle-sidebar {
     padding: 3px 0 0;
-    transition: transform $default-transition-duration;
+  }
+
+  .navbar-nav {
+    display: inline-block;
+
+    .nav-item {
+      display: inline-block;
+      float: none;
+    }
   }
 
   .fa {
     font-size: $h2-icon-size;
   }
 
+  a {
+    padding: 0;
+  }
+
   h2 {
-    transition: opacity $default-transition-duration;
+    margin-bottom: 0;
+  }
+
+  .breadcrumb {
+    background-color: inherit;
+    border-radius: 0;
+    display: inline-block;
+    margin: 0 0 0 1rem;
+    padding: .4rem 0 0;
+
+    @include media-breakpoint-up(md) {
+      margin: 0;
+    }
+  }
+
+  .icon-bar {
+    float: right;
+    font-size: .65rem;
+
+    .nav-link {
+      padding: .5rem 0;
+    }
   }
 }

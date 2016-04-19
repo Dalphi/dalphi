@@ -1,0 +1,35 @@
+// global color definitions; color description; general use for
+$color-1: #fbfcfc; // alabaster; general background
+$color-2: #1f2634; // black pearl; text color
+$color-3: #586681; // dark electric blue; navigation background
+$color-4: #93b449; // green smoke; highlight special words
+$color-5: #b6cd82; // pine glade; color-1 / color-4 hover
+$color-6: rgba(0, 0, 0, .26); // transparent black; shaddow color
+
+// global transparent colors
+$dark-curtain-color: rgba(0, 0, 0, .35);
+
+// global size definitions
+$container-padding: 10px;
+$content-container-top-margin: 13px;
+$default-margin: 10px;
+$h1-font-size: 38px;
+$h2-font-size: 32px;
+$h2-icon-size: 2em;
+$h3-font-size: 22px;
+$h4-font-size: 18px;
+$h5-font-size: 16px;
+$h6-font-size: 14px;
+$sidebar-width: 15.63rem;
+$small-font-size: 12px;
+$topbar-height: 54px;
+$navbar-padding-vertical: .5rem;
+$navbar-padding-horizontal: 1rem;
+$navbar-padding-horizontal-md-up: 1.563rem;
+
+
+// durations
+$default-transition-duration: .5s;
+
+// global shaddow definitions
+$navigation-box-shaddow: 5px $color-6;
