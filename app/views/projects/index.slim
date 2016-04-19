@@ -13,12 +13,9 @@
               tr
                 td = project.title
                 td = project.description
-                td
+                td.text-xs-right
                   = render 'shared/button', type: 'link', href: edit_project_path(project), icon: 'edit'
-                /  = render 'shared/button', type: 'link', href: projects_path(project), icon: 'delete', method: 'delete'
-                / td = link_to 'Show', project_raw_data_path(project)
-                / td = link_to 'Edit', edit_project_path(project)
-                / td = link_to 'Destroy', project, data: { confirm: 'Are you sure?' }, method: :delete
+                  = render 'shared/button', type: 'link', href: project_path(project), icon: 'times', method: 'delete', confirm: t('delete-confirm')
       - else
         .jumbotron
           h1.display-3
