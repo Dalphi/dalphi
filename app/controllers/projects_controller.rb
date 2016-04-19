@@ -5,11 +5,10 @@ class ProjectsController < ApplicationController
   def index
     @projects = Project.all
 
-    rr = RouteRecognizer.new(project_params)
+    rr = RouteRecognizer.new(params)
 
-    ap rr.get_all_paths
-    ap 'SECOND'
-    ap rr.initial_path_segments
+    ap 'CALL RouteRecognizer.build_path_tree'
+    rr.build_path_tree
   end
 
   # GET /projects/1
