@@ -1,18 +1,18 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
   def index
     @projects = Project.all
 
-    rr = RouteRecognizer.new(params)
-
-    ap 'CALL RouteRecognizer.build_path_tree'
-    rr.build_path_tree
+    ap 'INIT RouteRecognizer'
+    RouteRecognizer.new(request.env['PATH_INFO'])
   end
 
   # GET /projects/1
   def show
+    ap 'INIT RouteRecognizer'
+    RouteRecognizer.new(request.env['PATH_INFO'])
   end
 
   # GET /projects/new
@@ -22,6 +22,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    ap 'INIT RouteRecognizer'
+    RouteRecognizer.new(request.env['PATH_INFO'])
   end
 
   # POST /projects
