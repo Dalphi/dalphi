@@ -1,2 +1,0 @@
-$ ->
-  new FastClick(document.body)

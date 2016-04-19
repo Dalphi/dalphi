@@ -6,3 +6,6 @@
 #= require cookies_eu
 #= require fastclick
 #= require hammer
+
+$ ->
+  new FastClick(document.body)
