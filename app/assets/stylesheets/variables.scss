@@ -1,16 +1,13 @@
-// fonts
-$roboto-light: url('<%= asset_path('roboto-light.ttf') %>');
-$robotocondensed-regular: url('<%= asset_path('robotocondensed-regular.ttf') %>');
-
 // global color definitions; color description; general use for
-$color-1: #FBFCFC; // alabaster; general background
-$color-2: #1F2634; // black pearl; text color
+$color-1: #fbfcfc; // alabaster; general background
+$color-2: #1f2634; // black pearl; text color
 $color-3: #586681; // dark electric blue; navigation background
-$color-4: #93B449; // green smoke; highlight special words
-$color-5: #B6CD82; // pine glade; color-1 / color-4 hover
+$color-4: #93b449; // green smoke; highlight special words
+$color-5: #b6cd82; // pine glade; color-1 / color-4 hover
+$color-6: rgba(0, 0, 0, .26); // transparent black; shaddow color
 
 // global transparent colors
-$dark-curtain-color: rgba(0, 0, 0, 0.35);
+$dark-curtain-color: rgba(0, 0, 0, .35);
 
 // global size definitions
 $container-padding: 10px;
@@ -23,12 +20,16 @@ $h3-font-size: 22px;
 $h4-font-size: 18px;
 $h5-font-size: 16px;
 $h6-font-size: 14px;
-$sidebar-width: 250px;
+$sidebar-width: 15.63rem;
 $small-font-size: 12px;
 $topbar-height: 54px;
+$navbar-padding-vertical: .5rem;
+$navbar-padding-horizontal: 1rem;
+$navbar-padding-horizontal-md-up: 1.563rem;
+
 
 // durations
 $default-transition-duration: .5s;
 
 // global shaddow definitions
-$navigation-box-shaddow: 5px rgba(0, 0, 0, 0.26);
+$navigation-box-shaddow: 5px $color-6;
