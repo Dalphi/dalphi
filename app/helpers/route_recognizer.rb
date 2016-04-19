@@ -3,11 +3,9 @@ class RouteRecognizer
   # https://gist.github.com/bantic/5688232
 
   def initialize(params)
-    @callee_name = params[:controller]
-    @callee_action = params[:action]
-
     routes = Rails.application.routes.routes
-    @paths = routes.collect {|r| r.path.spec.to_s }.uniq
+    @paths = routes.collect { |route| route.path.spec.to_s }.uniq
+    build_path_tree(params[:controller], params[:action])
   end
 
   def get_all_paths
@@ -16,18 +14,15 @@ class RouteRecognizer
 
   def initial_path_segments
     @initial_path_segments ||= begin
-      @paths.collect do |path|
-        path[%r{^\/([^\/\(:]+)}, 1]
-      end.compact.uniq
+      @paths.collect { |path| path[%r{^\/([^\/\(:]+)}, 1] }.compact.uniq
     end
   end
 
-  def build_path_tree # WIP
-    ap "call controller: #{@callee_name}"
-    ap "call action: #{@callee_action}"
+  def build_path_tree(callee_name, callee_action) # WIP
+    ap "call controller: #{callee_name}"
+    ap "call action: #{callee_action}"
 
-    @path_tree = {}
-    @paths.keep_if { |path| path.include?("/#{@callee_name}/") }
+    @paths.keep_if { |path| path.include?("/#{callee_name}/") }
     ap @paths
   end
 end
