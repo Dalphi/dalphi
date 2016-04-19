@@ -140,21 +140,21 @@ th {
 }
 
 label {
-  abbr[title] {
-    border: 0;
-    text-decoration: none;
+  abbr {
+    &[title] {
+      border: 0;
+      text-decoration: none;
+    }
+  }
+
+  &.file {
+    height: auto;
   }
 }
 
 input {
   &.file {
-    opacity: 1;
     min-width: 100%;
-  }
-}
-
-label {
-  &.file {
-    height: auto;
+    opacity: 1;
   }
 }
