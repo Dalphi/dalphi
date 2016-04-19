@@ -5,8 +5,8 @@
         table.table.table-striped.table-hover
           thead.thead-default
             tr
-              th Title
-              th Description
+              th = t('activerecord.attributes.project.title')
+              th = t('activerecord.attributes.project.description')
               th
           tbody
             - @projects.each do |project|

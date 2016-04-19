@@ -134,3 +134,13 @@ td {
     width: 125px;
   }
 }
+
+th {
+  text-transform: capitalize;
+}
+
+input {
+  &.file {
+    opacity: 1;
+  }
+}

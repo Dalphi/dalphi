@@ -1,20 +1,36 @@
-h1 Listing raw_data
-
-table
-  thead
-    tr
-      th Shape
-      th
-      th
-      th
-
-  tbody
-    - @raw_data.each do |raw_datum|
-      tr
-        td = raw_datum.shape
-        td = link_to 'Edit', edit_project_raw_datum_path(@project, raw_datum)
-        td = link_to 'Destroy', project_raw_datum_path(@project, raw_datum), data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Raw datum', new_project_raw_datum_path(@project)
+.container
+  .row
+    .col-xs-12
+      - if @raw_data.any?
+        table.table.table-striped.table-hover
+          thead.thead-default
+            tr
+              th = t('activerecord.attributes.raw-datum.data-file-name')
+              th = t('activerecord.attributes.raw-datum.shape')
+              th
+          tbody
+            - @raw_data.each do |raw_datum|
+              tr
+                td = raw_datum.data_file_name
+                td = raw_datum.shape
+                td.controls
+                  = render 'shared/button', type: 'link', href: edit_project_raw_datum_path(@project, raw_datum), icon: 'edit'
+                  = render 'shared/button', type: 'link', href: project_raw_datum_path(@project, raw_datum), icon: 'times', method: 'delete', confirm: t('delete-confirm')
+            coffee:
+              window.clickableTableRow = new window.ClickableTableRow()
+      - else
+        .jumbotron
+          h1.display-3
+            = t('raw-data.blank-slate.title')
+          p.lead
+            = t('raw-data.blank-slate.text')
+          hr.m-y-2
+          = render 'shared/button', type: 'primary', label: t('raw_data.new-datum'), href: new_project_raw_datum_path(@project), icon: 'plus'
+        .row.btn-row
+          .col-xs-12
+             = render 'shared/button', label: t('back'), href: projects_path, icon: 'chevron-left'
+  - if @raw_data.any?
+    .row.btn-row
+      .col-xs-12
+         = render 'shared/button', label: t('back'), href: projects_path, icon: 'chevron-left'
+         = render 'shared/button', type: 'primary', label: t('raw_data.new-datum'), href: new_project_raw_datum_path(@project), icon: 'plus'
