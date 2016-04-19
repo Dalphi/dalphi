@@ -1,5 +1,9 @@
 en:
   projects:
+    new-project: 'New Project'
+    blank-slate:
+      title: 'No projects added yet'
+      text: 'To start with a new project use the button below.'
     action:
       create:
         success: Project was successfully created.

@@ -1,9 +1,11 @@
 = simple_form_for(project) do |f|
-  = f.error_notification
-
-  .form-inputs
-    = f.input :title
-    = f.input :description
-
-  .form-actions
-    = f.button :submit
+  .row
+    .col-xs-12
+      = f.error_notification
+      .form-inputs
+        = f.input :title
+        = f.input :description
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button', label: t('back'), icon: 'chevron-left', href: projects_path
+      = render 'shared/button', type: 'submit', label: t('save'), icon: 'check'

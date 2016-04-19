@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    models:
+      project:
+        one: project
+        other: projects
+      raw-data:
+        one: raw datum
+        other: raw data
+    attributes:
+      project:
+        title: title
+        description: description
+      raw-datum:
+        data-file-name: file name
+        shape: shape

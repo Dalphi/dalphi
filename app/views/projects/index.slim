@@ -1,23 +1,32 @@
-h1 Listing projects
-
-table
-  thead
-    tr
-      th Title
-      th Description
-      th
-      th
-      th
-
-  tbody
-    - @projects.each do |project|
-      tr
-        td = project.title
-        td = project.description
-        td = link_to 'Show', project_raw_data_path(project)
-        td = link_to 'Edit', edit_project_path(project)
-        td = link_to 'Destroy', project, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Project', new_project_path
+.container
+  .row
+    .col-xs-12
+      - if @projects.any?
+        table.table.table-striped.table-hover
+          thead.thead-default
+            tr
+              th = t('activerecord.attributes.project.title')
+              th = t('activerecord.attributes.project.description')
+              th
+          tbody
+            - @projects.each do |project|
+              tr data-href="#{project_raw_data_path(project)}"
+                td = project.title
+                td = project.description
+                td.controls
+                  = render 'shared/button', type: 'link', href: edit_project_path(project), icon: 'edit'
+                  = render 'shared/button', type: 'link', href: project_path(project), icon: 'times', method: 'delete', confirm: t('delete-confirm')
+            coffee:
+              window.clickableTableRow = new window.ClickableTableRow()
+      - else
+        .jumbotron
+          h1.display-3
+            = t('projects.blank-slate.title')
+          p.lead
+            = t('projects.blank-slate.text')
+          hr.m-y-2
+          = render 'shared/button', type: 'primary', label: t('projects.new-project'), href: new_project_path, icon: 'plus'
+  - if @projects.any?
+    .row.btn-row
+      .col-xs-12
+        = render 'shared/button', type: 'primary', label: t('projects.new-project'), href: new_project_path, icon: 'plus'
