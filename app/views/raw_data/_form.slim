@@ -3,7 +3,7 @@
     .col-xs-12
       = f.error_notification
       .form-inputs
-        = f.input :shape, as: :select, collection: raw_data_shapes, selected: raw_data_shapes.first
+        = f.input :shape, as: :select, collection: raw_data_shapes, selected: raw_data_shapes.first, input_html: { class: 'c-select' }
         = f.input :data, as: :file
   .row.btn-row
     .col-xs-12

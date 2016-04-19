@@ -142,5 +142,12 @@ th {
 input {
   &.file {
     opacity: 1;
+    min-width: 100%;
+  }
+}
+
+label {
+  &.file {
+    height: auto;
   }
 }
