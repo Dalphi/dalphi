@@ -1,7 +1,7 @@
 .sidebar {
   background-color: $color-3;
   bottom: 0;
-  box-shadow: 0 2px $navigation-box-shaddow;
+  box-shadow: 0 .3125rem $navigation-box-shaddow;
   color: $color-1;
   height: 100%;
   left: -100%;
@@ -39,7 +39,7 @@
     padding: 0;
 
     li {
-      margin: 0 3px;
+      margin: 0 .1875rem;
     }
   }
 
@@ -59,7 +59,7 @@
     }
 
     h1 {
-      margin-top: 8px;
+      margin-top: .5rem;
     }
   }
 

@@ -14,13 +14,14 @@
  *= require_self
  */
 
+// general definitions
+@import 'variables';
+@import 'bootstrap_overwrites';
+@import 'fonts';
+
 // gems & dependencies
 @import 'bootstrap';
 @import 'font-awesome';
-
-// general definitions
-@import 'variables';
-@import 'fonts';
 
 // partial styling
 @import 'content-container';
@@ -105,5 +106,56 @@ p {
 .dalphi-logo {
   path {
     fill: $color-4;
+  }
+}
+
+.btn-row {
+  text-align: right;
+
+  .btn {
+    margin: .25rem;
+  }
+
+  .btn:last-of-type {
+    margin-right: 0;
+  }
+}
+
+tr {
+  &[data-href] {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+td {
+  &.controls {
+    text-align: right;
+    width: 7.813rem;
+  }
+}
+
+th {
+  text-transform: capitalize;
+}
+
+label {
+  abbr {
+    &[title] {
+      border: 0;
+      text-decoration: none;
+    }
+  }
+
+  &.file {
+    height: auto;
+  }
+}
+
+input {
+  &.file {
+    min-width: 100%;
+    opacity: 1;
   }
 }

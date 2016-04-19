@@ -1,7 +1,7 @@
 .topbar {
   background-color: $color-1;
   border-radius: 0;
-  box-shadow: 0 2px $navigation-box-shaddow;
+  box-shadow: 0 .125rem $navigation-box-shaddow;
   color: $color-4;
   height: $topbar-height;
   position: fixed;
@@ -34,7 +34,8 @@
   }
 
   .toggle-sidebar {
-    padding: 3px 0 0;
+    padding: .1875rem 0 0;
+    transition: transform $default-transition-duration;
   }
 
   .navbar-nav {
@@ -72,7 +73,10 @@
 
   .icon-bar {
     float: right;
-    font-size: .65rem;
+
+    i {
+      font-size: 1.4rem;
+    }
 
     .nav-link {
       padding: .5rem 0;

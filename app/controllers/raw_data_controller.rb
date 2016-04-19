@@ -5,7 +5,7 @@ class RawDataController < ApplicationController
 
   # GET /raw_data
   def index
-    @raw_data = RawDatum.all
+    @raw_data = RawDatum.where(project: @project)
   end
 
   # GET /raw_data/new
