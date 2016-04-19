@@ -10,12 +10,14 @@
               th
           tbody
             - @projects.each do |project|
-              tr
+              tr data-href="#{project_raw_data_path(project)}"
                 td = project.title
                 td = project.description
-                td.text-xs-right
+                td.controls
                   = render 'shared/button', type: 'link', href: edit_project_path(project), icon: 'edit'
                   = render 'shared/button', type: 'link', href: project_path(project), icon: 'times', method: 'delete', confirm: t('delete-confirm')
+            coffee:
+              window.clickableTableRow = new window.ClickableTableRow()
       - else
         .jumbotron
           h1.display-3

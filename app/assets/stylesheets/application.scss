@@ -119,3 +119,18 @@ p {
     margin-right: 0;
   }
 }
+
+tr {
+  &[data-href] {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+td {
+  &.controls {
+    text-align: right;
+    width: 125px;
+  }
+}
