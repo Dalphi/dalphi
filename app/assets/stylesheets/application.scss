@@ -139,6 +139,13 @@ th {
   text-transform: capitalize;
 }
 
+label {
+  abbr[title] {
+    border: 0;
+    text-decoration: none;
+  }
+}
+
 input {
   &.file {
     opacity: 1;
