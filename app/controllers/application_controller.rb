@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_locale
   before_action :set_copyright_year
+  before_action :bake_breadcrumbs
 
   def styleguide
   end
@@ -20,6 +21,11 @@ class ApplicationController < ActionController::Base
   def set_copyright_year
     require 'date'
     @current_year = Date.today.strftime("%Y")
+  end
+
+  def bake_breadcrumbs
+    breadcrumb_bakery = BreadcrumbBakery.new(request.env['PATH_INFO'])
+    @breadcrumbs = breadcrumb_bakery.get_breadcrumbs
   end
 
   # This method smells of :reek:UtilityFunction

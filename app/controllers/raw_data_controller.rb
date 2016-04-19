@@ -15,8 +15,6 @@ class RawDataController < ApplicationController
 
   # GET /raw_data/1/edit
   def edit
-    ap 'INIT RouteRecognizer'
-    RouteRecognizer.new(request.env['PATH_INFO'])
   end
 
   # POST /raw_data

@@ -4,15 +4,10 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = Project.all
-
-    ap 'INIT RouteRecognizer'
-    RouteRecognizer.new(request.env['PATH_INFO'])
   end
 
   # GET /projects/1
   def show
-    ap 'INIT RouteRecognizer'
-    RouteRecognizer.new(request.env['PATH_INFO'])
   end
 
   # GET /projects/new
@@ -22,8 +17,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    ap 'INIT RouteRecognizer'
-    RouteRecognizer.new(request.env['PATH_INFO'])
   end
 
   # POST /projects

@@ -1,4 +1,4 @@
-class RouteRecognizer
+class BreadcrumbBakery
   include Rails.application.routes.url_helpers
 
   def initialize(current_uri)
@@ -20,10 +20,10 @@ class RouteRecognizer
       elsif key_string.end_with?('_id')
         controller_name = key_string[0..-4]
 
-        add_breadcrumb(controller_name,
+        add_breadcrumb(controller_name.pluralize,
           custom_url_for_controller(partial_recognized_path, controller_name, 'index'))
 
-        add_breadcrumb(controller_name,
+        add_breadcrumb(recognize_instance_name(controller_name, partial_recognized_path),
           custom_url_for_controller(partial_recognized_path, controller_name, 'show'))
       end
     end
@@ -66,10 +66,25 @@ class RouteRecognizer
 
   def add_breadcrumb(name, path)
     @breadcrumbs.push({
-      display_name: name.pluralize,
+      display_name: name,
       path: path
     })
   end
+
+  def recognize_instance_name(controller_name, recognized_path)
+    # TODO: create a config file and specify attribute name and don't hardcode 'title'
+    controller_instance = "#{controller_name}_id".to_sym
+    instance_id = recognized_path[controller_instance]
+    controller_name.classify.constantize.find(instance_id).title
+  rescue
+    'show'
+  end
+
+  def get_breadcrumbs
+    @breadcrumbs
+  end
+
+  # The following functions might be helpful in the future!
 
   def get_all_paths
     routes = Rails.application.routes.routes
