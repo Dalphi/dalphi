@@ -6,6 +6,7 @@ class BreadcrumbBakery
     @recognized_path = Rails.application.routes.recognize_path(current_uri)
     create_breadcrumbs
   rescue
+    @breadcrumbs = []
   end
 
   def create_breadcrumbs
