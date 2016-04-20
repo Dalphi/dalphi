@@ -4,3 +4,5 @@ UtilityFunction:
   enabled: false
 FeatureEnvy:
   enabled: false
+TooManyStatements:
+  max_statements: 10

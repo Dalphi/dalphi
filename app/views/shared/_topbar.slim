@@ -10,14 +10,10 @@ nav.topbar.navbar
         | Dalphi
 
   ol.breadcrumb
-    li
-      a href="#"
-        | Home
-    li
-      a href="#"
-        | Library
-    li.active
-      | Data
+    - breadcrumbs.each do |breadcrumb|
+      li
+        a href="#{breadcrumb[:path]}"
+          = breadcrumb[:display_name]
 
   ul.nav.navbar-nav.icon-bar
     li.nav-item
