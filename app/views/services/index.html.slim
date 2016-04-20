@@ -1,0 +1,31 @@
+h1 Listing services
+
+table
+  thead
+    tr
+      th Roll
+      th Description
+      th Capability
+      th Url
+      th Title
+      th Version
+      th
+      th
+      th
+
+  tbody
+    - @services.each do |service|
+      tr
+        td = service.roll
+        td = service.description
+        td = service.capability
+        td = service.url
+        td = service.title
+        td = service.version
+        td = link_to 'Show', service
+        td = link_to 'Edit', edit_service_path(service)
+        td = link_to 'Destroy', service, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Service', new_service_path

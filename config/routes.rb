@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :services
   resources :projects do
     resources :raw_data, except: [:show]
   end
