@@ -1,0 +1,15 @@
+.container
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    .row
+      .col-xs-12.col-sm-push-3.col-sm-6.col-lg-push-4.col-lg-4
+        h2
+          = t('devise.sign-up')
+        = f.error_notification
+        .form-inputs
+          = f.input :email, required: true, autofocus: true
+          = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+          = f.input :password_confirmation, required: true
+    .row.btn-row
+      .col-xs-12.col-sm-push-3.col-sm-6.col-lg-push-4.col-lg-4
+        = render 'devise/shared/links'
+        = render 'shared/button', type: 'submit', label: t('devise.sign-up'), icon: 'user-plus'
