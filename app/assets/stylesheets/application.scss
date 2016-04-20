@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require normalize-rails
+ *= require cookies_eu
  *= require_self
  */
 
@@ -38,6 +39,7 @@ body {
 
 body {
   background-color: $color-1;
+  padding-top: $topbar-height;
 }
 
 a {
@@ -140,6 +142,23 @@ th {
   text-transform: capitalize;
 }
 
+.alert {
+  border-radius: 0;
+  margin: 0;
+  position: relative;
+
+  @include media-breakpoint-up(md) {
+    margin-left: $sidebar-width;
+    width: calc(100% - #{$sidebar-width});
+  }
+
+  button {
+    position: absolute;
+    right: $container-margin;
+    top: .8rem;
+  }
+}
+
 label {
   abbr {
     &[title] {
@@ -163,4 +182,3 @@ input {
     margin-right: .25rem;
   }
 }
-
