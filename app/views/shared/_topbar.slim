@@ -18,20 +18,8 @@ nav.topbar.navbar
   - if user_signed_in?
     ul.nav.navbar-nav.icon-bar
       li.nav-item
-        a.nav-link href="#{edit_user_registration_path}"
+        a.nav-link href="#{edit_user_registration_path}" data-toggle='tooltip' data-placement='bottom' title="#{t('edit-profile')}"
           = fa_icon('user')
       li.nav-item
-        a.nav-link.sign-out href="#{destroy_user_session_path}" data-method='delete' rel='nofollow'
+        a.nav-link.sign-out href="#{destroy_user_session_path}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{t('sign-out')}"
           = fa_icon('sign-out')
-      / li.nav-item
-      /   .dropdown
-      /     button.btn.btn-secondary.dropdown-toggle type='button' id='dropdownUser' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
-      /       = gravatar_image_tag(current_user.email)
-      /     .dropdown-menu.dropdown-menu-right aria-labelledby='dropdown'
-      /       a.dropdown-item href="#"
-      /         = fa_icon('edit')
-      /         = " #{t('edit-profile')}"
-      /       .dropdown-divider
-      /       a.dropdown-item href="#{destroy_user_session_path}" data-method='delete' rel='nofollow'
-      /         = fa_icon('sign-out')
-      /         = " #{t('sign-out')}"
