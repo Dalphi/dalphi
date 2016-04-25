@@ -1,12 +1,11 @@
 .content-container {
+  margin-top: $container-margin;
   min-height: 100%;
   padding: $container-padding;
-  position: absolute;
-  right: 0;
-  top: #{$topbar-height + $content-container-top-margin};
   width: 100%;
 
   @include media-breakpoint-up(md) {
+    margin-left: $sidebar-width;
     width: calc(100% - #{$sidebar-width});
   }
 }

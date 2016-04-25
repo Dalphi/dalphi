@@ -11,8 +11,8 @@ en:
     a paradisematic country, in which roasted parts of sentences fly into your mouth.
     Even the all-powerful Pointing has no control about the blind texts it is an
   save: Save
-  sign-out: Sign out
-  user-edit:
-    necessary-password-for-confirmation: we need your current password to confirm
-      your changes
-    password-blank-hint: leave it blank if you don't want to change it
+  flashes:
+    titles:
+      alert: Attention
+      error: Error
+      notice: OK
