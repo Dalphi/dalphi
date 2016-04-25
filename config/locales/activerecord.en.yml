@@ -14,3 +14,9 @@ en:
       raw-datum:
         data-file-name: file name
         shape: shape
+    errors:
+      models:
+        service:
+          attributes:
+            url:
+              invalid_url: this URL is invalid
