@@ -51,10 +51,6 @@
     font-size: $h2-icon-size;
   }
 
-  a {
-    // padding: 0;
-  }
-
   h2 {
     margin-bottom: 0;
   }
@@ -95,19 +91,5 @@
 
   a {
     text-transform: capitalize;
-  }
-}
-
-.dropdown {
-  margin-top: -.5rem;
-
-  .dropdown-toggle {
-    border: 0;
-    border-radius: 0;
-
-    img {
-      height: 2.625rem;
-      width: 2.625rem;
-    }
   }
 }

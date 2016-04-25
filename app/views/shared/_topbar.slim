@@ -23,3 +23,6 @@ nav.topbar.navbar
       li.nav-item
         a.nav-link.sign-out href="#{destroy_user_session_path}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{t('sign-out')}"
           = fa_icon('sign-out')
+
+    coffee:
+      $('[data-toggle="tooltip"]').tooltip()
