@@ -24,6 +24,7 @@ class RawDataController < ApplicationController
     if @raw_datum.save
       redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.create.success')
     else
+      flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :new
     end
   end
@@ -33,6 +34,7 @@ class RawDataController < ApplicationController
     if @raw_datum.update(raw_datum_params)
       redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.update.success')
     else
+      flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :edit
     end
   end

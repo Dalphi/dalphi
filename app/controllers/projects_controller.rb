@@ -26,6 +26,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to project_raw_data_path(@project), notice: I18n.t('projects.action.create.success')
     else
+      flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :new
     end
   end
@@ -35,6 +36,7 @@ class ProjectsController < ApplicationController
     if @project.update(project_params)
       redirect_to projects_path, notice: I18n.t('projects.action.update.success')
     else
+      flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :edit
     end
   end

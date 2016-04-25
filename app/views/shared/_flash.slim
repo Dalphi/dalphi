@@ -1,6 +1,7 @@
+- devise_error_messages!
 - if flash.any?
   - flash.each do |flash_type, message|
-    - unless message && message.empty?
+    - unless message && message.empty? 
       .alert.alert-dismissable class="#{bootstrap_class_for(flash_type)}" role='alert'
         button.close type='button' data-dismiss='alert'
           span aria-hidden='true'
