@@ -1,0 +1,19 @@
+.container
+  .row
+    .col-xs-12.text-xs-center
+      = gravatar_image_tag(current_user.email, size: 128)
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+    .row
+      .col-xs-12
+        h2
+          = "#{t('edit')} #{resource_name.to_s.humanize}"
+        = f.error_notification
+        .form-inputs
+          = f.input :email, required: true, autofocus: true
+          = f.input :password, autocomplete: 'off', hint: t('user-edit.password-blank-hint'), required: false
+          = f.input :password_confirmation, required: false
+          = f.input :current_password, hint: t('user-edit.necessary-password-for-confirmation'), required: true
+    .row.btn-row
+      .col-xs-12
+        = render 'shared/button', type: 'danger', href: registration_path(resource_name), method: 'delete', icon: 'times', label: t('cancel-my-account'), confirm: t('delete-confirm')
+        = render 'shared/button', type: 'submit', icon: 'check', label: t('save')

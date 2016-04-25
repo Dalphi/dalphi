@@ -141,6 +141,7 @@ GEM
       thor (~> 0.19.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    gravatar_image_tag (1.2.0)
     haml (4.0.7)
       tilt
     hammerjs-rails (2.0.4)
@@ -406,6 +407,7 @@ DEPENDENCIES
   fastclick-rails
   font-awesome-rails
   foreman
+  gravatar_image_tag
   hammerjs-rails
   i18n-tasks
   inline_svg
