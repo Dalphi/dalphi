@@ -10,7 +10,17 @@
         | Dalphi Active Learning Platform
       span
         | for Human Interaction
-
+    ul.nav
+      - active_class = ''
+      - active_class = 'active' if %w(projects raw_data).include?(params[:controller])
+      li class="#{active_class}"
+        a href="#{projects_path}"
+          = t('activerecord.models.project.other')
+      - active_class = ''
+      - active_class = 'active' if params[:controller] == 'services'
+      li class="#{active_class}"
+        a href="#{services_path}"
+          = t('activerecord.models.service.other')
   .footer
     ul
       li.inline-block

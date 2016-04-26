@@ -7,6 +7,9 @@ en:
       raw-data:
         one: raw datum
         other: raw data
+      service:
+        one: service
+        other: services
     attributes:
       project:
         title: title

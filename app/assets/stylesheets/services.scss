@@ -1,0 +1,27 @@
+.services {
+  .service-search {
+    margin-bottom: 1rem;
+  }
+
+  .card-header {
+    a {
+      color: $color-2;
+      font-size: 1rem;
+    }
+  }
+
+  .card {
+    height: 100%;
+
+  }
+
+  .list-group {
+    margin: -.5625rem -.0625rem -.0625rem;
+  }
+
+  .list-group-item {
+    &:first-of-type {
+      border-radius: 0;
+    }
+  }
+}

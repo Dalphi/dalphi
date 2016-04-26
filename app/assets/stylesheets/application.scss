@@ -27,6 +27,8 @@
 @import 'content-container';
 @import 'topbar';
 @import 'sidebar';
+@import 'services';
+
 
 html,
 body {
@@ -164,3 +166,12 @@ input {
   }
 }
 
+.row-eq-height {
+  display: flex;
+  flex-wrap: wrap;
+
+  > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+  }
+}
