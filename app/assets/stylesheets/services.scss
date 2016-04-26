@@ -3,11 +3,11 @@
     margin-bottom: 1rem;
   }
 
-  .card-header {
-    a {
-      color: $color-2;
-      font-size: 1rem;
-    }
+  .btn-sm {
+    position: absolute;
+    right: .5625rem;
+    top: .5625rem;
+    z-index: 1;
   }
 
   .card {

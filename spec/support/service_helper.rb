@@ -14,8 +14,8 @@ module ServiceHelper
     expect(model_instance.machine_learning?).to match(match_map[2])
   end
 
-  def capability_is_valid(model_instance, capability_identifier, target_enum)
-    model_instance.capability = capability_identifier
+  def problem_id_is_valid(model_instance, problem_identifier, target_enum)
+    model_instance.problem_id = problem_identifier
     expect(model_instance).to be_valid
 
     match_map = [true] if target_enum == 0

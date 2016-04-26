@@ -12,7 +12,9 @@ class ServicesController < ApplicationController
 
   # GET /services/active_learning
   def role_services
-    @role_services = Service.where(role: params[:role])
+    role = params[:role]
+    raise ActionController::RoutingError.new('Not Found') unless Service.roles.keys.include?(role)
+    @role_services = Service.where(role: role)
   end
 
   # GET /services/1
@@ -21,7 +23,12 @@ class ServicesController < ApplicationController
 
   # GET /services/new
   def new
-    @service = Service.new
+    url = "#{params[:protocol]}#{params[:uri]}"
+    @service = Service.new_from_url(url)
+    unless @service
+      flash[:error] = I18n.t('services.error-searching')
+      redirect_to services_url
+    end
   end
 
   # GET /services/1/edit
@@ -65,6 +72,6 @@ class ServicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
-      params.require(:service).permit(:roll, :description, :capability, :url, :title, :version)
+      params.require(:service).permit(:role, :description, :problem_id, :url, :title, :version)
     end
 end

@@ -1,31 +1,33 @@
 .container.services
   .row.service-search
     .col-xs-12
-      .input-group
-        .input-group-btn
-          button.btn.btn-secondary.dropdown-toggle data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' type='button'
-            | http://
-          .dropdown-menu
-            a.dropdown-item#protocolDropdownToggle href="#"
-              | https://
-            coffee:
-              window.protocolDropdownToggle = new window.ProtocolDropdownToggle()
-        input.form-control type='text' placeholder='awesome-service.example.com:1234/api/v1'
-        span.input-group-btn
-          button.btn.btn-primary type='button'
-            = fa_icon('search')
-            span.hidden-sm-down
-              | &nbsp;
-              = t('search')
+      form action="#{new_service_path}" method="get"
+        .input-group
+          .input-group-btn
+            button.btn.btn-secondary.dropdown-toggle data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' type='button'
+              | http://
+            .dropdown-menu
+              a.dropdown-item#protocolDropdownToggle href="#"
+                | https://
+              coffee:
+                window.protocolDropdownToggle = new window.ProtocolDropdownToggle()
+          input type='hidden' name='protocol' value='http://'
+          input.form-control name='uri' type='text' placeholder='awesome-service.example.com:1234/api/v1'
+          span.input-group-btn
+            button.btn.btn-primary type='submit'
+              = fa_icon('search')
+              span.hidden-sm-down
+                | &nbsp;
+                = t('search')
   .row.row-eq-height
     - @roles.each do |role|
       .col-xs-12.col-lg-4
         .card
           h3.card-header
             = t("enums.services.roles.#{role}")
-            - if @services[role].any?
-              a class="pull-xs-right" href="#{role_service_path(role)}"
-                = fa_icon('asterisk')
+          - if @services[role].any?
+            a.btn.btn-sm.btn-secondary href="#{role_service_path(role)}"
+              = t('details')
           - if @services[role].any?
             ul.list-group.list-group-flash
               - @services[role].each do |service|
