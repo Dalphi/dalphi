@@ -9,17 +9,15 @@ Swagger::Docs::Config.register_apis({
     # if you want to delete all .json files at each generation
     :clean_directory => false,
     # Ability to setup base controller for each api version. Api::V1::SomeController for example.
-    #:parent_controller => Api::V1::BaseController,
+    :parent_controller => API::V1::BaseController,
     # add custom attributes to api-docs
     :attributes => {
       :info => {
-      'title' => 'Swagger Sample App',
-      'description' => 'This is a sample description.',
-      'termsOfServiceUrl' => 'http://helloreverb.com/terms/',
-      'contact' => 'apiteam@wordnik.com',
-      'license' => 'Apache 2.0',
-      'licenseUrl' => 'http://www.apache.org/licenses/LICENSE-2.0.html'
-    }
+        'title' => 'Dalphi',
+        'description' => 'Dalphi - Active Learning Platform for Human Interaction',
+        'license' => 'Apache 2.0',
+        'licenseUrl' => 'http://www.apache.org/licenses/LICENSE-2.0.html'
+      }
     }
   }
 })
