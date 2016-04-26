@@ -202,7 +202,7 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     normalize-rails (4.1.1)
     orm_adapter (0.5.0)
-    paperclip (5.0.0.beta1)
+    paperclip (5.0.0.beta2)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
       cocaine (~> 0.5.5)
@@ -418,7 +418,7 @@ DEPENDENCIES
   modernizr_rails
   mysql2
   normalize-rails
-  paperclip (= 5.0.0.beta1)
+  paperclip (= 5.0.0.beta2)
   puma
   rack-mini-profiler
   rails (= 5.0.0.beta3)
