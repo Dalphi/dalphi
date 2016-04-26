@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :service_active_learning, class: Service do
     role 0
     description 'Harbert algorithm for optimal results'
-    capability 0
+    problem_id 0
     url 'http://localhost:3000'
     title 'Active Learning component'
     version 'v2.0.0-rc1'

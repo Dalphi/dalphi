@@ -80,25 +80,25 @@ RSpec.describe Service, type: :model do
     end
   end
 
-  describe 'capability' do
+  describe 'problem_id' do
     it 'may not be nil' do
       pending 'TODO'
-      @al_service.capability = nil
+      @al_service.problem_id = nil
       expect(@al_service).to be_invalid
     end
 
     it 'may not be empty string' do
       pending 'TODO'
-      @al_service.capability = ''
+      @al_service.problem_id = ''
       expect(@al_service).to be_invalid
     end
 
     it 'can be active_learning as integer 0' do
-      capability_is_valid @al_service, 0, 0
+      problem_id_is_valid @al_service, 0, 0
     end
 
     it 'can be string active_learning' do
-      capability_is_valid @al_service, 'ner', 0
+      problem_id_is_valid @al_service, 'ner', 0
     end
   end
 
