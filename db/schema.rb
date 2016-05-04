@@ -25,9 +25,8 @@ ActiveRecord::Schema.define(version: 20160413091701) do
     t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "projects", force: :cascade do |t|
     t.string   "title"
@@ -35,9 +34,8 @@ ActiveRecord::Schema.define(version: 20160413091701) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "user_id"
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
-
-  add_index "projects", ["user_id"], name: "index_projects_on_user_id"
 
   create_table "raw_data", force: :cascade do |t|
     t.string   "shape"
@@ -48,9 +46,8 @@ ActiveRecord::Schema.define(version: 20160413091701) do
     t.integer  "data_file_size"
     t.datetime "data_updated_at"
     t.integer  "project_id"
+    t.index ["project_id"], name: "index_raw_data_on_project_id"
   end
-
-  add_index "raw_data", ["project_id"], name: "index_raw_data_on_project_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -65,9 +62,8 @@ ActiveRecord::Schema.define(version: 20160413091701) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
