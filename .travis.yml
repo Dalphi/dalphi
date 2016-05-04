@@ -2,7 +2,7 @@ env:
   - RAILS_ENV=test
 language: ruby
 rvm:
-  - 2.3.0
+  - 2.3.1
 script: ./bin/ci
 addons:
   code_climate:
