@@ -1,0 +1,6 @@
+en:
+  services:
+    error-searching: An error occured while searching for this service
+    blank-slate:
+      title: 'No services available yet'
+      text: 'To add a service use the searchbar above.'

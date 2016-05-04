@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+	"title":	"Test Machine Learning Service",
+	"version":	"1.0",
+	"description":	"A machine learning dummy service that just implements the Who Are You API",
+	"role":		"machine_learning",
+	"problem_id":	"ner",
+	"url":		"http://localhost:3003"
+}

@@ -1,0 +1,40 @@
+.container.services
+  .row.service-search
+    .col-xs-12
+      form action="#{new_service_path}" method="get"
+        .input-group
+          .input-group-btn
+            button.btn.btn-secondary.dropdown-toggle data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' type='button'
+              | http://
+            .dropdown-menu
+              a.dropdown-item#protocolDropdownToggle href="#"
+                | https://
+              coffee:
+                window.protocolDropdownToggle = new window.ProtocolDropdownToggle()
+          input type='hidden' name='protocol' value='http://'
+          input.form-control name='uri' type='text' placeholder='awesome-service.example.com:1234/api/v1'
+          span.input-group-btn
+            button.btn.btn-primary type='submit'
+              = fa_icon('search')
+              span.hidden-sm-down
+                | &nbsp;
+                = t('search')
+  .row.row-eq-height
+    - @roles.each do |role|
+      .col-xs-12.col-lg-4
+        .card
+          h3.card-header
+            = t("enums.services.roles.#{role}")
+          - if @services[role].any?
+            a.btn.btn-sm.btn-secondary href="#{role_service_path(role)}"
+              = t('details')
+          - if @services[role].any?
+            ul.list-group.list-group-flash
+              - @services[role].each do |service|
+                = render 'services/shared/service', service: service
+          - else
+            .card-block
+              h4.card-titleo
+                = t('services.blank-slate.title')
+              p.card-text
+                = t('services.blank-slate.text')

@@ -1,5 +1,6 @@
 ---
 en:
+  details: Details
   back: Back
   delete-confirm: Are you sure?
   edit: Edit
@@ -11,8 +12,10 @@ en:
     a paradisematic country, in which roasted parts of sentences fly into your mouth.
     Even the all-powerful Pointing has no control about the blind texts it is an
   save: Save
+  delete: Delete
   flashes:
     titles:
       alert: Attention
       error: Error
       notice: OK
+  search: Search
