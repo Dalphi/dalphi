@@ -8,9 +8,9 @@ Rails.application.routes.draw do
     resources :raw_data, except: [:show]
   end
 
-  put '/services/:id', to: 'services#show', constraints: { id: /[0-9]+/ }, as: 'service'
-  patch '/services/:id', to: 'services#show', constraints: { id: /[0-9]+/ }
-  delete '/services/:id', to: 'services#show', constraints: { id: /[0-9]+/ }
+  put '/services/:id', to: 'services#update', constraints: { id: /[0-9]+/ }, as: 'service'
+  patch '/services/:id', to: 'services#update', constraints: { id: /[0-9]+/ }
+  delete '/services/:id', to: 'services#destroy', constraints: { id: /[0-9]+/ }
 
   get '/services/:id/edit', to: 'services#edit', constraints: { id: /[0-9]+/ }, as: 'edit_service'
 

@@ -198,3 +198,7 @@ input {
     flex-direction: column;
   }
 }
+
+[readonly='readonly'] {
+  pointer-events: none;
+}
