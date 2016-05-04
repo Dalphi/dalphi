@@ -19,4 +19,4 @@ en:
         service:
           attributes:
             url:
-              invalid_url: this URL is invalid
+              regex_mismatch: the given URL doesn\'t start with the HTTP protocol or contains whitespace
