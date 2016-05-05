@@ -14,7 +14,6 @@ class Service < ApplicationRecord
     }
 
   validate do |service|
-    false
-    # check_response(service.url)
+    HttpResponseValidator.validate(service)
   end
 end

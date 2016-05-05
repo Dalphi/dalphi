@@ -19,4 +19,5 @@ en:
         service:
           attributes:
             url:
-              regex_mismatch: the given URL doesn\'t start with the HTTP protocol or contains whitespace
+              regex_mismatch: "the given URL doesn\'t start with the HTTP protocol or contains whitespace"
+              badHttpResponse: "the given URL doesn\'t respond"
