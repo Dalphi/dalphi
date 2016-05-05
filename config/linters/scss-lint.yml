@@ -8,3 +8,7 @@ linters:
     enabled: false
   VendorPrefixes:
     enabled: false
+  NestingDepth:
+    max_depth: 5
+  SelectorDepth:
+    max_depth: 5

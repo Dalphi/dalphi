@@ -1,10 +1,10 @@
 class Service < ApplicationRecord
   include UrlResponseChecker
 
-  enum roll: [ :active_learning, :bootstrap, :machine_learning ]
-  enum capability: [ :ner ]
+  enum role: [ :active_learning, :bootstrap, :machine_learning ]
+  enum problem_id: [ :ner ]
 
-  validates :roll, :description, :capability, :url, :title, :version,
+  validates :role, :description, :problem_id, :url, :title, :version,
     presence: true
 
   validates :url,
@@ -15,5 +15,20 @@ class Service < ApplicationRecord
 
   validate do |service|
     HttpResponseValidator.validate(service)
+  end
+
+  def self.new_from_url(url)
+    Service.new(params_from_url(url))
+  rescue
+    false
+  end
+
+  def self.params_from_url(url)
+    url = URI.parse(url)
+    req = Net::HTTP::Get.new(url.to_s)
+    res = Net::HTTP.start(url.host, url.port) do |http|
+      http.request(req)
+    end
+    JSON.parse(res.body.to_s)
   end
 end

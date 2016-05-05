@@ -19,7 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe ServicesController, type: :controller do
-  pending "add some examples to (or delete) #{__FILE__}"
+  pending "add some examples to #{__FILE__}"
 
   # # This should return the minimal set of attributes required to create a valid
   # # Service. As you add validations to Service, be sure to

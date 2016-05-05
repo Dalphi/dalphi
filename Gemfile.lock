@@ -125,6 +125,7 @@ GEM
       json
       thread
       thread_safe
+    enum_help (0.0.15)
     equalizer (0.0.11)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -402,6 +403,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise!
   dotenv-rails
+  enum_help
   factory_girl_rails
   fastclick-rails
   font-awesome-rails

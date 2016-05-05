@@ -1,13 +1,21 @@
-= simple_form_for(@service) do |f|
-  = f.error_notification
-
-  .form-inputs
-    = f.input :roll
-    = f.input :description
-    = f.input :capability
-    = f.input :url
-    = f.input :title
-    = f.input :version
-
-  .form-actions
-    = f.button :submit
+= simple_form_for(service) do |f|
+  .row
+    .form-inputs
+      - readonly = disabled = false
+      - readonly = disabled = true if params[:action] == 'new'
+      .col-xs-12.col-sm-10
+        = f.input :title, readonly: readonly, disabled: disabled
+      .col-xs-12.col-sm-2
+        = f.input :version, readonly: readonly, disabled: disabled
+      .col-xs-12
+        = f.input :description, readonly: readonly, disabled: disabled
+      .col-xs-12.col-sm-6
+        = f.input :role, readonly: true, disabled: true
+      .col-xs-12.col-sm-6
+        = f.input :problem_id, readonly: true, disabled: true
+      .col-xs-12
+        = f.input :url, readonly: readonly, disabled: disabled
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button', href: services_path(service), label: t('back'), icon: 'chevron-left'
+      = render 'shared/button', type: 'submit', label: t('save'), icon: 'check'

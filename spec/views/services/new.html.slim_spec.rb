@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "services/new", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  pending "add some examples to #{__FILE__}"
   # before(:each) do
   #   assign(:service, Service.new(
   #     :roll => 1,
