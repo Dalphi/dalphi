@@ -126,16 +126,6 @@ RSpec.describe Service, type: :model do
      expect(@al_service).to be_invalid
    end
 
-   it 'should reject an URL with an invalid TLD' do
-     @al_service.url = 'http://www.3antworten'
-     expect(@al_service).to be_invalid
-   end
-
-   it 'should reject an URL with an invalid TLD' do
-     @al_service.url = 'http://www.3antworten/'
-     expect(@al_service).to be_invalid
-   end
-
    it 'can be a valid URL' do
      @al_service.url = 'http://www.3antworten.de'
      expect(@al_service).to be_valid
@@ -152,12 +142,12 @@ RSpec.describe Service, type: :model do
     end
 
     it 'can be a valid url' do
-      @al_service.url = 'http://www.3antworten.de/services'
+      @al_service.url = 'http://petstore.swagger.io/'
       expect(@al_service).to be_valid
     end
 
     it 'can be a valid url' do
-      @al_service.url = 'http://www.3antworten.de/services/ner/algorithm'
+      @al_service.url = 'http://petstore.swagger.io/v2/swagger.json'
       expect(@al_service).to be_valid
     end
   end
