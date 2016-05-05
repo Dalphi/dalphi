@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: 'json' } do
+    get '/' => redirect('/api/v1')
+
     namespace :v1 do
       get '/' => 'base#who_are_you'
     end
