@@ -3,7 +3,7 @@ env:
 language: ruby
 rvm:
   - 2.3.0
-before_script: /bin/helpers/service-dummies
+before_script: ./bin/helpers/service-dummies
 script: ./bin/ci
 addons:
   code_climate:
