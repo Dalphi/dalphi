@@ -8,23 +8,12 @@
       "path": "/api/v1.json",
       "operations": [
         {
-          "summary": "Fetches all User items",
-          "notes": "This lists all the active users",
+          "summary": "Identifies the service that is operating at this URL",
           "responseMessages": [
             {
-              "code": 401,
-              "responseModel": null,
-              "message": "Unauthorized"
-            },
-            {
-              "code": 406,
-              "responseModel": null,
-              "message": "The request you made is not acceptable"
-            },
-            {
-              "code": 500,
-              "responseModel": null,
-              "message": "Requested Range Not Satisfiable"
+              "code": 200,
+              "responseModel": "Service",
+              "message": "Success"
             }
           ],
           "nickname": "API::V1::WhoAreYou#who_are_you",
@@ -33,5 +22,59 @@
       ]
     }
   ],
-  "authorizations": null
+  "authorizations": null,
+  "models": {
+    "Tag": {
+      "id": "Tag",
+      "required": [
+        "role",
+        "title",
+        "description",
+        "problem_id",
+        "url",
+        "version"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "Role",
+          "allowableValues": {
+            "valueType": "LIST",
+            "values": [
+              "active_learning",
+              "bootstrap",
+              "machine_learning"
+            ]
+          }
+        },
+        "title": {
+          "type": "string",
+          "description": "Title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description"
+        },
+        "problemId": {
+          "type": "string",
+          "description": "Proplem identifier",
+          "allowableValues": {
+            "valueType": "LIST",
+            "values": [
+              "ner"
+            ]
+          }
+        },
+        "url": {
+          "type": "string",
+          "description": "URL"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version"
+        }
+      },
+      "description": "A Service object."
+    }
+  }
 }
