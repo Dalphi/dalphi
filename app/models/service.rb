@@ -14,7 +14,9 @@ class Service < ApplicationRecord
     }
 
   validate do |service|
-    HttpResponseValidator.validate(service)
+    if service.url
+      HttpResponseValidator.validate(service)
+    end
   end
 
   def self.new_from_url(url)

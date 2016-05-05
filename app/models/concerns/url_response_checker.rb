@@ -6,12 +6,10 @@ module UrlResponseChecker
   extend ActiveSupport::Concern
 
   def self.check_response(url)
-    if !url.nil? && !url.empty?
-      case Net::HTTP.get_response(URI.parse(url))
-        when Net::HTTPSuccess then true
-        when Net::HTTPRedirection then true
-        else false
-      end
+    case Net::HTTP.get_response(URI.parse(url))
+      when Net::HTTPSuccess then true
+      when Net::HTTPRedirection then true
+      else false
     end
   rescue
     false
