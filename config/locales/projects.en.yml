@@ -4,6 +4,7 @@ en:
     blank-slate:
       title: 'No projects added yet'
       text: 'To start with a new project use the button below.'
+      no-description: No description provided.
     action:
       create:
         success: Project was successfully created.

@@ -1,10 +1,15 @@
-p#notice = notice
-p
-  strong Title:
-  = @project.title
-p
-  strong Description:
-  = @project.description
-= link_to 'Edit', edit_project_path(@project)
-'|
-= link_to 'Back', projects_path
+.container
+  .row
+    .col-xs-12
+      h2
+        = @project.title
+      p
+        - if !@project.description.empty?
+          = @project.description
+        - else
+          i
+            = t('projects.blank-slate.no-description')
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button', label: t('back'), icon: 'chevron-left', href: projects_path
+      = render 'shared/button', label: t('edit'), icon: 'edit', href: edit_project_path(@project)
