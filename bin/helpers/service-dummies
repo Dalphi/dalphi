@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # call this script from the Rails root in order to have the correct fixture paths
-while true; do cat ./spec/fixtures/service_headers/active_learning | nc -l 3101; done &
-while true; do cat ./spec/fixtures/service_headers/bootstrap | nc -l 3102; done &
-while true; do cat ./spec/fixtures/service_headers/machine_learning | nc -l 3103; done &
+# while true; do cat ./spec/fixtures/service_headers/active_learning | nc -l 3101; done &
+# while true; do cat ./spec/fixtures/service_headers/bootstrap | nc -l 3102; done &
+# while true; do cat ./spec/fixtures/service_headers/machine_learning | nc -l 3103; done &
