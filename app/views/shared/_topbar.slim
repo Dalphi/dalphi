@@ -18,10 +18,10 @@ nav.topbar.navbar
   - if user_signed_in?
     ul.nav.navbar-nav.icon-bar
       li.nav-item
-        a.nav-link href="#{edit_user_registration_path}" data-toggle='tooltip' data-placement='bottom' title="#{t('edit-profile')}"
+        a.nav-link href="#{edit_user_registration_path}" data-toggle='tooltip' data-placement='bottom' title="#{t('tooltip.links.user.edit-profile')}"
           = fa_icon('user')
       li.nav-item
-        a.nav-link.sign-out href="#{destroy_user_session_path}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{t('sign-out')}"
+        a.nav-link.sign-out href="#{destroy_user_session_path}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{t('tooltip.links.user.sign-out')}"
           = fa_icon('sign-out')
 
     coffee:

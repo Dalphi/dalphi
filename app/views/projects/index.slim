@@ -10,12 +10,27 @@
               th
           tbody
             - @projects.each do |project|
-              tr data-href="#{project_raw_data_path(project)}"
+              tr data-href="#{project_path(project)}"
                 td = project.title
                 td = project.description
                 td.controls
-                  = render 'shared/button', type: 'link', href: edit_project_path(project), icon: 'edit'
-                  = render 'shared/button', type: 'link', href: project_path(project), icon: 'times', method: 'delete', confirm: t('delete-confirm')
+                  = render 'shared/button',
+                    type: 'link',
+                    tooltip: 'project.edit-files',
+                    href: project_raw_data_path(project),
+                    icon: 'files-o'
+                  = render 'shared/button',
+                    type: 'link',
+                    tooltip: 'project.edit-project',
+                    href: edit_project_path(project),
+                    icon: 'edit'
+                  = render 'shared/button',
+                    type: 'link',
+                    tooltip: 'project.delete-project',
+                    href: project_path(project),
+                    icon: 'times',
+                    method: 'delete',
+                    confirm: t('delete-confirm')
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()
       - else
