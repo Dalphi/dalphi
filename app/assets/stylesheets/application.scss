@@ -17,7 +17,7 @@
 
 // general definitions
 @import 'variables';
-@import 'bootstrap_overwrites';
+@import 'bootstrap-overwrites';
 @import 'fonts';
 
 // gems & dependencies
@@ -28,6 +28,8 @@
 @import 'content-container';
 @import 'topbar';
 @import 'sidebar';
+@import 'services';
+
 
 html,
 body {
@@ -185,4 +187,18 @@ input {
 
 [alt='Gravatar'] {
   border-radius: 8rem;
+}
+
+.row-eq-height {
+  display: flex;
+  flex-wrap: wrap;
+
+  > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+[readonly='readonly'] {
+  pointer-events: none;
 }

@@ -1,0 +1,9 @@
+en:
+  enums:
+    service:
+      problem_id:
+        ner: NER
+      role:
+        active_learning: Active Learning
+        bootstrap: Bootstrap
+        machine_learning: Machine Learning

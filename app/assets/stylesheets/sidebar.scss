@@ -1,7 +1,7 @@
 .sidebar {
   background-color: $color-3;
   bottom: 0;
-  box-shadow: 0 .3125rem $navigation-box-shaddow;
+  box-shadow: 0 .3125rem $navigation-box-shadow;
   color: $color-1;
   height: 100%;
   left: -100%;
@@ -68,5 +68,40 @@
     font-size: $small-font-size;
     position: absolute;
     text-align: center;
+  }
+
+  .nav {
+    margin: 0 0 0 -.625rem;
+    width: calc(100% + 1.25rem);
+
+    li {
+      margin: 0;
+      text-align: left;
+      text-transform: capitalize;
+
+      a {
+        color: $color-1;
+        display: inline-block;
+        padding: .5rem 0 .5rem .75rem;
+        width: 100%;
+
+        &:hover {
+          color: $color-1;
+        }
+      }
+
+      &.active {
+        background-color: $color-3-2;
+        border-left: .25rem solid $color-4;
+
+        a {
+          padding: .5rem 0 .5rem .5rem;
+        }
+      }
+
+      &:hover {
+        background-color: $color-3-1;
+      }
+    }
   }
 }

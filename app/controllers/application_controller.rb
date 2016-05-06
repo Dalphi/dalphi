@@ -7,9 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :set_copyright_year
   before_action :bake_breadcrumbs
 
-  def styleguide
-  end
-
   private
 
   def set_locale
