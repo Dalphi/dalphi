@@ -13,12 +13,21 @@ Dalphi - Active Learning Platform for Human Interaction
 
 ## Getting started
 
-Dalphi requires Ruby 2.3.0 to work properly.
+### Kickstart with Docker
+
+```
+docker build -t dalphi .
+docker run -it -p 3000:3000 dalphi
+```
+
+### Starting for development
+
+Dalphi requires Ruby 2.3.1 to work properly.
 With `rvm` it can be installed by running the following.
 
 ```bash
-rvm install ruby-2.3.0
-rvm use ruby-2.3.0
+rvm install ruby-2.3.1
+rvm use ruby-2.3.1
 ```
 
 Get Dalphi by cloning the official repository.
