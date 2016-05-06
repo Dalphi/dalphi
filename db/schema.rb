@@ -49,8 +49,6 @@ ActiveRecord::Schema.define(version: 20160426150224) do
     t.index ["project_id"], name: "index_raw_data_on_project_id"
   end
 
-  add_index "raw_data", ["project_id"], name: "index_raw_data_on_project_id"
-
   create_table "services", force: :cascade do |t|
     t.integer  "role"
     t.string   "description"
