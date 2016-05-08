@@ -17,3 +17,11 @@ en:
       raw-datum:
         data-file-name: file name
         shape: shape
+    errors:
+      models:
+        service:
+          attributes:
+            url:
+              regex_mismatch: "the given URL doesn\'t start with the HTTP protocol or contains whitespace"
+              isNil: the given URL must not be nil
+              badHttpResponse: "the given URL doesn\'t respond"

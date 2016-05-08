@@ -19,13 +19,11 @@ RSpec.describe Service, type: :model do
 
   describe 'role' do
     it 'may not be nil' do
-      pending 'TODO'
       @al_service.role = nil
       expect(@al_service).to be_invalid
     end
 
     it 'may not be empty string' do
-      pending 'TODO'
       @al_service.role = ''
       expect(@al_service).to be_invalid
     end
@@ -56,25 +54,22 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'description' do
-    it 'should not be nil' do
-      pending 'TODO'
+    it 'can be nil' do
       @al_service.description = nil
-      expect(@al_service).to be_invalid
+      expect(@al_service).to be_valid
     end
 
-    it 'should not be empty string' do
-      pending 'TODO'
+    it 'can be an empty string' do
       @al_service.description = ''
-      expect(@al_service).to be_invalid
+      expect(@al_service).to be_valid
     end
 
-    it 'should not consist only of whitespace' do
-      pending 'TODO'
+    it 'can consist only of whitespace' do
       @al_service.description = '  '
-      expect(@al_service).to be_invalid
+      expect(@al_service).to be_valid
     end
 
-    it 'should be valid' do
+    it 'can be a valid description' do
       @al_service.description = 'A valid description'
       expect(@al_service).to be_valid
     end
@@ -82,13 +77,11 @@ RSpec.describe Service, type: :model do
 
   describe 'problem_id' do
     it 'may not be nil' do
-      pending 'TODO'
       @al_service.problem_id = nil
       expect(@al_service).to be_invalid
     end
 
     it 'may not be empty string' do
-      pending 'TODO'
       @al_service.problem_id = ''
       expect(@al_service).to be_invalid
     end
@@ -104,25 +97,21 @@ RSpec.describe Service, type: :model do
 
   describe 'url' do
     it 'may not be nil' do
-      pending 'TODO'
       @al_service.url = nil
       expect(@al_service).to be_invalid
     end
 
     it 'may not be empty' do
-      pending 'TODO'
       @al_service.url = ''
       expect(@al_service).to be_invalid
     end
 
-    it 'may not be empty' do
-      pending 'TODO'
+    it 'may not only consist of protocol identifier' do
       @al_service.url = 'http://'
       expect(@al_service).to be_invalid
     end
 
-    it 'may not be empty' do
-      pending 'TODO'
+    it 'may not only consist of protocol identifier' do
       @al_service.url = 'https://'
       expect(@al_service).to be_invalid
     end
@@ -130,24 +119,6 @@ RSpec.describe Service, type: :model do
     it 'should be at least 4 characters long' do
       @al_service.url = 'http://g.co'
       expect(@al_service).to be_valid
-    end
-
-    it 'should reject an URL without a TLD' do
-      pending 'TODO'
-      @al_service.url = 'http://3antwortende'
-      expect(@al_service).to be_invalid
-    end
-
-    it 'should reject an URL with an invalid TLD' do
-      pending 'TODO'
-      @al_service.url = 'http://www.3antworten'
-      expect(@al_service).to be_invalid
-    end
-
-    it 'should reject an URL with an invalid TLD' do
-      pending 'TODO'
-      @al_service.url = 'http://www.3antworten/'
-      expect(@al_service).to be_invalid
     end
 
     it 'can be a valid URL' do
@@ -166,31 +137,47 @@ RSpec.describe Service, type: :model do
     end
 
     it 'can be a valid url' do
-      @al_service.url = 'http://www.3antworten.de/services'
+      @al_service.url = 'http://petstore.swagger.io/'
       expect(@al_service).to be_valid
     end
 
     it 'can be a valid url' do
-      @al_service.url = 'http://www.3antworten.de/services/ner/algorithm'
+      @al_service.url = 'http://petstore.swagger.io/v2/swagger.json'
       expect(@al_service).to be_valid
     end
+
+    # the following are locally possible but unreliable with Travis CI
+    # it 'can be a valid local active_learning service dummy' do
+    #   spawn_service_dummy('active_learning', 3101)
+    #   @al_service.url = 'http://localhost:3101'
+    #   expect(@al_service).to be_valid
+    # end
+    #
+    # it 'can be a valid local bootstrap service dummy' do
+    #   spawn_service_dummy('bootstrap', 3102)
+    #   @al_service.url = 'http://localhost:3102'
+    #   expect(@al_service).to be_valid
+    # end
+    #
+    # it 'can be a valid local machine_learning service dummy' do
+    #   spawn_service_dummy('machine_learning', 3103)
+    #   @al_service.url = 'http://localhost:3103'
+    #   expect(@al_service).to be_valid
+    # end
   end
 
   describe 'title' do
     it 'should not be nil' do
-      pending 'TODO'
       @al_service.title = nil
       expect(@al_service).to be_invalid
     end
 
     it 'should not be empty string' do
-      pending 'TODO'
       @al_service.title = ''
       expect(@al_service).to be_invalid
     end
 
     it 'should not consist only of whitespace' do
-      pending 'TODO'
       @al_service.title = '  '
       expect(@al_service).to be_invalid
     end
@@ -203,19 +190,16 @@ RSpec.describe Service, type: :model do
 
   describe 'version' do
     it 'should not be nil' do
-      pending 'TODO'
       @al_service.version = nil
       expect(@al_service).to be_invalid
     end
 
     it 'should not be empty string' do
-      pending 'TODO'
       @al_service.version = ''
       expect(@al_service).to be_invalid
     end
 
     it 'should not consist only of whitespace' do
-      pending 'TODO'
       @al_service.version = '  '
       expect(@al_service).to be_invalid
     end

@@ -22,4 +22,29 @@ module ServiceHelper
 
     expect(model_instance.ner?).to match(match_map[0])
   end
+
+  # start static service emulations for testing against real URLs
+  def port_is_open?(port)
+    begin
+      Timeout::timeout(1) do
+        begin
+          s = TCPSocket.new('localhost', port)
+          s.close
+          return true
+        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+          return false
+        end
+      end
+    rescue Timeout::Error
+    end
+    return false
+  end
+
+  def spawn_service_dummy(name, port)
+    if !port_is_open?(port)
+      fixture_path = 'spec/fixtures/service_headers'
+      command = 'nc -l'
+      spawn "while true; do cat #{fixture_path}/#{name} | #{command} #{port}; done"
+    end
+  end
 end
