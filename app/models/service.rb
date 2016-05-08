@@ -4,7 +4,7 @@ class Service < ApplicationRecord
   enum role: [ :active_learning, :bootstrap, :machine_learning ]
   enum problem_id: [ :ner ]
 
-  validates :role, :description, :problem_id, :url, :title, :version,
+  validates :role, :problem_id, :url, :title, :version,
     presence: true
 
   validates :url,

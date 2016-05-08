@@ -54,22 +54,22 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'description' do
-    it 'should not be nil' do
+    it 'can be nil' do
       @al_service.description = nil
-      expect(@al_service).to be_invalid
+      expect(@al_service).to be_valid
     end
 
-    it 'should not be empty string' do
+    it 'can be an empty string' do
       @al_service.description = ''
-      expect(@al_service).to be_invalid
+      expect(@al_service).to be_valid
     end
 
-    it 'should not consist only of whitespace' do
+    it 'can consist only of whitespace' do
       @al_service.description = '  '
-      expect(@al_service).to be_invalid
+      expect(@al_service).to be_valid
     end
 
-    it 'should be valid' do
+    it 'can be a valid description' do
       @al_service.description = 'A valid description'
       expect(@al_service).to be_valid
     end
@@ -106,12 +106,12 @@ RSpec.describe Service, type: :model do
      expect(@al_service).to be_invalid
    end
 
-   it 'may not be empty' do
+   it 'may not only consist of protocol identifier' do
      @al_service.url = 'http://'
      expect(@al_service).to be_invalid
    end
 
-   it 'may not be empty' do
+   it 'may not only consist of protocol identifier' do
      @al_service.url = 'https://'
      expect(@al_service).to be_invalid
    end
@@ -119,11 +119,6 @@ RSpec.describe Service, type: :model do
    it 'should be at least 4 characters long' do
      @al_service.url = 'http://g.co'
      expect(@al_service).to be_valid
-   end
-
-   it 'should reject an URL without a TLD' do
-     @al_service.url = 'http://3antwortende'
-     expect(@al_service).to be_invalid
    end
 
    it 'can be a valid URL' do
