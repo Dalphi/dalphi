@@ -1,4 +1,4 @@
-class ProtocolDropdownToggle
+class ProtocolDropdown
   constructor: ->
     $('#protocolDropdownToggle').on 'click', ->
       $this = $(this)
@@ -10,4 +10,4 @@ class ProtocolDropdownToggle
       $toggleButton.text(newContent)
       $protocol.val(newContent)
 
-window.ProtocolDropdownToggle = ProtocolDropdownToggle
+window.ProtocolDropdown = ProtocolDropdown
