@@ -9,7 +9,7 @@
   position: fixed;
   top: 0;
   transition: left $default-transition-duration;
-  width: 100%;
+  width: $sidebar-xs-width;
   z-index: 10;
 
   @include media-breakpoint-up(sm) {

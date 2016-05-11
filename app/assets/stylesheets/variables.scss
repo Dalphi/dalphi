@@ -13,7 +13,7 @@ $color-5: #b6cd82; // pine glade; color-1 / color-4 hover
 $color-6: rgba(0, 0, 0, .26); // transparent black; shadow color
 
 // global transparent colors
-$dark-curtain-color: rgba(0, 0, 0, .35);
+$dark-curtain-color: rgba(0, 0, 0, .5);
 
 // global size definitions
 $container-padding: .625rem;
@@ -39,3 +39,5 @@ $default-transition-duration: .5s;
 
 // global shadow definitions
 $navigation-box-shadow: .3125rem $color-6;
+
+$sidebar-xs-width: 80%;
