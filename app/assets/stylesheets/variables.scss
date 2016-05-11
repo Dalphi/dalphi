@@ -37,5 +37,37 @@ $topbar-height: 3.375rem;
 // durations
 $default-transition-duration: .5s;
 
-// global shadow definitions
+// global definitions
 $navigation-box-shadow: .3125rem $color-6;
+$btn-row-margin: .25rem;
+$td-controls-width: 7.813rem;
+$alert-button-top: .8rem;
+$input-boolean-margin-right: .25rem;
+$gravatar-border-radius: 8rem;
+
+// services
+$services-service-search-margin-bottom: 1rem;
+$services-btn-sm-right: .5625rem;
+$services-btn-sm-top: .5625rem;
+$services-list-group-margin: -.5625rem -.0625rem -.0625rem;
+
+// sidebar
+$sidebar-box-shadow: 0 .3125rem $navigation-box-shadow;
+$sidebar-ul-li-margin: 0 .1875rem;
+$sidebar-header-toggle-sidebar-font-size: 1.3rem;
+$sidebar-header-toggle-sidebar-margin-top: -.4rem;
+$sidebar-header-h1-margin-top: .5rem;
+$sidebar-nav-margin: 0 0 0 -.625rem;
+$sidebar-nav-width: calc(100% + 1.25rem);
+$sidebar-nav-li-a-padding: .5rem 0 .5rem .75rem;
+$sidebar-nav-li-active-border-left: .25rem solid $color-4;
+$sidebar-nav-li-active-a-padding: .5rem 0 .5rem .5rem;
+
+// topbar
+$topbar-box-shadow: 0 .125rem $navigation-box-shadow;
+$topbar-z-index: 10;
+$topbar-toggle-sidebar-padding: .1875rem 0 0;
+$topbar-icon-bar-i-font-size: 1.4rem;
+$topbar-icon-bar-nav-link-padding;.5rem 0;
+$breadcrumb-margin: 0 0 0 1rem;
+$breadcrumb-padding: .4rem 0 0;
