@@ -4,3 +4,7 @@ en:
     blank-slate:
       title: 'No services available yet'
       text: 'To add a service use the searchbar above.'
+    names:
+      active-learning: Active Learning
+      bootstrap: Bootstrap
+      machine-learning: Machine Learning

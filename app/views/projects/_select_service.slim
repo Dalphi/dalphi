@@ -1,0 +1,8 @@
+.card-block
+  .card-text
+    = simple_form_for(project) do |f|
+      .form-inputs
+        = f.input service_name.to_sym,
+          collection: available_services,
+          label_method: -> (service) { service.title },
+          input_html: { class: 'c-select' }

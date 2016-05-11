@@ -201,3 +201,7 @@ input {
 [readonly='readonly'] {
   pointer-events: none;
 }
+
+.card-block:not(:last-child) {
+  padding-bottom: 0;
+}

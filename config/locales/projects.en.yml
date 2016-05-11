@@ -12,3 +12,9 @@ en:
         success: Project was successfully updated.
       destroy:
         success: Project was successfully destroyed.
+    settings:
+      services:
+        headline: Services to use
+        active-learning: Active Learning
+        bootstrap: Bootstrap
+        machine-learning: Machine Learning

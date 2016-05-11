@@ -9,6 +9,24 @@
         - else
           i
             = t('projects.blank-slate.no-description')
+  .row
+    .col-xs-12.col-sm-6
+      .card
+        h3.card-header
+          = t('projects.settings.services.headline')
+        = render 'projects/select_service',
+          project: @project,
+          available_services: @available_active_learning_services,
+          service_name: 'active_learning_service'
+        = render 'projects/select_service',
+          project: @project,
+          available_services: @available_bootstrap_services,
+          service_name: 'bootstrap_service'
+        = render 'projects/select_service',
+          project: @project,
+          available_services: @available_machine_learning_services,
+          service_name: 'machine_learning_service'
+
   .row.btn-row
     .col-xs-12
       = render 'shared/button', label: t('back'), icon: 'chevron-left', href: projects_path

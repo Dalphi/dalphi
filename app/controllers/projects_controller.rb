@@ -8,6 +8,9 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    @available_active_learning_services = Service.where(role: :active_learning)
+    @available_bootstrap_services = Service.where(role: :bootstrap)
+    @available_machine_learning_services = Service.where(role: :machine_learning)
   end
 
   # GET /projects/new
