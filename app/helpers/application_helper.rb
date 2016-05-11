@@ -8,6 +8,9 @@ module ApplicationHelper
   end
 
   def bootstrap_title_for(flash_type)
-    I18n.t('flashes.titles.' + flash_type)
+    return fa_icon('info-circle') if flash_type.eql?('notice')
+    return fa_icon('check-circle') if flash_type.eql?('success')
+    return fa_icon('exclamation-circle') if flash_type.eql?('error')
+    return fa_icon('exclamation-circle') if flash_type.eql?('alert')
   end
 end
