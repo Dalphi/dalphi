@@ -3,10 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :services, only: [:index, :create]
-  resources :projects do
-    resources :raw_data, except: [:show]
-  end
+  # API
 
   namespace :api, defaults: { format: 'json' } do
     get '/' => redirect('/api/v1')
@@ -16,6 +13,10 @@ Rails.application.routes.draw do
     end
   end
 
+  # Services
+
+  resources :services, only: [:index, :create]
+
   put '/services/:id', to: 'services#update', constraints: { id: /[0-9]+/ }, as: 'service'
   patch '/services/:id', to: 'services#update', constraints: { id: /[0-9]+/ }
   delete '/services/:id', to: 'services#destroy', constraints: { id: /[0-9]+/ }
@@ -24,6 +25,14 @@ Rails.application.routes.draw do
 
   get '/services/new', to: 'services#new', as: 'new_service'
   get '/services/:role', to: 'services#role_services', constraints: { id: /[a-zA-Z]+.*/ }, as: 'role_service'
+
+  # Projects
+
+  resources :projects do
+    resources :raw_data, except: [:show]
+  end
+
+  patch '/projects/update_services' => 'projects#update_services', as: 'update_project_services'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
