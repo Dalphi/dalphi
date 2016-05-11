@@ -1,4 +1,6 @@
 class Service < ApplicationRecord
+  has_many :projects
+
   enum role: [:active_learning, :bootstrap, :machine_learning]
   enum problem_id: [:ner]
 

@@ -61,20 +61,13 @@ RSpec.describe Project, type: :model do
 
     it 'can be a valid AL service' do
       service = FactoryGirl.create(:service_active_learning)
-      @project.active_learning_service = service.id
+      @project.active_learning_service = service
       expect(@project).to be_valid
     end
 
     it 'can not be an invalid AL service' do
       service = FactoryGirl.create(:service_bootstrap)
-      @project.active_learning_service = service.id
-      expect(@project).to be_invalid
-    end
-
-    it 'can not be a not existing service' do
-      service_id = 1
-      service_id = Service.last.id + 1 if Service.any?
-      @project.active_learning_service = service_id
+      @project.active_learning_service = service
       expect(@project).to be_invalid
     end
   end
@@ -87,20 +80,13 @@ RSpec.describe Project, type: :model do
 
     it 'can be a valid Bootstrap service' do
       service = FactoryGirl.create(:service_bootstrap)
-      @project.bootstrap_service = service.id
+      @project.bootstrap_service = service
       expect(@project).to be_valid
     end
 
     it 'can not be an invalid Bootstrap service' do
       service = FactoryGirl.create(:service_machine_learning)
-      @project.bootstrap_service = service.id
-      expect(@project).to be_invalid
-    end
-
-    it 'can not be a not existing service' do
-      service_id = 1
-      service_id = Service.last.id + 1 if Service.any?
-      @project.bootstrap_service = service_id
+      @project.bootstrap_service = service
       expect(@project).to be_invalid
     end
   end
@@ -113,20 +99,13 @@ RSpec.describe Project, type: :model do
 
     it 'can be a valid machine learning service' do
       service = FactoryGirl.create(:service_machine_learning)
-      @project.machine_learning_service = service.id
+      @project.machine_learning_service = service
       expect(@project).to be_valid
     end
 
     it 'can not be an invalid machine learning service' do
       service = FactoryGirl.create(:service_active_learning)
-      @project.machine_learning_service = service.id
-      expect(@project).to be_invalid
-    end
-
-    it 'can not be a not existing service' do
-      service_id = 1
-      service_id = Service.last.id + 1 if Service.any?
-      @project.machine_learning_service = service_id
+      @project.machine_learning_service = service
       expect(@project).to be_invalid
     end
   end
