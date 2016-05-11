@@ -1,13 +1,13 @@
 .topbar {
   background-color: $color-1;
   border-radius: 0;
-  box-shadow: 0 .125rem $navigation-box-shadow;
+  box-shadow: $topbar-box-shadow;
   color: $color-4;
   height: $topbar-height;
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: $topbar-z-index;
 
   @include media-breakpoint-up(md) {
     padding: $navbar-padding-vertical $navbar-padding-horizontal-md-up $navbar-padding-vertical #{$navbar-padding-horizontal-md-up + $sidebar-width};
@@ -34,7 +34,7 @@
   }
 
   .toggle-sidebar {
-    padding: .1875rem 0 0;
+    padding: $topbar-toggle-sidebar-padding;
     transition: transform $default-transition-duration;
   }
 
@@ -59,11 +59,11 @@
     float: right;
 
     i {
-      font-size: 1.4rem;
+      font-size: $topbar-icon-bar-i-font-size;
     }
 
     .nav-link {
-      padding: .5rem 0;
+      padding: $topbar-icon-bar-nav-link-padding;
     }
   }
 }
@@ -72,8 +72,8 @@
   background-color: inherit;
   border-radius: 0;
   display: inline-block;
-  margin: 0 0 0 1rem;
-  padding: .4rem 0 0;
+  margin: $breadcrumb-margin;
+  padding: $breadcrumb-padding;
 
   @include media-breakpoint-up(md) {
     margin: 0;

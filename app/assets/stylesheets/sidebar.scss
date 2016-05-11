@@ -1,7 +1,7 @@
 .sidebar {
   background-color: $color-3;
   bottom: 0;
-  box-shadow: 0 .3125rem $navigation-box-shadow;
+  box-shadow: $sidebar-box-shadow;
   color: $color-1;
   height: 100%;
   left: -100%;
@@ -39,7 +39,7 @@
     padding: 0;
 
     li {
-      margin: 0 .1875rem;
+      margin: $sidebar-ul-li-margin;
     }
   }
 
@@ -51,15 +51,15 @@
 
     .toggle-sidebar {
       color: $color-1;
-      font-size: 1.3rem;
-      margin-top: -.4rem;
+      font-size: $sidebar-header-toggle-sidebar-font-size;
+      margin-top: $sidebar-header-toggle-sidebar-margin-top;
       position: absolute;
       right: 0;
       top: 0;
     }
 
     h1 {
-      margin-top: .5rem;
+      margin-top: $sidebar-header-h1-margin-top;
     }
   }
 
@@ -71,8 +71,8 @@
   }
 
   .nav {
-    margin: 0 0 0 -.625rem;
-    width: calc(100% + 1.25rem);
+    margin: $sidebar-nav-margin;
+    width: $sidebar-nav-width;
 
     li {
       margin: 0;
@@ -82,7 +82,7 @@
       a {
         color: $color-1;
         display: inline-block;
-        padding: .5rem 0 .5rem .75rem;
+        padding: $sidebar-nav-li-a-padding;
         width: 100%;
 
         &:hover {
@@ -92,10 +92,10 @@
 
       &.active {
         background-color: $color-3-2;
-        border-left: .25rem solid $color-4;
+        border-left: $sidebar-nav-li-active-border-left;
 
         a {
-          padding: .5rem 0 .5rem .5rem;
+          padding: $sidebar-nav-li-active-a-padding;
         }
       }
 
