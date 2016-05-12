@@ -30,7 +30,9 @@ $h6-font-size: .875rem;
 $navbar-padding-horizontal-md-up: 1.563rem;
 $navbar-padding-horizontal: 1rem;
 $navbar-padding-vertical: .5rem;
+$sidebar-full-width-breakpoint: 301px;
 $sidebar-width: 15.63rem;
+$sidebar-xs-width: 80%;
 $small-font-size: .75rem;
 $topbar-height: 3.375rem;
 
@@ -39,5 +41,3 @@ $default-transition-duration: .5s;
 
 // global shadow definitions
 $navigation-box-shadow: .3125rem $color-6;
-
-$sidebar-xs-width: 80%;
