@@ -50,6 +50,14 @@ class ProjectsController < ApplicationController
     redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
   end
 
+  # PATCH /projects/1/update_services
+  def update_services
+    ap 'CALL update_services'
+    ap params[:project][:active_learning_service]
+    ap params[:project][:bootstrap_service]
+    ap params[:project][:machine_learning_service]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project

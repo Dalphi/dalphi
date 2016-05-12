@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resources :raw_data, except: [:show]
   end
 
-  patch '/projects/update_services' => 'projects#update_services', as: 'update_project_services'
+  patch '/projects/:id/update_services', to: 'projects#update_services', as: 'update_services'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
