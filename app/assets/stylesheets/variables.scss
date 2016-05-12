@@ -8,9 +8,16 @@ $color-3: #586681; // dark electric blue; navigation background
 $color-3-1: darken($color-3, 2.5);
 $color-3-2: darken($color-3, 5);
 $color-3-3: darken($color-3, 10);
+$color-3-11: lighten($color-3, 35);
 $color-4: #93b449; // green smoke; highlight special words
+$color-4-1: darken($color-4, 8);
 $color-5: #b6cd82; // pine glade; color-1 / color-4 hover
+$color-5-11: lighten($color-5, 20);
 $color-6: rgba(0, 0, 0, .26); // transparent black; shadow color
+$color-7: #fc6766; // carnation; alert & attetion color
+$color-7-1: darken($color-7, 30);
+$color-7-11: lighten($color-7, 15);
+$color-7-12: lighten($color-7, 20);
 
 // global transparent colors
 $dark-curtain-color: rgba(0, 0, 0, .35);

@@ -10,7 +10,7 @@ module ApplicationHelper
   def icon_name_for(flash_type)
     return 'info-circle' if flash_type.eql?('notice')
     return 'check-circle' if flash_type.eql?('success')
-    return 'exclamation-circle' if flash_type.eql?('error')
-    return 'exclamation-circle' if flash_type.eql?('alert')
+    return 'exclamation-triangle' if flash_type.eql?('error')
+    return 'exclamation' if flash_type.eql?('alert')
   end
 end
