@@ -9,23 +9,21 @@
         - else
           i
             = t('projects.blank-slate.no-description')
+
   .row
     .col-xs-12.col-sm-6
       .card
         h3.card-header
           = t('projects.settings.services.headline')
-        = render 'projects/select_service',
+        = render 'projects/show_service',
           project: @project,
-          available_services: @available_services[:active_learning],
-          service_name: 'active_learning_service'
-        = render 'projects/select_service',
+          service_name: 'active_learning'
+        = render 'projects/show_service',
           project: @project,
-          available_services: @available_services[:bootstrap],
-          service_name: 'bootstrap_service'
-        = render 'projects/select_service',
+          service_name: 'bootstrap'
+        = render 'projects/show_service',
           project: @project,
-          available_services: @available_services[:machine_learning],
-          service_name: 'machine_learning_service'
+          service_name: 'machine_learning'
 
   .row.btn-row
     .col-xs-12

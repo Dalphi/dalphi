@@ -14,11 +14,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
-    @available_services = {
-      active_learning: Service.where(role: :active_learning),
-      bootstrap: Service.where(role: :bootstrap),
-      machine_learning: Service.where(role: :machine_learning)
-    }
   end
 
   # GET /projects/new
@@ -28,6 +23,11 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    @available_services = {
+      active_learning: Service.where(role: :active_learning),
+      bootstrap: Service.where(role: :bootstrap),
+      machine_learning: Service.where(role: :machine_learning)
+    }
   end
 
   # POST /projects
@@ -95,6 +95,7 @@ class ProjectsController < ApplicationController
       )
     end
 
+    # render edit and show error flash if setting a different service went wrong
     def render_edit_with_error(error_key, service_name)
       translation_key = "projects.action.update-service.#{error_key}"
       flash[:error] = I18n.t(translation_key, service: service_name)

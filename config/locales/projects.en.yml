@@ -8,6 +8,9 @@ en:
     action:
       create:
         success: Project was successfully created.
+      edit:
+        general-settings-card:
+          headline: General settings
       update:
         success: Project was successfully updated.
       update-service:
