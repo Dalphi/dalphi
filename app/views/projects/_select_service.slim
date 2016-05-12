@@ -6,6 +6,6 @@
       .form-inputs
         = f.input service_name.to_sym,
           collection: available_services,
-          # selected: project.send(service_name.to_sym),
+          selected: project.send(service_name.to_sym),
           label_method: -> (service) { service.title },
           input_html: { class: 'c-select', onchange: 'this.form.submit();' }

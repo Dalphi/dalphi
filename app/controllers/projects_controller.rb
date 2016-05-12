@@ -14,9 +14,11 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
-    @available_active_learning_services = Service.where(role: :active_learning)
-    @available_bootstrap_services = Service.where(role: :bootstrap)
-    @available_machine_learning_services = Service.where(role: :machine_learning)
+    @available_services = {
+      active_learning: Service.where(role: :active_learning),
+      bootstrap: Service.where(role: :bootstrap),
+      machine_learning: Service.where(role: :machine_learning)
+    }
   end
 
   # GET /projects/new
@@ -52,8 +54,9 @@ class ProjectsController < ApplicationController
 
   # PATCH /projects/1/update_services
   def update_service
-    service_symbol = params[:service].to_sym
-    service_name = params[:service][0..-9].tr('_', ' ').capitalize
+    service_id = params[:service]
+    service_symbol = service_id.to_sym
+    service_name = service_id[0..-9].tr('_', ' ').capitalize
     new_service = Service.find(project_params[service_symbol])
 
     if @project.update({ service_symbol => new_service })
@@ -61,15 +64,11 @@ class ProjectsController < ApplicationController
       redirect_to project_path(@project),
         notice: I18n.t(translation_key, service: service_name)
     else
-      translation_key = "projects.action.update-service.error"
-      flash[:error] = I18n.t(translation_key, service: service_name)
-      render :edit
+      render_edit_with_error 'error', service_name
     end
 
   rescue ActiveRecord::RecordNotFound
-    translation_key = "projects.action.update-service.not-recognized"
-    flash[:error] = I18n.t(translation_key, service: service_name)
-    render :edit
+    render_edit_with_error 'not-recognized', service_name
   end
 
   # DELETE /projects/1
@@ -94,5 +93,11 @@ class ProjectsController < ApplicationController
         :machine_learning_service,
         :title
       )
+    end
+
+    def render_edit_with_error(error_key, service_name)
+      translation_key = "projects.action.update-service.#{error_key}"
+      flash[:error] = I18n.t(translation_key, service: service_name)
+      render :edit
     end
 end

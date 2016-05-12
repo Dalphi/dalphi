@@ -16,15 +16,15 @@
           = t('projects.settings.services.headline')
         = render 'projects/select_service',
           project: @project,
-          available_services: @available_active_learning_services,
+          available_services: @available_services[:active_learning],
           service_name: 'active_learning_service'
         = render 'projects/select_service',
           project: @project,
-          available_services: @available_bootstrap_services,
+          available_services: @available_services[:bootstrap],
           service_name: 'bootstrap_service'
         = render 'projects/select_service',
           project: @project,
-          available_services: @available_machine_learning_services,
+          available_services: @available_services[:machine_learning],
           service_name: 'machine_learning_service'
 
   .row.btn-row
