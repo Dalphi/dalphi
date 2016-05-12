@@ -1,5 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [
+    :show,
+    :edit,
+    :update,
+    :destroy,
+    :update_service
+  ]
 
   # GET /projects
   def index
@@ -44,18 +50,32 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # PATCH /projects/1/update_services
+  def update_service
+    service_symbol = params[:service].to_sym
+    service_name = params[:service][0..-9].tr('_', ' ').capitalize
+    new_service = Service.find(project_params[service_symbol])
+
+    if @project.update({ service_symbol => new_service })
+      translation_key = "projects.action.update-service.success"
+      redirect_to project_path(@project),
+        notice: I18n.t(translation_key, service: service_name)
+    else
+      translation_key = "projects.action.update-service.error"
+      flash[:error] = I18n.t(translation_key, service: service_name)
+      render :edit
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    translation_key = "projects.action.update-service.not-recognized"
+    flash[:error] = I18n.t(translation_key, service: service_name)
+    render :edit
+  end
+
   # DELETE /projects/1
   def destroy
     @project.destroy
     redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
-  end
-
-  # PATCH /projects/1/update_services
-  def update_services
-    ap 'CALL update_services'
-    ap params[:project][:active_learning_service]
-    ap params[:project][:bootstrap_service]
-    ap params[:project][:machine_learning_service]
   end
 
   private
@@ -66,6 +86,13 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:title, :description, :data)
+      params.require(:project).permit(
+        :active_learning_service,
+        :bootstrap_service,
+        :data,
+        :description,
+        :machine_learning_service,
+        :title
+      )
     end
 end

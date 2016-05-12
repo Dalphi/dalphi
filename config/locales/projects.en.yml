@@ -10,6 +10,10 @@ en:
         success: Project was successfully created.
       update:
         success: Project was successfully updated.
+      update-service:
+        success: "%{service} service was successfully set."
+        not-recognized: "%{service} service is not recognized."
+        error: "Couldn\'t set %{service} service"
       destroy:
         success: Project was successfully destroyed.
     settings:
