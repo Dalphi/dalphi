@@ -1,8 +1,8 @@
 .card-block
   .card-text
     = simple_form_for project,
-      url: update_service_path(project, service_name),
-      method: :patch do |f|
+                      url: update_service_path(project, service_name),
+                      method: :patch do |f|
       .form-inputs
         = f.input service_name.to_sym,
           collection: available_services,

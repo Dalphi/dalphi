@@ -4,11 +4,11 @@
       h2
         = @project.title
       p
-        - if !@project.description.empty?
-          = @project.description
-        - else
+        - if @project.description.empty?
           i
             = t('projects.blank-slate.no-description')
+        - else
+          = @project.description
 
   .row
     .col-xs-12.col-sm-6
@@ -16,14 +16,14 @@
         h3.card-header
           = t('projects.settings.services.headline')
         = render 'projects/show_service',
-          project: @project,
-          service_name: 'active_learning'
+                 project: @project,
+                 service_name: 'active_learning'
         = render 'projects/show_service',
-          project: @project,
-          service_name: 'bootstrap'
+                 project: @project,
+                 service_name: 'bootstrap'
         = render 'projects/show_service',
-          project: @project,
-          service_name: 'machine_learning'
+                 project: @project,
+                 service_name: 'machine_learning'
 
   .row.btn-row
     .col-xs-12

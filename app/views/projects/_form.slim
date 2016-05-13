@@ -5,7 +5,7 @@
         = t('projects.action.edit.general-settings-card.headline')
       .card-block
         .card-text
-          = simple_form_for(project) do |f|
+          = simple_form_for project  do |f|
             .form-inputs
               = f.input :title
               = f.input :description
@@ -16,17 +16,17 @@
       h3.card-header
         = t('projects.settings.services.headline')
       = render 'projects/select_service',
-        project: project,
-        available_services: available_services[:active_learning],
-        service_name: 'active_learning_service'
+               project: project,
+               available_services: available_services[:active_learning],
+               service_name: 'active_learning_service'
       = render 'projects/select_service',
-        project: project,
-        available_services: available_services[:bootstrap],
-        service_name: 'bootstrap_service'
+               project: project,
+               available_services: available_services[:bootstrap],
+               service_name: 'bootstrap_service'
       = render 'projects/select_service',
-        project: project,
-        available_services: available_services[:machine_learning],
-        service_name: 'machine_learning_service'
+               project: project,
+               available_services: available_services[:machine_learning],
+               service_name: 'machine_learning_service'
 
 .row.btn-row
   .col-xs-12

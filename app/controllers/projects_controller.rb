@@ -6,6 +6,10 @@ class ProjectsController < ApplicationController
     :destroy,
     :update_service
   ]
+  before_action :set_available_services, only: [
+    :edit,
+    :new
+  ]
 
   # GET /projects
   def index
@@ -23,11 +27,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    @available_services = {
-      active_learning: Service.where(role: :active_learning),
-      bootstrap: Service.where(role: :bootstrap),
-      machine_learning: Service.where(role: :machine_learning)
-    }
   end
 
   # POST /projects
@@ -81,6 +80,14 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+    end
+
+    def set_available_services
+      @available_services = {
+        active_learning: Service.where(role: :active_learning),
+        bootstrap: Service.where(role: :bootstrap),
+        machine_learning: Service.where(role: :machine_learning)
+      }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
