@@ -30,3 +30,9 @@ en:
             machine_learning_service:
               no_service: the given machine learning service is not recognized
               wrong_service: the given service is not a machine learning service
+        service:
+          attributes:
+            url:
+              regex_mismatch: "the given URL doesn\'t start with the HTTP protocol or contains whitespace"
+              isNil: the given URL must not be nil
+              badHttpResponse: "the given URL doesn\'t respond"

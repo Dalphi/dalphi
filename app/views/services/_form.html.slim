@@ -8,9 +8,9 @@
       .col-xs-12
         = f.input :description
       .col-xs-12.col-sm-6
-        = f.input :role, readonly: true
+        = f.input :role, readonly: true, input_html: { class: 'c-select' }
       .col-xs-12.col-sm-6
-        = f.input :problem_id, readonly: true
+        = f.input :problem_id, readonly: true, input_html: { class: 'c-select' }
       .col-xs-12
         = f.input :url, readonly: true
   .row.btn-row

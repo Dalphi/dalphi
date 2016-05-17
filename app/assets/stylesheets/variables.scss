@@ -8,12 +8,19 @@ $color-3: #586681; // dark electric blue; navigation background
 $color-3-1: darken($color-3, 2.5);
 $color-3-2: darken($color-3, 5);
 $color-3-3: darken($color-3, 10);
+$color-3-11: lighten($color-3, 35);
 $color-4: #93b449; // green smoke; highlight special words
+$color-4-1: darken($color-4, 8);
 $color-5: #b6cd82; // pine glade; color-1 / color-4 hover
+$color-5-11: lighten($color-5, 20);
 $color-6: rgba(0, 0, 0, .26); // transparent black; shadow color
+$color-7: #fc6766; // carnation; alert & attetion color
+$color-7-1: darken($color-7, 30);
+$color-7-11: lighten($color-7, 15);
+$color-7-12: lighten($color-7, 20);
 
 // global transparent colors
-$dark-curtain-color: rgba(0, 0, 0, .35);
+$dark-curtain-color: rgba(0, 0, 0, .5);
 
 // global size definitions
 $container-padding: .625rem;
@@ -30,12 +37,46 @@ $h6-font-size: .875rem;
 $navbar-padding-horizontal-md-up: 1.563rem;
 $navbar-padding-horizontal: 1rem;
 $navbar-padding-vertical: .5rem;
+$sidebar-full-width-breakpoint: 301px;
 $sidebar-width: 15.63rem;
+$sidebar-xs-width: 80%;
 $small-font-size: .75rem;
 $topbar-height: 3.375rem;
 
 // durations
 $default-transition-duration: .5s;
 
-// global shadow definitions
+// global definitions
 $navigation-box-shadow: .3125rem $color-6;
+$btn-row-margin: .25rem;
+$td-controls-width: 12rem;
+$alert-button-top: .8rem;
+$input-boolean-margin-right: .25rem;
+$gravatar-border-radius: 8rem;
+
+// services
+$services-service-search-margin-bottom: 1rem;
+$services-btn-sm-right: .5625rem;
+$services-btn-sm-top: .5625rem;
+$services-list-group-margin: -.5625rem -.0625rem -.0625rem;
+
+// sidebar
+$sidebar-box-shadow: 0 .3125rem $navigation-box-shadow;
+$sidebar-ul-li-margin: 0 .1875rem;
+$sidebar-header-toggle-sidebar-font-size: 1.3rem;
+$sidebar-header-toggle-sidebar-margin-top: -.4rem;
+$sidebar-header-h1-margin-top: .5rem;
+$sidebar-nav-margin: 0 0 0 -.625rem;
+$sidebar-nav-width: calc(100% + 1.25rem);
+$sidebar-nav-li-a-padding: .5rem 0 .5rem .75rem;
+$sidebar-nav-li-active-border-left: .25rem solid $color-4;
+$sidebar-nav-li-active-a-padding: .5rem 0 .5rem .5rem;
+
+// topbar
+$topbar-box-shadow: 0 .125rem $navigation-box-shadow;
+$topbar-z-index: 10;
+$topbar-toggle-sidebar-padding: .1875rem 0 0;
+$topbar-icon-bar-i-font-size: 1.4rem;
+$topbar-icon-bar-nav-link-padding: .5rem 0;
+$breadcrumb-margin: 0 0 0 1rem;
+$breadcrumb-padding: .4rem 0 0;

@@ -117,7 +117,7 @@ p {
   text-align: right;
 
   .btn {
-    margin: .25rem;
+    margin: $btn-row-margin;
   }
 
   .btn:last-of-type {
@@ -136,6 +136,17 @@ tr {
 td {
   &.controls {
     text-align: right;
+    visibility: hidden;
+    width: $td-controls-width;
+  }
+}
+
+.touch,
+tr:hover {
+  td {
+    &.controls {
+      visibility: visible;
+    }
   }
 }
 
@@ -156,7 +167,7 @@ th {
   button {
     position: absolute;
     right: $container-margin;
-    top: .8rem;
+    top: $alert-button-top;
   }
 }
 
@@ -180,12 +191,12 @@ input {
   }
 
   &.boolean {
-    margin-right: .25rem;
+    margin-right: $input-boolean-margin-right;
   }
 }
 
 [alt='Gravatar'] {
-  border-radius: 8rem;
+  border-radius: $gravatar-border-radius;
 }
 
 .row-eq-height {

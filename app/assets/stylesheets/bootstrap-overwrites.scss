@@ -4,6 +4,13 @@
 // colors
 $brand-primary: $color-4; // bootstrap blue e.g. for primary button
 $input-border-focus: $color-5; // lighter bootstrap blue e.g. for active inputs
+$state-success-text: $color-4-1; // text color of the success alert
+$state-success-bg: $color-5-11; // success alert background
+$state-info-text: $color-3; // text color of the info alert
+$state-info-bg: $color-3-11; // info alert background
+$state-danger-text: $color-7-1; // text color of the danger & warning alert
+$state-danger-bg: $color-7-12; // danger & warning alert background
+$state-danger-border: $color-7-11; // border color of the danger & warning alert
 
 // tables
 $table-bg-accent: $color-1-1; // bg color of every second table row

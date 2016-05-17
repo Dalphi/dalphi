@@ -1,12 +1,12 @@
 .services {
   .service-search {
-    margin-bottom: 1rem;
+    margin-bottom: $services-service-search-margin-bottom;
   }
 
   .btn-sm {
     position: absolute;
-    right: .5625rem;
-    top: .5625rem;
+    right: $services-btn-sm-right;
+    top: $services-btn-sm-top;
     z-index: 1;
   }
 
@@ -15,7 +15,7 @@
   }
 
   .list-group {
-    margin: -.5625rem -.0625rem -.0625rem;
+    margin: $services-list-group-margin;
   }
 
   .list-group-item {

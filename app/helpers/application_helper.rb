@@ -7,7 +7,10 @@ module ApplicationHelper
     flash_type.to_s
   end
 
-  def bootstrap_title_for(flash_type)
-    I18n.t('flashes.titles.' + flash_type)
+  def icon_name_for(flash_type)
+    return 'info-circle' if flash_type.eql?('notice')
+    return 'check-circle' if flash_type.eql?('success')
+    return 'exclamation-triangle' if flash_type.eql?('error')
+    return 'exclamation' if flash_type.eql?('alert')
   end
 end

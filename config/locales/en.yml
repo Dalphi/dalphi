@@ -12,9 +12,4 @@ en:
     Even the all-powerful Pointing has no control about the blind texts it is an
   save: Save
   delete: Delete
-  flashes:
-    titles:
-      alert: Attention
-      error: Error
-      notice: OK
   search: Search
