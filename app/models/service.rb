@@ -9,7 +9,7 @@ class Service < ApplicationRecord
 
   validates :url,
     format: {
-      with: /http(|s)\:\/\/\S+/,
+      with: /\Ahttp(|s)\:\/\/\S+\z/,
       message: I18n.t('activerecord.errors.models.service.attributes.url.regex_mismatch')
     }
 

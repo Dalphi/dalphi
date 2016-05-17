@@ -19,6 +19,7 @@ class RawDataController < ApplicationController
 
   # POST /raw_data
   def create
+    RawDatum::zip_to_data raw_datum_params[:data]
     @raw_datum = RawDatum.new(raw_datum_params)
     @raw_datum.project = @project
     if @raw_datum.save
