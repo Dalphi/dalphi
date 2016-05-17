@@ -1,0 +1,16 @@
+.col-xs-12.col-lg-4
+  .card
+    h3.card-header
+      = t("enums.services.roles.#{role}")
+    - if services[role].any?
+      a.btn.btn-sm.btn-secondary href="#{role_service_path(role)}"
+        = t('details')
+      ul.list-group.list-group-flash
+        - services[role].each do |service|
+          = render 'shared/services/item', service: service
+    - else
+      .card-block
+        h4.card-titleo
+          = t('services.blank-slate.title')
+        p.card-text
+          = t('services.blank-slate.text')
