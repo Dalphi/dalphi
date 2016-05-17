@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
   include ServiceRoles
 
   before_action :set_service, only: [:show, :edit, :update, :destroy]
-  before_action :set_roles # defined in 'cencerns/service_roles.rb'
+  before_action :set_roles # defined in 'concerns/service_roles.rb'
 
   # GET /services
   def index
@@ -68,10 +68,6 @@ class ServicesController < ApplicationController
       @service = Service.find(params[:id])
       ap @service
     end
-
-    # def set_roles
-    #   @roles = Service.roles.keys
-    # end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
