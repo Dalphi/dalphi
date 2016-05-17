@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/plataformatec/devise.git
-  revision: 22dd3b489d408c0cb5a5b6d2c18a8111e1b4674b
+  revision: 4924dd68ae952a427d08c43e7afb2dc8045efbc0
   specs:
     devise (4.1.0)
       bcrypt (~> 3.0)
@@ -182,7 +182,7 @@ GEM
     mime-types-data (3.2016.0221)
     mimemagic (0.3.1)
     mini_portile2 (2.0.0)
-    minitest (5.8.4)
+    minitest (5.9.0)
     modernizr_rails (2.6.2.1)
       railties (>= 3.0)
       thor (~> 0.14)
