@@ -1,5 +1,11 @@
 .projects {
-  .list-group-item {
-    border-bottom: 0;
+  .card {
+    .list-group {
+      margin: $projects-list-group-margin-top 0 0;
+    }
+
+    .list-group-item {
+      border: 0;
+    }
   }
 }
