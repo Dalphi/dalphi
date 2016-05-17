@@ -15,6 +15,18 @@
         = f.input :url, readonly: true
   .row.btn-row
     .col-xs-12
-      = render 'shared/button', href: services_path(service), label: t('back'), icon: 'chevron-left'
-      = render 'shared/button', method: 'delete', confirm: t('delete-confirm'), type: 'danger', href: service_path(service), label: t('delete'), icon: 'times' if params[:action] == 'edit'
-      = render 'shared/button', type: 'submit', label: t('save'), icon: 'check'
+      = render 'shared/button',
+               href: services_path(service),
+               label: t('back'),
+               icon: 'chevron-left'
+      = render 'shared/button',
+               method: 'delete',
+               confirm: t('delete-confirm'),
+               type: 'danger',
+               href: service_path(service),
+               label: t('delete'),
+               icon: 'times' if params[:action] == 'edit'
+      = render 'shared/button',
+               type: 'submit',
+               label: t('save'),
+               icon: 'check'

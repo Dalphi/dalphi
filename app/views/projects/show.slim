@@ -15,17 +15,18 @@
       .card
         h3.card-header
           = t('projects.settings.services.headline')
-        = render 'projects/show_service',
-                 project: @project,
-                 service_name: 'active_learning'
-        = render 'projects/show_service',
-                 project: @project,
-                 service_name: 'bootstrap'
-        = render 'projects/show_service',
-                 project: @project,
-                 service_name: 'machine_learning'
+        - %w(active_learning bootstrap machine_learning).each do |service|
+          = render 'projects/show_service',
+                   project: @project,
+                   service_name: service
 
   .row.btn-row
     .col-xs-12
-      = render 'shared/button', label: t('back'), icon: 'chevron-left', href: projects_path
-      = render 'shared/button', label: t('edit'), icon: 'edit', href: edit_project_path(@project)
+      = render 'shared/button',
+               label: t('back'),
+               icon: 'chevron-left',
+               href: projects_path
+      = render 'shared/button',
+               label: t('edit'),
+               icon: 'edit',
+               href: edit_project_path(@project)

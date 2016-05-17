@@ -1,5 +1,10 @@
 .card-block
   - service_key = service_name.tr('_', '-')
-  = t("projects.settings.services.#{service_key}")
+  small
+    = t("projects.settings.services.#{service_key}")
   .card-text
-    = project.send("#{service_name}_service").title
+    - service = project.send("#{service_name}_service")
+    - if service
+      = service.title
+    - else
+      | service title
