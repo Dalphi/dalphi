@@ -9,9 +9,7 @@
             .dropdown-menu
               a.dropdown-item#protocolDropdownToggle href="#"
                 | https://
-              coffee:
-                window.protocolDropdownToggle = new window.ProtocolDropdownToggle()
-          input type='hidden' name='protocol' value='http://'
+          input type='hidden' name='protocol' value='http'
           input.form-control name='uri' type='text' placeholder='awesome-service.example.com:1234/api/v1'
           span.input-group-btn
             button.btn.btn-primary type='submit'
@@ -19,6 +17,8 @@
               span.hidden-sm-down
                 | &nbsp;
                 = t('search')
+        coffee:
+          window.protocolDropdown = new window.ProtocolDropdown()
   .row.row-eq-height
     - @roles.each do |role|
       .col-xs-12.col-lg-4

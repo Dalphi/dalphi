@@ -23,7 +23,7 @@ class ServicesController < ApplicationController
 
   # GET /services/new
   def new
-    url = "#{params[:protocol]}#{params[:uri]}"
+    url = "#{params[:protocol]}://#{params[:uri]}"
     @service = Service.new_from_url(url)
     unless @service
       flash[:error] = I18n.t('services.error-searching')
