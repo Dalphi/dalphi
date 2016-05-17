@@ -25,7 +25,8 @@ class RawDatum < ApplicationRecord
   def self.zip_to_data(zip)
     temp_dir = Dir.mktmpdir
     begin
-      batch_result = process_zip_archive zip, temp_dir
+      batch_result = { success: [], error: [] }
+      batch_result = process_zip_archive zip, temp_dir, batch_result
     ensure
       FileUtils.remove_entry temp_dir
     end
@@ -33,9 +34,8 @@ class RawDatum < ApplicationRecord
   end
 
 
-  def self.process_zip_archive(zip, temp_dir)
+  def self.process_zip_archive(zip, temp_dir, batch_result)
     require 'zip'
-    batch_result = { success: [], error: [] }
     Zip::File.open(zip) do |zipfile|
       zipfile.each do |file|
         file_name = file.name
