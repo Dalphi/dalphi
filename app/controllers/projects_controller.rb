@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  include ServiceRoles
+
   before_action :set_project, only: [
     :show,
     :edit,
@@ -10,6 +12,7 @@ class ProjectsController < ApplicationController
     :edit,
     :new
   ]
+  before_action :set_roles, only: [:show] # defined in 'cencerns/service_roles.rb'
 
   # GET /projects
   def index
@@ -18,6 +21,10 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    @project_services = {}
+    @roles.each do |role|
+      @project_services[role] = [@project.send("#{role}_service")]
+    end
   end
 
   # GET /projects/new

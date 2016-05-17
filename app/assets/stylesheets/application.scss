@@ -29,6 +29,7 @@
 @import 'topbar';
 @import 'sidebar';
 @import 'services';
+@import 'projects';
 
 
 html,
@@ -211,6 +212,20 @@ input {
 
 [readonly='readonly'] {
   pointer-events: none;
+}
+
+.card {
+  height: 100%;
+
+  .list-group {
+    margin: $services-list-group-margin;
+  }
+
+  .list-group-item {
+    &:first-of-type {
+      border-radius: 0;
+    }
+  }
 }
 
 .card-block:not(:last-child) {

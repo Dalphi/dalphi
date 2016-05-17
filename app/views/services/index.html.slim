@@ -19,6 +19,10 @@
               span.hidden-sm-down
                 | &nbsp;
                 = t('search')
+
   .row.row-eq-height
     - @roles.each do |role|
-      = render 'shared/services/card', services: @services, role: role
+      = render 'shared/services/card',
+               services: @services,
+               role: role,
+               show_details: true

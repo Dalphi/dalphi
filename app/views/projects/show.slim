@@ -1,4 +1,4 @@
-.container
+.container.projects
   .row
     .col-xs-12
       h2
@@ -19,6 +19,13 @@
           = render 'projects/show_service',
                    project: @project,
                    service_name: service
+                   
+  .row.row-eq-height
+    - @roles.each do |role|
+      = render 'shared/services/card',
+               services: @project_services,
+              role: role,
+              show_details: false
 
   .row.btn-row
     .col-xs-12
