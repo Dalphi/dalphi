@@ -1,40 +1,33 @@
-.row
-  ruby:
-    layout_class = ''
-    layout_class = 'col-md-6' if params[:action] == 'edit'
-  .col-xs-12 class="#{layout_class}"
-    .card
-      h3.card-header
-        = t('projects.action.edit.general-settings-card.headline')
-      .card-block
-        .card-text
-          = simple_form_for project do |f|
+= simple_form_for project do |f|
+  .row.row-eq-height
+    .col-xs-12.col-md-6
+      .card
+        h3.card-header
+          = t('projects.action.edit.general-settings-card.headline')
+        .card-block
+          .card-text
             .form-inputs
               = f.input :title
               = f.input :description
-            = render 'shared/button',
-                     label: t('back'),
-                     icon: 'chevron-left',
-                     href: projects_path if params[:action] == 'new'
-            = render 'shared/button',
-                     type: 'submit',
-                     label: t('save'),
-                     icon: 'check'
 
-  - if params[:action] == 'edit'
     .col-xs-12.col-md-6
       .card
         h3.card-header
           = t('projects.settings.services.headline')
         - %w(active_learning bootstrap machine_learning).each do |service|
           = render 'projects/select_service',
+                   form: f,
                    project: project,
                    available_services: available_services[service.to_sym],
                    service_name: "#{service}_service"
-
-.row.btn-row
-  .col-xs-12
-    = render 'shared/button',
-             label: t('back'),
-             icon: 'chevron-left',
-             href: project_path(project) if params[:action] == 'edit'
+                     
+    .btn-row
+      .col-xs-12
+        = render 'shared/button',
+                  label: t('back'),
+                  icon: 'chevron-left',
+                  href: project_path(project) if params[:action] == 'edit'
+        = render 'shared/button',
+                  type: 'submit',
+                  label: t('save'),
+                  icon: 'check'

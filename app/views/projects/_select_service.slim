@@ -1,12 +1,10 @@
 .card-block
   .card-text
-    = simple_form_for project,
-                      url: update_service_path(project, service_name),
-                      method: :patch do |f|
-      .form-inputs
-        = f.input service_name.to_sym,
-          collection: available_services,
-          selected: project.send(service_name.to_sym),
-          include_blank: true,
-          label_method: -> (service) { service.title },
-          input_html: { class: 'c-select', onchange: 'this.form.submit();' }
+    .form-inputs
+      = form.input service_name.to_sym,
+        collection: available_services,
+        name: service_name,
+        selected: project.send(service_name.to_sym),
+        include_blank: true,
+        label_method: -> (service) { service.title },
+        input_html: { class: 'c-select' }
