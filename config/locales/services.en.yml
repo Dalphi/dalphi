@@ -1,5 +1,8 @@
 en:
   services:
+    name:
+      one: Service
+      other: Services
     error-searching: An error occured while searching for this service
     blank-slate:
       title: 'No services available yet'

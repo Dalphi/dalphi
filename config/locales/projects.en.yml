@@ -8,9 +8,14 @@ en:
     action:
       create:
         success: Project was successfully created.
-      edit:
+      form:
         general-settings-card:
           headline: General settings
+        services-card:
+          no-service-selected: '—'
+          blank-slate:
+            title: None available.
+            text: 'Add a %{service} component: %{link}'
       update:
         success: Project was successfully updated.
       update-service:
@@ -22,6 +27,3 @@ en:
     settings:
       services:
         headline: Services to use
-        active-learning: Active Learning
-        bootstrap: Bootstrap
-        machine-learning: Machine Learning

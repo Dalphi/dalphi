@@ -1,10 +1,32 @@
+ruby:
+  service_name_dash_separated = service_name.tr('_', '-')
+  service_name_human_readable = t("services.names.#{service_name_dash_separated}")
+  service_name_with_postfix = "#{service_name}_service"
+  service_name_symbol = service_name_with_postfix.to_sym
+  headline = "#{service_name_human_readable} #{t('services.name.one')}"
+  current_service = project.send(service_name_symbol)
+  selected_id = current_service.id if current_service
+  link_to_services = link_to t('services.name.other'), services_path
+
 .card-block
-  .card-text
-    .form-inputs
-      = form.input service_name.to_sym,
-        collection: available_services,
-        name: service_name,
-        selected: project.send(service_name.to_sym),
-        include_blank: true,
-        label_method: -> (service) { service.title },
-        input_html: { class: 'c-select' }
+  - if available_services.any?
+    .card-titleo
+      = "#{headline}"
+    .card-text
+      .form-inputs
+        = form.input service_name_symbol,
+          collection: available_services,
+          include_blank: t('projects.action.form.services-card.no-service-selected'),
+          input_html: { class: 'c-select' },
+          label_method: -> (service_instance) { service_instance.title },
+          label: false,
+          name: service_name_with_postfix,
+          selected: selected_id
+
+  - else
+    .card-titleo
+      = "#{headline}: #{t('projects.action.form.services-card.blank-slate.title')}"
+    p.card-text.create-new-service-notice
+      == t('projects.action.form.services-card.blank-slate.text',
+           service: service_name_human_readable,
+           link: link_to_services)
