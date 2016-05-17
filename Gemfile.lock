@@ -323,6 +323,8 @@ GEM
       rubocop (>= 0.36.0)
       slim (~> 3.0)
       sysexits (~> 1.1)
+    spinjs-rails (1.4)
+      rails (>= 3.1)
     spring (1.7.1)
     sprockets (3.6.0)
       concurrent-ruby (~> 1.0)
@@ -423,6 +425,7 @@ DEPENDENCIES
   simple_form
   slim-rails
   slim_lint
+  spinjs-rails
   spring
   sprockets-rails
   sqlite3

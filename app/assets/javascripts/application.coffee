@@ -8,6 +8,8 @@
 #= require fastclick
 #= require hammer
 #= require modernizr
+#= require spin
+#= require jquery.spin
 
 $ ->
   new FastClick(document.body)

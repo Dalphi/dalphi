@@ -4,7 +4,7 @@ li.list-group-item
     span.label.label-default.pull-xs-right
       = service.version
     br
-    small
-      .connectivity-sign.available
+    small.connection-details
+      .connectivity-sign.available data-url="#{service.url}"
         = fa_icon 'globe'
       = service.url

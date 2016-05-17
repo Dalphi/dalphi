@@ -24,12 +24,20 @@
     }
   }
 
+  .connection-details {
+    position: relative;
+  }
+
   .connectivity-sign {
     display: inline-block;
     margin-right: .1rem;
 
     &.available {
       color: $color-4-1;
+    }
+
+    &.checking {
+      color: $color-3-2;
     }
 
     &.down {
