@@ -5,6 +5,6 @@ li.list-group-item
       = service.version
     br
     small.connection-details
-      .connectivity-sign.available data-url="#{service.url}"
+      .connectivity-sign.available data-url="#{check_connectivity_path(service)}"
         = fa_icon 'globe'
       = service.url

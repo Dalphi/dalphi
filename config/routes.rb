@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get '/services/new', to: 'services#new', as: 'new_service'
   get '/services/:role', to: 'services#role_services', constraints: { id: /[a-zA-Z]+.*/ }, as: 'role_service'
 
+  get '/services/:id/connectivity', to: 'services#check_connectivity', constraints: { id: /[0-9]+/ }, as: 'check_connectivity'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # Serve websocket cable requests in-process

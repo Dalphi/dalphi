@@ -1,5 +1,5 @@
 class ServicesController < ApplicationController
-  before_action :set_service, only: [:show, :edit, :update, :destroy]
+  before_action :set_service, only: [:show, :edit, :check_connectivity, :update, :destroy]
   before_action :set_roles
 
   # GET /services
@@ -33,6 +33,12 @@ class ServicesController < ApplicationController
 
   # GET /services/1/edit
   def edit
+  end
+
+  # GET /services/1/check_connectivity
+  def check_connectivity
+    sleep 1
+    render json: { serviceIsAvailable: true }, status: 200
   end
 
   # POST /services

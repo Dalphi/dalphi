@@ -26,9 +26,7 @@ class ServiceAvailableIndicator
 
     this.initAjax()
     this.initServiceList()
-
-    # test the spinner
-    this.showSpinnerAtSeviceWithIndex(1, true)
+    this.checkConnectivityForAllServices()
 
   initServiceList: ->
     this.serviceListItems.each (index, element) ->
@@ -47,31 +45,50 @@ class ServiceAvailableIndicator
       headers:
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 
-  showSpinnerAtSeviceWithIndex: (serviceIndex, show) ->
-    if show
-      this.services[serviceIndex].icon.css('visibility', 'hidden')
-      this.services[serviceIndex].element.addClass('checking')
-      this.services[serviceIndex].element.spin(this.spinnerSettings)
-    else
-      this.services[serviceIndex].icon.css('visibility', 'visible')
-      this.services[serviceIndex].element.removeClass('checking')
-      this.services[serviceIndex].element.spin(false)
+  checkConnectivityForAllServices: ->
+    this.services.forEach (service) ->
+      _this.checkConnectivityForService service
 
-  # performAjaxRequest: (data, changeCheckboxesState) ->
-  #   $.ajax
-  #     type: 'PATCH',
-  #     url: this.ajaxPath,
-  #     dataType: 'json'
-  #     data: data,
-  #     beforeSend: ->
-  #       showSpinnerAtTableHead(true)
-  #     success: ->
-  #       console.log 'successfully posted data via ajax'
-  #     error: ->
-  #       console.log 'faild to post data via ajax'
-  #     complete: ->
-  #       if changeCheckboxesState
-  #         enableVisibleCheckboxes(changeCheckboxesState)
-  #       showSpinnerAtTableHead(false)
+  showSpinnerAtService: (service, show) ->
+    if show
+      service.icon.css('visibility', 'hidden')
+      service.element.addClass('unknown')
+      service.element.spin(this.spinnerSettings)
+    else
+      service.icon.css('visibility', 'visible')
+      service.element.removeClass('unknown')
+      service.element.spin(false)
+
+  cleanColorClassesFromService: (service) ->
+    service.element.removeClass('available')
+    service.element.removeClass('down')
+    service.element.removeClass('unknown')
+
+  handleAjaxResponse: (service, response) ->
+    this.cleanColorClassesFromService service
+    if response.serviceIsAvailable
+      service.element.addClass('available')
+    else
+      service.element.addClass('down')
+
+  handleAjaxError: (service) ->
+    this.cleanColorClassesFromService service
+    service.element.addClass('unknown')
+    # console.log 'handle error'
+    # console.log service.element
+
+  checkConnectivityForService: (service) ->
+    $.ajax
+      type: 'GET',
+      url: service.url,
+      dataType: 'json'
+      beforeSend: ->
+        _this.showSpinnerAtService(service, true)
+      success: (data) ->
+        _this.handleAjaxResponse(service, data)
+      error: ->
+        _this.handleAjaxError service
+      complete: ->
+        _this.showSpinnerAtService(service, false)
 
 window.ServiceAvailableIndicator = ServiceAvailableIndicator
