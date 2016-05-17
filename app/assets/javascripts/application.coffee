@@ -7,6 +7,7 @@
 #= require cookies_eu
 #= require fastclick
 #= require hammer
+#= require modernizr
 
 $ ->
   new FastClick(document.body)
