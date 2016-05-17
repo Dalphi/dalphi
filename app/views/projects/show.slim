@@ -10,16 +10,6 @@
         - else
           = @project.description
 
-  .row
-    .col-xs-12.col-sm-6
-      .card
-        h3.card-header
-          = t('projects.settings.services.headline')
-        - %w(active_learning bootstrap machine_learning).each do |service|
-          = render 'projects/show_service',
-                   project: @project,
-                   service_name: service
-                   
   .row.row-eq-height
     - @roles.each do |role|
       = render 'shared/services/card',
