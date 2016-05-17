@@ -1,34 +1,38 @@
 class ProtocolDropdown
+
+  _this = undefined
+
   constructor: ->
+    _this = this
+    this.$protocolFormValue = $('[name="protocol"]')
+    this.$protocolDropdownToggle = $('#protocolDropdownToggle')
+    this.$toggleButton = $('button', this.$protocolDropdownToggle.parent().parent())
+
     $('#protocolDropdownToggle').on 'click', (e) ->
       e.preventDefault()
       $this = $(this)
       if $this.text() == 'https://'
-        selectProtocol('https')
+        _this.selectProtocol('https')
       else if $this.text() == 'http://'
-        selectProtocol('http')
+        _this.selectProtocol('http')
 
     $('[name="uri"]').on 'change textInput input', ->
       uri = $(this).val()
       if uri.startsWith('https://')
-        selectProtocol('https')
+        _this.selectProtocol('https')
         uri = uri.replace('https://', '')
       else if uri.startsWith('http://')
-        selectProtocol('http')
+        _this.selectProtocol('http')
         uri = uri.replace('http://', '')
       $(this).val(uri)
 
-  selectProtocol = (protocol) ->
-    $protocolFormValue = $('[name="protocol"]')
-    $protocolDropdownToggle = $('#protocolDropdownToggle')
-    $toggleButton = $('button', $protocolDropdownToggle.parent().parent())
-
-    $protocolFormValue.val(protocol)
-    $toggleButton.text(protocol + '://')
+  selectProtocol: (protocol) ->
+    this.$protocolFormValue.val(protocol)
+    this.$toggleButton.text(protocol + '://')
     if protocol == 'https'
-      $protocolDropdownToggle.text('http://')
+      this.$protocolDropdownToggle.text('http://')
     else if protocol == 'http'
-      $protocolDropdownToggle.text('https://')
+      this.$protocolDropdownToggle.text('https://')
 
 
 window.ProtocolDropdown = ProtocolDropdown
