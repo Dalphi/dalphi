@@ -34,5 +34,4 @@ class ProtocolDropdown
     else if protocol == 'http'
       this.$protocolDropdownToggle.text('https://')
 
-
 window.ProtocolDropdown = ProtocolDropdown
