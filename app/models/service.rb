@@ -26,11 +26,7 @@ class Service < ApplicationRecord
   end
 
   def self.params_from_url(url)
-    url = URI.parse(url)
-    req = Net::HTTP::Get.new(url.to_s)
-    res = Net::HTTP.start(url.host, url.port) do |http|
-      http.request(req)
-    end
-    JSON.parse(res.body.to_s)
+    data = URI.parse(url).read
+    JSON.parse(data)
   end
 end
