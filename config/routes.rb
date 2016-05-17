@@ -17,14 +17,27 @@ Rails.application.routes.draw do
 
   resources :services, only: [:index, :create]
 
-  put '/services/:id', to: 'services#update', constraints: { id: /[0-9]+/ }, as: 'service'
-  patch '/services/:id', to: 'services#update', constraints: { id: /[0-9]+/ }
-  delete '/services/:id', to: 'services#destroy', constraints: { id: /[0-9]+/ }
-
-  get '/services/:id/edit', to: 'services#edit', constraints: { id: /[0-9]+/ }, as: 'edit_service'
-
-  get '/services/new', to: 'services#new', as: 'new_service'
-  get '/services/:role', to: 'services#role_services', constraints: { id: /[a-zA-Z]+.*/ }, as: 'role_service'
+  put '/services/:id',
+      to: 'services#update',
+      constraints: { id: /[0-9]+/ },
+      as: 'service'
+  patch '/services/:id',
+        to: 'services#update',
+        constraints: { id: /[0-9]+/ }
+  delete '/services/:id',
+        to: 'services#destroy',
+        constraints: { id: /[0-9]+/ }
+  get '/services/:id/edit',
+        to: 'services#edit',
+        constraints: { id: /[0-9]+/ },
+        as: 'edit_service'
+  get '/services/new',
+      to: 'services#new',
+      as: 'new_service'
+  get '/services/:role',
+      to: 'services#role_services',
+      constraints: { id: /[a-zA-Z]+.*/ },
+      as: 'role_service'
 
   # Projects
 
@@ -32,9 +45,8 @@ Rails.application.routes.draw do
     resources :raw_data, except: [:show]
   end
 
-  patch '/projects/:id/update_service/:service', to: 'projects#update_service', constraints: { service: /[a-z_]+(_service)/ }, as: 'update_service'
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # For details on the DSL available within this file,
+  # see http://guides.rubyonrails.org/routing.html
 
   # Serve websocket cable requests in-process
   # mount ActionCable.server => '/cable'

@@ -58,25 +58,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # # PATCH /projects/1/update_services
-  # def update_service
-  #   service_id = params[:service]
-  #   service_symbol = service_id.to_sym
-  #   service_name = service_id[0..-9].tr('_', ' ').capitalize
-  #   new_service = Service.find(project_params[service_symbol])
-  #
-  #   if @project.update({ service_symbol => new_service })
-  #     translation_key = "projects.action.update-service.success"
-  #     redirect_to project_path(@project),
-  #       notice: I18n.t(translation_key, service: service_name)
-  #   else
-  #     render_edit_with_error 'error', service_name
-  #   end
-  #
-  # rescue ActiveRecord::RecordNotFound
-  #   render_edit_with_error 'not-recognized', service_name
-  # end
-
   # DELETE /projects/1
   def destroy
     @project.destroy
@@ -100,7 +81,9 @@ class ProjectsController < ApplicationController
     def params_with_service_instances
       new_params = project_params
 
-      [:active_learning_service, :bootstrap_service, :machine_learning_service].each do |service_symbol|
+      [ :active_learning_service,
+        :bootstrap_service,
+        :machine_learning_service ].each do |service_symbol|
         service_instance = Service.find_by_id(project_params[service_symbol])
         new_params[service_symbol] = service_instance
       end
@@ -119,11 +102,4 @@ class ProjectsController < ApplicationController
         :title
       )
     end
-
-    # # render edit and show error flash if setting a different service went wrong
-    # def render_edit_with_error(error_key, service_name)
-    #   translation_key = "projects.action.update-service.#{error_key}"
-    #   flash[:error] = I18n.t(translation_key, service: service_name)
-    #   render :edit
-    # end
 end
