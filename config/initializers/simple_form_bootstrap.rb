@@ -18,7 +18,10 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
-  config.wrappers :vertical_file_input, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :vertical_file_input,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -30,7 +33,10 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
-  config.wrappers :vertical_boolean, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :vertical_boolean,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.optional :readonly
 
@@ -42,7 +48,10 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
-  config.wrappers :vertical_radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :vertical_radio_and_checkboxes,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'control-label'
@@ -51,7 +60,10 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
-  config.wrappers :horizontal_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_form,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -67,7 +79,10 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_file_input, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_file_input,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -81,7 +96,10 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_boolean,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.optional :readonly
 
@@ -95,7 +113,10 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_radio_and_checkboxes,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.optional :readonly
 
@@ -108,7 +129,10 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :inline_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :inline_form,
+                  tag: 'div',
+                  class: 'form-group',
+                  error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength

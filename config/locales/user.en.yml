@@ -1,5 +1,4 @@
 en:
-  sign-out: Sign out
   user-edit:
     necessary-password-for-confirmation: We need your current password to confirm your changes.
     password-blank-hint: leave it blank if you don't want to change it

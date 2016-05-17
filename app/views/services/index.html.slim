@@ -21,20 +21,7 @@
           window.protocolDropdown = new window.ProtocolDropdown()
   .row.row-eq-height
     - @roles.each do |role|
-      .col-xs-12.col-lg-4
-        .card
-          h3.card-header
-            = t("enums.services.roles.#{role}")
-          - if @services[role].any?
-            a.btn.btn-sm.btn-secondary href="#{role_service_path(role)}"
-              = t('details')
-          - if @services[role].any?
-            ul.list-group.list-group-flash
-              - @services[role].each do |service|
-                = render 'services/shared/service', service: service
-          - else
-            .card-block
-              h4.card-titleo
-                = t('services.blank-slate.title')
-              p.card-text
-                = t('services.blank-slate.text')
+      = render 'shared/services/card',
+               services: @services,
+               role: role,
+               show_details: true

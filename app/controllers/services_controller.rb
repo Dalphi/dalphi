@@ -1,11 +1,13 @@
 class ServicesController < ApplicationController
+  include ServiceRoles
+
   before_action :set_service, only: [:show, :edit, :update, :destroy]
-  before_action :set_roles
+  before_action :set_roles # defined in 'concerns/service_roles.rb'
 
   # GET /services
   def index
     @services = {}
-    Service.roles.keys.each do |role|
+    @roles.each do |role|
       @services[role] = Service.where(role: role)
     end
   end
@@ -64,10 +66,7 @@ class ServicesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])
-    end
-
-    def set_roles
-      @roles = Service.roles.keys
+      ap @service
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

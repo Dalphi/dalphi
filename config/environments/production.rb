@@ -32,7 +32,8 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
-  # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
+  # `config.assets.precompile` and `config.assets.version` have moved
+  # to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'

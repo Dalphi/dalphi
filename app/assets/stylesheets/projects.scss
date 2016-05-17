@@ -1,0 +1,19 @@
+.projects {
+  .card {
+    .card-titleo {
+      margin-bottom: $input-label-margin-bottom;
+    }
+
+    .card-text.create-new-service-notice {
+      margin-top: -$input-label-margin-bottom;
+    }
+
+    .list-group {
+      margin: $projects-list-group-margin-top 0 0;
+    }
+
+    .list-group-item {
+      border: 0;
+    }
+  }
+}

@@ -4,10 +4,26 @@ en:
     blank-slate:
       title: 'No projects added yet'
       text: 'To start with a new project use the button below.'
+      no-description: No description provided.
     action:
       create:
         success: Project was successfully created.
+      form:
+        general-settings-card:
+          headline: General settings
+        services-card:
+          no-service-selected: '—'
+          blank-slate:
+            title: None available.
+            text: 'Add a %{service} component: %{link}'
       update:
         success: Project was successfully updated.
+      update-service:
+        success: "%{service} service was successfully set."
+        not-recognized: "%{service} service is not recognized."
+        error: "Couldn\'t set %{service} service"
       destroy:
         success: Project was successfully destroyed.
+    settings:
+      services:
+        headline: Services to use
