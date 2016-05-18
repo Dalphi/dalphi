@@ -40,34 +40,4 @@
       }
     }
   }
-
-  .connection-details {
-    position: relative;
-
-    .no-display {
-      display: none;
-    }
-  }
-
-  .connectivity-sign {
-    display: inline-block;
-    margin-right: .1rem;
-
-    &.available {
-      color: $color-4-1;
-    }
-
-    &.checking {
-      color: $color-3-2;
-      width: $service-check-spinner-replacement-width;
-    }
-
-    &.down {
-      color: $color-7-1;
-    }
-
-    &.undefined {
-      color: $color-3-2;
-    }
-  }
 }
