@@ -2,13 +2,16 @@
   .card
     h3.card-header
       = t("enums.services.roles.#{role}")
+
     - if services[role].any? && show_details
       a.btn.btn-sm.btn-secondary href="#{role_service_path(role)}"
         = t('details')
+
     - if services[role].any?
       ul.list-group.list-group-flash
         - services[role].each do |service|
-          = render 'shared/services/item', service: service
+          = render 'services/shared/item', service: service
+
     - else
       .card-block
         h4.card-titleo

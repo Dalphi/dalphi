@@ -17,11 +17,16 @@
               span.hidden-sm-down
                 | &nbsp;
                 = t('search')
+
         coffee:
           window.protocolDropdown = new window.ProtocolDropdown()
+
   .row.row-eq-height
     - @roles.each do |role|
-      = render 'shared/services/card',
+      = render 'services/shared/card',
                services: @services,
                role: role,
                show_details: true
+
+    coffee:
+      window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()

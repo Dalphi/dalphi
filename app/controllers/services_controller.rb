@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
   include ServiceRoles
 
-  before_action :set_service, only: [:show, :edit, :update, :destroy]
+  before_action :set_service, only: [:show, :edit, :check_connectivity, :update, :destroy]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
 
   # GET /services
@@ -37,6 +37,11 @@ class ServicesController < ApplicationController
   def edit
   end
 
+  # GET /services/1/check_connectivity
+  def check_connectivity
+    render json: { serviceIsAvailable: @service.is_available? }, status: 200
+  end
+
   # POST /services
   def create
     @service = Service.new(service_params)
@@ -66,7 +71,6 @@ class ServicesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])
-      ap @service
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

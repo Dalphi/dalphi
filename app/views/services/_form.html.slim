@@ -12,7 +12,17 @@
       .col-xs-12.col-sm-6
         = f.input :problem_id, readonly: true, input_html: { class: 'c-select' }
       .col-xs-12
-        = f.input :url, readonly: true
+        .address-label
+          span.title
+            = t('services.form.url-label-text')
+          = render 'services/shared/connectivity_sign',
+                   service_instance: service,
+                   children: nil
+        = f.input :url, readonly: true, label: false
+
+        coffee:
+          window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()
+
   .row.btn-row
     .col-xs-12
       = render 'shared/button',

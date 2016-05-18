@@ -9,4 +9,31 @@
     top: $services-btn-sm-top;
     z-index: 1;
   }
+
+  .card {
+    height: 100%;
+  }
+
+  .list-group {
+    margin: $services-list-group-margin;
+  }
+
+  .list-group-item {
+    &:first-of-type {
+      border-radius: 0;
+    }
+  }
+
+  .address-label {
+    margin-bottom: $form-label-margin-bottom;
+
+    .title {
+      display: inline-block;
+      margin-right: $form-label-margin-bottom;
+    }
+
+    .connection-details {
+      display: inline-block;
+    }
+  }
 }
