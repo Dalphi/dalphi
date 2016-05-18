@@ -4,8 +4,8 @@ li.list-group-item
     span.label.label-default.pull-xs-right
       = service.version
     br
-    
+
     small
       = render 'services/shared/connectivity_sign',
                service_instance: service,
-               child_content: service.url
+               children: service.url
