@@ -52,30 +52,12 @@ class ServiceAvailableIndicator
   showSpinnerAtService: (service, show) ->
     if show
       service.icon.css('visibility', 'hidden')
-      service.element.addClass('unknown')
+      service.element.addClass('checking')
       service.element.spin(this.spinnerSettings)
     else
       service.icon.css('visibility', 'visible')
-      service.element.removeClass('unknown')
+      service.element.removeClass('checking')
       service.element.spin(false)
-
-  cleanColorClassesFromService: (service) ->
-    service.element.removeClass('available')
-    service.element.removeClass('down')
-    service.element.removeClass('unknown')
-
-  handleAjaxResponse: (service, response) ->
-    this.cleanColorClassesFromService service
-    if response.serviceIsAvailable
-      service.element.addClass('available')
-    else
-      service.element.addClass('down')
-
-  handleAjaxError: (service) ->
-    this.cleanColorClassesFromService service
-    service.element.addClass('unknown')
-    # console.log 'handle error'
-    # console.log service.element
 
   checkConnectivityForService: (service) ->
     $.ajax
@@ -90,5 +72,21 @@ class ServiceAvailableIndicator
         _this.handleAjaxError service
       complete: ->
         _this.showSpinnerAtService(service, false)
+
+  handleAjaxResponse: (service, response) ->
+    this.cleanColorClassesFromService service
+    if response.serviceIsAvailable
+      service.element.addClass('available')
+    else
+      service.element.addClass('down')
+
+  handleAjaxError: (service) ->
+    this.cleanColorClassesFromService service
+    service.element.addClass('undefined')
+
+  cleanColorClassesFromService: (service) ->
+    service.element.removeClass('available')
+    service.element.removeClass('down')
+    service.element.removeClass('undefined')
 
 window.ServiceAvailableIndicator = ServiceAvailableIndicator
