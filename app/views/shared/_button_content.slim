@@ -1,4 +1,7 @@
 - if defined?(icon) && icon
-  = fa_icon(icon)
+  - if icon == 'spinner'
+    i.fa.fa-spinner.fa-spin
+  - else
+    = fa_icon(icon)
   == '&nbsp;' if label != ''
 == label
