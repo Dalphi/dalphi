@@ -7,7 +7,6 @@ en:
         success: Raw data was successfully updated.
       destroy:
         success: Raw data was successfully destroyed.
-    new-project: 'New Datum'
     blank-slate:
       title: 'No data added yet'
       text: 'To add some data to the project use the button below.'

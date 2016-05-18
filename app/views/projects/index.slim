@@ -16,17 +16,17 @@
                 td.controls
                   = render 'shared/button',
                     type: 'link',
-                    tooltip: 'project.edit-files',
+                    tooltip: t('activerecord.actions.raw-datum.edit'),
                     href: project_raw_data_path(project),
                     icon: 'database'
                   = render 'shared/button',
                     type: 'link',
-                    tooltip: 'project.edit-project',
+                    tooltip: t('activerecord.actions.project.edit'),
                     href: edit_project_path(project),
                     icon: 'edit'
                   = render 'shared/button',
                     type: 'link',
-                    tooltip: 'project.delete-project',
+                    tooltip: t('activerecord.actions.project.delete'),
                     href: project_path(project),
                     icon: 'trash',
                     method: 'delete',
@@ -40,8 +40,16 @@
           p.lead
             = t('projects.blank-slate.text')
           hr.m-y-2
-          = render 'shared/button', type: 'primary', label: t('projects.new-project'), href: new_project_path, icon: 'plus'
+          = render 'shared/button',
+                   type: 'primary',
+                   label: t('activerecord.actions.project.new'),
+                   href: new_project_path,
+                   icon: 'plus'
   - if @projects.any?
     .row.btn-row
       .col-xs-12
-        = render 'shared/button', type: 'primary', label: t('projects.new-project'), href: new_project_path, icon: 'plus'
+        = render 'shared/button',
+                 type: 'primary',
+                 label: t('activerecord.actions.project.new'),
+                 href: new_project_path,
+                 icon: 'plus'

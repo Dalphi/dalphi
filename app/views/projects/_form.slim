@@ -23,10 +23,7 @@
 
     .col-xs-12
       .btn-row
-        = render 'shared/button',
-                  label: t('back'),
-                  icon: 'chevron-left',
-                  href: project_path(project) if params[:action] == 'edit'
+        = render 'shared/button', type: 'back'
         = render 'shared/button',
                   type: 'submit',
                   label: t('save'),
