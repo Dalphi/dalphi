@@ -8,7 +8,8 @@ ruby:
   button_content = render 'shared/button_content', icon: icon, label: label
 
 - if type == 'submit'
-  button name='button' type='submit' class='btn btn-primary'
+  - disable_with = render('shared/button_content', icon: 'spinner', label: label).tr!('"', "'")
+  button name='button' type='submit' class='btn btn-primary' data-disable-with="#{disable_with}"
     == button_content
 
 - elsif method == 'delete' && tooltip
