@@ -41,7 +41,7 @@ RSpec.describe RawDatum, :type => :model do
     it 'can batch process a zip archive with valid files' do
       expect(RawDatum.all.count).to eq(0)
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                           "#{Rails.root}/spec/fixtures/zip/valid.zip"
+                                          "#{Rails.root}/spec/fixtures/zip/valid.zip"
       expect(batch_result).to eq(
         {
           success: ['valid1.md', 'valid2.md'],
@@ -54,7 +54,7 @@ RSpec.describe RawDatum, :type => :model do
     it 'can batch process a zip archive with partially valid files' do
       expect(RawDatum.all.count).to eq(0)
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                           "#{Rails.root}/spec/fixtures/zip/partially-valid.zip"
+                                          "#{Rails.root}/spec/fixtures/zip/partially-valid.zip"
       expect(batch_result).to eq(
         {
           success: ['valid.md'],
@@ -67,7 +67,7 @@ RSpec.describe RawDatum, :type => :model do
     it 'can batch process a zip archive with invalid files' do
       expect(RawDatum.all.count).to eq(0)
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                           "#{Rails.root}/spec/fixtures/zip/invalid.zip"
+                                          "#{Rails.root}/spec/fixtures/zip/invalid.zip"
       expect(batch_result).to eq(
         {
           success: [],
@@ -75,6 +75,45 @@ RSpec.describe RawDatum, :type => :model do
         }
       )
       expect(RawDatum.all.count).to eq(0)
+    end
+
+    it 'can batch process a zip archive with subdirectories ignoring them' do
+      expect(RawDatum.all.count).to eq(0)
+      batch_result = RawDatum.zip_to_data @raw_datum.project,
+                                          "#{Rails.root}/spec/fixtures/zip/subdirectory.zip"
+      expect(batch_result).to eq(
+        {
+          success: ['file.md'],
+          error: []
+        }
+      )
+      expect(RawDatum.all.count).to eq(1)
+    end
+
+    it 'can batch process a zip archive with Mac encoded file names' do
+      expect(RawDatum.all.count).to eq(0)
+      batch_result = RawDatum.zip_to_data @raw_datum.project,
+                                          "#{Rails.root}/spec/fixtures/zip/mac_encoding.zip"
+      expect(batch_result).to eq(
+        {
+          success: ['äöüß.md'],
+          error: []
+        }
+      )
+      expect(RawDatum.all.count).to eq(1)
+    end
+
+    it 'can batch process a zip archive with Linux encoded file names' do
+      expect(RawDatum.all.count).to eq(0)
+      batch_result = RawDatum.zip_to_data @raw_datum.project,
+                                          "#{Rails.root}/spec/fixtures/zip/linux_encoding.zip"
+      expect(batch_result).to eq(
+        {
+          success: ['äöüß.md'],
+          error: []
+        }
+      )
+      expect(RawDatum.all.count).to eq(1)
     end
   end
 

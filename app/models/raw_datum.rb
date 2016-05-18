@@ -58,19 +58,26 @@ class RawDatum < ApplicationRecord
     batch_result = { success: [], error: [] }
     Zip::File.open(zip) do |zipfile|
       zipfile.each do |file|
-        filename = file.name
-        zipfile.extract(file, "#{temp_dir}/#{filename}")
+        filename = file.to_s
+        next if filename =~ /\//
+        zipfile.extract(filename, "#{temp_dir}/#{filename}")
         raw_datum = RawDatum.new(
           project: project,
           shape: SHAPES.first,
-          data: File.open("#{temp_dir}/#{filename}")
+          data: File.open("#{temp_dir}/#{filename.force_encoding('utf-8')}")
         )
-        if raw_datum.save
-          batch_result[:success] << filename
-        else
-          batch_result[:error] << filename
-        end
+        batch_result = process_raw_datum(raw_datum, filename, batch_result)
       end
+    end
+    batch_result
+  end
+
+  def self.process_raw_datum(raw_datum, filename, batch_result)
+    encoded_filename = ActiveSupport::Multibyte::Unicode.normalize(filename)
+    if raw_datum.save
+      batch_result[:success] << encoded_filename
+    else
+      batch_result[:error] << encoded_filename
     end
     batch_result
   end
