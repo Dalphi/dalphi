@@ -2,15 +2,16 @@ class ProjectsController < ApplicationController
   include ServiceRoles
 
   before_action :set_project, only: [
-    :show,
-    :edit,
-    :update,
     :destroy,
-    :update_service
+    :edit,
+    :show,
+    :update_service,
+    :update
   ]
   before_action :set_available_services, only: [
     :edit,
-    :new
+    :new,
+    :show
   ]
   before_action :set_roles, only: [:show] # defined in 'cencerns/service_roles.rb'
 
@@ -23,7 +24,7 @@ class ProjectsController < ApplicationController
   def show
     @project_services = {}
     @roles.each do |role|
-      @project_services[role] = [@project.send("#{role}_service")]
+      @project_services[role] = @project.send("#{role}_service")
     end
   end
 
