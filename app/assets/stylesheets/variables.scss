@@ -34,6 +34,7 @@ $h3-font-size: 1.375rem;
 $h4-font-size: 1.125rem;
 $h5-font-size: 1rem;
 $h6-font-size: .875rem;
+$input-label-margin-bottom: .5rem;
 $navbar-padding-horizontal-md-up: 1.563rem;
 $navbar-padding-horizontal: 1rem;
 $navbar-padding-vertical: .5rem;
@@ -49,11 +50,14 @@ $default-transition-duration: .5s;
 // global definitions
 $navigation-box-shadow: .3125rem $color-6;
 $btn-row-margin: .25rem;
-$td-controls-width: 7.813rem;
+$td-controls-width: 12rem;
 $alert-button-top: .8rem;
 $input-boolean-margin-right: .25rem;
 $gravatar-border-radius: 8rem;
 $form-label-margin-bottom: .5rem;
+
+// projects
+$projects-list-group-margin-top: -.4rem;
 
 // services
 $services-service-search-margin-bottom: 1rem;

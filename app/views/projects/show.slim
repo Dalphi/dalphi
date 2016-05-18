@@ -1,10 +1,29 @@
-p#notice = notice
-p
-  strong Title:
-  = @project.title
-p
-  strong Description:
-  = @project.description
-= link_to 'Edit', edit_project_path(@project)
-'|
-= link_to 'Back', projects_path
+.container.projects
+  .row
+    .col-xs-12
+      h2
+        = @project.title
+      p
+        - if @project.description.empty?
+          i
+            = t('projects.blank-slate.no-description')
+        - else
+          = @project.description
+
+  .row.row-eq-height
+    - @roles.each do |role|
+      = render 'services/shared/card',
+               services: @project_services,
+              role: role,
+              show_details: false
+
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button',
+               label: t('back'),
+               icon: 'chevron-left',
+               href: projects_path
+      = render 'shared/button',
+               label: t('edit'),
+               icon: 'edit',
+               href: edit_project_path(@project)

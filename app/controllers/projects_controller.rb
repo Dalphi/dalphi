@@ -1,5 +1,18 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  include ServiceRoles
+
+  before_action :set_project, only: [
+    :show,
+    :edit,
+    :update,
+    :destroy,
+    :update_service
+  ]
+  before_action :set_available_services, only: [
+    :edit,
+    :new
+  ]
+  before_action :set_roles, only: [:show] # defined in 'cencerns/service_roles.rb'
 
   # GET /projects
   def index
@@ -8,6 +21,10 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    @project_services = {}
+    @roles.each do |role|
+      @project_services[role] = [@project.send("#{role}_service")]
+    end
   end
 
   # GET /projects/new
@@ -21,7 +38,7 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(params_with_service_instances)
     @project.user = current_user
     if @project.save
       redirect_to project_raw_data_path(@project), notice: I18n.t('projects.action.create.success')
@@ -33,8 +50,8 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params)
-      redirect_to projects_path, notice: I18n.t('projects.action.update.success')
+    if @project.update(params_with_service_instances)
+      redirect_to project_path(@project), notice: I18n.t('projects.action.update.success')
     else
       flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :edit
@@ -53,8 +70,36 @@ class ProjectsController < ApplicationController
       @project = Project.find(params[:id])
     end
 
+    def set_available_services
+      @available_services = {
+        active_learning: Service.where(role: :active_learning),
+        bootstrap: Service.where(role: :bootstrap),
+        machine_learning: Service.where(role: :machine_learning)
+      }
+    end
+
+    def params_with_service_instances
+      new_params = project_params
+
+      [ :active_learning_service,
+        :bootstrap_service,
+        :machine_learning_service ].each do |service_symbol|
+        service_instance = Service.find_by_id(project_params[service_symbol])
+        new_params[service_symbol] = service_instance
+      end
+
+      new_params
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:title, :description, :data)
+      params.require(:project).permit(
+        :active_learning_service,
+        :bootstrap_service,
+        :data,
+        :description,
+        :machine_learning_service,
+        :title
+      )
     end
 end

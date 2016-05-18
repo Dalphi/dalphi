@@ -4,16 +4,28 @@ ruby:
   label = '' unless defined?(label) && label
   confirm = '' unless defined?(confirm) && confirm
   method = 'get' unless defined?(method) && method
+  tooltip = false unless defined?(tooltip) && tooltip
   button_content = render 'shared/button_content', icon: icon, label: label
 
 - if type == 'submit'
   button name='button' type='submit' class='btn btn-primary'
     == button_content
 
-- elsif method == 'delete'
+- elsif method == 'delete' && tooltip
+  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{t('tooltip.links.' + tooltip)}"
+    == button_content
+
+- elsif method == 'delete' && !tooltip
   a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' rel='nofollow'
+    == button_content
+
+- elsif tooltip
+  a.btn class="btn-#{type}" href="#{href}" data-toggle='tooltip' data-placement='bottom' title="#{t('tooltip.links.' + tooltip)}"
     == button_content
 
 - else
   a.btn class="btn-#{type}" href="#{href}"
     == button_content
+
+coffee:
+  $('[data-toggle="tooltip"]').tooltip()

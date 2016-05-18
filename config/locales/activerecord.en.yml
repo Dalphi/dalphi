@@ -19,6 +19,17 @@ en:
         shape: shape
     errors:
       models:
+        project:
+          attributes:
+            active_learning_service:
+              no_service: the given active learning service is not recognized
+              wrong_service: the given service is not a active learning service
+            bootstrap_service:
+              no_service: the given bootstrap service is not recognized
+              wrong_service: the given service is not a bootstrap service
+            machine_learning_service:
+              no_service: the given machine learning service is not recognized
+              wrong_service: the given service is not a machine learning service
         service:
           attributes:
             url:

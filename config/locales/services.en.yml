@@ -11,3 +11,10 @@ en:
     error-searching: An error occured while searching for this service
     form:
       url-label-text: '* Address'
+    name:
+      one: Service
+      other: Services
+    names:
+      active-learning: Active Learning
+      bootstrap: Bootstrap
+      machine-learning: Machine Learning

@@ -4,7 +4,7 @@
       .card
         ul.list-group.list-group-flash
         - @role_services.each do |role_service|
-          = render 'services/shared/service', service: role_service
+          = render 'shared/services/item', service: role_service
       coffee:
         window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()
 
