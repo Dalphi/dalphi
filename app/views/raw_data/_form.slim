@@ -6,5 +6,8 @@
         = f.input :data, as: :file
   .row.btn-row
     .col-xs-12
-      = render 'shared/button', label: t('back'), icon: 'chevron-left', href: project_raw_data_path(project)
-      = render 'shared/button', type: 'submit', label: t('save'), icon: 'check'
+      = render 'shared/button', type: 'back'
+      = render 'shared/button',
+               type: 'submit',
+               label: t('save'),
+               icon: 'check'

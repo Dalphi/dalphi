@@ -14,8 +14,18 @@
                 td = raw_datum.data_file_name
                 td = raw_datum.shape
                 td.controls
-                  = render 'shared/button', type: 'link', href: edit_project_raw_datum_path(@project, raw_datum), icon: 'edit'
-                  = render 'shared/button', type: 'link', href: project_raw_datum_path(@project, raw_datum), icon: 'times', method: 'delete', confirm: t('delete-confirm')
+                  = render 'shared/button',
+                           type: 'link',
+                           href: edit_project_raw_datum_path(@project, raw_datum),
+                           icon: 'edit',
+                           tooltip: t('activerecord.actions.raw-datum.edit')
+                  = render 'shared/button',
+                           type: 'link',
+                           href: project_raw_datum_path(@project, raw_datum),
+                           icon: 'times',
+                           method: 'delete',
+                           confirm: t('delete-confirm'),
+                           tooltip: t('activerecord.actions.raw-datum.delete')
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()
       - else
@@ -25,12 +35,19 @@
           p.lead
             = t('raw-data.blank-slate.text')
           hr.m-y-2
-          = render 'shared/button', type: 'primary', label: t('raw_data.new-datum'), href: new_project_raw_datum_path(@project), icon: 'plus'
+          = render 'shared/button',
+                   type: 'primary',
+                   label: t('activerecord.actions.raw-datum.new'),
+                   href: new_project_raw_datum_path(@project),
+                   icon: 'plus'
         .row.btn-row
           .col-xs-12
-             = render 'shared/button', label: t('back'), href: projects_path, icon: 'chevron-left'
+             = render 'shared/button', type: 'back'
   - if @raw_data.any?
     .row.btn-row
       .col-xs-12
-         = render 'shared/button', label: t('back'), href: projects_path, icon: 'chevron-left'
-         = render 'shared/button', type: 'primary', label: t('raw_data.new-datum'), href: new_project_raw_datum_path(@project), icon: 'plus'
+         = render 'shared/button', type: 'back'
+         = render 'shared/button',
+                  type: 'primary',
+                  label: t('activerecord.actions.raw-datum.new'),
+                  href: new_project_raw_datum_path(@project), icon: 'plus'

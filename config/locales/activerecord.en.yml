@@ -1,5 +1,17 @@
 en:
   activerecord:
+    actions:
+      user:
+        edit: Edit user profile
+        sign-out: Sign out
+      project:
+        new: New project
+        delete: Delete project
+        edit: Edit project
+      raw-datum:
+        new: New raw datum
+        edit: Edit raw datum
+        delete: Delete raw datum
     models:
       project:
         one: project
@@ -33,6 +45,6 @@ en:
         service:
           attributes:
             url:
-              regex_mismatch: "the given URL doesn\'t start with the HTTP protocol or contains whitespace"
+              regex_mismatch: "the given URL does not start with the HTTP protocol or contains whitespace"
               isNil: the given URL must not be nil
-              badHttpResponse: "the given URL doesn\'t respond"
+              badHttpResponse: "the given URL does not respond"

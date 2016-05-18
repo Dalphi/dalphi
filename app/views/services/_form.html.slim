@@ -15,10 +15,7 @@
         = f.input :url, readonly: true
   .row.btn-row
     .col-xs-12
-      = render 'shared/button',
-               href: services_path(service),
-               label: t('back'),
-               icon: 'chevron-left'
+      = render 'shared/button', type: 'back'
       = render 'shared/button',
                method: 'delete',
                confirm: t('delete-confirm'),

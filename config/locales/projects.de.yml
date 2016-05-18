@@ -1,9 +1,0 @@
-de:
-  projects:
-    action:
-      create:
-        success: Projekt wurde erfolgreich erstellt.
-      update:
-        success: Projekt wurde erfolgreich aktualisiert.
-      destroy:
-        success: Projekt wurde erfolgreich entfernt.

@@ -19,11 +19,12 @@
 
   .row.btn-row
     .col-xs-12
+      = render 'shared/button', type: 'back'
       = render 'shared/button',
-               label: t('back'),
-               icon: 'chevron-left',
-               href: projects_path
+               label: t('activerecord.actions.raw-datum.edit'),
+               icon: 'edit',
+               href: project_raw_data_path(@project)
       = render 'shared/button',
-               label: t('edit'),
+               label: t('activerecord.actions.project.edit'),
                icon: 'edit',
                href: edit_project_path(@project)
