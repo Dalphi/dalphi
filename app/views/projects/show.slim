@@ -12,10 +12,10 @@
 
   .row.row-eq-height
     - @roles.each do |role|
-      = render 'services/shared/card',
+      = render 'projects/service_card',
+               project: @project,
                services: @project_services,
-              role: role,
-              show_details: false
+               role: role
 
     coffee:
       window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()

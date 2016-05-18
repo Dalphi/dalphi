@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
   def show
     @project_services = {}
     @roles.each do |role|
-      @project_services[role] = [@project.send("#{role}_service")]
+      @project_services[role] = @project.send("#{role}_service")
     end
   end
 

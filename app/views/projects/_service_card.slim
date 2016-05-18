@@ -1,0 +1,16 @@
+.col-xs-12.col-lg-4
+  .card
+    h3.card-header
+      = t("enums.services.roles.#{role}")
+
+    - if services[role]
+      ul.list-group.list-group-flash
+        = render 'services/shared/item', service: services[role]
+
+    - else
+      .card-block
+        h4.card-titleo
+          = t('projects.service-cards.blank-slate.title')
+        p.card-text
+          - link = link_to 'Edit', edit_project_path(project)
+          == t('projects.service-cards.blank-slate.text', edit_link: link)
