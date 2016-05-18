@@ -77,7 +77,6 @@ class ProjectsController < ApplicationController
         bootstrap: Service.where(role: :bootstrap),
         machine_learning: Service.where(role: :machine_learning)
       }
-      ap @available_services
     end
 
     def params_with_service_instances
