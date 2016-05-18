@@ -16,9 +16,7 @@ class Service < ApplicationRecord
     }
 
   validate do |service|
-    if service.url
-      HttpResponseValidator.validate(service)
-    end
+    HttpResponseValidator.validate(service) if service.url
   end
 
   def self.new_from_url(url)
@@ -32,7 +30,7 @@ class Service < ApplicationRecord
     JSON.parse(data)
   end
 
-  def is_available
+  def is_available?
     UrlResponseChecker::check_response url
   end
 end
