@@ -2,15 +2,16 @@ class ProjectsController < ApplicationController
   include ServiceRoles
 
   before_action :set_project, only: [
-    :show,
-    :edit,
-    :update,
     :destroy,
-    :update_service
+    :edit,
+    :show,
+    :update_service,
+    :update
   ]
   before_action :set_available_services, only: [
     :edit,
-    :new
+    :new,
+    :show
   ]
   before_action :set_roles, only: [:show] # defined in 'cencerns/service_roles.rb'
 
@@ -76,6 +77,7 @@ class ProjectsController < ApplicationController
         bootstrap: Service.where(role: :bootstrap),
         machine_learning: Service.where(role: :machine_learning)
       }
+      ap @available_services
     end
 
     def params_with_service_instances
