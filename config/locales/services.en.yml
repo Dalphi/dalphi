@@ -1,11 +1,13 @@
 en:
   services:
+    blank-slate:
+      title: 'No services available yet'
+      text: 'To add a service use the searchbar above.'
     connectivity:
       available: service is available
       checking: checking service state
       undefined: service state is unknwon
       down: service is currently down
     error-searching: An error occured while searching for this service
-    blank-slate:
-      title: 'No services available yet'
-      text: 'To add a service use the searchbar above.'
+    form:
+      url-label-text: '* Address'

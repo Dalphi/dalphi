@@ -52,19 +52,21 @@ class ServiceAvailableIndicator
 
   checkConnectivityForAllServices: ->
     this.services.forEach (service) ->
+      # _this.showSpinnerAtService(service, true)
       _this.checkConnectivityForService service
 
   changeState: (service, stateIndex) ->
     service.container.forEach ($container, index) ->
-      console.log $container
       if index == stateIndex
         $container.removeClass('no-display')
       else
         $container.addClass('no-display')
 
+      _this.showSpinnerAtService(service, true) if stateIndex == 1
+      _this.showSpinnerAtService(service, false) unless stateIndex == 1
+
   showSpinnerAtService: (service, show) ->
     if show
-      this.changeState(service, 1)
       service.container[1].spin(this.spinnerSettings)
     else
       service.container[1].spin(false)
@@ -75,21 +77,16 @@ class ServiceAvailableIndicator
       url: service.url,
       dataType: 'json'
       beforeSend: ->
-        _this.showSpinnerAtService(service, true)
+        _this.changeState(service, 1)
       success: (data) ->
         _this.handleAjaxResponse(service, data)
       error: ->
-        _this.handleAjaxError service
-      complete: ->
-        _this.showSpinnerAtService(service, false)
+        _this.changeState(service, 3)
 
   handleAjaxResponse: (service, response) ->
     if response.serviceIsAvailable
       this.changeState(service, 0)
     else
       this.changeState(service, 2)
-
-  handleAjaxError: (service) ->
-    this.changeState(service, 3)
 
 window.ServiceAvailableIndicator = ServiceAvailableIndicator

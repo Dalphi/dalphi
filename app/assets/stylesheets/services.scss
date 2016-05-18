@@ -24,6 +24,23 @@
     }
   }
 
+  .address-label {
+    margin-bottom: $form-label-margin-bottom;
+
+    span.title {
+      display: inline-block;
+      margin-right: $form-label-margin-bottom;
+    }
+
+    .connection-details {
+      display: inline-block;
+
+      .spinner {
+        margin-top: $service-check-spinner-non-small-margin-top;
+      }
+    }
+  }
+
   .connection-details {
     position: relative;
 
