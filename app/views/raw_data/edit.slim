@@ -1,2 +1,6 @@
 .container
-  == render 'form', project: @project, raw_datum: @raw_datum, raw_data_shapes: @raw_data_shapes
+  == render 'form',
+            project: @project,
+            raw_datum: @raw_datum,
+            raw_data_shapes: RawDatum::SHAPES,
+            upload_mime_types: RawDatum::MIME_TYPES.values.first + %w(application/zip)
