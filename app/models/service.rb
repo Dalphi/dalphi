@@ -29,4 +29,8 @@ class Service < ApplicationRecord
     data = URI.parse(url).read
     JSON.parse(data)
   end
+
+  def is_available
+    UrlResponseChecker::check_response url
+  end
 end

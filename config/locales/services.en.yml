@@ -1,5 +1,10 @@
 en:
   services:
+    connectivity:
+      available: service is available
+      checking: checking service state
+      undefined: service state is unknwon
+      down: service is currently down
     error-searching: An error occured while searching for this service
     blank-slate:
       title: 'No services available yet'
