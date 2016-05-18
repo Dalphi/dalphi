@@ -37,15 +37,15 @@ class ServicesController < ApplicationController
 
   # GET /services/1/check_connectivity
   def check_connectivity
-    render json: { serviceIsAvailable: @service.is_available }, status: 200
+    # render json: { serviceIsAvailable: @service.is_available }, status: 200
 
     # use this to simulate connectivities:
-    # sleep (500 + rand(3000)) / 1000.0
-    # if [true, false].sample
-    #   render json: { serviceIsAvailable: [true, false].sample }, status: 200
-    # else
-    #   render json: { serviceIsAvailable: [true, false].sample }, status: 500
-    # end
+    sleep (500 + rand(3000)) / 1000.0
+    if [true, false].sample
+      render json: { serviceIsAvailable: [true, false].sample }, status: 200
+    else
+      render json: { serviceIsAvailable: [true, false].sample }, status: 500
+    end
   end
 
   # POST /services

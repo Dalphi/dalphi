@@ -4,13 +4,8 @@ li.list-group-item
     span.label.label-default.pull-xs-right
       = service.version
     br
-    small.connection-details data-url="#{check_connectivity_path(service)}"
-      .connectivity-sign.available.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('services.connectivity.available')}"
-        = fa_icon 'check-circle'
-      .connectivity-sign.checking data-toggle='tooltip' data-placement='bottom' title="#{t('services.connectivity.checking')}"
-        / = fa_icon 'question-circle'
-      .connectivity-sign.down.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('services.connectivity.down')}"
-        = fa_icon 'exclamation-circle'
-      .connectivity-sign.undefined.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('services.connectivity.undefined')}"
-        = fa_icon 'question-circle'
-      = service.url
+    
+    small
+      = render 'services/shared/connectivity_sign',
+               service_instance: service,
+               child_content: service.url
