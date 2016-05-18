@@ -26,6 +26,10 @@
 
   .connection-details {
     position: relative;
+
+    .no-display {
+      display: none;
+    }
   }
 
   .connectivity-sign {
