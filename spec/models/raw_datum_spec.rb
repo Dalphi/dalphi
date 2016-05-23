@@ -77,17 +77,30 @@ RSpec.describe RawDatum, :type => :model do
       expect(RawDatum.all.count).to eq(0)
     end
 
-    it 'can batch process a zip archive with subdirectories ignoring them' do
+    it 'can batch process a zip archive with subdirectories' do
       expect(RawDatum.all.count).to eq(0)
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                          "#{Rails.root}/spec/fixtures/zip/subdirectory.zip"
+                                          "#{Rails.root}/spec/fixtures/zip/subdirectory1.zip"
       expect(batch_result).to eq(
         {
-          success: ['file.md'],
+          success: ['root_file.md', 'subdir∕file.md'], # be aware that the slash is U+2215
           error: []
         }
       )
-      expect(RawDatum.all.count).to eq(1)
+      expect(RawDatum.all.count).to eq(2)
+    end
+
+    it 'can batch process a zip archive with subdirectories' do
+      expect(RawDatum.all.count).to eq(0)
+      batch_result = RawDatum.zip_to_data @raw_datum.project,
+                                          "#{Rails.root}/spec/fixtures/zip/subdirectory2.zip"
+      expect(batch_result).to eq(
+        {
+          success: ['valid1.md', 'subdir∕valid2.md'], # be aware that the slash is U+2215
+          error: ['invalid1.bin', 'subdir∕invalid2.bin'] # be aware that the slash is U+2215
+        }
+      )
+      expect(RawDatum.all.count).to eq(2)
     end
 
     it 'can batch process a zip archive with Mac encoded file names' do
