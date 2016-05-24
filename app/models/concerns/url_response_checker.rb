@@ -5,8 +5,7 @@ module UrlResponseChecker
 
   def self.check_response(url)
     uri = URI.parse(url)
-    ap Rails.application.config.dalphi
-    timeout = Rails.application.config.dalphi['timeouts']['url-response-checker'].to_i
+    timeout = Rails.configuration.x.dalphi['timeouts']['url-response-checker']
 
     Net::HTTP.new(uri.hostname, uri.port) do |http|
       http.open_timeout = timeout
