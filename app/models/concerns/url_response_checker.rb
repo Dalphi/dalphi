@@ -6,10 +6,14 @@ module UrlResponseChecker
   extend ActiveSupport::Concern
 
   def self.check_response(url)
-    case Net::HTTP.get_response(URI.parse(url))
-      when Net::HTTPSuccess then true
-      when Net::HTTPRedirection then true
-      else false
+    uri = URI.parse(url)
+    Net::HTTP.new(uri.hostname, uri.port) do |http|
+      http.open_timeout = 60
+      case http.request_get(uri.request_uri)
+        when Net::HTTPSuccess then true
+        when Net::HTTPRedirection then true
+        else false
+      end
     end
   rescue
     false
