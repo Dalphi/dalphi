@@ -1,0 +1,11 @@
+test:
+  timeouts:
+    url-response-checker: 3
+
+development:
+  timeouts:
+    url-response-checker: 3
+
+production:
+  timeouts:
+    url-response-checker: 20
