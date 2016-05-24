@@ -2,8 +2,15 @@
   .row
     .col-xs-12
       .form-inputs
-        = f.input :shape, as: :select, collection: raw_data_shapes, selected: raw_data_shapes.first, input_html: { class: 'c-select' }
-        = f.input :data, as: :file
+        = f.input :shape,
+                  as: :select,
+                  collection: raw_data_shapes,
+                  selected: raw_data_shapes.first,
+                  input_html: { class: 'c-select' }
+        = f.input :data,
+                  as: :file,
+                  input_html: { multiple: true,
+                                accept: upload_mime_types.join(',') }
   .row.btn-row
     .col-xs-12
       = render 'shared/button', type: 'back'

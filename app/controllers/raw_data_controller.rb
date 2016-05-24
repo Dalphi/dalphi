@@ -1,7 +1,6 @@
 class RawDataController < ApplicationController
   before_action :set_raw_datum, only: [:show, :edit, :update, :destroy]
   before_action :set_project
-  before_action :set_raw_data_shapes
 
   # GET /raw_data
   def index
@@ -19,13 +18,14 @@ class RawDataController < ApplicationController
 
   # POST /raw_data
   def create
-    @raw_datum = RawDatum.new(raw_datum_params)
-    @raw_datum.project = @project
-    if @raw_datum.save
-      redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.create.success')
-    else
+    data = raw_datum_params[:data][1..-1]
+    batch_result = RawDatum.batch_process @project, data
+    if data.size == 0 || batch_result[:success].empty?
       flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :new
+    else
+      redirect_to project_raw_data_path(@project),
+                  notice: I18n.t('raw-data.action.create.success')
     end
   end
 
@@ -55,12 +55,8 @@ class RawDataController < ApplicationController
       @project = Project.find(params[:project_id])
     end
 
-    def set_raw_data_shapes
-      @raw_data_shapes = RawDatum::SHAPES
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def raw_datum_params
-      params.require(:raw_datum).permit(:shape, :data)
+      params.require(:raw_datum).permit(:shape, data: [])
     end
 end
