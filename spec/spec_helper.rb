@@ -99,7 +99,7 @@ RSpec.configure do |config|
   config.before(:each) do
     stub_request(:get, 'http://www.google.com/').
       with(:headers => {'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'www.google.com', 'User-Agent' => 'Ruby'}).
-      to_return(status: 200, body: '', headers: {})
+      to_return(status: 302, body: '', headers: {})
     stub_request(:get, 'http://petstore.swagger.io/v2/swagger.json').
       with(:headers => {'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'petstore.swagger.io', 'User-Agent' => 'Ruby'}).
       to_return(status: 200, body: '', headers: {})
@@ -114,12 +114,12 @@ RSpec.configure do |config|
       to_return(status: 200, body: '', headers: {})
     stub_request(:get, 'http://g.co/').
       with(:headers => {'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'g.co', 'User-Agent' => 'Ruby'}).
-      to_return(status: 200, body: '', headers: {})
+      to_return(status: 302, body: '', headers: {})
     stub_request(:get, 'http://www.google.org/').
       with(:headers => {'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'www.google.org', 'User-Agent' => 'Ruby'}).
-      to_return(status: 200, body: '', headers: {})
+      to_return(status: 302, body: '', headers: {})
     stub_request(:get, 'http://www.google.de/').
       with(:headers => {'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'www.google.de', 'User-Agent' => 'Ruby'}).
-      to_return(status: 200, body: '', headers: {})
+      to_return(status: 302, body: '', headers: {})
   end
 end
