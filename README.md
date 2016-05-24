@@ -17,7 +17,7 @@ Dalphi - Active Learning Platform for Human Interaction
 
 ```
 docker build -t dalphi .
-docker run -it -p 3000:3000 dalphi
+docker run -it -p 3000-3003:3000-3003 dalphi
 ```
 
 ### Starting for development
