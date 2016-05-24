@@ -1,0 +1,2 @@
+timeouts:
+  url-response-checker: 10

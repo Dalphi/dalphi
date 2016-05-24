@@ -1,14 +1,15 @@
 require 'net/http'
 
-# Original credits: http://blog.inquirylabs.com/2006/04/13/simple-uri-validation/
-
 module UrlResponseChecker
   extend ActiveSupport::Concern
 
   def self.check_response(url)
     uri = URI.parse(url)
+    ap Rails.application.config.dalphi
+    timeout = Rails.application.config.dalphi['timeouts']['url-response-checker'].to_i
+
     Net::HTTP.new(uri.hostname, uri.port) do |http|
-      http.open_timeout = 60
+      http.open_timeout = timeout
       case http.request_get(uri.request_uri)
         when Net::HTTPSuccess then true
         when Net::HTTPRedirection then true
