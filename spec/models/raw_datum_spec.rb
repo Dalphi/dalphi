@@ -27,7 +27,8 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'should have a valid value: text' do
       @raw_datum.shape = 'text'
-      @raw_datum.data = File.new("#{Rails.root}/spec/fixtures/text/lorem.txt")
+      file_path = Rails.root.join('spec/fixtures/text/lorem.txt')
+      @raw_datum.data = File.new(file_path)
       expect(@raw_datum).to be_valid
     end
 
@@ -40,8 +41,9 @@ RSpec.describe RawDatum, :type => :model do
   describe 'zip_to_data' do
     it 'can batch process a zip archive with valid files' do
       expect(RawDatum.all.count).to eq(0)
+      file_path = Rails.root.join('spec/fixtures/zip/valid.zip')
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                          "#{Rails.root}/spec/fixtures/zip/valid.zip"
+                                          file_path
       expect(batch_result).to eq(
         {
           success: ['valid1.md', 'valid2.md'],
@@ -53,8 +55,9 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'can batch process a zip archive with partially valid files' do
       expect(RawDatum.all.count).to eq(0)
+      file_path = Rails.root.join('spec/fixtures/zip/partially-valid.zip')
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                          "#{Rails.root}/spec/fixtures/zip/partially-valid.zip"
+                                          file_path
       expect(batch_result).to eq(
         {
           success: ['valid.md'],
@@ -66,8 +69,9 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'can batch process a zip archive with invalid files' do
       expect(RawDatum.all.count).to eq(0)
+      file_path = Rails.root.join('spec/fixtures/zip/invalid.zip')
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                          "#{Rails.root}/spec/fixtures/zip/invalid.zip"
+                                          file_path
       expect(batch_result).to eq(
         {
           success: [],
@@ -79,8 +83,9 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'can batch process a zip archive with subdirectories ignoring them' do
       expect(RawDatum.all.count).to eq(0)
+      file_path = Rails.root.join('spec/fixtures/zip/subdirectory.zip')
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                          "#{Rails.root}/spec/fixtures/zip/subdirectory.zip"
+                                          file_path
       expect(batch_result).to eq(
         {
           success: ['file.md'],
@@ -92,8 +97,9 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'can batch process a zip archive with Mac encoded file names' do
       expect(RawDatum.all.count).to eq(0)
+      file_path = Rails.root.join('spec/fixtures/zip/mac_encoding.zip')
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                          "#{Rails.root}/spec/fixtures/zip/mac_encoding.zip"
+                                          file_path
       expect(batch_result).to eq(
         {
           success: ['äöüß.md'],
@@ -105,8 +111,9 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'can batch process a zip archive with Linux encoded file names' do
       expect(RawDatum.all.count).to eq(0)
+      file_path = Rails.root.join('spec/fixtures/zip/linux_encoding.zip')
       batch_result = RawDatum.zip_to_data @raw_datum.project,
-                                          "#{Rails.root}/spec/fixtures/zip/linux_encoding.zip"
+                                          file_path
       expect(batch_result).to eq(
         {
           success: ['äöüß.md'],
@@ -120,9 +127,11 @@ RSpec.describe RawDatum, :type => :model do
   describe 'batch_create' do
     it 'can batch process a set of valid files' do
       expect(RawDatum.all.count).to eq(0)
+      file_path_1 = Rails.root.join('spec/fixtures/text/valid1.md')
+      file_path_2 = Rails.root.join('spec/fixtures/text/valid2.md')
       data = [
-        { filename: 'valid1.md', path: "#{Rails.root}/spec/fixtures/text/valid1.md" },
-        { filename: 'valid2.md', path: "#{Rails.root}/spec/fixtures/text/valid2.md" }
+        { filename: 'valid1.md', path: file_path_1 },
+        { filename: 'valid2.md', path: file_path_2 }
       ]
       batch_result = RawDatum.batch_create @raw_datum.project,
                                            data
