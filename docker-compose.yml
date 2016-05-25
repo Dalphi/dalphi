@@ -1,0 +1,22 @@
+web:
+  build: .
+  ports:
+    - '3000:3000'
+worker:
+  build: .
+  command: bundle exec rake jobs:work
+active_learning:
+  build: .
+  command: bash -c 'while true; do nc -l 3001 < spec/fixtures/service_headers/active_learning; done'
+  ports:
+    - '3001:3001'
+bootstrap:
+  build: .
+  command: bash -c 'while true; do nc -l 3002 < spec/fixtures/service_headers/bootstrap; done'
+  ports:
+    - '3002:3002'
+machine_learning:
+  build: .
+  command: bash -c 'while true; do nc -l 3003 < spec/fixtures/service_headers/machine_learning; done'
+  ports:
+    - '3003:3003'

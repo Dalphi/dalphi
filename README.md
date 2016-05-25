@@ -15,9 +15,17 @@ Dalphi - Active Learning Platform for Human Interaction
 
 ### Kickstart with Docker
 
+Start just the Ruby on Rails Webapp with
+
 ```
 docker build -t dalphi .
 docker run -it -p 3000:3000 dalphi
+```
+
+or launch the complete bundle including some example services and a worker with
+
+```
+docker-compose up
 ```
 
 ### Starting for development
