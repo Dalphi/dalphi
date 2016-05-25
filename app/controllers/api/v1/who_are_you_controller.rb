@@ -3,9 +3,9 @@ module API
     class WhoAreYouController < BaseController
       include Swagger::Blocks
 
-      swagger_path '/who_are_you' do
+      swagger_path '/' do
         operation :get do
-          key :description, 'Returns a service description of this webapp'
+          key :description, 'Identifies the service that is operating at this URL'
           key :operationId, 'whoAreYou'
           key :produces, [
             'application/json',
@@ -14,10 +14,10 @@ module API
             'WhoAreYou'
           ]
           response 200 do
-            key :description, 'webapp response'
-          end
-          response :default do
-            key :description, 'unexpected error'
+            key :description, 'service response'
+            schema do
+              key :'$ref', :Service
+            end
           end
         end
       end
@@ -32,8 +32,8 @@ module API
         {
           role: 'webapp',
           title: 'Dalphi',
-          description: "The Ruby on Rails Dalphi webapp\
-                       for user interaction and service intercommunication",
+          description: 'The Ruby on Rails Dalphi webapp ' \
+                       'for user interaction and service intercommunication',
           problem_id: 'ner',
           url: root_url,
           version: '1.0'
