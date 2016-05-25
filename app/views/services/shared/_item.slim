@@ -5,6 +5,7 @@ li.list-group-item
       = service.version
     br
     small
-      = render 'services/shared/connectivity_sign',
-               service_instance: service,
-               children: service.url
+      - if service.id
+        = render 'services/shared/connectivity_sign',
+                 service_instance: service,
+                 children: service.url

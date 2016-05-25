@@ -15,9 +15,10 @@
         .address-label
           span.title
             = t('services.form.url-label-text')
-          = render 'services/shared/connectivity_sign',
-                   service_instance: service,
-                   children: nil
+          - if service.id
+            = render 'services/shared/connectivity_sign',
+                     service_instance: service,
+                     children: nil
         = f.input :url, readonly: true, label: false
 
         coffee:
