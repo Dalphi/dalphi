@@ -81,18 +81,32 @@ RSpec.describe RawDatum, :type => :model do
       expect(RawDatum.all.count).to eq(0)
     end
 
-    it 'can batch process a zip archive with subdirectories ignoring them' do
+    it 'can batch process a zip archive with subdirectories' do
       expect(RawDatum.all.count).to eq(0)
-      file_path = Rails.root.join('spec/fixtures/zip/subdirectory.zip')
+      file_path = Rails.root.join('spec/fixtures/zip/subdirectory1.zip')
       batch_result = RawDatum.zip_to_data @raw_datum.project,
                                           file_path
       expect(batch_result).to eq(
         {
-          success: ['file.md'],
+          success: ['root_file.md', 'subdir∕file.md'], # be aware that the slash is U+2215
           error: []
         }
       )
-      expect(RawDatum.all.count).to eq(1)
+      expect(RawDatum.all.count).to eq(2)
+    end
+
+    it 'can batch process a zip archive with subdirectories' do
+      expect(RawDatum.all.count).to eq(0)
+      file_path = Rails.root.join('spec/fixtures/zip/subdirectory2.zip')
+      batch_result = RawDatum.zip_to_data @raw_datum.project,
+                                          file_path
+      expect(batch_result).to eq(
+        {
+          success: ['valid1.md', 'subdir∕valid2.md'], # be aware that the slash is U+2215
+          error: ['invalid1.bin', 'subdir∕invalid2.bin'] # be aware that the slash is U+2215
+        }
+      )
+      expect(RawDatum.all.count).to eq(2)
     end
 
     it 'can batch process a zip archive with Mac encoded file names' do
@@ -146,9 +160,11 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'can batch process a set of partially valid files' do
       expect(RawDatum.all.count).to eq(0)
+      file_path_1 = Rails.root.join('spec/fixtures/text/valid.md')
+      file_path_2 = Rails.root.join('spec/fixtures/text/invalid.bin')
       data = [
-        { filename: 'valid.md', path: "#{Rails.root}/spec/fixtures/text/valid.md" },
-        { filename: 'invalid.bin', path: "#{Rails.root}/spec/fixtures/text/invalid.bin" }
+        { filename: 'valid.md', path: file_path_1 },
+        { filename: 'invalid.bin', path: file_path_2 }
       ]
       batch_result = RawDatum.batch_create @raw_datum.project,
                                            data
@@ -163,9 +179,11 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'can batch process a set of invalid files' do
       expect(RawDatum.all.count).to eq(0)
+      file_path_1 = Rails.root.join('spec/fixtures/text/invalid1.bin')
+      file_path_2 = Rails.root.join('spec/fixtures/text/invalid2.bin')
       data = [
-        { filename: 'invalid1.bin', path: "#{Rails.root}/spec/fixtures/text/invalid1.bin" },
-        { filename: 'invalid2.bin', path: "#{Rails.root}/spec/fixtures/text/invalid2.bin" },
+        { filename: 'invalid1.bin', path: file_path_1 },
+        { filename: 'invalid2.bin', path: file_path_2 },
       ]
       batch_result = RawDatum.batch_create @raw_datum.project,
                                            data
@@ -187,31 +205,36 @@ RSpec.describe RawDatum, :type => :model do
 
     it 'should be a text file if shape is text' do
       @raw_datum.shape = 'text'
-      @raw_datum.data = File.new("#{Rails.root}/spec/fixtures/text/lorem.txt")
+      file_path = Rails.root.join('spec/fixtures/text/lorem.txt')
+      @raw_datum.data = File.new(file_path)
       expect(@raw_datum).to be_valid
     end
 
     it 'should be a text file if shape is text' do
       @raw_datum.shape = 'text'
-      @raw_datum.data = File.new("#{Rails.root}/spec/fixtures/text/ipsum.txt")
+      file_path = Rails.root.join('spec/fixtures/text/ipsum.txt')
+      @raw_datum.data = File.new(file_path)
       expect(@raw_datum).to be_valid
     end
 
     it 'should be a text file if shape is text' do
       @raw_datum.shape = 'text'
-      @raw_datum.data = File.new("#{Rails.root}/spec/fixtures/image/implisense-logo.png")
+      file_path = Rails.root.join('spec/fixtures/image/implisense-logo.png')
+      @raw_datum.data = File.new(file_path)
       expect(@raw_datum).to be_invalid
     end
 
     it 'should not be a text file if shape not text' do
       @raw_datum.shape = 'image'
-      @raw_datum.data = File.new("#{Rails.root}/spec/fixtures/text/lorem.txt")
+      file_path = Rails.root.join('spec/fixtures/text/lorem.txt')
+      @raw_datum.data = File.new(file_path)
       expect(@raw_datum).to be_invalid
     end
 
     it 'should not be a text file if shape not text' do
       @raw_datum.shape = 'sound'
-      @raw_datum.data = File.new("#{Rails.root}/spec/fixtures/text/lorem.txt")
+      file_path = Rails.root.join('spec/fixtures/text/lorem.txt')
+      @raw_datum.data = File.new(file_path)
       expect(@raw_datum).to be_invalid
     end
   end

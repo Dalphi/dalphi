@@ -67,6 +67,7 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.5.0.beta3'
+  gem 'webmock'
 end
 
 group :production do
