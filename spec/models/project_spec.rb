@@ -60,13 +60,13 @@ RSpec.describe Project, type: :model do
     end
 
     it 'can be a valid AL service' do
-      service = FactoryGirl.create(:service_active_learning)
+      service = FactoryGirl.create(:active_learning_service)
       @project.active_learning_service = service
       expect(@project).to be_valid
     end
 
     it 'can not be an invalid AL service' do
-      service = FactoryGirl.create(:service_bootstrap)
+      service = FactoryGirl.create(:bootstrap_service)
       @project.active_learning_service = service
       expect(@project).to be_invalid
     end
@@ -79,13 +79,13 @@ RSpec.describe Project, type: :model do
     end
 
     it 'can be a valid Bootstrap service' do
-      service = FactoryGirl.create(:service_bootstrap)
+      service = FactoryGirl.create(:bootstrap_service)
       @project.bootstrap_service = service
       expect(@project).to be_valid
     end
 
     it 'can not be an invalid Bootstrap service' do
-      service = FactoryGirl.create(:service_machine_learning)
+      service = FactoryGirl.create(:machine_learning_service)
       @project.bootstrap_service = service
       expect(@project).to be_invalid
     end
@@ -98,13 +98,13 @@ RSpec.describe Project, type: :model do
     end
 
     it 'can be a valid machine learning service' do
-      service = FactoryGirl.create(:service_machine_learning)
+      service = FactoryGirl.create(:machine_learning_service)
       @project.machine_learning_service = service
       expect(@project).to be_valid
     end
 
     it 'can not be an invalid machine learning service' do
-      service = FactoryGirl.create(:service_active_learning)
+      service = FactoryGirl.create(:active_learning_service)
       @project.machine_learning_service = service
       expect(@project).to be_invalid
     end

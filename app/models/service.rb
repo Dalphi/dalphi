@@ -1,7 +1,7 @@
 class Service < ApplicationRecord
   include UrlResponseChecker
 
-  enum role: [ :active_learning, :bootstrap, :machine_learning ]
+  enum role: [ :active_learning, :bootstrap, :machine_learning, :merge ]
   enum problem_id: [ :ner ]
 
   has_many :projects
