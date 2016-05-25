@@ -8,5 +8,5 @@ ADD Gemfile.lock /app/Gemfile.lock
 RUN bundle install --jobs 4
 ADD . /app
 RUN bundle exec rails db:migrate
-CMD bundle exec foreman start
+CMD bundle exec rails s -b 0.0.0.0
 EXPOSE 3000 3001 3002 3003
