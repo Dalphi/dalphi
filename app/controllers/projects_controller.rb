@@ -8,12 +8,12 @@ class ProjectsController < ApplicationController
     :update_service,
     :update
   ]
+  before_action :set_roles, only: [:show] # defined in 'cencerns/service_roles.rb'
   before_action :set_available_services, only: [
     :edit,
     :new,
     :show
   ]
-  before_action :set_roles, only: [:show] # defined in 'cencerns/service_roles.rb'
 
   # GET /projects
   def index
@@ -72,11 +72,11 @@ class ProjectsController < ApplicationController
     end
 
     def set_available_services
-      @available_services = {
-        active_learning: Service.where(role: :active_learning),
-        bootstrap: Service.where(role: :bootstrap),
-        machine_learning: Service.where(role: :machine_learning)
-      }
+      @available_services = {}
+      @roles.each do |role|
+        role_symbol = role.to_sym
+        @available_services[role_symbol] = Service.where(role: role_symbol)
+      end
     end
 
     def params_with_service_instances
