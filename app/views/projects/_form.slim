@@ -14,7 +14,7 @@
       .card
         h3.card-header
           = t('projects.settings.services.headline')
-        - @roles.each do |role|
+        - roles.each do |role|
           = render 'projects/select_service',
                    form: f,
                    project: project,

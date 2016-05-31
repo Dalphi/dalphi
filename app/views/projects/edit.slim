@@ -1,2 +1,5 @@
 .container.projects
-  == render 'form', project: @project, available_services: @available_services
+  == render 'form',
+            available_services: @available_services,
+            project: @project,
+            roles: @roles
