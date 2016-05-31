@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
     :update_service,
     :update
   ]
-  before_action :set_roles # defined in 'cencerns/service_roles.rb'
+  before_action :set_roles # defined in 'concerns/service_roles.rb'
   before_action :set_available_services, only: [
     :edit,
     :new,
