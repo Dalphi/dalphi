@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/plataformatec/devise.git
-  revision: cbbe932ee22947fb7fc741a4da3e6783091c88b0
+  revision: bcdd54cc5ebd3413eeb3d17e3b634e8ace0d09f3
   specs:
     devise (4.1.0)
       bcrypt (~> 3.0)
@@ -69,7 +69,7 @@ GEM
       sass (>= 3.4.19)
     brakeman (3.3.0)
     builder (3.2.2)
-    byebug (9.0.4)
+    byebug (9.0.5)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -155,7 +155,7 @@ GEM
       activesupport (>= 4.0.4)
       loofah (>= 2.0)
       nokogiri (~> 1.6)
-    jbuilder (2.4.1)
+    jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
     jquery-cookie-rails (1.3.1.1)
@@ -352,7 +352,7 @@ GEM
     thread (0.2.2)
     thread_safe (0.3.5)
     tilt (2.0.4)
-    tins (1.10.1)
+    tins (1.10.2)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
