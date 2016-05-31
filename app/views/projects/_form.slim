@@ -14,12 +14,12 @@
       .card
         h3.card-header
           = t('projects.settings.services.headline')
-        - %w(active_learning bootstrap machine_learning).each do |service|
+        - @roles.each do |role|
           = render 'projects/select_service',
                    form: f,
                    project: project,
-                   available_services: available_services[service.to_sym],
-                   service_name: service
+                   available_services: available_services[role.to_sym],
+                   service_name: role
 
     .col-xs-12
       .btn-row
