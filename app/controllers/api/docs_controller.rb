@@ -25,7 +25,7 @@ module API
         key :description, 'Identifies the service that is operating at this URL'
       end
 
-      key :host, 'localhost:3000'
+      key :host, "#{ENV['DOMAIN']}#{":#{ENV['PORT']}" if ENV['PORT'] != ''}"
       key :basePath, '/api/v1'
       key :consumes, ['application/json']
       key :produces, ['application/json']
