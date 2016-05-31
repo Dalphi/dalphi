@@ -1,14 +1,13 @@
 # dalphi
 
-[![Build Status](https://travis-ci.org/implisense/dalphi.svg?branch=master)](https://travis-ci.org/implisense/dalphi)
-[![Code Climate](https://codeclimate.com/github/implisense/dalphi/badges/gpa.svg)](https://codeclimate.com/github/implisense/dalphi)
-[![codebeat badge](https://codebeat.co/badges/c3c6b8d5-8ef4-4a81-9d37-6ee06383fc85)](https://codebeat.co/projects/github-com-implisense-dalphi)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/312f3902da6d4e0687483b51a8bcbe4c)](https://www.codacy.com/app/robert_10/dalphi)
-[![Test Coverage](https://codeclimate.com/github/implisense/dalphi/badges/coverage.svg)](https://codeclimate.com/github/implisense/dalphi/coverage)
-[![Dependency Status](https://gemnasium.com/implisense/dalphi.svg)](https://gemnasium.com/implisense/dalphi)
-[![Issue Count](https://codeclimate.com/github/implisense/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/implisense/dalphi)
+[![Build Status](https://travis-ci.org/Dalphi/dalphi.svg?branch=master)](https://travis-ci.org/dalphi/dalphi)
+[![Dependency Status](https://gemnasium.com/Dalphi/dalphi.svg)](https://gemnasium.com/Dalphi/dalphi)
+[![codebeat badge](https://codebeat.co/badges/c3c6b8d5-8ef4-4a81-9d37-6ee06383fc85)](https://codebeat.co/projects/github-com-dalphi-dalphi)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a177baa4ea244d59202547cd6f8a975)](https://www.codacy.com/app/github_67/dalphi)
+[![Code Climate](https://codeclimate.com/github/Dalphi/dalphi/badges/gpa.svg)](https://codeclimate.com/github/dalphi/dalphi)
+[![Issue Count](https://codeclimate.com/github/Dalphi/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/Dalphi/dalphi)
 
-![Dalphi](https://github.com/implisense/dalphi/blob/master/app/assets/images/dalphi-logo.png)
+![Dalphi](https://github.com/Dalphi/dalphi/blob/master/app/assets/images/dalphi-logo.png)
 Dalphi - Active Learning Platform for Human Interaction
 
 ## Getting started
@@ -41,7 +40,7 @@ rvm use ruby-2.3.1
 Get Dalphi by cloning the official repository.
 
 ```bash
-git clone https://github.com/implisense/dalphi.git
+git clone https://github.com/Dalphi/dalphi.git
 ```
 
 In the cloned repo run the `bundler` in order to install all dependencies.
@@ -82,4 +81,4 @@ The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integratio
 
 ## License
 
-See [LICENSE](https://raw.githubusercontent.com/implisense/dalphi/master/LICENSE).
+See [LICENSE](https://raw.githubusercontent.com/Dalphi/dalphi/master/LICENSE).
