@@ -1,1 +1,3 @@
-/public/api/swagger/* -diff
+public/api/swagger/* -diff
+public/api/swagger/**/* -diff
+*.svg -diff
