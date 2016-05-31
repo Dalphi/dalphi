@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+	"title":	"Test Merge Service",
+	"version":	"1.0",
+	"description":	"A merge dummy service that just implements the Who Are You API",
+	"role":		"merge",
+	"problem_id":	"ner",
+	"url":		"http://localhost:3004"
+}

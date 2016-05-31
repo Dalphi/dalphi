@@ -15,6 +15,10 @@ class ProjectServiceValidator < ActiveModel::Validator
     validate_service(record, 'machine_learning_service')
   end
 
+  def self.validate_merge_service(record)
+    validate_service(record, 'merge_service')
+  end
+
   def self.validate_service(record, type)
     target_service = record.send(type)
     if target_service && target_service.role != type[0..-9]
