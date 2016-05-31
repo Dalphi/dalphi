@@ -1,11 +1,11 @@
 # dalphi
 
 [![Build Status](https://travis-ci.org/Dalphi/dalphi.svg?branch=master)](https://travis-ci.org/dalphi/dalphi)
-[![Code Climate](https://codeclimate.com/github/Dalphi/dalphi/badges/gpa.svg)](https://codeclimate.com/github/dalphi/dalphi)
-[![codebeat badge](https://codebeat.co/badges/c3c6b8d5-8ef4-4a81-9d37-6ee06383fc85)](https://codebeat.co/projects/github-com-dalphi-dalphi)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/312f3902da6d4e0687483b51a8bcbe4c)](https://www.codacy.com/app/robert_10/dalphi)
-[![Test Coverage](https://codeclimate.com/github/Dalphi/dalphi/badges/coverage.svg)](https://codeclimate.com/github/Dalphi/dalphi/coverage)
 [![Dependency Status](https://gemnasium.com/Dalphi/dalphi.svg)](https://gemnasium.com/Dalphi/dalphi)
+[![codebeat badge](https://codebeat.co/badges/c3c6b8d5-8ef4-4a81-9d37-6ee06383fc85)](https://codebeat.co/projects/github-com-dalphi-dalphi)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a177baa4ea244d59202547cd6f8a975)](https://www.codacy.com/app/github_67/dalphi)
+[![Code Climate](https://codeclimate.com/github/Dalphi/dalphi/badges/gpa.svg)](https://codeclimate.com/github/dalphi/dalphi)
+[![Test Coverage](https://codeclimate.com/github/Dalphi/dalphi/badges/coverage.svg)](https://codeclimate.com/github/Dalphi/dalphi/coverage)
 [![Issue Count](https://codeclimate.com/github/Dalphi/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/Dalphi/dalphi)
 
 ![Dalphi](https://github.com/Dalphi/dalphi/blob/master/app/assets/images/dalphi-logo.png)
