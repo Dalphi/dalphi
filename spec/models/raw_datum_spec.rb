@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe RawDatum, :type => :model do
+RSpec.describe RawDatum, type: :model do
   before(:each) do
     @raw_datum = FactoryGirl.build(:raw_datum)
   end

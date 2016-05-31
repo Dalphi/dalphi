@@ -10,6 +10,8 @@ class RawDatum < ApplicationRecord
   SHAPES = MIME_TYPES.keys.map(&:to_s)
 
   belongs_to :project
+  has_many :annotation_documents,
+           dependent: :destroy
   has_attached_file :data
 
   validates :project,
@@ -106,5 +108,9 @@ class RawDatum < ApplicationRecord
       end
     end
     batch_result
+  end
+
+  def size?
+    File.size? self.data.path
   end
 end
