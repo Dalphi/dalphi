@@ -96,11 +96,11 @@ RSpec.describe Service, type: :model do
       expect(@al_service).to be_invalid
     end
 
-    it 'can be active_learning as integer 0' do
+    it 'can be ner as integer 0' do
       problem_id_is_valid @al_service, 0, 0
     end
 
-    it 'can be string active_learning' do
+    it 'can be string ner' do
       problem_id_is_valid @al_service, 'ner', 0
     end
   end

@@ -110,6 +110,25 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  describe 'merge_service' do
+    it 'can be nil' do
+      @project.merge_service = nil
+      expect(@project).to be_valid
+    end
+
+    it 'can be a valid merge service' do
+      service = FactoryGirl.create(:merge_service)
+      @project.merge_service = service
+      expect(@project).to be_valid
+    end
+
+    it 'can not be an invalid merge service' do
+      service = FactoryGirl.create(:active_learning_service)
+      @project.merge_service = service
+      expect(@project).to be_invalid
+    end
+  end
+
   it { should have_many(:raw_data).dependent(:destroy) }
 
   it { should belong_to(:user) }
