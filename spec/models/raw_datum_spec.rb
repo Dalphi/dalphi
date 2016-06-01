@@ -143,7 +143,7 @@ RSpec.describe RawDatum, :type => :model do
                                           file_path
       expect(batch_result).to eq(
         {
-          success: ['root_file.md', 'subdir/file.md'], # be aware that the slash is U+2215
+          success: ['root_file.md', 'subdir/file.md'],
           error: []
         }
       )
@@ -157,8 +157,8 @@ RSpec.describe RawDatum, :type => :model do
                                           file_path
       expect(batch_result).to eq(
         {
-          success: ['valid1.md', 'subdir/valid2.md'], # be aware that the slash is U+2215
-          error: ['invalid1.bin', 'subdir/invalid2.bin'] # be aware that the slash is U+2215
+          success: ['valid1.md', 'subdir/valid2.md'],
+          error: ['invalid1.bin', 'subdir/invalid2.bin']
         }
       )
       expect(RawDatum.all.count).to eq(2)
