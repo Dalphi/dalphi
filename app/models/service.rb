@@ -10,6 +10,7 @@ class Service < ApplicationRecord
     presence: true
 
   validates :url,
+    uniqueness: true,
     format: {
       with: /\Ahttp(|s)\:\/\/\S+\z/,
       message: I18n.t('activerecord.errors.models.service.attributes.url.regex_mismatch')
