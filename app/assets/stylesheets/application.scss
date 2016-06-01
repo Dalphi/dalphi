@@ -39,6 +39,15 @@ body {
   font-family: 'Roboto Light', sans-serif;
   height: 100%;
   width: 100%;
+
+  &.turbolinks-progress-bar::before {
+    // scss-lint:disable ImportantRule
+    background-color: $color-4 !important;
+    border-radius: 1px;
+    box-shadow: 0 0 2px $color-4;
+    height: 2px !important;
+    z-index: 99999;
+  }
 }
 
 body {
