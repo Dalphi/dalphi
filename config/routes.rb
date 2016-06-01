@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :docs, only: [:index]
 
     namespace :v1 do
-      get '/' => 'base#who_are_you'
+      get '/' => 'who_are_you#who_are_you'
     end
   end
 
