@@ -10,5 +10,5 @@
 #= require modernizr
 
 $ ->
-  Turbolinks.enableProgressBar();
+  Turbolinks.enableProgressBar()
   new FastClick(document.body)
