@@ -11,6 +11,7 @@ class Project < ApplicationRecord
              foreign_type: 'machine_learning_service'
   has_many :raw_data,
            dependent: :destroy
+  has_many :annotation_documents
 
   validates :title,
     presence: true

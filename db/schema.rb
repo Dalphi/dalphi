@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531102941) do
+ActiveRecord::Schema.define(version: 20160601124141) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.integer  "chunk_offset"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 20160531102941) do
     t.integer  "content_file_size"
     t.datetime "content_updated_at"
     t.integer  "raw_datum_id"
+    t.integer  "project_id"
+    t.index ["project_id", "content_file_name"], name: "index_annotation_documents_on_project_id_and_content_file_name", unique: true
+    t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
   end
 
@@ -52,9 +55,11 @@ ActiveRecord::Schema.define(version: 20160531102941) do
     t.integer  "active_learning_service_id"
     t.integer  "bootstrap_service_id"
     t.integer  "machine_learning_service_id"
+    t.integer  "merge_service_id"
     t.index ["active_learning_service_id"], name: "index_projects_on_active_learning_service_id"
     t.index ["bootstrap_service_id"], name: "index_projects_on_bootstrap_service_id"
     t.index ["machine_learning_service_id"], name: "index_projects_on_machine_learning_service_id"
+    t.index ["merge_service_id"], name: "index_projects_on_merge_service_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

@@ -35,9 +35,12 @@ en:
           attributes:
             chunk_offset:
               too_large: the chunk_offset is larger than the related raw_datum byte size
+            content:
+              type: file type must match raw-datum\'s type
             options:
               empty: the options array can not be empty
               too-few-options: the options array has to contain at least two options
+              type: options should be of type string
             label:
               not-in-options: the selected label must be an option for this annotation document
         project:

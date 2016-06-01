@@ -7,6 +7,7 @@ class RawDatum < ApplicationRecord
       'text/rtf'
     ],
   }
+  MIME_TYPES_LIST = MIME_TYPES.values.flatten
   SHAPES = MIME_TYPES.keys.map(&:to_s)
 
   belongs_to :project
@@ -26,7 +27,7 @@ class RawDatum < ApplicationRecord
 
   validates_attachment :data,
     content_type: {
-      content_type: MIME_TYPES.values.first
+      content_type: MIME_TYPES_LIST
     }
 
   def self.batch_process(project, data)
