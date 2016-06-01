@@ -9,6 +9,13 @@ GIT
       responders
       warden (~> 1.2.3)
 
+GIT
+  remote: https://github.com/rails/turbolinks.git
+  revision: 37a7c296232d20a61bd1946f600da7f2009189db
+  specs:
+    turbolinks (3.0.0)
+      coffee-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -52,7 +59,7 @@ GEM
     addressable (2.4.0)
     arel (7.0.0)
     ast (2.2.0)
-    autoprefixer-rails (6.3.6.1)
+    autoprefixer-rails (6.3.6.2)
       execjs
     awesome_print (1.6.1)
     axiom-types (0.1.1)
@@ -353,8 +360,6 @@ GEM
     thread_safe (0.3.5)
     tilt (2.0.4)
     tins (1.10.2)
-    turbolinks (2.5.3)
-      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -438,7 +443,7 @@ DEPENDENCIES
   sqlite3
   swagger-docs
   therubyracer
-  turbolinks
+  turbolinks!
   uglifier
   unicorn
   web-console

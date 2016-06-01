@@ -8,12 +8,12 @@ class ProjectsController < ApplicationController
     :update_service,
     :update
   ]
+  before_action :set_roles # defined in 'concerns/service_roles.rb'
   before_action :set_available_services, only: [
     :edit,
     :new,
     :show
   ]
-  before_action :set_roles, only: [:show] # defined in 'cencerns/service_roles.rb'
 
   # GET /projects
   def index
@@ -72,19 +72,18 @@ class ProjectsController < ApplicationController
     end
 
     def set_available_services
-      @available_services = {
-        active_learning: Service.where(role: :active_learning),
-        bootstrap: Service.where(role: :bootstrap),
-        machine_learning: Service.where(role: :machine_learning)
-      }
+      @available_services = {}
+      @roles.each do |role|
+        role_symbol = role.to_sym
+        @available_services[role_symbol] = Service.where(role: role_symbol)
+      end
     end
 
     def params_with_service_instances
       new_params = project_params
 
-      [ :active_learning_service,
-        :bootstrap_service,
-        :machine_learning_service ].each do |service_symbol|
+      @roles.each do |role|
+        service_symbol = "#{role}_service".to_sym
         service_instance = Service.find_by_id(project_params[service_symbol])
         new_params[service_symbol] = service_instance
       end
@@ -100,6 +99,7 @@ class ProjectsController < ApplicationController
         :data,
         :description,
         :machine_learning_service,
+        :merge_service,
         :title
       )
     end
