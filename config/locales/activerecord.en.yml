@@ -31,6 +31,15 @@ en:
         shape: shape
     errors:
       models:
+        annotation_document:
+          attributes:
+            chunk_offset:
+              too_large: the chunk_offset is larger than the related raw_datum byte size
+            options:
+              empty: the options array can not be empty
+              too-few-options: the options array has to contain at least two options
+            label:
+              not-in-options: the selected label must be an option for this annotation document
         project:
           attributes:
             active_learning_service:
