@@ -1,4 +1,5 @@
 .container.projects
   == render 'form',
+            available_services: @available_services,
             project: @project,
-            available_services: @available_services
+            roles: @roles

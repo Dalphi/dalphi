@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20160601124141) do
     t.integer  "data_file_size"
     t.datetime "data_updated_at"
     t.integer  "project_id"
+    t.string   "filename"
     t.index ["project_id"], name: "index_raw_data_on_project_id"
   end
 

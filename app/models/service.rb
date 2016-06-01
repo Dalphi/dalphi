@@ -1,7 +1,34 @@
 class Service < ApplicationRecord
   include UrlResponseChecker
+  include Swagger::Blocks
 
-  enum role: [ :active_learning, :bootstrap, :machine_learning ]
+  swagger_schema :Service do
+    property :role do
+      key :type, :string
+    end
+
+    property :title do
+      key :type, :string
+    end
+
+    property :description do
+      key :type, :string
+    end
+
+    property :problem_id do
+      key :type, :string
+    end
+
+    property :url do
+      key :type, :string
+    end
+
+    property :version do
+      key :type, :string
+    end
+  end
+
+  enum role: [ :active_learning, :bootstrap, :machine_learning, :merge ]
   enum problem_id: [ :ner ]
 
   has_many :projects
@@ -10,6 +37,7 @@ class Service < ApplicationRecord
     presence: true
 
   validates :url,
+    uniqueness: true,
     format: {
       with: /\Ahttp(|s)\:\/\/\S+\z/,
       message: I18n.t('activerecord.errors.models.service.attributes.url.regex_mismatch')

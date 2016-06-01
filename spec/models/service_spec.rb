@@ -6,15 +6,17 @@ end
 
 RSpec.describe Service, type: :model do
   before(:each) do
-    @al_service = FactoryGirl.build(:service_active_learning)
-    @ml_service = FactoryGirl.build(:service_machine_learning)
-    @bootstrap_service = FactoryGirl.build(:service_bootstrap)
+    @al_service = FactoryGirl.build(:active_learning_service)
+    @bootstrap_service = FactoryGirl.build(:bootstrap_service)
+    @ml_service = FactoryGirl.build(:machine_learning_service)
+    @merge_service = FactoryGirl.build(:merge_service)
   end
 
   it 'should have a valid factory' do
     expect(@al_service).to be_valid
     expect(@ml_service).to be_valid
     expect(@bootstrap_service).to be_valid
+    expect(@merge_service).to be_valid
   end
 
   describe 'role' do
@@ -40,6 +42,10 @@ RSpec.describe Service, type: :model do
       role_is_valid @al_service, 2, 2
     end
 
+    it 'can be merge as integer 3' do
+      role_is_valid @merge_service, 3, 3
+    end
+
     it 'can be string active_learning' do
       role_is_valid @al_service, 'active_learning', 0
     end
@@ -50,6 +56,10 @@ RSpec.describe Service, type: :model do
 
     it 'can be string machine_learning' do
       role_is_valid @al_service, 'machine_learning', 2
+    end
+
+    it 'can be string merge' do
+      role_is_valid @al_service, 'merge', 3
     end
   end
 
@@ -86,11 +96,11 @@ RSpec.describe Service, type: :model do
       expect(@al_service).to be_invalid
     end
 
-    it 'can be active_learning as integer 0' do
+    it 'can be ner as integer 0' do
       problem_id_is_valid @al_service, 0, 0
     end
 
-    it 'can be string active_learning' do
+    it 'can be string ner' do
       problem_id_is_valid @al_service, 'ner', 0
     end
   end
@@ -146,24 +156,29 @@ RSpec.describe Service, type: :model do
       expect(@al_service).to be_valid
     end
 
-    # the following are locally possible but unreliable with Travis CI
-    # it 'can be a valid local active_learning service dummy' do
-    #   spawn_service_dummy('active_learning', 3101)
-    #   @al_service.url = 'http://localhost:3101'
-    #   expect(@al_service).to be_valid
-    # end
-    #
-    # it 'can be a valid local bootstrap service dummy' do
-    #   spawn_service_dummy('bootstrap', 3102)
-    #   @al_service.url = 'http://localhost:3102'
-    #   expect(@al_service).to be_valid
-    # end
-    #
-    # it 'can be a valid local machine_learning service dummy' do
-    #   spawn_service_dummy('machine_learning', 3103)
-    #   @al_service.url = 'http://localhost:3103'
-    #   expect(@al_service).to be_valid
-    # end
+    it 'should be unique, so that two services with different URLs can exist' do
+      expect(Service.all.size).to eq(0)
+      @al_service.url = 'http://localhost:3000'
+      @al_service.save!
+      expect(Service.all.size).to eq(1)
+      another_al_service = FactoryGirl.build(
+        :active_learning_service,
+        url: 'http://localhost:3001'
+      )
+      expect(another_al_service).to be_valid
+      another_al_service.save!
+      expect(Service.all.size).to eq(2)
+    end
+
+    it 'should be unique, so that two services with the same URL cannot exist' do
+      @al_service.url = 'http://localhost:3000'
+      @al_service.save!
+      another_al_service = FactoryGirl.build(
+        :active_learning_service,
+        url: @al_service.url
+      )
+      expect(another_al_service).to be_invalid
+    end
   end
 
   describe 'title' do

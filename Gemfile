@@ -27,10 +27,10 @@ gem 'rubyzip'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'slim-rails'
-gem 'sprockets-rails', :require => 'sprockets/railtie'
-gem 'swagger-docs'
+gem 'sprockets-rails', require: 'sprockets/railtie'
+gem 'swagger-blocks'
 gem 'therubyracer'
-gem 'turbolinks'
+gem 'turbolinks', git: 'https://github.com/rails/turbolinks.git'
 gem 'uglifier'
 
 group :doc do

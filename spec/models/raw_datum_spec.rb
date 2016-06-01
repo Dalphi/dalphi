@@ -9,6 +9,61 @@ RSpec.describe RawDatum, type: :model do
     expect(@raw_datum).to be_valid
   end
 
+  describe 'filename' do
+    it 'should not be nil' do
+      @raw_datum.filename = nil
+      expect(@raw_datum).to be_invalid
+    end
+
+    it 'should not be empty string' do
+      @raw_datum.filename = ''
+      expect(@raw_datum).to be_invalid
+    end
+
+    it 'should not consist only of whitespace' do
+      @raw_datum.filename = '  '
+      expect(@raw_datum).to be_invalid
+    end
+
+    it 'can be a valid filename' do
+      @raw_datum.filename = 'file.md'
+      expect(@raw_datum).to be_valid
+    end
+
+    it 'can be a path with directories' do
+      @raw_datum.filename = 'directory/file.md'
+      expect(@raw_datum).to be_valid
+    end
+
+    it 'should be unique in the scope of projects and override existing raw_data' do
+      expect(RawDatum.all.size).to eq(0)
+      @raw_datum.filename = 'file1.md'
+      @raw_datum.save!
+      expect(RawDatum.all.size).to eq(1)
+      another_raw_datum = FactoryGirl.build(:raw_datum,
+        filename: 'file2.md',
+        project: @raw_datum.project
+      )
+      another_raw_datum.save!
+      expect(RawDatum.all.size).to eq(2)
+    end
+
+    it 'should be unique in the scope of projects and override existing raw_data' do
+      expect(RawDatum.all.size).to eq(0)
+      @raw_datum.filename = 'file1.md'
+      @raw_datum.save!
+      old_id = @raw_datum.id
+      expect(RawDatum.all.size).to eq(1)
+      another_raw_datum = FactoryGirl.build(:raw_datum,
+        filename: 'file1.md',
+        project: @raw_datum.project
+      )
+      another_raw_datum.save!
+      expect(RawDatum.all.size).to eq(1)
+      expect(old_id != another_raw_datum.id)
+    end
+  end
+
   describe 'shape' do
     it 'should not be nil' do
       @raw_datum.shape = nil
@@ -88,7 +143,7 @@ RSpec.describe RawDatum, type: :model do
                                           file_path
       expect(batch_result).to eq(
         {
-          success: ['root_file.md', 'subdir∕file.md'], # be aware that the slash is U+2215
+          success: ['root_file.md', 'subdir/file.md'],
           error: []
         }
       )
@@ -102,8 +157,8 @@ RSpec.describe RawDatum, type: :model do
                                           file_path
       expect(batch_result).to eq(
         {
-          success: ['valid1.md', 'subdir∕valid2.md'], # be aware that the slash is U+2215
-          error: ['invalid1.bin', 'subdir∕invalid2.bin'] # be aware that the slash is U+2215
+          success: ['valid1.md', 'subdir/valid2.md'],
+          error: ['invalid1.bin', 'subdir/invalid2.bin']
         }
       )
       expect(RawDatum.all.count).to eq(2)
