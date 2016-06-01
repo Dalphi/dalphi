@@ -1,4 +1,7 @@
 en:
+  helpers:
+    submit:
+      edit: 'Edit %{model}'
   activerecord:
     actions:
       user:

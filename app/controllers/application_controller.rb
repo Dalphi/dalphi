@@ -23,8 +23,8 @@ class ApplicationController < ActionController::Base
   def bake_breadcrumbs
     @breadcrumbs = []
     return unless user_signed_in?
-    breadcrumb_bakery = BreadcrumbBakery.new(request.env['PATH_INFO'])
-    @breadcrumbs = breadcrumb_bakery.get_breadcrumbs
+    breadcrumb_bakery = BreadcrumbBakery.new(request)
+    @breadcrumbs = breadcrumb_bakery.breadcrumbs
   end
 
   # This method smells of :reek:UtilityFunction
