@@ -1,4 +1,6 @@
 class AnnotationDocument < ApplicationRecord
+  include Swagger::Blocks
+
   belongs_to :project
   belongs_to :raw_datum
   has_attached_file :content
@@ -8,6 +10,36 @@ class AnnotationDocument < ApplicationRecord
 
   before_validation do
     self.project = raw_datum.project if raw_datum
+  end
+
+  swagger_schema :AnnotationDocument do
+    property :id do
+      key :type, :integer
+    end
+
+    property :chunk_offset do
+      key :type, :integer
+    end
+
+    property :raw_data_id do
+      key :type, :integer
+    end
+
+    # property :type do
+    #   key :type, :string
+    # end
+
+    property :options do
+      key :type, :array
+    end
+
+    property :content do
+      key :type, :text
+    end
+
+    property :label do
+      key :type, :string
+    end
   end
 
   validates :chunk_offset,

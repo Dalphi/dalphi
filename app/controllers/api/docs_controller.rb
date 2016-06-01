@@ -25,6 +25,11 @@ module API
         key :description, 'Identifies the service that is operating at this URL'
       end
 
+      tag do
+        key :name, 'AnnotationDocuments'
+        key :description, 'Listing all interactions with annotation documents'
+      end
+
       key :host, "#{ENV['DOMAIN']}#{":#{ENV['PORT']}" if ENV['PORT'] != ''}"
       key :basePath, '/api/v1'
       key :consumes, ['application/json']
@@ -33,7 +38,9 @@ module API
 
     # A list of all classes that have swagger_* declarations.
     SWAGGERED_CLASSES = [
+      API::V1::AnnotationDocumentsController,
       API::V1::WhoAreYouController,
+      AnnotationDocument,
       Service,
       self,
     ].freeze
