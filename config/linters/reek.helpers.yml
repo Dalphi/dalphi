@@ -6,3 +6,6 @@ FeatureEnvy:
   enabled: false
 TooManyStatements:
   max_statements: 10
+TooManyMethods:
+  max_methods: 25
+

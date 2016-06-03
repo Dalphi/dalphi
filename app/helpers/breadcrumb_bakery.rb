@@ -45,35 +45,47 @@ class BreadcrumbBakery
 
   def labelize(tokens, token)
     token['/'] = ''
-    if is_integer?(token)
-      return predecessor(tokens, token)
-               .singularize
-               .classify
-               .constantize
-               .find(token)
-               .label rescue token
-    elsif is_class?(token)
-      return token
-               .classify
-               .constantize
-               .model_name
-               .human
-               .pluralize
-    elsif is_integer_and_action?(token)
-      token_chunks = token.split('/')
-      id = token_chunks.first
-      action = token_chunks.second
-      model = predecessor(tokens, token)
-                .singularize
-                .classify
-                .constantize
-                .find(id)
-                .label rescue id
-      return I18n.t("helpers.submit.#{action}", model: model)
-    elsif is_action?(token)
-      return I18n.t("helpers.actions.#{token}")
-    end
+    token_predecessor = predecessor(tokens, token)
+    return integer_label(token, token_predecessor) if is_integer?(token)
+    return class_label(token) if is_class?(token)
+    return integer_and_action_label(token, token_predecessor) if is_integer_and_action?(token)
+    return action_label(token) if is_action?(token)
     token
+  end
+
+  def integer_label(integer, token_predecessor)
+    token_predecessor
+      .singularize
+      .classify
+      .constantize
+      .find(integer)
+      .label rescue integer
+  end
+
+  def class_label(token)
+    token
+      .classify
+      .constantize
+      .model_name
+      .human
+      .pluralize
+  end
+
+  def integer_and_action_label(token, token_predecessor)
+    token_chunks = token.split('/')
+    integer = token_chunks.first
+    action = token_chunks.second
+    model = token_predecessor
+              .singularize
+              .classify
+              .constantize
+              .find(integer)
+              .label rescue integer
+    I18n.t("helpers.submit.#{action}", model: model)
+  end
+
+  def action_label(action)
+    I18n.t("helpers.actions.#{action}")
   end
 
   def predecessor(array, item)

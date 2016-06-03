@@ -15,7 +15,6 @@ class ServicesController < ApplicationController
   # GET /services/active_learning
   def role_services
     role = params[:role]
-    raise role.to_s
     raise ActionController::RoutingError.new('Not Found') unless Service.roles.keys.include?(role)
     @role_services = Service.where(role: role)
   end
