@@ -51,26 +51,29 @@ class BreadcrumbBakery
                .classify
                .constantize
                .find(token)
-               .label
+               .label rescue token
     elsif is_class?(token)
       return token
                .classify
                .constantize
                .model_name
                .human
+               .pluralize
     elsif is_integer_and_action?(token)
+      token_chunks = token.split('/')
+      id = token_chunks.first
+      action = token_chunks.second
       model = predecessor(tokens, token)
                 .singularize
                 .classify
                 .constantize
-                .find(token)
-                .label
-      action = token.split('/').second
+                .find(id)
+                .label rescue id
       return I18n.t("helpers.submit.#{action}", model: model)
+    elsif is_action?(token)
+      return I18n.t("helpers.actions.#{token}")
     end
     token
-  #rescue
-  #  token
   end
 
   def predecessor(array, item)
@@ -94,6 +97,10 @@ class BreadcrumbBakery
   def is_integer_and_action?(integer_and_action)
     return integer_and_action if integer_and_action =~ /[0-9]+\/\S+/
     false
+  end
+
+  def is_action?(action)
+    return action if %w(edit new).include?(action)
   end
 
   def breadcrumbs

@@ -107,4 +107,8 @@ class RawDatum < ApplicationRecord
     end
     batch_result
   end
+
+  def label
+    self.filename
+  end
 end
