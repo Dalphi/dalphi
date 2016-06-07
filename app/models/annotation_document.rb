@@ -13,31 +13,49 @@ class AnnotationDocument < ApplicationRecord
   end
 
   swagger_schema :AnnotationDocument do
+    key :required,
+        [
+          :chunk_offset,
+          :raw_data_id,
+          :type,
+          :options,
+          :content
+        ]
+
     property :id do
+      key :description, I18n.t('api.annotation_document.description.id')
       key :type, :integer
     end
 
     property :chunk_offset do
+      key :description, I18n.t('api.annotation_document.description.chunk_offset')
       key :type, :integer
     end
 
     property :raw_data_id do
+      key :description, I18n.t('api.annotation_document.description.raw_data_id')
       key :type, :integer
     end
 
-    # property :type do
-    #   key :type, :string
-    # end
+    property :type do
+      key :description, I18n.t('api.annotation_document.description.type')
+      key :enum, ['text_nominal']
+      key :type, :string
+    end
 
     property :options do
-      key :type, :array
+      key :description, I18n.t('api.annotation_document.description.options')
+      key :pattern, '\[(\"[\w\ ]+\",\ )*(\"[\w\ ]+\")\]'
+      key :type, :string
     end
 
     property :content do
+      key :description, I18n.t('api.annotation_document.description.content')
       key :type, :text
     end
 
     property :label do
+      key :description, I18n.t('api.annotation_document.description.label')
       key :type, :string
     end
   end

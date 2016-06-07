@@ -4,6 +4,10 @@ module API
 
     swagger_root do
       key :swagger, '2.0'
+      key :host, "#{ENV['DOMAIN']}#{":#{ENV['PORT']}" if ENV['PORT'] != ''}"
+      key :basePath, '/api/v1'
+      key :consumes, ['application/json']
+      key :produces, ['application/json']
 
       info do
         key :version, '1'
@@ -29,14 +33,8 @@ module API
         key :name, 'AnnotationDocuments'
         key :description, 'Listing all interactions with annotation documents'
       end
-
-      key :host, "#{ENV['DOMAIN']}#{":#{ENV['PORT']}" if ENV['PORT'] != ''}"
-      key :basePath, '/api/v1'
-      key :consumes, ['application/json']
-      key :produces, ['application/json']
     end
 
-    # A list of all classes that have swagger_* declarations.
     SWAGGERED_CLASSES = [
       API::V1::AnnotationDocumentsController,
       API::V1::WhoAreYouController,

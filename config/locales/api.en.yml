@@ -1,0 +1,11 @@
+en:
+  api:
+    annotation_document:
+      description:
+        chunk_offset: Identifies the position of this chunk within the corresponding raw datum
+        content: Subset of the corresponding raw datum to annotate
+        id: Internal id for DALPHI's database; set after an annotation document was saved
+        label: One of the options an annotator can use as a label for this chunk. This is only set if the annotation document was annotated.
+        options: String array of options
+        raw_data_id: Id of the corresponding raw datum of which this annotation document is a subset of
+        type: Interface type definition
