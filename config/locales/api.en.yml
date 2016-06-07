@@ -1,6 +1,10 @@
 en:
   api:
     annotation_document:
+      create:
+        response-200: annotation document request
+        response-400: parameters for annotation document are not satisfying
+        error: unable to create a new annotation document
       description:
         chunk_offset: Identifies the position of this chunk within the corresponding raw datum
         content: Subset of the corresponding raw datum to annotate
@@ -9,3 +13,9 @@ en:
         options: String array of options
         raw_data_id: Id of the corresponding raw datum of which this annotation document is a subset of
         type: Interface type definition
+      general-errors:
+        parameter-type-mismatch: a given parameter has the wrong type
+      get:
+        response-200: annotation document request
+        response-400: parameters (id) for annotation document are not satisfying
+        error: unable to get an annotation document for the given parameters

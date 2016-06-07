@@ -38,6 +38,7 @@ module API
     SWAGGERED_CLASSES = [
       API::V1::AnnotationDocumentsController,
       API::V1::WhoAreYouController,
+      API::V1::ErrorModel,
       AnnotationDocument,
       Service,
       self,

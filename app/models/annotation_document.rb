@@ -16,20 +16,36 @@ class AnnotationDocument < ApplicationRecord
     key :required,
         [
           :chunk_offset,
-          :raw_data_id,
-          :type,
+          :content,
           :options,
-          :content
+          :raw_data_id,
+          :type
         ]
+
+    property :chunk_offset do
+      key :description, I18n.t('api.annotation_document.description.chunk_offset')
+      key :type, :integer
+    end
+
+    property :content do
+      key :description, I18n.t('api.annotation_document.description.content')
+      key :type, :text
+    end
 
     property :id do
       key :description, I18n.t('api.annotation_document.description.id')
       key :type, :integer
     end
 
-    property :chunk_offset do
-      key :description, I18n.t('api.annotation_document.description.chunk_offset')
-      key :type, :integer
+    property :label do
+      key :description, I18n.t('api.annotation_document.description.label')
+      key :type, :string
+    end
+
+    property :options do
+      key :description, I18n.t('api.annotation_document.description.options')
+      key :pattern, '\[(\"[\w\ ]+\",\ )*(\"[\w\ ]+\")\]'
+      key :type, :string
     end
 
     property :raw_data_id do
@@ -40,22 +56,6 @@ class AnnotationDocument < ApplicationRecord
     property :type do
       key :description, I18n.t('api.annotation_document.description.type')
       key :enum, ['text_nominal']
-      key :type, :string
-    end
-
-    property :options do
-      key :description, I18n.t('api.annotation_document.description.options')
-      key :pattern, '\[(\"[\w\ ]+\",\ )*(\"[\w\ ]+\")\]'
-      key :type, :string
-    end
-
-    property :content do
-      key :description, I18n.t('api.annotation_document.description.content')
-      key :type, :text
-    end
-
-    property :label do
-      key :description, I18n.t('api.annotation_document.description.label')
       key :type, :string
     end
   end

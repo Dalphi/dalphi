@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/' => 'who_are_you#who_are_you'
 
-      resources :annotation_documents, only: [:create]
+      resources :annotation_documents, only: [:create, :get, :update, :destroy]
     end
   end
 
