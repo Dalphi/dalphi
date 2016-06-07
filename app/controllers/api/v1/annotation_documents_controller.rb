@@ -117,8 +117,8 @@ module API
                    validationErrors: @annotation_document.errors.full_messages
                  }
         end
-      # rescue
-      #   return_parameter_type_mismatch
+      rescue ArgumentError
+        return_parameter_type_mismatch
       end
 
       def get
