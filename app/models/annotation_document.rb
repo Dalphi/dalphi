@@ -5,7 +5,7 @@ class AnnotationDocument < ApplicationRecord
   belongs_to :raw_datum
   has_attached_file :content
 
-  enum type: [ :text_nominal ]
+  enum interface_type: [ :text_nominal ]
   serialize :options, Array
 
   before_validation do
@@ -53,8 +53,8 @@ class AnnotationDocument < ApplicationRecord
       key :type, :integer
     end
 
-    property :type do
-      key :description, I18n.t('api.annotation_document.description.type')
+    property :interface_type do
+      key :description, I18n.t('api.annotation_document.description.interface_type')
       key :enum, ['text_nominal']
       key :type, :string
     end
@@ -67,9 +67,9 @@ class AnnotationDocument < ApplicationRecord
   validates :raw_datum,
     presence: true
 
-  validates :type,
+  validates :interface_type,
     presence: true,
-    inclusion: { in: self.types }
+    inclusion: { in: self.interface_types }
 
   validates :options,
     presence: true

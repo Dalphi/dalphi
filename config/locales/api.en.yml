@@ -12,10 +12,10 @@ en:
         label: One of the options an annotator can use as a label for this chunk. This is only set if the annotation document was annotated.
         options: String array of options
         raw_data_id: Id of the corresponding raw datum of which this annotation document is a subset of
-        type: Interface type definition
+        interface_type: Interface type definition
       general-errors:
         parameter-type-mismatch: a given parameter has the wrong type
-      get:
+      show:
         response-200: annotation document request
         response-400: parameters (id) for annotation document are not satisfying
         error: unable to get an annotation document for the given parameters

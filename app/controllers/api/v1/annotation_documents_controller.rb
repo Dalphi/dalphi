@@ -3,9 +3,9 @@ module API
     class AnnotationDocumentsController < BaseController
       include Swagger::Blocks
 
-      before_action :set_annotation_document, only: [:get, :update, :destroy]
+      before_action :set_annotation_document, only: [:show, :update, :destroy]
 
-      swagger_path '/annotation_documents' do
+      swagger_path '/annotation_documents/{id}' do
         operation :get do
           key :comsumes, ['application/json']
           key :description, 'Returns an annotation document'
@@ -21,20 +21,22 @@ module API
           end
 
           response 200 do
-            key :description, I18n.t('api.annotation_document.get.response-200')
+            key :description, I18n.t('api.annotation_document.show.response-200')
             schema do
               key :'$ref', :AnnotationDocument
             end
           end
 
           response 400 do
-            key :description, I18n.t('api.annotation_document.get.response-400')
+            key :description, I18n.t('api.annotation_document.show.response-400')
             schema do
               key :'$ref', :ErrorModel
             end
           end
         end
+      end
 
+      swagger_path '/annotation_documents' do
         operation :post do
           key :comsumes, ['application/json']
           key :description, 'Creates a new annotation document'
@@ -81,7 +83,7 @@ module API
             key :format, :int32
           end
 
-          parameter name: :type do
+          parameter name: :interface_type do
             key :in, :formData
             key :maxLength, 255
             key :required, true
@@ -121,21 +123,30 @@ module API
         return_parameter_type_mismatch
       end
 
-      def get
-        if @annotation_document
-          render json: @annotation_document
-        else
-          render status: 400,
-                 json: {
-                   message: I18n.t('api.annotation_document.get.error')
-                 }
-        end
+      def show
+        render json: return_relevat_attributes
       end
 
       private
 
         def set_annotation_document
           @annotation_document = AnnotationDocument.find(params[:id])
+        rescue #RecordNotFound
+          render status: 400,
+                 json: {
+                   message: I18n.t('api.annotation_document.show.error')
+                 }
+        end
+
+        def return_relevat_attributes
+          {
+            'chunk_offset': @annotation_document.chunk_offset,
+            'id': @annotation_document.id,
+            'label': @annotation_document.label,
+            'options': @annotation_document.options,
+            'raw_data_id': @annotation_document.raw_datum_id,
+            'interface_type': @annotation_document.interface_type
+          }
         end
 
         def return_parameter_type_mismatch
@@ -147,12 +158,13 @@ module API
 
         def annotation_document_params
           params.permit(
+            :id,
             :chunk_offset,
             :content,
             :label,
             :options,
             :raw_data_id,
-            :type
+            :interface_type
           )
         end
     end

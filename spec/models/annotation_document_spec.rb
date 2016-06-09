@@ -38,24 +38,24 @@ RSpec.describe AnnotationDocument, type: :model do
     it { should belong_to(:raw_datum) }
   end
 
-  describe 'type' do
+  describe 'interface_type' do
     it 'may not be nil' do
-      @annotation_document.type = nil
+      @annotation_document.interface_type = nil
       expect(@annotation_document).to be_invalid
     end
 
     it 'may not be empty string' do
-      @annotation_document.type = ''
+      @annotation_document.interface_type = ''
       expect(@annotation_document).to be_invalid
     end
 
     it 'can be text_nominal as text string' do
-      @annotation_document.type = 'text_nominal'
+      @annotation_document.interface_type = 'text_nominal'
       expect(@annotation_document).to be_valid
     end
 
     it 'can be text_nominal as integer 0' do
-      @annotation_document.type = 0
+      @annotation_document.interface_type = 0
       expect(@annotation_document).to be_valid
     end
   end

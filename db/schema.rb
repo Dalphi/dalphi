@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601124141) do
+ActiveRecord::Schema.define(version: 20160609120034) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.integer  "chunk_offset"
-    t.integer  "type"
+    t.integer  "interface_type"
     t.string   "label"
     t.text     "options"
     t.datetime "created_at",           null: false
