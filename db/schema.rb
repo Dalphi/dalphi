@@ -11,23 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609120034) do
+ActiveRecord::Schema.define(version: 20160609171729) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.integer  "chunk_offset"
     t.integer  "interface_type"
     t.string   "label"
     t.text     "options"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.string   "content_file_name"
-    t.string   "content_content_type"
-    t.integer  "content_file_size"
-    t.datetime "content_updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "raw_datum_id"
     t.integer  "project_id"
-    t.index ["project_id", "content_file_name"], name: "index_annotation_documents_on_project_id_and_content_file_name", unique: true
+    t.text     "content"
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
+    t.index ["project_id"], name: "index_annotation_documents_on_project_id_and_content_file_name", unique: true
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
   end
 

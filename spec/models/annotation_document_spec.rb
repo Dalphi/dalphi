@@ -93,67 +93,35 @@ RSpec.describe AnnotationDocument, type: :model do
       expect(@annotation_document).to be_invalid
     end
 
-    describe 'is related to it\'s raw_datum\'s shape and' do
-      it 'can be a text file if raw_data shape is text' do
-        @annotation_document.raw_datum.shape = 'text'
-        file_path = Rails.root.join('spec/fixtures/text/valid1.md')
-        @annotation_document.content = File.new(file_path)
-        expect(@annotation_document).to be_valid
-      end
-
-      it 'can be a text file if raw_data shape is text' do
-        @annotation_document.raw_datum.shape = 'text'
-        file_path = Rails.root.join('spec/fixtures/text/lorem_first_chunk.txt')
-        @annotation_document.content = File.new(file_path)
-        expect(@annotation_document).to be_valid
-      end
-
-      it 'can be a binary file if raw_data shape is binary' do
-        pending('is implemented but raw_datum needs to support more than one shape')
-        @annotation_document.raw_datum.shape = 'application'
-        file_path = Rails.root.join('spec/fixtures/text/invalid.bin')
-        @annotation_document.content = File.new(file_path)
-        expect(@annotation_document).to be_valid
-      end
-
-      it 'can not be a text file if raw_data shape is binary' do
-        pending('is implemented but raw_datum needs to support more than one shape')
-        @annotation_document.raw_datum.shape = 'application'
-        file_path = Rails.root.join('spec/fixtures/text/valid1.md')
-        @annotation_document.content = File.new(file_path)
-        expect(@annotation_document).to be_invalid
-      end
-
-      it 'can not be a binary file if raw_data shape is text' do
-        @annotation_document.raw_datum.shape = 'text'
-        file_path = Rails.root.join('spec/fixtures/text/invalid.bin')
-        @annotation_document.content = File.new(file_path)
-        expect(@annotation_document).to be_invalid
-      end
+    it 'should not be empty' do
+      @annotation_document.content = ''
+      expect(@annotation_document).to be_invalid
+      @annotation_document.content = '   '
+      expect(@annotation_document).to be_invalid
     end
 
     describe 'should be unique within one project and' do
       it 'should not be assigned twice' do
         common_project = @annotation_ducument_with_different_user.raw_datum.project
-        file_path = Rails.root.join('spec/fixtures/text/lorem_first_chunk.txt')
+        test_string = 'The company Implisense GmbH in Berlin.'
 
-        @annotation_ducument_with_different_user.content = File.new(file_path)
+        @annotation_ducument_with_different_user.content = test_string
         @annotation_ducument_with_different_user.save!
 
-        @annotation_document.content = File.new(file_path)
+        @annotation_document.content = test_string
         @annotation_document.raw_datum.project = common_project
         expect(@annotation_document).to be_invalid
       end
 
       it 'can be different' do
         common_project = @annotation_ducument_with_different_user.raw_datum.project
-        file_path_1 = Rails.root.join('spec/fixtures/text/lorem_first_chunk.txt')
-        file_path_2 = Rails.root.join('spec/fixtures/text/lorem_second_chunk.txt')
+        test_string_1 = 'The company Implisense GmbH in Berlin.'
+        test_string_2 = 'The company 3antworten UG in Berlin.'
 
-        @annotation_ducument_with_different_user.content = File.new(file_path_1)
+        @annotation_ducument_with_different_user.content = test_string_1
         @annotation_ducument_with_different_user.save!
 
-        @annotation_document.content = File.new(file_path_2)
+        @annotation_document.content = test_string_2
         @annotation_document.raw_datum.project = common_project
         expect(@annotation_document).to be_valid
       end
@@ -161,13 +129,13 @@ RSpec.describe AnnotationDocument, type: :model do
       it 'can be the same in different projects' do
         project_1 = @annotation_document.raw_datum.project
         project_2 = FactoryGirl.create(:another_project)
-        file_path = Rails.root.join('spec/fixtures/text/lorem_first_chunk.txt')
+        test_string = 'The company Implisense GmbH in Berlin.'
 
-        @annotation_ducument_with_different_user.content = File.new(file_path)
+        @annotation_ducument_with_different_user.content = test_string
         @annotation_ducument_with_different_user.raw_datum.project = project_1
         @annotation_ducument_with_different_user.save!
 
-        @annotation_document.content = File.new(file_path)
+        @annotation_document.content = test_string
         @annotation_document.raw_datum.project = project_2
         expect(@annotation_document).to be_valid
       end

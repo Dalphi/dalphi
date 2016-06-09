@@ -4,7 +4,7 @@ FactoryGirl.define do
     raw_datum { FactoryGirl.create(:raw_datum) }
     interface_type 0
     options ['ok', 'nö']
-    content File.new(Rails.root + 'spec/fixtures/text/lorem_first_chunk.txt')
+    content 'Lorem ipsum'
     label ''
 
     factory :annotation_ducument_with_different_user do
