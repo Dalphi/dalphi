@@ -17,7 +17,7 @@ class AnnotationDocument < ApplicationRecord
           :chunk_offset,
           :content,
           :options,
-          :raw_data_id,
+          :raw_datum_id,
           :type
         ]
 
@@ -47,8 +47,8 @@ class AnnotationDocument < ApplicationRecord
       key :type, :string
     end
 
-    property :raw_data_id do
-      key :description, I18n.t('api.annotation_document.description.raw_data_id')
+    property :raw_datum_id do
+      key :description, I18n.t('api.annotation_document.description.raw_datum_id')
       key :type, :integer
     end
 
@@ -80,7 +80,18 @@ class AnnotationDocument < ApplicationRecord
   validate do |annotation_document|
     AnnotationDocumentValidator.validate_chunk_offset_upper_limit(annotation_document)
     AnnotationDocumentValidator.validate_options_array(annotation_document)
-    # AnnotationDocumentValidator.validate_content(annotation_document)
     AnnotationDocumentValidator.validate_label(annotation_document)
+  end
+
+  def relevat_attributes
+    {
+      chunk_offset: chunk_offset,
+      content: content,
+      id: id,
+      label: label,
+      options: options,
+      raw_datum_id: raw_datum_id,
+      interface_type: interface_type
+    }
   end
 end

@@ -44,50 +44,12 @@ module API
           key :produces, ['application/json']
           key :tags, ['AnnotationDocuments']
 
-          parameter name: :chunk_offset do
-            key :in, :formData
+          parameter name: :json_object do
+            key :in, :body
             key :required, true
-            key :type, :integer
-            key :format, :int32
-          end
-
-          parameter name: :content do
-            key :in, :formData
-            key :required, true
-            key :type, :string
-          end
-
-          parameter name: :label do
-            key :in, :formData
-            key :maxLength, 255
-            key :required, false
-            key :type, :string
-          end
-
-          parameter name: :options do
-            key :in, :formData
-            key :minItems, 2
-            key :required, true
-            key :type, :array
-            key :uniqueItems, true
-            items do
-              key :maxLength, 255
-              key :type, :string
+            schema do
+              key :'$ref', :AnnotationDocument
             end
-          end
-
-          parameter name: :raw_data_id do
-            key :in, :formData
-            key :required, true
-            key :type, :integer
-            key :format, :int32
-          end
-
-          parameter name: :interface_type do
-            key :in, :formData
-            key :maxLength, 255
-            key :required, true
-            key :type, :string
           end
 
           response 200 do
@@ -107,8 +69,6 @@ module API
       end
 
       def create
-        ap 'CREATE:'
-        ap annotation_document_params
         @annotation_document = AnnotationDocument.new(annotation_document_params)
         if @annotation_document.save
           render json: @annotation_document
@@ -124,7 +84,7 @@ module API
       end
 
       def show
-        render json: return_relevat_attributes
+        render json: @annotation_document.relevat_attributes
       end
 
       private
@@ -138,17 +98,6 @@ module API
                  }
         end
 
-        def return_relevat_attributes
-          {
-            'chunk_offset': @annotation_document.chunk_offset,
-            'id': @annotation_document.id,
-            'label': @annotation_document.label,
-            'options': @annotation_document.options,
-            'raw_data_id': @annotation_document.raw_datum_id,
-            'interface_type': @annotation_document.interface_type
-          }
-        end
-
         def return_parameter_type_mismatch
           render status: 400,
                  json: {
@@ -157,15 +106,17 @@ module API
         end
 
         def annotation_document_params
-          params.permit(
+          parameters = params.require(:annotation_document).permit(
             :id,
             :chunk_offset,
             :content,
             :label,
             :options,
-            :raw_data_id,
+            :raw_datum_id,
             :interface_type
           )
+          parameters[:options] = params[:options]
+          parameters
         end
     end
   end

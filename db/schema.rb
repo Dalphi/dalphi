@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609171729) do
+ActiveRecord::Schema.define(version: 20160609190704) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.integer  "chunk_offset"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20160609171729) do
     t.integer  "project_id"
     t.text     "content"
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
-    t.index ["project_id"], name: "index_annotation_documents_on_project_id_and_content_file_name", unique: true
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
   end
 

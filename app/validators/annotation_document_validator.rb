@@ -40,21 +40,6 @@ class AnnotationDocumentValidator < ActiveModel::Validator
     end
   end
 
-  def self.validate_content(record)
-    raw_datum = record.raw_datum
-    return if raw_datum.nil? # this is hadeled by dynamic_matchers
-
-    raw_datum_shape = raw_datum.shape.to_sym
-    shape_conform_mime_types = RawDatum::MIME_TYPES[raw_datum_shape]
-    content_type = record.content_content_type
-
-    if !shape_conform_mime_types.include? content_type
-      error_message = I18n.t('activerecord.errors.models.annotation_document.' \
-                             'attributes.content.type')
-      record.errors[:options] << error_message
-    end
-  end
-
   def self.validate_label(record)
     label = record.label
     return if label.nil? || label.empty?

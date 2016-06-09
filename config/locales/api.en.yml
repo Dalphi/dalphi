@@ -11,7 +11,7 @@ en:
         id: Internal id for DALPHI's database; set after an annotation document was saved
         label: One of the options an annotator can use as a label for this chunk. This is only set if the annotation document was annotated.
         options: String array of options
-        raw_data_id: Id of the corresponding raw datum of which this annotation document is a subset of
+        raw_datum_id: Id of the corresponding raw datum of which this annotation document is a subset of
         interface_type: Interface type definition
       general-errors:
         parameter-type-mismatch: a given parameter has the wrong type
