@@ -8,7 +8,7 @@ module API
       swagger_path '/annotation_documents/{id}' do
         operation :get do
           key :comsumes, ['application/json']
-          key :description, 'Returns an annotation document'
+          key :description, I18n.t('api.annotation_document.show.description')
           key :operationId, 'annotation_document_read'
           key :produces, ['application/json']
           key :tags, ['AnnotationDocuments']
@@ -39,7 +39,7 @@ module API
       swagger_path '/annotation_documents' do
         operation :post do
           key :comsumes, ['application/json']
-          key :description, 'Creates a new annotation document'
+          key :description, I18n.t('api.annotation_document.create.description')
           key :operationId, 'annotation_document_create'
           key :produces, ['application/json']
           key :tags, ['AnnotationDocuments']
@@ -68,6 +68,46 @@ module API
         end
       end
 
+      swagger_path '/annotation_documents/{id}' do
+        operation :patch do
+          key :comsumes, ['application/json']
+          key :description, I18n.t('api.annotation_document.update.description')
+          key :operationId, 'annotation_document_update'
+          key :produces, ['application/json']
+          key :tags, ['AnnotationDocuments']
+
+          parameter name: :id do
+            key :in, :path
+            key :required, true
+            key :type, :integer
+            key :format, :int32
+          end
+
+          parameter name: :json_object do
+            key :in, :body
+            key :required, true
+            schema do
+              key :'$ref', :AnnotationDocument
+            end
+          end
+
+          response 200 do
+            key :description, I18n.t('api.annotation_document.update.response-200')
+            schema do
+              key :'$ref', :AnnotationDocument
+            end
+          end
+
+          response 400 do
+            key :description, I18n.t('api.annotation_document.update.response-400')
+            schema do
+              key :'$ref', :ErrorModel
+            end
+          end
+        end
+      end
+
+      # POST /api/v1/annotation_documents
       def create
         @annotation_document = AnnotationDocument.new(annotation_document_params)
         if @annotation_document.save
@@ -83,8 +123,24 @@ module API
         return_parameter_type_mismatch
       end
 
+      # GET /api/v1/annotation_documents/1
       def show
         render json: @annotation_document.relevat_attributes
+      end
+
+      # PATCH/PUT /api/v1/annotation_documents/1
+      def update
+        if @annotation_document.update(annotation_document_params)
+          render json: @annotation_document
+        else
+          render status: 400,
+                 json: {
+                   message: I18n.t('api.annotation_document.update.error'),
+                   validationErrors: @annotation_document.errors.full_messages
+                 }
+        end
+      rescue ArgumentError
+        return_parameter_type_mismatch
       end
 
       private
