@@ -107,6 +107,45 @@ module API
         end
       end
 
+      swagger_path '/annotation_documents/{id}' do
+        operation :delete do
+          key :comsumes, ['application/json']
+          key :description, I18n.t('api.annotation_document.delete.description')
+          key :operationId, 'annotation_document_delete'
+          key :produces, ['application/json']
+          key :tags, ['AnnotationDocuments']
+
+          parameter name: :id do
+            key :in, :path
+            key :required, true
+            key :type, :integer
+            key :format, :int32
+          end
+
+          parameter name: :json_object do
+            key :in, :body
+            key :required, true
+            schema do
+              key :'$ref', :AnnotationDocument
+            end
+          end
+
+          response 200 do
+            key :description, I18n.t('api.annotation_document.update.response-200')
+            schema do
+              key :'$ref', :AnnotationDocument
+            end
+          end
+
+          response 400 do
+            key :description, I18n.t('api.annotation_document.update.response-400')
+            schema do
+              key :'$ref', :ErrorModel
+            end
+          end
+        end
+      end
+
       # POST /api/v1/annotation_documents
       def create
         @annotation_document = AnnotationDocument.new(annotation_document_params)
