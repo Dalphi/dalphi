@@ -110,8 +110,8 @@ module API
       swagger_path '/annotation_documents/{id}' do
         operation :delete do
           key :comsumes, ['application/json']
-          key :description, I18n.t('api.annotation_document.delete.description')
-          key :operationId, 'annotation_document_delete'
+          key :description, I18n.t('api.annotation_document.destroy.description')
+          key :operationId, 'annotation_document_destroy'
           key :produces, ['application/json']
           key :tags, ['AnnotationDocuments']
 
@@ -122,23 +122,15 @@ module API
             key :format, :int32
           end
 
-          parameter name: :json_object do
-            key :in, :body
-            key :required, true
-            schema do
-              key :'$ref', :AnnotationDocument
-            end
-          end
-
           response 200 do
-            key :description, I18n.t('api.annotation_document.update.response-200')
+            key :description, I18n.t('api.annotation_document.destroy.response-200')
             schema do
               key :'$ref', :AnnotationDocument
             end
           end
 
           response 400 do
-            key :description, I18n.t('api.annotation_document.update.response-400')
+            key :description, I18n.t('api.annotation_document.destroy.response-400')
             schema do
               key :'$ref', :ErrorModel
             end
@@ -182,11 +174,20 @@ module API
         return_parameter_type_mismatch
       end
 
+      # DELETE /api/v1/annotation_documents/1
+      def destroy
+        @annotation_document.destroy
+        render status: 200,
+               json: {
+                 message: I18n.t('api.annotation_document.destroy.success')
+               }
+      end
+
       private
 
         def set_annotation_document
           @annotation_document = AnnotationDocument.find(params[:id])
-        rescue #RecordNotFound
+        rescue
           render status: 400,
                  json: {
                    message: I18n.t('api.annotation_document.show.error')
