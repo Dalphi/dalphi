@@ -155,6 +155,30 @@ RSpec.describe Service, type: :model do
       @al_service.url = 'http://petstore.swagger.io/v2/swagger.json'
       expect(@al_service).to be_valid
     end
+
+    it 'should be unique, so that two services with different URLs can exist' do
+      expect(Service.all.size).to eq(0)
+      @al_service.url = 'http://localhost:3000'
+      @al_service.save!
+      expect(Service.all.size).to eq(1)
+      another_al_service = FactoryGirl.build(
+        :active_learning_service,
+        url: 'http://localhost:3001'
+      )
+      expect(another_al_service).to be_valid
+      another_al_service.save!
+      expect(Service.all.size).to eq(2)
+    end
+
+    it 'should be unique, so that two services with the same URL cannot exist' do
+      @al_service.url = 'http://localhost:3000'
+      @al_service.save!
+      another_al_service = FactoryGirl.build(
+        :active_learning_service,
+        url: @al_service.url
+      )
+      expect(another_al_service).to be_invalid
+    end
   end
 
   describe 'title' do

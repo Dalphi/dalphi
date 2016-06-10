@@ -11,8 +11,12 @@ class RawDatum < ApplicationRecord
 
   belongs_to :project
   has_attached_file :data
+  before_save :destroy_raw_datum_with_same_filename
 
   validates :project,
+    presence: true
+
+  validates :filename,
     presence: true
 
   validates :shape,
@@ -64,9 +68,10 @@ class RawDatum < ApplicationRecord
         raw_datum = RawDatum.new(
           project: project,
           shape: SHAPES.first,
+          filename: filename.force_encoding('utf-8'),
           data: File.open("#{temp_dir}/#{extraction_filename.force_encoding('utf-8')}")
         )
-        batch_result = process_result(raw_datum, extraction_filename, batch_result)
+        batch_result = process_result(raw_datum, filename, batch_result)
       end
     end
     batch_result
@@ -79,8 +84,12 @@ class RawDatum < ApplicationRecord
     return filename, extraction_filename
   end
 
+  def self.encode_filename(filename)
+    ActiveSupport::Multibyte::Unicode.normalize(filename)
+  end
+
   def self.process_result(raw_datum, filename, batch_result)
-    encoded_filename = ActiveSupport::Multibyte::Unicode.normalize(filename)
+    encoded_filename = encode_filename(filename)
     if raw_datum.save
       batch_result[:success] << encoded_filename
     else
@@ -96,6 +105,7 @@ class RawDatum < ApplicationRecord
       raw_datum = RawDatum.new(
         project: project,
         shape: SHAPES.first,
+        filename: filename.force_encoding('utf-8'),
         data: File.open(datum[:path])
       )
       raw_datum.data_file_name = filename
@@ -111,4 +121,13 @@ class RawDatum < ApplicationRecord
   def label
     self.filename
   end
+
+  private
+
+    def destroy_raw_datum_with_same_filename
+      RawDatum.where(
+        project: self.project,
+        filename: self.filename
+      ).destroy_all
+    end
 end

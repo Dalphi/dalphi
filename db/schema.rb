@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531081559) do
+ActiveRecord::Schema.define(version: 20160531151835) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20160531081559) do
     t.integer  "data_file_size"
     t.datetime "data_updated_at"
     t.integer  "project_id"
+    t.string   "filename"
     t.index ["project_id"], name: "index_raw_data_on_project_id"
   end
 
