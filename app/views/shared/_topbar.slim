@@ -13,7 +13,7 @@ nav.topbar.navbar
     - breadcrumbs.each do |breadcrumb|
       li
         a href="#{breadcrumb[:path]}"
-          = breadcrumb[:display_name]
+          = breadcrumb[:label]
 
   - if user_signed_in?
     ul.nav.navbar-nav.icon-bar

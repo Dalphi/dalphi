@@ -24,4 +24,8 @@ class Project < ApplicationRecord
     ProjectServiceValidator.validate_machine_learning_service(project)
     ProjectServiceValidator.validate_merge_service(project)
   end
+
+  def label
+    self.title
+  end
 end

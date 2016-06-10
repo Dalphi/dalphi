@@ -61,4 +61,8 @@ class Service < ApplicationRecord
   def is_available?
     UrlResponseChecker::check_response url
   end
+
+  def label
+    self.title
+  end
 end

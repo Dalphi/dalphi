@@ -118,12 +118,16 @@ class RawDatum < ApplicationRecord
     batch_result
   end
 
+  def label
+    self.filename
+  end
+
   private
 
-  def destroy_raw_datum_with_same_filename
-    RawDatum.where(
-      project: self.project,
-      filename: self.filename
-    ).destroy_all
-  end
+    def destroy_raw_datum_with_same_filename
+      RawDatum.where(
+        project: self.project,
+        filename: self.filename
+      ).destroy_all
+    end
 end

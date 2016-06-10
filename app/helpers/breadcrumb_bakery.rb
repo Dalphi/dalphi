@@ -1,112 +1,124 @@
 class BreadcrumbBakery
   include Rails.application.routes.url_helpers
 
-  def initialize(current_uri)
+  def initialize(request)
+    tokens = url_tokens(request.original_url)
     @breadcrumbs = []
-    @recognized_path = Rails.application.routes.recognize_path(current_uri)
-    create_breadcrumbs
-  rescue
-    @breadcrumbs = []
+    subpath = ''
+    tokens.each do |token|
+      subpath << "#{token}"
+      @breadcrumbs << {
+                        label: labelize(tokens, token),
+                        path: subpath.clone
+                      }
+    end
   end
 
-  def create_breadcrumbs
-    partial_recognized_path = {}
+  def url_tokens(original_url)
+    original_path = url_to_path(original_url)
+    url_tokens = original_path.split('/')
+    url_tokens -= ['']
+    condense_url_tokens(url_tokens)
+  end
 
-    @recognized_path.each do |key, value|
-      partial_recognized_path.merge!({key => value})
-      key_string = key.to_s
+  def url_to_path(url)
+    url
+      .gsub(/^http(|s):\/\/[^\/]+(|:[0-9]+)/, '') # remove protocol, domain and port
+      .gsub(/\?.*$/, '')                          # remove get attributes
+  end
 
-      if key_string == 'id'
-        add_tailing_breadcrumbs
-
-      elsif key_string.end_with?('_id')
-        controller_name = key_string[0..-4]
-
-        add_breadcrumb(controller_name.pluralize,
-          custom_url_for_controller(partial_recognized_path, controller_name, 'index'))
-
-        add_breadcrumb(recognize_instance_name(controller_name, partial_recognized_path),
-          custom_url_for_controller(partial_recognized_path, controller_name, 'show'))
+  def condense_url_tokens(url_tokens)
+    condensed_tokens = []
+    token_set = ''
+    url_tokens.each do |token|
+      token_set << "/#{token}"
+      if path_exists?("#{condensed_tokens.join('/')}#{token_set}")
+        condensed_tokens << token_set
+        token_set = ''
       end
     end
-
-    add_trivial_breadcrumb if @breadcrumbs == []
+    condensed_tokens
   end
 
-  def custom_url_for_controller(path, controller, action)
-    path_hash = path.clone
-    controller_instance = "#{controller}_id".to_sym
-    path_hash[:id] = path_hash[controller_instance] if action != 'index'
-    path_hash.except!(controller_instance)
-
-    path_hash[:controller] = controller.pluralize
-    path_hash[:action] = action
-    path_hash[:only_path] = true
-    url_for path_hash
-  end
-
-  def custom_url_for_action(path, action)
-    path_hash = path.clone
-    path_hash.except!(:id) if action == 'index'
-
-    path_hash[:action] = action
-    path_hash[:only_path] = true
-    url_for path_hash
-  end
-
-  def add_trivial_breadcrumb
-    add_breadcrumb(@recognized_path[:controller],
-      url_for(@recognized_path.merge({ only_path: true })))
-  end
-
-  def add_tailing_breadcrumbs
-    add_breadcrumb(@recognized_path[:controller],
-      custom_url_for_action(@recognized_path, 'index'))
-    add_breadcrumb(@recognized_path[:action],
-      url_for(@recognized_path.merge({ only_path: true })))
-  end
-
-  def add_breadcrumb(name, path)
-    @breadcrumbs.push({
-      display_name: name,
-      path: path
-    })
-  end
-
-  def recognize_instance_name(controller_name, recognized_path)
-    # TODO: create a config file and specify attribute name and don't hardcode 'title'
-    controller_instance = "#{controller_name}_id".to_sym
-    instance_id = recognized_path[controller_instance]
-    controller_name.classify.constantize.find(instance_id).title
+  def path_exists?(path)
+    Rails.application.routes.recognize_path(path)
   rescue
-    'show'
+    false
   end
 
-  def get_breadcrumbs
+  def labelize(tokens, token)
+    token['/'] = ''
+    token_predecessor = predecessor(tokens, token)
+    return integer_label(token, token_predecessor) if is_integer?(token)
+    return class_label(token) if is_class?(token)
+    return integer_and_action_label(token, token_predecessor) if is_integer_and_action?(token)
+    return action_label(token) if is_action?(token)
+    token
+  end
+
+  def integer_label(integer, token_predecessor)
+    token_predecessor
+      .singularize
+      .classify
+      .constantize
+      .find(integer)
+      .label rescue integer
+  end
+
+  def class_label(token)
+    token
+      .classify
+      .constantize
+      .model_name
+      .human
+      .pluralize
+  end
+
+  def integer_and_action_label(token, token_predecessor)
+    token_chunks = token.split('/')
+    integer = token_chunks.first
+    action = token_chunks.second
+    model = token_predecessor
+              .singularize
+              .classify
+              .constantize
+              .find(integer)
+              .label rescue integer
+    I18n.t("helpers.submit.#{action}", model: model)
+  end
+
+  def action_label(action)
+    I18n.t("helpers.actions.#{action}")
+  end
+
+  def predecessor(array, item)
+    array[array.find_index(item) - 1]
+  rescue
+    nil
+  end
+
+  def is_integer?(object)
+    Integer(object)
+  rescue
+    false
+  end
+
+  def is_class?(klass)
+    klass.classify.constantize
+  rescue
+    false
+  end
+
+  def is_integer_and_action?(integer_and_action)
+    return integer_and_action if integer_and_action =~ /[0-9]+\/\S+/
+    false
+  end
+
+  def is_action?(action)
+    return action if %w(edit new).include?(action)
+  end
+
+  def breadcrumbs
     @breadcrumbs
-  end
-
-  # The following functions might be helpful in the future!
-
-  def get_all_paths
-    routes = Rails.application.routes.routes
-    @paths = routes.collect { |route| route.path.spec.to_s }.uniq
-  end
-
-  def initial_path_segments
-    get_all_paths
-    @paths.collect { |path| path[%r{^\/([^\/\(:]+)}, 1] }.compact.uniq
-  end
-
-  def get_currently_related_routes
-    get_all_paths
-    controller = "/#{@recognized_path[:controller]}/"
-    action = "/#{@recognized_path[:action]}"
-
-    relevant_paths = @paths.select { |path| path.include?(controller) }
-    action_containing = relevant_paths.select { |path| path.include?(action) }
-
-    return action_containing unless action_containing.empty?
-    relevant_paths
   end
 end

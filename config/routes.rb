@@ -21,28 +21,28 @@ Rails.application.routes.draw do
 
   put '/services/:id',
       to: 'services#update',
-      constraints: { id: /[0-9]+/ },
+      constraints: { id: /\d+/ },
       as: 'service'
   patch '/services/:id',
         to: 'services#update',
-        constraints: { id: /[0-9]+/ }
+        constraints: { id: /\d+/ }
   delete '/services/:id',
         to: 'services#destroy',
-        constraints: { id: /[0-9]+/ }
+        constraints: { id: /\d+/ }
   get '/services/:id/edit',
         to: 'services#edit',
-        constraints: { id: /[0-9]+/ },
+        constraints: { id: /\d+/ },
         as: 'edit_service'
   get '/services/new',
       to: 'services#new',
       as: 'new_service'
   get '/services/:role',
       to: 'services#role_services',
-      constraints: { id: /[a-zA-Z]+.*/ },
+      constraints: { role: /\D+\w*/ },
       as: 'role_service'
   get '/services/:id/connectivity',
       to: 'services#check_connectivity',
-      constraints: { id: /[0-9]+/ },
+      constraints: { id: /\d+/ },
       as: 'check_connectivity'
 
   # Projects
