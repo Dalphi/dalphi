@@ -1,0 +1,4 @@
+en:
+  breadcrumb-exceptions:
+    /users/edit: 'Edit user'
+    /users/sign_in: 'Sign in user'

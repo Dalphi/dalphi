@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'projects#index'
+  root to: redirect('/projects')
 
   devise_for :users
 

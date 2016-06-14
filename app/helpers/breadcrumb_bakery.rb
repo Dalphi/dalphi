@@ -3,6 +3,7 @@ class BreadcrumbBakery
 
   def initialize(request)
     tokens = url_tokens(request.original_url)
+    return @breadcrumbs if @breadcrumbs = breadcrumb_exception(tokens)
     @breadcrumbs = []
     subpath = ''
     tokens.each do |token|
@@ -19,6 +20,13 @@ class BreadcrumbBakery
     url_tokens = original_path.split('/')
     url_tokens -= ['']
     condense_url_tokens(url_tokens)
+  end
+
+  def breadcrumb_exception(tokens)
+    path = tokens.join('/')
+    return false if path == ''
+    [{ label: I18n.t("breadcrumb-exceptions.#{path}", raise: true),
+       path: path }] rescue false
   end
 
   def url_to_path(url)
@@ -41,9 +49,7 @@ class BreadcrumbBakery
   end
 
   def path_exists?(path)
-    Rails.application.routes.recognize_path(path)
-  rescue
-    false
+    Rails.application.routes.recognize_path(path) rescue false
   end
 
   def labelize(tokens, token)

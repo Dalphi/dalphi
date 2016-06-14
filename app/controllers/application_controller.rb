@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
   end
 
   def bake_breadcrumbs
-    return unless user_signed_in?
     @breadcrumbs = []
     bakery = BreadcrumbBakery.new(request)
     @breadcrumbs = bakery.breadcrumbs
