@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/plataformatec/devise.git
-  revision: bcdd54cc5ebd3413eeb3d17e3b634e8ace0d09f3
+  revision: ac702843ddaa5652fde7a0050ff2378e7368149e
   specs:
     devise (4.1.0)
       bcrypt (~> 3.0)
@@ -74,7 +74,7 @@ GEM
     bootstrap (4.0.0.alpha3)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
-    brakeman (3.3.1)
+    brakeman (3.3.2)
     builder (3.2.2)
     byebug (9.0.5)
     climate_control (0.0.3)
@@ -256,15 +256,15 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
     raindrops (0.16.0)
-    rake (11.1.2)
+    rake (11.2.2)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     rdoc (4.2.2)
       json (~> 1.4)
-    reek (4.0.3)
+    reek (4.0.4)
       codeclimate-engine-rb (~> 0.3.1)
-      parser (~> 2.3, >= 2.3.0.6)
+      parser (~> 2.3.1, >= 2.3.1.2)
       rainbow (~> 2.0)
     ref (2.0.0)
     require_all (1.3.3)
