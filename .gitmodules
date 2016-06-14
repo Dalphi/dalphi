@@ -1,0 +1,3 @@
+[submodule "lib/components/swagger-ui"]
+	path = lib/components/swagger-ui
+	url = git@github.com:Dalphi/swagger-ui.git
