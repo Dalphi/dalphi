@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531151835) do
+ActiveRecord::Schema.define(version: 20160609190704) do
+
+  create_table "annotation_documents", force: :cascade do |t|
+    t.integer  "chunk_offset"
+    t.integer  "interface_type"
+    t.string   "label"
+    t.text     "options"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "raw_datum_id"
+    t.integer  "project_id"
+    t.text     "content"
+    t.index ["project_id"], name: "index_annotation_documents_on_project_id"
+    t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
+  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false

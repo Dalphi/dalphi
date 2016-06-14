@@ -1,0 +1,33 @@
+en:
+  api:
+    annotation_document:
+      description:
+        chunk_offset: Identifies the position of this chunk within the corresponding raw datum
+        content: Subset of the corresponding raw datum to annotate
+        id: Internal id for DALPHI's database; set after an annotation document was saved
+        label: One of the options an annotator can use as a label for this chunk. This is only set if the annotation document was annotated.
+        options: String array of options
+        raw_datum_id: Id of the corresponding raw datum of which this annotation document is a subset of
+        interface_type: Interface type definition
+      general-errors:
+        parameter-type-mismatch: a given parameter has the wrong type
+      create:
+        description: Creates a new annotation document and returns it
+        response-200: respond with the created annotation document
+        response-400: parameters for annotation document are not satisfying
+        error: unable to create a new annotation document
+      show:
+        description: Returns an annotation document
+        response-200: respond with the requested annotation document
+        response-400: parameters (id) for annotation document are not satisfying
+        error: unable to get an annotation document for the given parameters
+      update:
+        description: Updates an existing annotation document and returns the new values
+        response-200: respond with the updated annotation document
+        response-400: parameters (id) for annotation document are not satisfying
+        error: unable to update the annotation document with the given parameters
+      destroy:
+        description: Destroys an existing annotation document
+        response-200: respond with an acknowledgment
+        response-400: parameters (id) for annotation document are not satisfying
+        success: Annotation document successfully deleted

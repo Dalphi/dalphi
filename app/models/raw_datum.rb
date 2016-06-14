@@ -7,9 +7,12 @@ class RawDatum < ApplicationRecord
       'text/rtf'
     ],
   }
+  MIME_TYPES_LIST = MIME_TYPES.values.flatten
   SHAPES = MIME_TYPES.keys.map(&:to_s)
 
   belongs_to :project
+  has_many :annotation_documents,
+           dependent: :destroy
   has_attached_file :data
   before_save :destroy_raw_datum_with_same_filename
 
@@ -28,7 +31,7 @@ class RawDatum < ApplicationRecord
 
   validates_attachment :data,
     content_type: {
-      content_type: MIME_TYPES.values.first
+      content_type: MIME_TYPES_LIST
     }
 
   def self.batch_process(project, data)
@@ -120,6 +123,10 @@ class RawDatum < ApplicationRecord
 
   def label
     self.filename
+  end
+
+  def size?
+    File.size? self.data.path
   end
 
   private
