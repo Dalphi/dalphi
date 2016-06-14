@@ -156,7 +156,7 @@ module API
 
       # GET /api/v1/annotation_documents/1
       def show
-        render json: @annotation_document.relevat_attributes
+        render json: @annotation_document.relevant_attributes
       end
 
       # PATCH/PUT /api/v1/annotation_documents/1

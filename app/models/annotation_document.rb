@@ -69,7 +69,7 @@ class AnnotationDocument < ApplicationRecord
       greater_than_or_equal_to: 0
     }
 
-  def relevat_attributes
+  def relevant_attributes
     {
       id: id,
       interface_type: interface_type,
