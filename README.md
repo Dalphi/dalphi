@@ -1,11 +1,11 @@
 # DALPHI
 
-[![Build Status](https://travis-ci.org/DALPHI/DALPHI.svg?branch=master)](https://travis-ci.org/DALPHI/DALPHI)
-[![Dependency Status](https://gemnasium.com/DALPHI/DALPHI.svg)](https://gemnasium.com/DALPHI/DALPHI)
-[![codebeat badge](https://codebeat.co/badges/c3c6b8d5-8ef4-4a81-9d37-6ee06383fc85)](https://codebeat.co/projects/github-com-DALPHI-DALPHI)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a177baa4ea244d59202547cd6f8a975)](https://www.codacy.com/app/github_67/DALPHI)
-[![Code Climate](https://codeclimate.com/github/DALPHI/DALPHI/badges/gpa.svg)](https://codeclimate.com/github/DALPHI/DALPHI)
-[![Issue Count](https://codeclimate.com/github/DALPHI/DALPHI/badges/issue_count.svg)](https://codeclimate.com/github/DALPHI/DALPHI)
+[![Build Status](https://travis-ci.org/Dalphi/dalphi.svg?branch=master)](https://travis-ci.org/dalphi/dalphi)
+[![Dependency Status](https://gemnasium.com/Dalphi/dalphi.svg)](https://gemnasium.com/Dalphi/dalphi)
+[![codebeat badge](https://codebeat.co/badges/c3c6b8d5-8ef4-4a81-9d37-6ee06383fc85)](https://codebeat.co/projects/github-com-dalphi-dalphi)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a177baa4ea244d59202547cd6f8a975)](https://www.codacy.com/app/github_67/dalphi)
+[![Code Climate](https://codeclimate.com/github/Dalphi/dalphi/badges/gpa.svg)](https://codeclimate.com/github/dalphi/dalphi)
+[![Issue Count](https://codeclimate.com/github/Dalphi/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/Dalphi/dalphi)
 
 ![DALPHI](https://github.com/DALPHI/DALPHI/blob/master/app/assets/images/DALPHI-logo.png)
 DALPHI - Active Learning Platform for Human Interaction
@@ -61,8 +61,8 @@ foreman start
 
 DALPHI uses [Swagger](http://swagger.io/) 2.0 (compatible to [OpenAPI](https://openapis.org/)) for an interactive documentation of its API.
 For the most straight forward experience, we ship the latest version of [*Swagger UI*](https://github.com/swagger-api/swagger-ui) to give you everything you need to understand our API and start developing your own Services for DALPHI.
-After starting the application, *Swagger UI* will be available at [http://localhost:3000/api/swagger/](http://localhost:3000/api/swagger/)
-The API specification JSON will be served at [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
+After starting the application, *Swagger UI* will be available at [http://localhost:3000/api/swagger/](http://localhost:3000/api/swagger/).
+The API specification JSON will be served at [http://localhost:3000/api/docs](http://localhost:3000/api/docs).
 
 ## Testing & Continuous Integration
 
