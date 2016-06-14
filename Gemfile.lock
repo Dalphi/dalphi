@@ -425,7 +425,7 @@ DEPENDENCIES
   rails-assets-tether
   rails_best_practices
   reek
-  rspec-rails (~> 3.5.0.beta3)
+  rspec-rails (~> 3.5.0.beta4)
   rubocop
   rubocop-rspec
   rubyzip
