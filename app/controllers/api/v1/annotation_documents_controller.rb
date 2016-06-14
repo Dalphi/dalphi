@@ -156,7 +156,7 @@ module API
 
       # GET /api/v1/annotation_documents/1
       def show
-        render json: @annotation_document.relevat_attributes
+        render json: @annotation_document.relevant_attributes
       end
 
       # PATCH/PUT /api/v1/annotation_documents/1
@@ -204,14 +204,12 @@ module API
         def annotation_document_params
           parameters = params.require(:annotation_document).permit(
             :id,
-            :chunk_offset,
-            :content,
-            :label,
-            :options,
+            :interface_type,
+            :payload,
+            :rank,
             :raw_datum_id,
-            :interface_type
+            :skipped
           )
-          parameters[:options] = params[:options]
           parameters
         end
     end
