@@ -20,6 +20,10 @@ RSpec.describe AnnotationDocument, type: :model do
     it { should belong_to(:raw_datum) }
   end
 
+  describe 'project' do
+    it { should belong_to(:project) }
+  end
+
   describe 'interface_type' do
     it 'may not be nil' do
       @annotation_document.interface_type = nil

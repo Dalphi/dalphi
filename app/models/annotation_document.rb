@@ -13,11 +13,9 @@ class AnnotationDocument < ApplicationRecord
   swagger_schema :AnnotationDocument do
     key :required,
         [
-          :rank,
-          :raw_datum_id,
+          :interface_type,
           :payload,
-          :skipped,
-          :type
+          :raw_datum_id
         ]
 
     property :id do
@@ -37,7 +35,7 @@ class AnnotationDocument < ApplicationRecord
 
     property :payload do
       key :description, I18n.t('api.annotation_document.description.payload')
-      key :example, '{"label":"testlabel","options":["option1","option2"]},"content":"testcontent"'
+      key :example, '{"label":"testlabel","options":["option1","option2"],"content":"testcontent"}'
       key :type, :string
     end
 
@@ -74,8 +72,11 @@ class AnnotationDocument < ApplicationRecord
   def relevat_attributes
     {
       id: id,
+      interface_type: interface_type,
+      payload: payload,
+      rank: rank,
       raw_datum_id: raw_datum_id,
-      interface_type: interface_type
+      skipped: skipped
     }
   end
 end

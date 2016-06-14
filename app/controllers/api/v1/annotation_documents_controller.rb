@@ -204,9 +204,11 @@ module API
         def annotation_document_params
           parameters = params.require(:annotation_document).permit(
             :id,
+            :interface_type,
             :payload,
+            :rank,
             :raw_datum_id,
-            :interface_type
+            :skipped
           )
           parameters
         end
