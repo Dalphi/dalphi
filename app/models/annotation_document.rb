@@ -5,7 +5,6 @@ class AnnotationDocument < ApplicationRecord
   belongs_to :raw_datum
 
   enum interface_type: [ :text_nominal ]
-  serialize :options, Array
 
   before_validation do
     self.project = raw_datum.project if raw_datum
@@ -14,42 +13,37 @@ class AnnotationDocument < ApplicationRecord
   swagger_schema :AnnotationDocument do
     key :required,
         [
-          :chunk_offset,
-          :content,
-          :options,
+          :rank,
           :raw_datum_id,
+          :payload,
+          :skipped,
           :type
         ]
-
-    property :chunk_offset do
-      key :description, I18n.t('api.annotation_document.description.chunk_offset')
-      key :type, :integer
-    end
-
-    property :content do
-      key :description, I18n.t('api.annotation_document.description.content')
-      key :type, :string
-    end
 
     property :id do
       key :description, I18n.t('api.annotation_document.description.id')
       key :type, :integer
     end
 
-    property :label do
-      key :description, I18n.t('api.annotation_document.description.label')
-      key :type, :string
-    end
-
-    property :options do
-      key :description, I18n.t('api.annotation_document.description.options')
-      key :pattern, '\[(\"[\w\ ]+\",\ )*(\"[\w\ ]+\")\]'
-      key :type, :string
+    property :rank do
+      key :description, I18n.t('api.annotation_document.description.rank')
+      key :type, :integer
     end
 
     property :raw_datum_id do
       key :description, I18n.t('api.annotation_document.description.raw_datum_id')
       key :type, :integer
+    end
+
+    property :payload do
+      key :description, I18n.t('api.annotation_document.description.payload')
+      key :example, '{"label":"testlabel","options":["option1","option2"]},"content":"testcontent"'
+      key :type, :string
+    end
+
+    property :skipped do
+      key :description, I18n.t('api.annotation_document.description.skipped')
+      key :type, :boolean
     end
 
     property :interface_type do
@@ -59,10 +53,6 @@ class AnnotationDocument < ApplicationRecord
     end
   end
 
-  validates :chunk_offset,
-    presence: true,
-    numericality: { greater_than_or_equal_to: 0 }
-
   validates :raw_datum,
     presence: true
 
@@ -70,26 +60,20 @@ class AnnotationDocument < ApplicationRecord
     presence: true,
     inclusion: { in: self.interface_types }
 
-  validates :options,
-    presence: true
-
-  validates :content,
+  validates :payload,
     presence: true,
     uniqueness: { scope: :project }
 
-  validate do |annotation_document|
-    AnnotationDocumentValidator.validate_chunk_offset_upper_limit(annotation_document)
-    AnnotationDocumentValidator.validate_options_array(annotation_document)
-    AnnotationDocumentValidator.validate_label(annotation_document)
-  end
+  validates :rank,
+    allow_nil: true,
+    numericality: {
+      only_integer: true,
+      greater_than_or_equal_to: 0
+    }
 
   def relevat_attributes
     {
-      chunk_offset: chunk_offset,
-      content: content,
       id: id,
-      label: label,
-      options: options,
       raw_datum_id: raw_datum_id,
       interface_type: interface_type
     }

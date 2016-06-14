@@ -204,14 +204,10 @@ module API
         def annotation_document_params
           parameters = params.require(:annotation_document).permit(
             :id,
-            :chunk_offset,
-            :content,
-            :label,
-            :options,
+            :payload,
             :raw_datum_id,
             :interface_type
           )
-          parameters[:options] = params[:options]
           parameters
         end
     end
