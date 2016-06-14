@@ -40,7 +40,7 @@ rvm use ruby-2.3.1
 Get DALPHI by cloning the official repository.
 
 ```bash
-git clone https://github.com/DALPHI/DALPHI.git
+git clone --recursive https://github.com/DALPHI/DALPHI.git
 ```
 
 In the cloned repo run the `bundler` in order to install all dependencies.
