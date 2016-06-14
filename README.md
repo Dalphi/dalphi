@@ -59,17 +59,10 @@ foreman start
 
 ## API Documentation
 
-DALPHI uses [Swagger](http://swagger.io/) 2.0 (compatible to [OpenAPI](https://openapis.org/)) for an interactive documentation of it's API. For the most straight forward experience, we ship the latest version of [*Swagger UI*](https://github.com/swagger-api/swagger-ui) to give you everything you need to understand our API and start developing your own Services for DALPHI. After starting the application, *Swagger UI* will be available at
-
-```bash
-http://localhost:3000/api/swagger/
-```
-
-The API specification JSON will be served at
-
-```bash
-http://localhost:3000/api/docs
-```
+DALPHI uses [Swagger](http://swagger.io/) 2.0 (compatible to [OpenAPI](https://openapis.org/)) for an interactive documentation of its API.
+For the most straight forward experience, we ship the latest version of [*Swagger UI*](https://github.com/swagger-api/swagger-ui) to give you everything you need to understand our API and start developing your own Services for DALPHI.
+After starting the application, *Swagger UI* will be available at [http://localhost:3000/api/swagger/](http://localhost:3000/api/swagger/)
+The API specification JSON will be served at [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
 
 ## Testing & Continuous Integration
 
