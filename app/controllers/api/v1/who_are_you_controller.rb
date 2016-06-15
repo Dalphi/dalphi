@@ -35,7 +35,6 @@ module API
           description: 'The Ruby on Rails Dalphi webapp ' \
                        'for user interaction and service intercommunication',
           problem_id: 'ner',
-          url: root_url,
           version: '1.0'
         }
       end
