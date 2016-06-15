@@ -25,12 +25,15 @@ class Service < ApplicationRecord
   end
 
   enum role: [ :active_learning, :bootstrap, :machine_learning, :merge ]
-  enum problem_id: [ :ner ]
 
   has_many :projects
 
-  validates :role, :problem_id, :url, :title, :version,
+  validates :role, :url, :title, :version,
     presence: true
+
+  validates :problem_id,
+    presence: true,
+    format: { with: /\A[\w\.\-\_]+\z/ }
 
   validates :url,
     uniqueness: true,

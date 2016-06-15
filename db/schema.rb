@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614100350) do
+ActiveRecord::Schema.define(version: 20160615095335) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.integer  "interface_type"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20160614100350) do
   create_table "services", force: :cascade do |t|
     t.integer  "role"
     t.string   "description"
-    t.integer  "problem_id"
+    t.string   "problem_id"
     t.string   "url"
     t.string   "title"
     t.string   "version"
