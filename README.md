@@ -8,7 +8,7 @@
 [![Issue Count](https://codeclimate.com/github/Dalphi/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/Dalphi/dalphi)
 [![Test Coverage](https://codeclimate.com/github/Dalphi/dalphi/badges/coverage.svg)](https://codeclimate.com/github/Dalphi/dalphi/coverage)
 
-![DALPHI](https://github.com/DALPHI/DALPHI/blob/master/app/assets/images/DALPHI-logo.png)
+![DALPHI](https://github.com/Dalphi/dalphi/blob/master/app/assets/images/dalphi-logo.png)
 DALPHI - Active Learning Platform for Human Interaction
 
 ## Getting started
