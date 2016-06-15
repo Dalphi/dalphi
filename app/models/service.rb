@@ -19,10 +19,6 @@ class Service < ApplicationRecord
       key :type, :string
     end
 
-    property :url do
-      key :type, :string
-    end
-
     property :version do
       key :type, :string
     end
@@ -54,8 +50,9 @@ class Service < ApplicationRecord
   end
 
   def self.params_from_url(url)
-    data = URI.parse(url).read
-    JSON.parse(data)
+    data = JSON.parse(URI.parse(url).read)
+    data['url'] = url
+    return data
   end
 
   def is_available?
