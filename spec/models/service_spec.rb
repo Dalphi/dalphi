@@ -96,15 +96,45 @@ RSpec.describe Service, type: :model do
       expect(@al_service).to be_invalid
     end
 
+    it 'may not only consist of whitespace' do
+      @al_service.problem_id = '  '
+      expect(@al_service).to be_invalid
+    end
+
+    it 'can consist of letters' do
+      @al_service.problem_id = 'abc'
+      expect(@al_service).to be_valid
+    end
+
+    it 'can consist of letters' do
+      @al_service.problem_id = 'aBcD'
+      expect(@al_service).to be_valid
+    end
+
+    it 'can consist of numbers' do
+      @al_service.problem_id = '1234'
+      expect(@al_service).to be_valid
+    end
+
+    it 'can consist of hypens dots, hyphens and underscores' do
+      @al_service.problem_id = '.-_'
+      expect(@al_service).to be_valid
+    end
+
+    it 'can consist of a combination of letters, numbers, dots, hyphens and underscores' do
+      @al_service.problem_id = 'a1b-h.c3a_Add52'
+      expect(@al_service).to be_valid
+    end
+
     it 'can be any string (\w) with hyphens' do
-      alphabet = [('a'..'z'), ('A'..'Z'), (0..9)].map { |i| i.to_a }.flatten.concat(['_', '-'])
+      alphabet = [('a'..'z'), ('A'..'Z'), (0..9)].map { |i| i.to_a }.flatten.concat(['_', '-', '.'])
       (0..10).each do
         @al_service.problem_id = (0...15).map { alphabet[rand(alphabet.length)] }.join
         expect(@al_service).to be_valid
       end
     end
 
-    it 'should not contain special characters besides "_" and "-"' do
+    it 'should not contain special characters besides _ - .' do
       @al_service.problem_id = 'qwerty!@#$%^&*()_'
       expect(@al_service).to be_invalid
     end
