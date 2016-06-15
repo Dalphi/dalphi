@@ -47,7 +47,7 @@ class BreadcrumbBakery
   def labelize(tokens, token)
     token['/'] = ''
     token_predecessor = predecessor(tokens, token)
-    return exception_label(tokens, token) if has_breadcrumb_exception?(tokens, token)
+    return exception_label(tokens) if has_breadcrumb_exception?(tokens)
     return integer_label(token, token_predecessor) if is_integer?(token)
     return class_label(token) if is_class?(token)
     return integer_and_action_label(token, token_predecessor) if is_integer_and_action?(token)
@@ -94,12 +94,12 @@ class BreadcrumbBakery
     array[array.find_index(item) - 1] rescue nil
   end
 
-  def exception_label(tokens, token)
+  def exception_label(tokens)
     path = "/#{tokens.join('/')}"
     I18n.t "breadcrumb-exceptions.#{path}"
   end
 
-  def has_breadcrumb_exception?(tokens, token)
+  def has_breadcrumb_exception?(tokens)
     path = "/#{tokens.join('/')}"
     I18n.t("breadcrumb-exceptions.#{path}", raise: true) rescue false
   end
