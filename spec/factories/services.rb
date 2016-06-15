@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :active_learning_service, class: Service do
     role 0
     description 'Arnnes algorithm for optimal results'
-    problem_id 0
+    problem_id 'NER'
     url 'http://www.google.com'
     title 'Active Learning component'
     version 'v2.0.0-rc1'

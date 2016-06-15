@@ -29,12 +29,18 @@ class Service < ApplicationRecord
   end
 
   enum role: [ :active_learning, :bootstrap, :machine_learning, :merge ]
-  enum problem_id: [ :ner ]
 
   has_many :projects
 
-  validates :role, :problem_id, :url, :title, :version,
+  validates :role, :url, :title, :version,
     presence: true
+
+  validates :problem_id,
+    presence: true,
+    # format: { with: /\A[a-zA-Z]+\z/,
+    # message: "only allows letters" }
+    format: { with: /\A[\w-]+\z/ }
+    # format: { with: /\A(\w|-)+\z/ }
 
   validates :url,
     uniqueness: true,

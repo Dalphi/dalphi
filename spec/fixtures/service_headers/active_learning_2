@@ -6,6 +6,6 @@ Content-Type: application/json
 	"version":	"1.0",
 	"description":	"An active learning dummy service that just implements the Who Are You API",
 	"role":		"active_learning",
-	"problem_id":	"ner",
-	"url":		"http://localhost:3004"
+	"problem_id":	"special NER",
+	"url":		"http://localhost:3005"
 }
