@@ -50,7 +50,7 @@ class Service < ApplicationRecord
   end
 
   def self.params_from_url(url)
-    timeout = Rails.configuration.x.dalphi['timeouts']['service-look-up']
+    timeout = 3
     Timeout::timeout(timeout) do
       data = JSON.parse(URI.parse(url).read)
       data['url'] = url
