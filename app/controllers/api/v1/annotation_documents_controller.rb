@@ -142,7 +142,8 @@ module API
       def create
         @annotation_document = AnnotationDocument.new(annotation_document_params)
         if @annotation_document.save
-          render json: @annotation_document
+          render status: 200,
+                 json: @annotation_document.relevant_attributes
         else
           render status: 400,
                  json: {
