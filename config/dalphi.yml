@@ -1,14 +1,11 @@
 test:
   timeouts:
     url-response-checker: 3
-    service-look-up: 5
 
 development:
   timeouts:
     url-response-checker: 3
-    service-look-up: 5
 
 production:
   timeouts:
     url-response-checker: 20
-    service-look-up: 10
