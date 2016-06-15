@@ -8,7 +8,10 @@ en:
       checking: checking service state
       undefined: service state is unknwon
       down: service is currently down
-    error-searching: An error occured while searching for this service
+    searching:
+      no-url: Please enter a URL to search for a Service
+      already-taken-url: The Service behind the given URL is already in use
+      general-error: An error occured while searching for this service
     form:
       url-label-text: '* Address'
     name:
