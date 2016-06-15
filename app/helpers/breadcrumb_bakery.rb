@@ -41,14 +41,13 @@ class BreadcrumbBakery
   end
 
   def path_exists?(path)
-    Rails.application.routes.recognize_path(path)
-  rescue
-    false
+    Rails.application.routes.recognize_path(path) rescue false
   end
 
   def labelize(tokens, token)
     token['/'] = ''
     token_predecessor = predecessor(tokens, token)
+    return exception_label(tokens) if has_breadcrumb_exception?(tokens)
     return integer_label(token, token_predecessor) if is_integer?(token)
     return class_label(token) if is_class?(token)
     return integer_and_action_label(token, token_predecessor) if is_integer_and_action?(token)
@@ -92,21 +91,25 @@ class BreadcrumbBakery
   end
 
   def predecessor(array, item)
-    array[array.find_index(item) - 1]
-  rescue
-    nil
+    array[array.find_index(item) - 1] rescue nil
+  end
+
+  def exception_label(tokens)
+    path = "/#{tokens.join('/')}"
+    I18n.t "breadcrumb-exceptions.#{path}"
+  end
+
+  def has_breadcrumb_exception?(tokens)
+    path = "/#{tokens.join('/')}"
+    I18n.t("breadcrumb-exceptions.#{path}", raise: true) rescue false
   end
 
   def is_integer?(object)
-    Integer(object)
-  rescue
-    false
+    Integer(object) rescue false
   end
 
   def is_class?(klass)
-    klass.classify.constantize
-  rescue
-    false
+    klass.classify.constantize rescue false
   end
 
   def is_integer_and_action?(integer_and_action)
