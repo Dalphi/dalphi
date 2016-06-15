@@ -9,21 +9,21 @@ ruby:
 ul
   li
     - if service_problem_ids.count == 0
-      = render 'projects/dashboard_compatibility_sign',
+      = render 'projects/dashboard/compatibility_sign',
                additional_class: 'undefined',
                icon: 'question-circle',
                tooltip: 'undefined'
       = t('projects.dashboard-card.services.compatibility.undefined')
 
     - elsif service_problem_ids.count == 1
-      = render 'projects/dashboard_compatibility_sign',
+      = render 'projects/dashboard/compatibility_sign',
                additional_class: 'available',
                icon: 'check-circle',
                tooltip: 'compatible'
       = t('projects.dashboard-card.services.compatibility.compatible', problem: problem_names)
 
     - else
-      = render 'projects/dashboard_compatibility_sign',
+      = render 'projects/dashboard/compatibility_sign',
                additional_class: 'not-set',
                icon: 'exclamation-circle',
                tooltip: 'incompatible'
