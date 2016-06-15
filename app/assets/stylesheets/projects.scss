@@ -16,4 +16,17 @@
       border: 0;
     }
   }
+
+  .dashboard-card {
+    .service-status-sign {
+      display: inline-block;
+      margin-right: $inline-margin;
+    }
+
+    .service-state-description {
+      a {
+        margin-left: $inline-margin;
+      }
+    }
+  }
 }

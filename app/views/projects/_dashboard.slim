@@ -1,0 +1,29 @@
+.col-xs-12.col-lg-6
+  .card.dashboard-card
+    h3.card-header
+      = t('projects.dashboard-card.title')
+    .card-block
+      h4.card-titleo
+        = t('projects.dashboard-card.services.title')
+      p.card-text
+        ul
+          li
+            = t('projects.dashboard-card.services.defined-available.title')
+            ul
+              - roles.each do |role|
+                li.service-state-description
+                  .service-status-sign
+                    - if services[role]
+                      = render 'services/shared/connectivity_sign',
+                               service_instance: services[role],
+                               children: nil
+                    - else
+                      .connectivity-sign.not-set.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('services.connectivity.not-set')}"
+                        = fa_icon 'times-circle'
+
+                  = t("enums.services.roles.#{role}")
+
+                  - unless services[role]
+                    = link_to t('projects.dashboard-card.services.defined-available.edit-link'), edit_project_path(project)
+
+          li Compatibility between Services

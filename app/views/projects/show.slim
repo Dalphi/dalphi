@@ -1,16 +1,22 @@
 .container.projects
   .row
-    .col-xs-12
-      h2
-        = @project.title
-      p
-        - if @project.description.empty?
-          i
-            = t('projects.blank-slate.no-description')
-        - else
-          = @project.description
+    h2.col-xs-12
+      = @project.title
+  .row
+    p.col-xs-12
+      - if @project.description.empty?
+        i
+          = t('projects.blank-slate.no-description')
+      - else
+        = @project.description
 
   .row.row-eq-height
+    = render 'projects/dashboard',
+             project: @project,
+             services: @project_services,
+             available_services: @available_services,
+             roles: @roles
+
     - @roles.each do |role|
       = render 'projects/service_card',
                project: @project,

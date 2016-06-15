@@ -18,7 +18,8 @@
     color: $color-3-2;
   }
 
-  &.down {
+  &.down,
+  &.not-set {
     color: $color-7-1;
   }
 

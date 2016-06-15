@@ -23,6 +23,13 @@ en:
         error: "Couldn\'t set %{service} service"
       destroy:
         success: Project was successfully destroyed.
+    dashboard-card:
+      title: Project Dashboard
+      services:
+        title: Services
+        defined-available:
+          title: Defined & available
+          edit-link: (set here)
     service-cards:
       blank-slate:
         title: 'No service selected'

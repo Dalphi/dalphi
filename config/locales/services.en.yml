@@ -8,6 +8,7 @@ en:
       checking: checking service state
       undefined: service state is unknwon
       down: service is currently down
+      not-set: service ist not set
     error-searching: An error occured while searching for this service
     form:
       url-label-text: '* Address'
