@@ -13,13 +13,8 @@
   .row.row-eq-height
     = render 'projects/dashboard',
              project: @project,
-             services: @project_services,
              available_services: @available_services,
-             service_problem_ids: @service_problem_ids,
              roles: @roles
-
-    coffee:
-      window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()
 
   .row.btn-row
     .col-xs-12

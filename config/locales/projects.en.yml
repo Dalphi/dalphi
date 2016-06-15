@@ -33,13 +33,13 @@ en:
           service-link: (add here)
         compatibility:
           title: Compatibility between Services
-          compatible: "all Services handle \"%{problem}\" problems"
+          compatible: "all Services handle %{problem} problems"
           incompatible: "various problem identifier (%{problems})"
           undefined: no services set
-    service-cards:
-      blank-slate:
-        title: 'No service selected'
-        text: '%{edit_link} this project to select a service.'
+          tooltips:
+            compatible: services are compatible
+            incompatible: services are incompatible
+            undefined: set compatible services
     settings:
       services:
         headline: Services to use

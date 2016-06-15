@@ -1,0 +1,24 @@
+= t('projects.dashboard-card.services.defined-available.title')
+ul
+  - roles.each do |role|
+    li.service-state-description
+        - if project_services[role]
+          .service-status-sign
+            = render 'services/shared/connectivity_sign',
+                     service_instance: project_services[role],
+                     children: nil
+          = t("enums.services.roles.#{role}")
+
+        - else
+          .service-status-sign
+            .connectivity-sign.not-set.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('services.connectivity.not-set')}"
+              = fa_icon 'times-circle'
+
+          = t("enums.services.roles.#{role}")
+
+          - relevant_services = available_services[role.to_sym]
+          - if relevant_services && relevant_services.any?
+            = link_to t('projects.dashboard-card.services.defined-available.edit-link'), edit_project_path(project)
+
+          - else
+            = link_to t('projects.dashboard-card.services.defined-available.service-link'), services_path
