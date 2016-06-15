@@ -6,4 +6,4 @@ rvm:
 script: ./bin/ci
 addons:
   code_climate:
-    repo_token: cf9635ed40660b7a9c9476bdef62b2171849bb8f05db2f3c9cdfb347ede317ad
+    repo_token: 94963d52eba7794ca798f92bf7b2a239d942e6bfbbe0c72be47952918f90ec31
