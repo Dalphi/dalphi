@@ -1,4 +1,8 @@
 en:
   breadcrumb-exceptions:
+    /services/active_learning: 'Active Learning'
+    /services/bootstrap: 'Bootstrap'
+    /services/machine_learning: 'Machine Learning'
+    /services/merge: 'Merge'
     /users/edit: 'Edit user'
     /users/sign_in: 'Sign in user'

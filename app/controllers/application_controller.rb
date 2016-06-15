@@ -24,8 +24,6 @@ class ApplicationController < ActionController::Base
     @breadcrumbs = []
     bakery = BreadcrumbBakery.new(request)
     @breadcrumbs = bakery.breadcrumbs
-    ap 'INSPECT BREADCRUMBS'
-    ap @breadcrumbs
   end
 
   # This method smells of :reek:UtilityFunction

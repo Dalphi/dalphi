@@ -3,7 +3,6 @@ class BreadcrumbBakery
 
   def initialize(request)
     tokens = url_tokens(request.original_url)
-    return @breadcrumbs if @breadcrumbs = breadcrumb_exception(tokens)
     @breadcrumbs = []
     subpath = ''
     tokens.each do |token|
@@ -20,13 +19,6 @@ class BreadcrumbBakery
     url_tokens = original_path.split('/')
     url_tokens -= ['']
     condense_url_tokens(url_tokens)
-  end
-
-  def breadcrumb_exception(tokens)
-    path = tokens.join('/')
-    return false if path == ''
-    [{ label: I18n.t("breadcrumb-exceptions.#{path}", raise: true),
-       path: path }] rescue false
   end
 
   def url_to_path(url)
@@ -55,6 +47,7 @@ class BreadcrumbBakery
   def labelize(tokens, token)
     token['/'] = ''
     token_predecessor = predecessor(tokens, token)
+    return exception_label(tokens, token) if has_breadcrumb_exception?(tokens, token)
     return integer_label(token, token_predecessor) if is_integer?(token)
     return class_label(token) if is_class?(token)
     return integer_and_action_label(token, token_predecessor) if is_integer_and_action?(token)
@@ -98,21 +91,25 @@ class BreadcrumbBakery
   end
 
   def predecessor(array, item)
-    array[array.find_index(item) - 1]
-  rescue
-    nil
+    array[array.find_index(item) - 1] rescue nil
+  end
+
+  def exception_label(tokens, token)
+    path = "/#{tokens.join('/')}"
+    I18n.t "breadcrumb-exceptions.#{path}"
+  end
+
+  def has_breadcrumb_exception?(tokens, token)
+    path = "/#{tokens.join('/')}"
+    I18n.t("breadcrumb-exceptions.#{path}", raise: true) rescue false
   end
 
   def is_integer?(object)
-    Integer(object)
-  rescue
-    false
+    Integer(object) rescue false
   end
 
   def is_class?(klass)
-    klass.classify.constantize
-  rescue
-    false
+    klass.classify.constantize rescue false
   end
 
   def is_integer_and_action?(integer_and_action)
