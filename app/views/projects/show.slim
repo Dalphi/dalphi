@@ -15,14 +15,8 @@
              project: @project,
              services: @project_services,
              available_services: @available_services,
+             service_problem_ids: @service_problem_ids,
              roles: @roles
-
-    - @roles.each do |role|
-      = render 'projects/service_card',
-               project: @project,
-               services: @project_services,
-               available_services: @available_services,
-               role: role
 
     coffee:
       window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()

@@ -26,6 +26,11 @@ class ProjectsController < ApplicationController
     @roles.each do |role|
       @project_services[role] = @project.send("#{role}_service")
     end
+
+    @service_problem_ids = @project_services.values
+                                            .compact
+                                            .map { |i| i[:problem_id] }
+                                            .uniq
   end
 
   # GET /projects/new

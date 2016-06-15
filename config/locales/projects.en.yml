@@ -30,6 +30,12 @@ en:
         defined-available:
           title: Defined & available
           edit-link: (set here)
+          service-link: (add here)
+        compatibility:
+          title: Compatibility between Services
+          compatible: "all Services handle \"%{problem}\" problems"
+          incompatible: "various problem identifier (%{problems})"
+          undefined: no services set
     service-cards:
       blank-slate:
         title: 'No service selected'
