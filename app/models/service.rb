@@ -37,10 +37,7 @@ class Service < ApplicationRecord
 
   validates :problem_id,
     presence: true,
-    # format: { with: /\A[a-zA-Z]+\z/,
-    # message: "only allows letters" }
-    format: { with: /\A[\w-]+\z/ }
-    # format: { with: /\A(\w|-)+\z/ }
+    format: { with: /\A[\w\.\-\_]+\z/ }
 
   validates :url,
     uniqueness: true,
