@@ -25,12 +25,13 @@ class ServicesController < ApplicationController
 
   # GET /services/new
   def new
-    url = "#{params[:protocol]}://#{params[:uri]}"
+    uri = params[:uri]
+    url = "#{params[:protocol]}://#{uri}"
+
     @service = Service.new_from_url(url)
-    unless @service
-      flash[:error] = I18n.t('services.error-searching')
-      redirect_to services_url
-    end
+    flash[:error] = new_service_flash_text(uri) # returns nil if everything is alright
+
+    redirect_to services_url if !@service || @service.errors.any?
   end
 
   # GET /services/1/edit
@@ -71,6 +72,20 @@ class ServicesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])
+    end
+
+    # generate a meaningful flash text in case of any error for service#new
+    def new_service_flash_text(uri)
+      if @service
+        @service.validate
+        url_error = @service.errors.details[:url].first
+        flash_text = I18n.t('services.searching.already-taken-url')
+        return flash_text if url_error && url_error[:error] == :taken
+      else
+        return I18n.t('services.searching.no-url') if uri.empty?
+        return I18n.t('services.searching.general-error') if uri.present?
+      end
+      nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -53,9 +53,14 @@ class Service < ApplicationRecord
   end
 
   def self.params_from_url(url)
-    data = JSON.parse(URI.parse(url).read)
-    data['url'] = url
-    return data
+    timeout = 3
+    Timeout::timeout(timeout) do
+      data = JSON.parse(URI.parse(url).read)
+      data['url'] = url
+      return data
+    end
+  rescue
+    raise "timeout of #{timeout} seconds to look up service exceeded"
   end
 
   def is_available?
