@@ -5,7 +5,7 @@ RSpec.describe "RawData API", type: :request do
     raw_datum = FactoryGirl.create(:raw_datum)
     sign_in(raw_datum.project.user)
 
-    xhr :get, "/projects/#{raw_datum.project.id}/raw_data"
+    get "/projects/#{raw_datum.project.id}/raw_data", xhr: true
     expect(response).to be_success
 
     json = JSON.parse(response.body)
