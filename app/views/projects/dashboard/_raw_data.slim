@@ -11,14 +11,15 @@ ruby:
     .card-block
       ul.card-text
         li
-          .raw-data-availability-details data-url='#'
+          .raw-data-availability-details data-url="#{project_raw_data_path(project)}"
             .raw-data-state-sign.available.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.raw-data.states.available')}"
               = fa_icon 'check-circle'
-            .raw-data-state-sign.checking data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.raw-data.states.checking')}"
+            .raw-data-state-sign.checking.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.raw-data.states.checking')}"
               i.fa.fa-spinner.fa-spin
             .raw-data-state-sign.unavailable.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.raw-data.states.unavailable')}"
               = fa_icon 'exclamation-circle'
-            .raw-data-state-sign.undefined.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.raw-data.states.undefined')}"
+            .raw-data-state-sign.undefined data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.raw-data.states.undefined')}"
               = fa_icon 'question-circle'
-          span
-            = t('projects.dashboard-card.raw-data.availability-of-raw-data')
+          = t('projects.dashboard-card.raw-data.availability-of-raw-data')
+          coffee:
+            window.rawDataAvailableIndicator = new window.RawDataAvailableIndicator()

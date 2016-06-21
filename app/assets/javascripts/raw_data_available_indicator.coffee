@@ -4,6 +4,8 @@ class RawDataAvailableIndicator
 
   constructor: ->
     _this = this
+    _this.$rawData = $('.raw-data-availability-details')
+    _this.url = _this.$rawData.data('url')
     this.rawData = []
 
     this.initAjax()
@@ -19,17 +21,26 @@ class RawDataAvailableIndicator
   checkAvailabilityOfRawData: ->
     $.ajax
       type: 'GET',
-      url: service.url,
+      url: _this.url,
       dataType: 'json'
       beforeSend: ->
-        _this.changeState(service, 1)
+        _this.changeState(1)
       success: (data) ->
-        _this.handleAjaxResponse(service, data)
+        _this.handleAjaxResponse(data)
       error: ->
-        _this.changeState(service, 3)
+        _this.changeState(3)
 
+  handleAjaxResponse: (data) ->
+    if data.length
+      _this.changeState(0)
+    else
+      _this.changeState(2)
 
   changeState: (stateIndex) ->
-    return true
+    $('.raw-data-state-sign', _this.$rawData).each (index, element) ->
+      if index == stateIndex
+        $(element).removeClass('no-display')
+      else
+        $(element).addClass('no-display')
 
 window.RawDataAvailableIndicator = RawDataAvailableIndicator
