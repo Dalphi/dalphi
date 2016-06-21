@@ -49,6 +49,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
 
   it 'patches an annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
+    expect(AnnotationDocument.all.count).to eq(1)
 
     patch "/api/v1/annotation_documents/#{annotation_document.id}",
           annotation_document: 
@@ -60,6 +61,8 @@ RSpec.describe "AnnotationDocuments API", type: :request do
             }
 
     expect(response).to be_success
+    expect(AnnotationDocument.all.count).to eq(1)
+
     json = JSON.parse(response.body)
     expect(json).to eq(
       'id' => 1,
@@ -75,5 +78,27 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     expect(annotation_document.rank).to eq(123)
     expect(annotation_document.payload).to eq("{\"new\":\"payload\"}")
     expect(annotation_document.skipped).to eq(true)
+  end
+
+  it 'destroys an annotation document' do
+    annotation_document = FactoryGirl.create(:annotation_document)
+    expect(AnnotationDocument.all.count).to eq(1)
+
+    delete "/api/v1/annotation_documents/#{annotation_document.id}"
+
+    expect(response).to be_success
+    expect(AnnotationDocument.all.count).to eq(0)
+
+    json = JSON.parse(response.body)
+    expect(json).to eq(
+      {
+        'id' => 1,
+        'interface_type' => 'text_nominal',
+        'payload' => "{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}",
+        'rank' => nil,
+        'raw_datum_id' => 1,
+        'skipped' => nil
+      }
+    )
   end
 end
