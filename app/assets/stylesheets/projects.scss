@@ -4,8 +4,10 @@
       margin-bottom: $input-label-margin-bottom;
     }
 
-    .card-text.create-new-service-notice {
-      margin-top: -$input-label-margin-bottom;
+    .card-text {
+      .create-new-service-notice {
+        margin-top: -$input-label-margin-bottom;
+      }
     }
 
     .list-group {
@@ -27,6 +29,14 @@
     .service-state-description {
       small {
         margin-left: $inline-margin;
+      }
+    }
+
+    ul {
+      list-style: none;
+
+      li {
+        margin-left: -$container-margin;
       }
     }
   }

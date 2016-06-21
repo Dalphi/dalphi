@@ -1,7 +1,7 @@
 .col-xs-12.col-lg-6.col-xl-3
   .card
     h3.card-header
-      = t("enums.services.roles.#{role}")
+      = t("enums.service.role.#{role}")
 
     - if services[role].any? && show_details
       a.btn.btn-sm.btn-secondary href="#{role_service_path(role)}"

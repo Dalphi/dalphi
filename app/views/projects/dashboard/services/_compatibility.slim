@@ -7,7 +7,8 @@ ruby:
     t('projects.dashboard-card.delimited-problem', problem: problem_name)
   end.join(', ')
 
-= t('projects.dashboard-card.services.compatibility.title')
+h4
+  = t('projects.dashboard-card.services.compatibility.title')
 ul
   li
     - if service_problem_ids.count == 0
