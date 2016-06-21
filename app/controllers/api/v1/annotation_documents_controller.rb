@@ -179,9 +179,7 @@ module API
       def destroy
         @annotation_document.destroy
         render status: 200,
-               json: {
-                 message: I18n.t('api.annotation_document.destroy.success')
-               }
+               json: @annotation_document.relevant_attributes
       end
 
       private
