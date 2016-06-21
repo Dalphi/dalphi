@@ -22,10 +22,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
-    @project_services = {}
-    @roles.each do |role|
-      @project_services[role] = @project.send("#{role}_service")
-    end
   end
 
   # GET /projects/new

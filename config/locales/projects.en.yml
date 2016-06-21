@@ -20,13 +20,33 @@ en:
       update-service:
         success: "%{service} service was successfully set."
         not-recognized: "%{service} service is not recognized."
-        error: "Couldn\'t set %{service} service"
+        error: "Couldn't set %{service} service"
       destroy:
         success: Project was successfully destroyed.
-    service-cards:
-      blank-slate:
-        title: 'No service selected'
-        text: '%{edit_link} this project to select a service.'
+    dashboard-card:
+      title: Project Dashboard
+      delimited-problem: '<i>%{problem}</i>'
+      services:
+        title: Services
+        set-and-available:
+          title: Set and available
+          no-service-set:
+            (service is currently unset, please %{set_link} it)
+          set-service-link-label:
+            set
+          no-service-available:
+            (no service available, please %{add_link} one to Dalphi)
+          add-service-link-label:
+            add
+        compatibility:
+          title: Compatibility between Services
+          compatible: "all Services handle %{problem} problems"
+          incompatible: "various problem identifier (%{problems})"
+          undefined: no services set
+          tooltips:
+            compatible: services are compatible
+            incompatible: services are incompatible
+            undefined: set compatible services
     settings:
       services:
         headline: Services to use

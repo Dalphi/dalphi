@@ -1,0 +1,28 @@
+ruby:
+  project_services = {}
+  roles.each do |role|
+    project_services[role] = project.send("#{role}_service")
+  end
+
+.col-xs-12
+  .card.dashboard-card
+    h3.card-header
+      = t('projects.dashboard-card.title')
+    .card-block
+      h4.card-titleo
+        = t('projects.dashboard-card.services.title')
+      p.card-text
+        ul
+          li
+            = render 'projects/dashboard/services_set_and_available',
+                     project: project,
+                     project_services: project_services,
+                     available_services: available_services,
+                     roles: roles
+
+          li
+            = render 'projects/dashboard/services_compatibility',
+                     project_services: project_services
+
+coffee:
+ window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()

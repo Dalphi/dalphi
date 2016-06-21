@@ -16,4 +16,18 @@
       border: 0;
     }
   }
+
+  .dashboard-card {
+    .compatibility-status-sign,
+    .service-status-sign {
+      display: inline-block;
+      margin-right: $inline-margin;
+    }
+
+    .service-state-description {
+      small {
+        margin-left: $inline-margin;
+      }
+    }
+  }
 }

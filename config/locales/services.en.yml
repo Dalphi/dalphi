@@ -8,6 +8,7 @@ en:
       checking: checking service state
       undefined: service state is unknwon
       down: service is currently down
+      not-set: service ist not set
     searching:
       no-url: Please enter a URL to search for a Service
       already-taken-url: The Service behind the given URL is already in use
