@@ -5,6 +5,9 @@ class RawDataController < ApplicationController
   # GET /raw_data
   def index
     @raw_data = RawDatum.where(project: @project)
+    if request.xhr?
+      return render json: @raw_data
+    end
   end
 
   # GET /raw_data/new

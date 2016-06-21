@@ -21,7 +21,8 @@
 
   .dashboard-card {
     .compatibility-status-sign,
-    .service-status-sign {
+    .service-status-sign,
+    .raw-data-availability-details {
       display: inline-block;
       margin-right: $inline-margin;
     }
