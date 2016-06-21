@@ -12,7 +12,6 @@ RSpec.describe "WhoAreYou API", type: :request do
         description: 'The Ruby on Rails Dalphi webapp ' \
                      'for user interaction and service intercommunication',
         problem_id: 'ner',
-        url: root_url,
         version: '1.0'
       }.to_json
     )
