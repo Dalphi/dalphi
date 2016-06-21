@@ -163,7 +163,7 @@ module API
       # PATCH/PUT /api/v1/annotation_documents/1
       def update
         if @annotation_document.update(annotation_document_params)
-          render json: @annotation_document
+          render json: @annotation_document.relevant_attributes
         else
           render status: 400,
                  json: {

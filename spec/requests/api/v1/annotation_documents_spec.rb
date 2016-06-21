@@ -48,26 +48,32 @@ RSpec.describe "AnnotationDocuments API", type: :request do
   end
 
   it 'patches an annotation document' do
-    annotation_document_1 = FactoryGirl.create(:annotation_document)
+    annotation_document = FactoryGirl.create(:annotation_document)
 
-    annotation_document_2 = FactoryGirl.build(
-                              :annotation_document,
-                              raw_datum: annotation_document_1.raw_datum
-                            )
-    annotation_document_2.interface_type = 'text_nominal'
-    annotation_document_2.payload = "{\"new\":\"payload\"}"
-    annotation_document_2.rank = 123
-    annotation_document_2.raw_datum_id = 456
-    annotation_document_2.skipped = true
-
-    patch "/api/v1/annotation_documents/#{annotation_document_1.id}",
-          annotation_document: annotation_document_2.to_json
+    patch "/api/v1/annotation_documents/#{annotation_document.id}",
+          annotation_document: 
+            {
+              'interface_type' => 'text_nominal',
+              'rank' => 123,
+              'payload' => "{\"new\":\"payload\"}",
+              'skipped' => true
+            }
 
     expect(response).to be_success
-    annotation_document_3 = AnnotationDocument.new(JSON.parse(response.body))
-    annotation_document_1.reload
+    json = JSON.parse(response.body)
+    expect(json).to eq(
+      'id' => 1,
+      'interface_type' => 'text_nominal',
+      'raw_datum_id' => 1,
+      'payload' => "{\"new\":\"payload\"}",
+      'rank' => 123,
+      'skipped' => true
+    )
 
-    expect(annotation_document_1).to eq(annotation_document_2)
-    expect(annotation_document_2).to eq(annotation_document_3)
+    annotation_document.reload
+    expect(annotation_document.interface_type).to eq('text_nominal')
+    expect(annotation_document.rank).to eq(123)
+    expect(annotation_document.payload).to eq("{\"new\":\"payload\"}")
+    expect(annotation_document.skipped).to eq(true)
   end
 end
