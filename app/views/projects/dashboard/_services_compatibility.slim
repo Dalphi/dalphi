@@ -3,7 +3,9 @@ ruby:
                                         .compact
                                         .map { |i| i[:problem_id] }
                                         .uniq
-  problem_names = service_problem_ids.map(&:inspect).join(', ')
+  problem_names = service_problem_ids.map do |problem_name|
+    t('projects.dashboard-card.delimited-problem', problem: problem_name)
+  end.join(', ')
 
 = t('projects.dashboard-card.services.compatibility.title')
 ul
@@ -13,18 +15,18 @@ ul
                additional_class: 'undefined',
                icon: 'question-circle',
                tooltip: 'undefined'
-      = t('projects.dashboard-card.services.compatibility.undefined')
+      == t('projects.dashboard-card.services.compatibility.undefined')
 
     - elsif service_problem_ids.count == 1
       = render 'projects/dashboard/compatibility_sign',
                additional_class: 'available',
                icon: 'check-circle',
                tooltip: 'compatible'
-      = t('projects.dashboard-card.services.compatibility.compatible', problem: problem_names)
+      == t('projects.dashboard-card.services.compatibility.compatible', problem: problem_names)
 
     - else
       = render 'projects/dashboard/compatibility_sign',
                additional_class: 'not-set',
                icon: 'exclamation-circle',
                tooltip: 'incompatible'
-      = t('projects.dashboard-card.services.compatibility.incompatible', problems: problem_names)
+      == t('projects.dashboard-card.services.compatibility.incompatible', problems: problem_names)
