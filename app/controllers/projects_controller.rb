@@ -64,18 +64,19 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/bootstrap
   def bootstrap
-    uri = URI.parse(@project.bootstrap_service.url)
+    bootstrap_service = @project.bootstrap_service
+    uri = URI.parse(bootstrap_service.url)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new uri.request_uri,
-                                  initheader = { 'Content-Type' => 'application/json' }
+                                  initheader: { 'Content-Type' => 'application/json' }
     request.body = @project.bootstrap_data.to_json
     response = http.request(request)
     if response.kind_of? Net::HTTPSuccess
-      redirect_to project_path(@project), notice: I18n.t('projects.bootstrap.success')
+      flash[:notice] = I18n.t('projects.bootstrap.success')
     else
       flash[:error] = I18n.t('projects.bootstrap.error')
-      redirect_to project_path(@project)
     end
+    redirect_to project_path(@project)
   end
 
   private
