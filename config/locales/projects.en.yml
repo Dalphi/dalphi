@@ -51,14 +51,13 @@ en:
           add-service-link-label:
             add
         compatibility:
-          title: Compatibility between services
-          compatible: "all services handle %{problem} problems"
-          incompatible: "various problem identifier (%{problems})"
-          undefined: no services set
-          tooltips:
-            compatible: services are compatible
-            incompatible: services are incompatible
-            undefined: set compatible services
+          title: 'Compatibility of services'
+          compatibility-of-services: 'Compatibility of services'
+          compatible: 'All services handle %{problem} problems'
+          incompatible: 'Various problem identifiers (%{problems})'
+          undefined: 'An error occured while checking for problem identifiers'
+          checking: 'Checking for problem identifiers'
+          empty: 'There seem to be no services associated'
     settings:
       services:
         headline: Services to use
