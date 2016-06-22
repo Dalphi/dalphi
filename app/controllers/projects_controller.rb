@@ -68,7 +68,7 @@ class ProjectsController < ApplicationController
     uri = URI.parse(bootstrap_service.url)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new uri.request_uri,
-                                  initheader: { 'Content-Type' => 'application/json' }
+                                  { 'Content-Type' => 'application/json' }
     request.body = @project.bootstrap_data.to_json
     response = http.request(request)
     if response.kind_of? Net::HTTPSuccess
