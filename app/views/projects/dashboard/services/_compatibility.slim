@@ -11,7 +11,7 @@ h4
   = t('projects.dashboard-card.services.compatibility.title')
 ul.card-text
   li
-    .compatibility-check-details data-url="#{check_problem_identifiers_path(@project)}"
+    .compatibility-check-details data-url="#{check_problem_identifiers_path(project)}"
       .compatibility-state-sign.checking.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.checking')}"
         i.fa.fa-spinner.fa-spin
       .compatibility-state-sign.empty.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.empty')}"

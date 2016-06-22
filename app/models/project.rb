@@ -30,7 +30,7 @@ class Project < ApplicationRecord
     problem_identifiers = []
     Service.roles.keys.each do |role|
       service = self.send("#{role}_service")
-      problem_identifiers << service.problem_id unless service.nil?
+      problem_identifiers << service.problem_id if service
     end
     problem_identifiers.uniq.sort
   end
