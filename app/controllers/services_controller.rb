@@ -40,7 +40,8 @@ class ServicesController < ApplicationController
 
   # GET /services/1/check_connectivity
   def check_connectivity
-    render json: { serviceIsAvailable: @service.is_available? }, status: 200
+    render json: { serviceIsAvailable: @service.is_available? },
+           status: 200
   end
 
   # POST /services

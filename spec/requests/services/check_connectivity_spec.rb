@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe "Service API", type: :request do
+RSpec.describe "Connectivity check", type: :request do
   it 'shows service connectivity status' do
     raw_datum = FactoryGirl.create(:raw_datum)
     service = FactoryGirl.create(:active_learning_service)
     sign_in(raw_datum.project.user)
 
-    get "/services/#{service.id}/connectivity", xhr: true
+    get check_connectivity_path(service), xhr: true
     expect(response).to be_success
 
     json = JSON.parse(response.body)

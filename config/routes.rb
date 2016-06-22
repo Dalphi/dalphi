@@ -42,10 +42,14 @@ Rails.application.routes.draw do
       to: 'services#role_services',
       constraints: { role: /\D+\w*/ },
       as: 'role_service'
-  get '/services/:id/connectivity',
+  get '/services/:id/check_connectivity',
       to: 'services#check_connectivity',
       constraints: { id: /\d+/ },
       as: 'check_connectivity'
+  get '/projects/:id/check_problem_identifiers',
+      to: 'projects#check_problem_identifiers',
+      constraints: { id: /\d+/ },
+      as: 'check_problem_identifiers'
 
   # Projects
 
