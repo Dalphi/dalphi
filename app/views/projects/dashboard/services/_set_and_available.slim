@@ -16,9 +16,11 @@ ul
             = fa_icon 'times-circle'
 
         = t("enums.service.role.#{role}")
-        small.no-service-set.no-display
-          == t 'projects.dashboard-card.services.set-and-available.no-service-set',
-               set_link: link_to(t('projects.dashboard-card.services.set-and-available.set-service-link-label'), edit_project_path(project))
-        small.no-service-available.no-display
-          == t 'projects.dashboard-card.services.set-and-available.no-service-available',
-               add_link: link_to(t('projects.dashboard-card.services.set-and-available.add-service-link-label'), services_path)
+        small
+          - relevant_services = available_services[role.to_sym]
+          - if relevant_services && relevant_services.any?
+            == t 'projects.dashboard-card.services.set-and-available.no-service-set',
+                 set_link: link_to(t('projects.dashboard-card.services.set-and-available.set-service-link-label'), edit_project_path(project))
+          - else
+            == t 'projects.dashboard-card.services.set-and-available.no-service-available',
+                 add_link: link_to(t('projects.dashboard-card.services.set-and-available.add-service-link-label'), services_path)

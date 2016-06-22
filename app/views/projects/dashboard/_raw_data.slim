@@ -20,6 +20,9 @@ ruby:
               = fa_icon 'exclamation-circle'
             .raw-data-state-sign.undefined data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.raw-data.states.undefined')}"
               = fa_icon 'question-circle'
-          = t('projects.dashboard-card.raw-data.availability-of-raw-data')
+          = t 'projects.dashboard-card.raw-data.availability-of-raw-data'
+          small.no-display
+            == t 'projects.dashboard-card.raw-data.no-raw-data-available',
+                 add_link: link_to(t('projects.dashboard-card.raw-data.add-raw-data-label'), new_project_raw_datum_path(project))
           coffee:
             window.rawDataAvailableIndicator = new window.RawDataAvailableIndicator()

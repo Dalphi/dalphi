@@ -32,6 +32,8 @@ en:
       delimited-problem: '<i>%{problem}</i>'
       raw-data:
         availability-of-raw-data: Availability of raw data
+        no-raw-data-available: (no raw data available, please %{add_link} some)
+        add-raw-data-label: add
         title: Raw Data
         states:
           checking: 'Checking for raw data'
@@ -42,14 +44,10 @@ en:
         title: Services
         set-and-available:
           title: Set and available
-          no-service-set:
-            (service is currently unset, please %{set_link} it)
-          set-service-link-label:
-            set
-          no-service-available:
-            (no service available, please %{add_link} one to Dalphi)
-          add-service-link-label:
-            add
+          no-service-set: (service is currently unset, please %{set_link} it)
+          set-service-link-label: set
+          no-service-available: (no service available, please %{add_link} one to Dalphi)
+          add-service-link-label: add
         compatibility:
           title: 'Compatibility of services'
           compatibility-of-services: 'Compatibility of services'

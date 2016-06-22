@@ -27,7 +27,8 @@
       margin-right: $inline-margin;
     }
 
-    .service-state-description {
+    .service-state-description,
+    .card-text {
       small {
         margin-left: $inline-margin;
       }

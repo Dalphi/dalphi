@@ -10,8 +10,6 @@ class RawDataAvailableIndicator
 
     this.initAjax()
     this.checkAvailabilityOfRawData()
-    # this.initServiceList()
-    # this.checkConnectivityForAllServices()
 
   initAjax: ->
     $.ajaxSetup
@@ -28,7 +26,7 @@ class RawDataAvailableIndicator
       success: (data) ->
         _this.handleAjaxResponse(data)
       error: ->
-        _this.changeState(3)
+        #_this.changeState(3)
 
   handleAjaxResponse: (data) ->
     if data.length
@@ -37,6 +35,11 @@ class RawDataAvailableIndicator
       _this.changeState(2)
 
   changeState: (stateIndex) ->
+    $hint = $('small', $('.raw-data-availability-details').parent())
+    if stateIndex == 2
+      $hint.removeClass('no-display')
+    else
+      $hint.addClass('no-display')
     $('.raw-data-state-sign', _this.$rawData).each (index, element) ->
       if index == stateIndex
         $(element).removeClass('no-display')
