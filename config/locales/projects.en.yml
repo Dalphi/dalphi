@@ -51,11 +51,13 @@ en:
         compatibility:
           title: 'Compatibility of services'
           compatibility-of-services: 'Compatibility of services'
-          compatible: 'All services handle %{problem} problems'
-          incompatible: 'Various problem identifiers (%{problems})'
+          compatible: (all services handle %problem problems)
+          incompatible: '(various problem identifiers: %problems; please %{fix_link} it)'
+          incompatible-label: fix
           undefined: 'An error occured while checking for problem identifiers'
           checking: 'Checking for problem identifiers'
-          empty: 'There seem to be no services associated'
+          empty: '(no services associated, please %{add_link} one)'
+          empty-label: add
     settings:
       services:
         headline: Services to use

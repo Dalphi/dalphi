@@ -12,16 +12,21 @@ h4
 ul.card-text
   li
     .compatibility-check-details data-url="#{check_problem_identifiers_path(project)}"
+      .compatibility-state-sign.compatible.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.compatible')}"
+        = fa_icon 'check-circle'
       .compatibility-state-sign.checking.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.checking')}"
         i.fa.fa-spinner.fa-spin
-      .compatibility-state-sign.empty.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.empty')}"
+      .compatibility-state-sign.empty.no-display
         = fa_icon 'exclamation-circle'
-      .compatibility-state-sign.compatible.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.compatible.')}"
-        = fa_icon 'check-circle'
-      .compatibility-state-sign.incompatible.no-display data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.incompatible')}"
+      .compatibility-state-sign.incompatible.no-display
         = fa_icon 'exclamation-circle'
       .compatibility-state-sign.undefined data-toggle='tooltip' data-placement='bottom' title="#{t('projects.dashboard-card.services.compatibility.undefined')}"
         = fa_icon 'question-circle'
     = t('projects.dashboard-card.services.compatibility.compatibility-of-services')
+    - hints = { compatible: t('projects.dashboard-card.services.compatibility.compatible'),
+                empty: t('projects.dashboard-card.services.compatibility.empty'),
+                incompatible: t('projects.dashboard-card.services.compatibility.incompatible',
+                                fix_link: link_to(t('projects.dashboard-card.services.compatibility.incompatible-label'), edit_project_path(project))) }
+    small data=hints
     coffee:
-      window.rawDataAvailableIndicator = new window.RawDataAvailableIndicator()
+      window.compatibilityCheckIndicator = new window.CompatibilityCheckIndicator()

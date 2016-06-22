@@ -6,7 +6,6 @@ class RawDataAvailableIndicator
     _this = this
     _this.$rawData = $('.raw-data-availability-details')
     _this.url = _this.$rawData.data('url')
-    this.rawData = []
 
     this.initAjax()
     this.checkAvailabilityOfRawData()
@@ -26,7 +25,7 @@ class RawDataAvailableIndicator
       success: (data) ->
         _this.handleAjaxResponse(data)
       error: ->
-        #_this.changeState(3)
+        _this.changeState(3)
 
   handleAjaxResponse: (data) ->
     if data.length
