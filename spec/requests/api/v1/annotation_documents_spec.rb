@@ -10,7 +10,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
       {
         'id' => 1,
         'interface_type' => 'text_nominal',
-        'payload' => "{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}",
+        'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
         'skipped' => nil
@@ -27,7 +27,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
            {
              'rank' => 0,
              'raw_datum_id' => raw_datum.id,
-             'payload' => "{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}",
+             'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
              'skipped' => false,
              'interface_type' => 'text_nominal'
            }
@@ -38,7 +38,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
       {
         'id' => 1,
         'interface_type' => 'text_nominal',
-        'payload' => "{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}",
+        'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => 0,
         'raw_datum_id' => raw_datum.id,
         'skipped' => false
@@ -56,7 +56,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
             {
               'interface_type' => 'text_nominal',
               'rank' => 123,
-              'payload' => "{\"new\":\"payload\"}",
+              'payload' => Base64.encode64("{\"new\":\"payload\"}"),
               'skipped' => true
             }
 
@@ -68,7 +68,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
       'id' => 1,
       'interface_type' => 'text_nominal',
       'raw_datum_id' => 1,
-      'payload' => "{\"new\":\"payload\"}",
+      'payload' => Base64.encode64("{\"new\":\"payload\"}"),
       'rank' => 123,
       'skipped' => true
     )
@@ -94,7 +94,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
       {
         'id' => 1,
         'interface_type' => 'text_nominal',
-        'payload' => "{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}",
+        'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
         'skipped' => nil

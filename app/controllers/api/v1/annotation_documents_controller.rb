@@ -209,6 +209,7 @@ module API
             :raw_datum_id,
             :skipped
           )
+          parameters[:payload] = Base64.decode64(parameters[:payload])
           parameters
         end
     end

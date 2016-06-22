@@ -73,7 +73,7 @@ class AnnotationDocument < ApplicationRecord
     {
       id: id,
       interface_type: interface_type,
-      payload: payload,
+      payload: Base64.encode64(payload),
       rank: rank,
       raw_datum_id: raw_datum_id,
       skipped: skipped
