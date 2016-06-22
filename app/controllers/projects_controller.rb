@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   include ServiceRoles
 
   before_action :set_project, only: [
+    :bootstrap,
     :destroy,
     :edit,
     :show,
@@ -59,6 +60,22 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
+  end
+
+  # GET /projects/1/bootstrap
+  def bootstrap
+    uri = URI.parse(@project.bootstrap_service.url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Post.new uri.request_uri,
+                                  initheader = { 'Content-Type' => 'application/json' }
+    request.body = @project.bootstrap_data.to_json
+    response = http.request(request)
+    if response.kind_of? Net::HTTPSuccess
+      redirect_to project_path(@project), notice: I18n.t('projects.bootstrap.success')
+    else
+      flash[:error] = I18n.t('projects.bootstrap.error')
+      redirect_to project_path(@project)
+    end
   end
 
   private

@@ -1,5 +1,9 @@
 en:
   projects:
+    bootstrap:
+      title: Bootstrap
+      success: Raw data has successfully been sent to the bootstrap service
+      error: An error occured after sending raw data to the bootstrap service
     blank-slate:
       title: 'No projects added yet'
       text: 'To start with a new project use the button below.'
