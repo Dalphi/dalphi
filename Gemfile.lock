@@ -362,7 +362,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.0.5)
+    unicode-display_width (1.1.0)
     unicorn (5.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
