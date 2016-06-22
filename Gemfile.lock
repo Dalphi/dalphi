@@ -336,7 +336,7 @@ GEM
       slim (~> 3.0)
       sysexits (~> 1.1)
     spring (1.7.1)
-    sprockets (3.6.1)
+    sprockets (3.6.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.0.4)
