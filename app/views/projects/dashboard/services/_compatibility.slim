@@ -24,7 +24,8 @@ ul.card-text
         = fa_icon 'question-circle'
     = t('projects.dashboard-card.services.compatibility.compatibility-of-services')
     - hints = { compatible: t('projects.dashboard-card.services.compatibility.compatible'),
-                empty: t('projects.dashboard-card.services.compatibility.empty'),
+                empty: t('projects.dashboard-card.services.compatibility.empty',
+                         add_link: link_to(t('projects.dashboard-card.services.compatibility.empty-label'), edit_project_path(project))),
                 incompatible: t('projects.dashboard-card.services.compatibility.incompatible',
                                 fix_link: link_to(t('projects.dashboard-card.services.compatibility.incompatible-label'), edit_project_path(project))) }
     small data=hints
