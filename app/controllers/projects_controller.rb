@@ -63,7 +63,7 @@ class ProjectsController < ApplicationController
     redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
   end
 
-  # GET /services/1/check_compatibility
+  # GET /projects/1/check_compatibility
   def check_problem_identifiers
     render json: { associatedProblemIdentifiers: @project.associated_problem_identifiers },
            status: 200
