@@ -23,14 +23,15 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     expect(AnnotationDocument.all.count).to eq(0)
 
     post '/api/v1/annotation_documents',
-         annotation_document:
-           {
+         params: {
+           annotation_document: {
              'rank' => 0,
              'raw_datum_id' => raw_datum.id,
              'payload' => "{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}",
              'skipped' => false,
              'interface_type' => 'text_nominal'
            }
+         }
 
     expect(response).to be_success
     json = JSON.parse(response.body)
@@ -52,13 +53,14 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     expect(AnnotationDocument.all.count).to eq(1)
 
     patch "/api/v1/annotation_documents/#{annotation_document.id}",
-          annotation_document:
-            {
+          params: {
+            annotation_document: {
               'interface_type' => 'text_nominal',
               'rank' => 123,
               'payload' => "{\"new\":\"payload\"}",
               'skipped' => true
             }
+          }
 
     expect(response).to be_success
     expect(AnnotationDocument.all.count).to eq(1)

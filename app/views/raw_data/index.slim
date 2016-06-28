@@ -11,7 +11,7 @@
           tbody
             - @raw_data.each do |raw_datum|
               tr
-                td = raw_datum.data_file_name
+                td = raw_datum.filename
                 td = raw_datum.shape
                 td.controls
                   = render 'shared/button',

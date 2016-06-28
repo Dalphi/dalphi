@@ -95,12 +95,12 @@ class BreadcrumbBakery
   end
 
   def exception_label(tokens)
-    path = "/#{tokens.join('/')}"
+    path = "/#{tokens.join('/')}".gsub(/[0-9]+/, '1')
     I18n.t "breadcrumb-exceptions.#{path}"
   end
 
   def has_breadcrumb_exception?(tokens)
-    path = "/#{tokens.join('/')}"
+    path = "/#{tokens.join('/')}".gsub(/[0-9]+/, '1')
     I18n.t("breadcrumb-exceptions.#{path}", raise: true) rescue false
   end
 

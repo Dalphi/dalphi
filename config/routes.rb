@@ -53,6 +53,10 @@ Rails.application.routes.draw do
     resources :raw_data, except: [:show]
   end
 
+  get '/projects/:id/bootstrap',
+      to: 'projects#bootstrap',
+      as: 'project_bootstrap'
+
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html
 

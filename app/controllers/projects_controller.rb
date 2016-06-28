@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   include ServiceRoles
 
   before_action :set_project, only: [
+    :bootstrap,
     :destroy,
     :edit,
     :show,
@@ -61,6 +62,28 @@ class ProjectsController < ApplicationController
     redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
   end
 
+  # GET /projects/1/bootstrap
+  def bootstrap
+    bootstrap_service = @project.bootstrap_service
+    uri = URI.parse(bootstrap_service.url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Post.new uri.request_uri,
+                                  { 'Content-Type' => 'application/json' }
+
+    request.body = @project.bootstrap_data.to_json
+    response = http.request(request)
+
+    if response.kind_of? Net::HTTPSuccess
+      flash[:notice] = I18n.t('projects.bootstrap.success')
+      redirect_to project_path(@project)
+    else
+      redirect_bootstrap_with_flash
+    end
+
+  rescue
+    redirect_bootstrap_with_flash
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
@@ -98,5 +121,10 @@ class ProjectsController < ApplicationController
         :merge_service,
         :title
       )
+    end
+
+    def redirect_bootstrap_with_flash
+      flash[:error] = I18n.t('projects.bootstrap.error')
+      redirect_to project_path(@project)
     end
 end

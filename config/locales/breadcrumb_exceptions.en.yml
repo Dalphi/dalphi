@@ -6,3 +6,4 @@ en:
     /services/merge: 'Merge'
     /users/edit: 'Edit user'
     /users/sign_in: 'Sign in user'
+    /projects/1/bootstrap: 'Bootstrap'

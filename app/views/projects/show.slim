@@ -31,3 +31,8 @@
                label: t('activerecord.actions.project.edit'),
                icon: 'edit',
                href: edit_project_path(@project)
+      = render 'shared/button',
+               label: t('projects.bootstrap.title'),
+               icon: 'rocket',
+               type: 'primary',
+               href: project_bootstrap_path(@project)

@@ -26,6 +26,19 @@ class Project < ApplicationRecord
     ProjectServiceValidator.validate_merge_service(project)
   end
 
+  def bootstrap_data
+    data = []
+    self.raw_data.each do |raw_datum|
+      data << {
+        raw_datum_id: raw_datum.id,
+        content: Base64.encode64(
+                   File.new(raw_datum.data.path).read
+                 )
+      }
+    end
+    data
+  end
+
   def label
     self.title
   end
