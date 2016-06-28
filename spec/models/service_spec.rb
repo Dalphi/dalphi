@@ -191,11 +191,6 @@ RSpec.describe Service, type: :model do
       expect(@al_service).to be_valid
     end
 
-    it 'can not be a unreachable resource' do
-      @al_service.url = 'http://www.example.com/dalphi'
-      expect(@al_service).to be_invalid
-    end
-
     it 'should be unique, so that two services with different URLs can exist' do
       expect(Service.all.size).to eq(0)
       @al_service.url = 'http://localhost:3000'
