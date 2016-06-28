@@ -77,6 +77,10 @@ class ProjectsController < ApplicationController
       flash[:error] = I18n.t('projects.bootstrap.error')
     end
     redirect_to project_path(@project)
+
+  rescue
+    flash[:error] = I18n.t('projects.bootstrap.error')
+    redirect_to project_path(@project)
   end
 
   private
