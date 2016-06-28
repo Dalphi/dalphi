@@ -1,4 +1,6 @@
-.connection-details {
+.connection-details,
+.raw-data-availability-details {
+  display: inline-block;
   position: relative;
 
   .no-display {
@@ -7,7 +9,8 @@
 }
 
 .compatibility-status-sign,
-.connectivity-sign {
+.connectivity-sign,
+.raw-data-state-sign {
   display: inline-block;
   margin-right: .1rem;
 
@@ -20,7 +23,8 @@
   }
 
   &.down,
-  &.not-set {
+  &.not-set,
+  &.unavailable {
     color: $color-7-1;
   }
 

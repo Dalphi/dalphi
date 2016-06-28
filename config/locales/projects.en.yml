@@ -26,6 +26,14 @@ en:
     dashboard-card:
       title: Project Dashboard
       delimited-problem: '<i>%{problem}</i>'
+      raw-data:
+        availability-of-raw-data: Availability of raw data
+        title: Raw Data
+        states:
+          checking: 'Checking for raw data'
+          available: 'Raw data is available'
+          unavailable: 'There is no raw data available'
+          undefined: 'An error occured while checking for availability of raw data'
       services:
         title: Services
         set-and-available:
@@ -39,8 +47,8 @@ en:
           add-service-link-label:
             add
         compatibility:
-          title: Compatibility between Services
-          compatible: "all Services handle %{problem} problems"
+          title: Compatibility between services
+          compatible: "all services handle %{problem} problems"
           incompatible: "various problem identifier (%{problems})"
           undefined: no services set
           tooltips:

@@ -11,7 +11,11 @@
         = @project.description
 
   .row.row-eq-height
-    = render 'projects/dashboard/dashboard',
+    = render 'projects/dashboard/services',
+             project: @project,
+             available_services: @available_services,
+             roles: @roles
+    = render 'projects/dashboard/raw_data',
              project: @project,
              available_services: @available_services,
              roles: @roles
