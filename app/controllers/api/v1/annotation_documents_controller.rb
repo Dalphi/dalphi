@@ -142,7 +142,8 @@ module API
       def create
         @annotation_document = AnnotationDocument.new(annotation_document_params)
         if @annotation_document.save
-          render json: @annotation_document
+          render status: 200,
+                 json: @annotation_document.relevant_attributes
         else
           render status: 400,
                  json: {
@@ -162,7 +163,7 @@ module API
       # PATCH/PUT /api/v1/annotation_documents/1
       def update
         if @annotation_document.update(annotation_document_params)
-          render json: @annotation_document
+          render json: @annotation_document.relevant_attributes
         else
           render status: 400,
                  json: {
@@ -178,9 +179,7 @@ module API
       def destroy
         @annotation_document.destroy
         render status: 200,
-               json: {
-                 message: I18n.t('api.annotation_document.destroy.success')
-               }
+               json: @annotation_document.relevant_attributes
       end
 
       private
