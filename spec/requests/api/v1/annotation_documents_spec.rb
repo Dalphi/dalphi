@@ -52,7 +52,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     expect(AnnotationDocument.all.count).to eq(1)
 
     patch "/api/v1/annotation_documents/#{annotation_document.id}",
-          annotation_document: 
+          annotation_document:
             {
               'interface_type' => 'text_nominal',
               'rank' => 123,
