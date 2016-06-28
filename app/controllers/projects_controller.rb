@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
     :edit,
     :show,
     :update_service,
+    :check_problem_identifiers,
     :update
   ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
@@ -60,6 +61,12 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
+  end
+
+  # GET /projects/1/check_compatibility
+  def check_problem_identifiers
+    render json: { associatedProblemIdentifiers: @project.associated_problem_identifiers },
+           status: 200
   end
 
   # GET /projects/1/bootstrap

@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       to: 'services#role_services',
       constraints: { role: /\D+\w*/ },
       as: 'role_service'
-  get '/services/:id/connectivity',
+  get '/services/:id/check_connectivity',
       to: 'services#check_connectivity',
       constraints: { id: /\d+/ },
       as: 'check_connectivity'
@@ -56,6 +56,10 @@ Rails.application.routes.draw do
   get '/projects/:id/bootstrap',
       to: 'projects#bootstrap',
       as: 'project_bootstrap'
+  get '/projects/:id/check_problem_identifiers',
+      to: 'projects#check_problem_identifiers',
+      constraints: { id: /\d+/ },
+      as: 'check_problem_identifiers'
 
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html

@@ -26,6 +26,15 @@ class Project < ApplicationRecord
     ProjectServiceValidator.validate_merge_service(project)
   end
 
+  def associated_problem_identifiers
+    problem_identifiers = []
+    Service.roles.keys.each do |role|
+      service = self.send("#{role}_service")
+      problem_identifiers << service.problem_id if service
+    end
+    problem_identifiers.uniq.sort
+  end
+
   def bootstrap_data
     data = []
     self.raw_data.each do |raw_datum|

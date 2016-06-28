@@ -17,7 +17,8 @@ ruby:
                  roles: roles
 
         = render 'projects/dashboard/services/compatibility',
-                 project_services: project_services
+                 project_services: project_services,
+                 project: project
 
 coffee:
  window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()

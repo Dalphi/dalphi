@@ -21,7 +21,6 @@ ul
           - if relevant_services && relevant_services.any?
             == t 'projects.dashboard-card.services.set-and-available.no-service-set',
                  set_link: link_to(t('projects.dashboard-card.services.set-and-available.set-service-link-label'), edit_project_path(project))
-
           - else
             == t 'projects.dashboard-card.services.set-and-available.no-service-available',
                  add_link: link_to(t('projects.dashboard-card.services.set-and-available.add-service-link-label'), services_path)

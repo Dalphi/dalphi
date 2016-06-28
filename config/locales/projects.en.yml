@@ -32,6 +32,8 @@ en:
       delimited-problem: '<i>%{problem}</i>'
       raw-data:
         availability-of-raw-data: Availability of raw data
+        no-raw-data-available: (no raw data available, please %{add_link} some)
+        add-raw-data-label: add
         title: Raw Data
         states:
           checking: 'Checking for raw data'
@@ -42,23 +44,20 @@ en:
         title: Services
         set-and-available:
           title: Set and available
-          no-service-set:
-            (service is currently unset, please %{set_link} it)
-          set-service-link-label:
-            set
-          no-service-available:
-            (no service available, please %{add_link} one to Dalphi)
-          add-service-link-label:
-            add
+          no-service-set: (service is currently unset, please %{set_link} it)
+          set-service-link-label: set
+          no-service-available: (no service available, please %{add_link} one to Dalphi)
+          add-service-link-label: add
         compatibility:
-          title: Compatibility between services
-          compatible: "all services handle %{problem} problems"
-          incompatible: "various problem identifier (%{problems})"
-          undefined: no services set
-          tooltips:
-            compatible: services are compatible
-            incompatible: services are incompatible
-            undefined: set compatible services
+          title: 'Compatibility of services'
+          compatibility-of-services: 'Compatibility of services'
+          compatible: (all services handle %problem problems)
+          incompatible: '(various problem identifiers: %problems; please %{fix_link} it)'
+          incompatible-label: fix
+          undefined: 'An error occured while checking for problem identifiers'
+          checking: 'Checking for problem identifiers'
+          empty: '(no services associated, please %{add_link} one)'
+          empty-label: add
     settings:
       services:
         headline: Services to use
