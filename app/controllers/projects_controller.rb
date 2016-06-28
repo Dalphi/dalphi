@@ -69,18 +69,19 @@ class ProjectsController < ApplicationController
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new uri.request_uri,
                                   { 'Content-Type' => 'application/json' }
+
     request.body = @project.bootstrap_data.to_json
     response = http.request(request)
+
     if response.kind_of? Net::HTTPSuccess
       flash[:notice] = I18n.t('projects.bootstrap.success')
+      redirect_to project_path(@project)
     else
-      flash[:error] = I18n.t('projects.bootstrap.error')
+      redirect_bootstrap_with_flash
     end
-    redirect_to project_path(@project)
 
   rescue
-    flash[:error] = I18n.t('projects.bootstrap.error')
-    redirect_to project_path(@project)
+    redirect_bootstrap_with_flash
   end
 
   private
@@ -120,5 +121,10 @@ class ProjectsController < ApplicationController
         :merge_service,
         :title
       )
+    end
+
+    def redirect_bootstrap_with_flash
+      flash[:error] = I18n.t('projects.bootstrap.error')
+      redirect_to project_path(@project)
     end
 end
