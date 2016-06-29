@@ -39,6 +39,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(params_with_service_instances)
     @project.user = current_user
+    @project.connect_services
     if @project.save
       redirect_to project_raw_data_path(@project), notice: I18n.t('projects.action.create.success')
     else

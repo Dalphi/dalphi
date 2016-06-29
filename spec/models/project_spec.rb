@@ -158,6 +158,40 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  describe 'connect_services' do
+    it 'should not connect services if no service available' do
+      Service.destroy_all
+      @project.connect_services
+      expect(@project.active_learning_service).to eq(nil)
+      expect(@project.bootstrap_service).to eq(nil)
+      expect(@project.machine_learning_service).to eq(nil)
+      expect(@project.merge_service).to eq(nil)
+    end
+
+    it 'should connect services from different types if exactly one service per type exists' do
+      Service.destroy_all
+      active_learning_service = FactoryGirl.create(:active_learning_service)
+      bootstrap_service = FactoryGirl.create(:bootstrap_service)
+      @project.connect_services
+      expect(@project.active_learning_service).to eq(active_learning_service)
+      expect(@project.bootstrap_service).to eq(bootstrap_service)
+      expect(@project.machine_learning_service).to eq(nil)
+      expect(@project.merge_service).to eq(nil)
+    end
+
+    it 'should only connect thoses services where exactly one service per type exists' do
+      Service.destroy_all
+      FactoryGirl.create(:active_learning_service)
+      FactoryGirl.create(:active_learning_service, url: 'http://yet-another-dalphi-service.com')
+      bootstrap_service = FactoryGirl.create(:bootstrap_service)
+      @project.connect_services
+      expect(@project.active_learning_service).to eq(nil)
+      expect(@project.bootstrap_service).to eq(bootstrap_service)
+      expect(@project.machine_learning_service).to eq(nil)
+      expect(@project.merge_service).to eq(nil)
+    end
+  end
+
   it { should have_many(:raw_data).dependent(:destroy) }
 
   it { should belong_to(:user) }
