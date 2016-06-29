@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Project boostrap", type: :request do
-  it 'should not connect services if no service available' do
+  before(:each) do
     Service.destroy_all
     project = FactoryGirl.build(:project)
     sign_in(project.user)
+  end
 
+  it 'should not connect services if no service available' do
     post projects_path,
          params: {
            project: {
@@ -31,9 +33,6 @@ RSpec.describe "Project boostrap", type: :request do
   end
 
   it 'should connect services from different types if exactly one service per type exists' do
-    Service.destroy_all
-    project = FactoryGirl.build(:project)
-    sign_in(project.user)
     active_learning_service = FactoryGirl.create(:active_learning_service)
     bootstrap_service = FactoryGirl.create(:bootstrap_service)
 
@@ -62,9 +61,6 @@ RSpec.describe "Project boostrap", type: :request do
   end
 
   it 'should only connect thoses services where exactly one service per type exists' do
-    Service.destroy_all
-    project = FactoryGirl.build(:project)
-    sign_in(project.user)
     FactoryGirl.create(:active_learning_service)
     FactoryGirl.create(:active_learning_service, url: 'http://yet-another-dalphi-service.com')
     bootstrap_service = FactoryGirl.create(:bootstrap_service)
