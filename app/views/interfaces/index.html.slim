@@ -1,19 +1,15 @@
-h1 Listing interfaces
-
-table
-  thead
-    tr
-      th
-      th
-      th
-
-  tbody
-    - @interfaces.each do |interface|
-      tr
-        td = link_to 'Show', interface
-        td = link_to 'Edit', edit_interface_path(interface)
-        td = link_to 'Destroy', interface, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Interface', new_interface_path
+.container.interfaces
+  .row.row-eq-height
+    - if @interfaces.any?
+      - @interface_types.each do |interface_type|
+        = render 'interfaces/shared/card',
+                 interfaces: @interfaces[interface_type],
+                 interface_type: interface_type
+    - else
+      .blank-slate
+        h3
+          = t('interfaces.blank-slate.title')
+        p
+          - link = link_to t('interfaces.blank-slate.link-text'),
+                           new_interface_path
+          == t('interfaces.blank-slate.text', link: link)
