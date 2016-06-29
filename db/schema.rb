@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20160706082354) do
     t.integer  "project_id"
     t.text     "payload"
     t.integer  "rank"
-    t.boolean  "skipped"
+    t.boolean  "skipped",        default: false
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
   end
