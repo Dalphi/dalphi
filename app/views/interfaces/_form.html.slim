@@ -3,32 +3,20 @@
     .form-inputs
       .col-xs-12.col-sm-6
         = f.input :title
-      .col-xs-12.col-sm-6
+
+        / radio list of existing interface types and input for new type
         = f.input :interface_type,
                   collection: interface_types,
                   input_html: { class: 'c-select' }
 
-
-
-      .col-xs-12.col-sm-2
-        = f.input :version, readonly: true
-      .col-xs-12
-        = f.input :description
-
+        / token input of associated_problem_identifiers
+        
       .col-xs-12.col-sm-6
-        = f.input :problem_id, readonly: true, input_html: { class: 'c-select' }
-      .col-xs-12
-        .address-label
-          span.title
-            = t('services.form.url-label-text')
-          - if service.id
-            = render 'services/shared/connectivity_sign',
-                     service_instance: service,
-                     children: nil
-        = f.input :url, readonly: true, label: false
-
-        coffee:
-          window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()
+        = f.input :template, input_html: { class: 'form-control', rows: 5 }
+      .col-xs-12.col-sm-6
+        = f.input :java_script, input_html: { class: 'form-control', rows: 5 }
+      .col-xs-12.col-sm-6
+        = f.input :stylesheet, input_html: { class: 'form-control', rows: 5 }
 
   .row.btn-row
     .col-xs-12
