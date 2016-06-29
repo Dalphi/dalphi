@@ -207,8 +207,8 @@ RSpec.describe Interface, type: :model do
       expect(@interface).to be_valid
     end
 
-    it 'can not be an invalid java_script' do
-      @interface.java_script = 'alert(this is not a JS string!)'
+    it 'can not be an invalid coffee script' do
+      @interface.java_script = 'alert(this is not a JS string!) -> if 0'
       expect(@interface).to be_invalid
     end
   end
