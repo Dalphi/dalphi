@@ -4,8 +4,6 @@ class AnnotationDocument < ApplicationRecord
   belongs_to :project
   belongs_to :raw_datum
 
-  enum interface_type: [ :text_nominal ]
-
   before_validation do
     self.project = raw_datum.project if raw_datum
   end
@@ -46,17 +44,13 @@ class AnnotationDocument < ApplicationRecord
 
     property :interface_type do
       key :description, I18n.t('api.annotation_document.description.interface_type')
-      key :enum, ['text_nominal']
+      key :example, 'text_nominal'
       key :type, :string
     end
   end
 
-  validates :raw_datum,
+  validates :raw_datum, :interface_type,
     presence: true
-
-  validates :interface_type,
-    presence: true,
-    inclusion: { in: self.interface_types }
 
   validates :payload,
     presence: true,
