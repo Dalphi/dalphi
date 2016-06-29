@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615095335) do
+ActiveRecord::Schema.define(version: 20160629151147) do
 
   create_table "annotation_documents", force: :cascade do |t|
-    t.integer  "interface_type"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.string   "interface_type"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "raw_datum_id"
     t.integer  "project_id"
     t.text     "payload"
     t.integer  "rank"
     t.boolean  "skipped"
+    t.boolean  "displayed",      default: false
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
   end
@@ -38,6 +39,17 @@ ActiveRecord::Schema.define(version: 20160615095335) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "interfaces", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "interface_type"
+    t.text     "associated_problem_identifiers"
+    t.text     "template"
+    t.text     "stylesheet"
+    t.text     "java_script"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "projects", force: :cascade do |t|
