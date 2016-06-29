@@ -1,10 +1,11 @@
 class InterfacesController < ApplicationController
   before_action :set_interface, only: [:show, :edit, :update, :destroy]
+  before_action :set_interface_types, only: [:index, :edit, :new]
+  before_action :set_problem_identifiers, only: [:edit, :new]
 
   # GET /interfaces
   def index
     @interfaces = {}
-    @interface_types = Interface.select(:interface_type).distinct
     @interface_types.each do |interface_type|
       @interfaces[interface_type] = Interface.where(interface_type: interface_type)
     end
@@ -52,6 +53,15 @@ class InterfacesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_interface
       @interface = Interface.find(params[:id])
+    end
+
+    def set_interface_types
+      exemplary_interfaces = Interface.select(:interface_type).distinct
+      @interface_types = exemplary_interfaces.map { |interface| interface.problem_id }.compact
+    end
+
+    def set_problem_identifiers
+      @problem_identifiers = Service::problem_identifiers
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

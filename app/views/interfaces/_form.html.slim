@@ -1,7 +1,46 @@
 = simple_form_for(interface) do |f|
-  = f.error_notification
+  .row
+    .form-inputs
+      .col-xs-12.col-sm-6
+        = f.input :title
+      .col-xs-12.col-sm-6
+        = f.input :interface_type,
+                  collection: interface_types,
+                  input_html: { class: 'c-select' }
 
-  .form-inputs
 
-  .form-actions
-    = f.button :submit
+
+      .col-xs-12.col-sm-2
+        = f.input :version, readonly: true
+      .col-xs-12
+        = f.input :description
+      
+      .col-xs-12.col-sm-6
+        = f.input :problem_id, readonly: true, input_html: { class: 'c-select' }
+      .col-xs-12
+        .address-label
+          span.title
+            = t('services.form.url-label-text')
+          - if service.id
+            = render 'services/shared/connectivity_sign',
+                     service_instance: service,
+                     children: nil
+        = f.input :url, readonly: true, label: false
+
+        coffee:
+          window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()
+
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button', type: 'back'
+      = render 'shared/button',
+               method: 'delete',
+               confirm: t('delete-confirm'),
+               type: 'danger',
+               href: service_path(service),
+               label: t('delete'),
+               icon: 'times' if params[:action] == 'edit'
+      = render 'shared/button',
+               type: 'submit',
+               label: t('save'),
+               icon: 'check'

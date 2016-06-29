@@ -1,8 +1,4 @@
-h1 Editing interface
-
-== render 'form',
-          interface: @interface
-
-= link_to 'Show', @interface
-'|
-= link_to 'Back', interfaces_path
+.container.interfaces
+  == render 'form',
+            interface_types: @interface_types,
+            interface: @interface
