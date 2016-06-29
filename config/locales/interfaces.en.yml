@@ -1,0 +1,6 @@
+en:
+  interfaces:
+    blank-slate:
+      title: 'No interfaces created yet'
+      text: 'Add an new interface %{link}.'
+      link-text: here

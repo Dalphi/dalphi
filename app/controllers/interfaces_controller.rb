@@ -3,7 +3,11 @@ class InterfacesController < ApplicationController
 
   # GET /interfaces
   def index
-    @interfaces = Interface.all
+    @interfaces = {}
+    @interface_types = Interface.select(:interface_type).distinct
+    @interface_types.each do |interface_type|
+      @interfaces[interface_type] = Interface.where(interface_type: interface_type)
+    end
   end
 
   # GET /interfaces/1
