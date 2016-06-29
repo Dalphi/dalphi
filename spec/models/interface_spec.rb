@@ -29,6 +29,34 @@ RSpec.describe Interface, type: :model do
       @interface.title = 'A valid title'
       expect(@interface).to be_valid
     end
+
+    it 'should not be assigned twice' do
+      test_title = 'Super Interface'
+
+      @another_interface = FactoryGirl.build(:interface_2)
+      expect(@another_interface).to be_valid
+
+      @another_interface.title = test_title
+      @another_interface.template = test_title
+      @another_interface.save!
+
+      @interface.title = test_title
+      expect(@interface).to be_invalid
+    end
+
+    it 'can be different' do
+      test_title_1 = 'Wow Interface'
+      test_title_2 = 'Incredible Interface'
+
+      @another_interface = FactoryGirl.build(:interface_2)
+      expect(@another_interface).to be_valid
+
+      @another_interface.title = test_title_1
+      @another_interface.save!
+
+      @interface.title = test_title_2
+      expect(@interface).to be_valid
+    end
   end
 
   describe 'interface_type' do

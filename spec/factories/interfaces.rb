@@ -9,6 +9,7 @@ FactoryGirl.define do
 
     factory :interface_2 do
       title 'another NER annotator'
+      template '<p class="question">Think about this: {{that}}</p>'
     end
   end
 end
