@@ -39,11 +39,6 @@ RSpec.describe AnnotationDocument, type: :model do
       @annotation_document.interface_type = 'text_nominal'
       expect(@annotation_document).to be_valid
     end
-
-    it 'can be text_nominal as integer 0' do
-      @annotation_document.interface_type = 0
-      expect(@annotation_document).to be_valid
-    end
   end
 
   describe 'payload' do
