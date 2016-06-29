@@ -68,3 +68,4 @@ en:
               regex_mismatch: "the given URL does not start with the HTTP protocol or contains whitespace"
               isNil: the given URL must not be nil
               badHttpResponse: "the given URL does not respond"
+        interface: TBA
