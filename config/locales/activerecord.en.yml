@@ -28,6 +28,9 @@ en:
       service:
         one: service
         other: services
+      interface:
+        one: interface
+        other: interfaces
     attributes:
       project:
         title: title
