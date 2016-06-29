@@ -6,17 +6,10 @@ module UrlResponseChecker
   def self.check_response(url)
     uri = URI.parse(url)
     timeout = Rails.configuration.x.dalphi['timeouts']['url-response-checker']
-
-    client = Net::HTTP.new(uri.hostname, uri.port) do |http|
-      http.open_timeout = timeout
-      case http.request_get(uri.request_uri)
-        when response.kind_of?(Net::HTTPSuccess) then return true
-        else return false
-      end
+    Timeout::timeout(timeout) do
+      response = Net::HTTP.get_response(uri)
+      return response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
     end
-
-    return true if client
-    false
   rescue
     false
   end

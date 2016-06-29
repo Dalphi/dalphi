@@ -214,6 +214,11 @@ RSpec.describe Service, type: :model do
       )
       expect(another_al_service).to be_invalid
     end
+
+    it 'can not be an unreachable resource' do
+      @al_service.url = 'http://example.com/unreachable/resource'
+      expect(@al_service).to be_invalid
+    end
   end
 
   describe 'title' do
