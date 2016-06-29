@@ -4,6 +4,7 @@ ruby '2.3.1'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0.alpha3'
+gem 'bootstrap_tokenfield_rails'
 gem 'coffee-rails'
 gem 'cookies_eu'
 gem 'delayed_job_active_record'

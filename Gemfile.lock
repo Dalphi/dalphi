@@ -74,6 +74,7 @@ GEM
     bootstrap (4.0.0.alpha3)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
+    bootstrap_tokenfield_rails (0.12.1)
     brakeman (3.3.2)
     builder (3.2.2)
     byebug (9.0.5)
@@ -393,6 +394,7 @@ DEPENDENCIES
   awesome_print
   better_errors
   bootstrap (~> 4.0.0.alpha3)
+  bootstrap_tokenfield_rails
   brakeman
   byebug
   codeclimate-test-reporter
