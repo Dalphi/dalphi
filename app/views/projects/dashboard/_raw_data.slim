@@ -4,7 +4,7 @@ ruby:
     project_services[role] = project.send("#{role}_service")
   end
 
-.col-xs-12.col-md-6
+.col-xs-12
   .card.dashboard-card
     h3.card-header
       = t('projects.dashboard-card.raw-data.title')
@@ -22,7 +22,7 @@ ruby:
               = fa_icon 'question-circle'
           = t 'projects.dashboard-card.raw-data.availability-of-raw-data'
           small.no-display
-            == t 'projects.dashboard-card.raw-data.no-raw-data-available',
-                 add_link: link_to(t('projects.dashboard-card.raw-data.add-raw-data-label'), new_project_raw_datum_path(project))
+            == "(#{t 'projects.dashboard-card.raw-data.no-raw-data-available',
+                     add_link: link_to(t('projects.dashboard-card.raw-data.add-raw-data-label'), new_project_raw_datum_path(project))})"
           coffee:
             window.rawDataAvailableIndicator = new window.RawDataAvailableIndicator()
