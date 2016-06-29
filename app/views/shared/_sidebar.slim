@@ -17,6 +17,7 @@
       li class="#{active_class}"
         a href="#{projects_path}"
           = t('activerecord.models.project.other')
+
       - active_class = ''
       - active_class = 'active' if params[:controller] == 'services'
       li class="#{active_class}"
