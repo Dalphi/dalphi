@@ -51,4 +51,12 @@ class Project < ApplicationRecord
   def label
     self.title
   end
+
+  def connect_services
+    services = Service.all
+    Service.roles.keys.each do |role|
+      role_services = services.where(role: role)
+      self.send("#{role}_service=", role_services.first) if role_services.length == 1
+    end
+  end
 end
