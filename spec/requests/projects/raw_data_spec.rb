@@ -40,4 +40,15 @@ RSpec.describe "RawData", type: :request do
          }
     expect(response).to be_success
   end
+
+  it 'accepts binary garbage' do
+    post project_raw_data_path(@raw_datum.project),
+         params: {
+           raw_datum: {
+             shape: 'text',
+             data: [fixture_file_upload('spec/fixtures/text/invalid.bin', 'application/octet-stream')]
+           }
+         }
+    expect(response).to be_success
+  end
 end

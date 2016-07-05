@@ -13,7 +13,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
         'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
-        'skipped' => false
+        'skipped' => nil
       }
     )
   end
@@ -28,7 +28,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
              'rank' => 0,
              'raw_datum_id' => raw_datum.id,
              'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
-             'skipped' => false,
+             'skipped' => nil,
              'interface_type' => 'text_nominal'
            }
          }
@@ -42,7 +42,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
         'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => 0,
         'raw_datum_id' => raw_datum.id,
-        'skipped' => false
+        'skipped' => nil
       }
     )
     expect(AnnotationDocument.all.count).to eq(1)
@@ -84,7 +84,6 @@ RSpec.describe "AnnotationDocuments API", type: :request do
 
   it 'destroys an annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
-    ap annotation_document
     expect(AnnotationDocument.all.count).to eq(1)
 
     delete "/api/v1/annotation_documents/#{annotation_document.id}"
@@ -100,7 +99,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
         'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
-        'skipped' => false
+        'skipped' => nil
       }
     )
   end

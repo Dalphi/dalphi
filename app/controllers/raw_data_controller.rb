@@ -21,7 +21,8 @@ class RawDataController < ApplicationController
   def create
     data = raw_datum_params[:data]
     batch_result = RawDatum.batch_process @project, data
-    if data.size == 0 || batch_result[:success].empty?
+    if batch_result[:success].empty?
+      @raw_datum = RawDatum.new
       flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :new
     else
