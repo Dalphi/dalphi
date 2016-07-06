@@ -1,14 +1,19 @@
 class InterfacesController < ApplicationController
   before_action :set_interface, only: [:show, :edit, :update, :destroy]
-  before_action :set_interface_types, only: [:index, :edit, :new]
   before_action :set_problem_identifiers, only: [:edit, :new]
 
   # GET /interfaces
   def index
     @interfaces = {}
-    @interface_types.each do |interface_type|
-      @interfaces[interface_type] = Interface.where(interface_type: interface_type)
-    end
+    exemplary_interfaces = Interface.select(:interface_type).distinct
+    exemplary_interfaces.map { |interface| interface.interface_type }
+                        .compact
+                        .each do |interface_type|
+                          @interfaces[interface_type] = Interface.where(
+                            interface_type: interface_type
+                          )
+                        end
+    ap @interfaces
   end
 
   # GET /interfaces/1
@@ -26,9 +31,9 @@ class InterfacesController < ApplicationController
 
   # POST /interfaces
   def create
-    @interface = Interface.new(interface_params)
+    @interface = Interface.new(converted_attributes)
     if @interface.save
-      redirect_to @interface, notice: 'Interface was successfully created.'
+      redirect_to @interfaces, notice: 'Interface was successfully created.'
     else
       render :new
     end
@@ -36,8 +41,8 @@ class InterfacesController < ApplicationController
 
   # PATCH/PUT /interfaces/1
   def update
-    if @interface.update(interface_params)
-      redirect_to @interface, notice: 'Interface was successfully updated.'
+    if @interface.update(converted_attributes)
+      redirect_to @interfaces, notice: 'Interface was successfully updated.'
     else
       render :edit
     end
@@ -55,17 +60,26 @@ class InterfacesController < ApplicationController
       @interface = Interface.find(params[:id])
     end
 
-    def set_interface_types
-      exemplary_interfaces = Interface.select(:interface_type).distinct
-      @interface_types = exemplary_interfaces.map { |interface| interface.problem_id }.compact
-    end
-
     def set_problem_identifiers
       @problem_identifiers = Service::problem_identifiers
     end
 
+    def converted_attributes
+      associated_problems = interface_params['associated_problem_identifiers']
+      new_params = interface_params
+      new_params['associated_problem_identifiers'] = [associated_problems]
+      new_params
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def interface_params
-      params.fetch(:interface, {})
+      params.require(:interface).permit(
+        :template,
+        :java_script,
+        :stylesheet,
+        :title,
+        :interface_type,
+        :associated_problem_identifiers
+      )
     end
 end

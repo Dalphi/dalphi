@@ -19,6 +19,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    ace-rails-ap (4.0.2)
     actioncable (5.0.0.rc2)
       actionpack (= 5.0.0.rc2)
       nio4r (~> 1.2)
@@ -390,6 +391,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ace-rails-ap
   autoprefixer-rails
   awesome_print
   better_errors

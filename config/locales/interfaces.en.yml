@@ -6,7 +6,9 @@ en:
       link-text: here
     form:
       attributes:
+        template:
+          label: 'HTML Template code'
         javascript:
-          label: 'Java Script / Coffee Script'
+          label: 'Java Script / Coffee Script code'
         stylesheet:
-          label: 'CSS / SCSS'
+          label: 'CSS / SCSS code'

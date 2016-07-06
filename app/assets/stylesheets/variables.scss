@@ -1,12 +1,12 @@
 // global color definitions; color description; general use for
-$color-0: #ffffff; // plain white; inputs
+$color-0: #fff; // plain white; inputs
 $color-1: #fbfcfc; // alabaster; general background
 $color-1-1: darken($color-1, 2.5); // table row background
 $color-1-2: darken($color-1, 5); // table row background hover
 $color-1-3: darken($color-1, 10); // table head background
 $color-1-4: darken($color-1, 20); // code textarea line number color
 $color-2: #1f2634; // black pearl; text color
-$color-2-1: #cccccc; // gray; defaulr border color
+$color-2-1: #ccc; // gray; default border color
 $color-3: #586681; // dark electric blue; navigation background
 $color-3-1: darken($color-3, 2.5);
 $color-3-2: darken($color-3, 5);

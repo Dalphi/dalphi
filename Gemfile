@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
+gem 'ace-rails-ap'
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'bootstrap_tokenfield_rails'

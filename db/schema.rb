@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629151147) do
+ActiveRecord::Schema.define(version: 20160706094601) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.string   "interface_type"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20160629151147) do
 
   create_table "interfaces", force: :cascade do |t|
     t.string   "title"
-    t.integer  "interface_type"
+    t.string   "interface_type"
     t.text     "associated_problem_identifiers"
     t.text     "template"
     t.text     "stylesheet"

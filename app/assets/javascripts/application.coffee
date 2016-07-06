@@ -9,7 +9,11 @@
 #= require fastclick
 #= require hammer
 #= require modernizr
-#= require ./jQuery_plugins/jquery.numberedtextarea.js
+#= require ace-rails-ap
+#= require ace/theme-tomorrow
+#= require ace/mode-coffee
+#= require ace/mode-scss
+#= require ace/mode-html
 
 $ ->
   new FastClick(document.body)

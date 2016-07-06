@@ -13,4 +13,7 @@ class Interface < ApplicationRecord
     WebsiteComponentsValidator.validate_java_script(interface)
   end
 
+  def label
+    self.title
+  end
 end

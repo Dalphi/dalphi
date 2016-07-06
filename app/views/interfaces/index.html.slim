@@ -1,9 +1,9 @@
 .container.interfaces
   .row.row-eq-height
     - if @interfaces.any?
-      - @interface_types.each do |interface_type|
+      - @interfaces.each do |interface_type, interfaces|
         = render 'interfaces/shared/card',
-                 interfaces: @interfaces[interface_type],
+                 interfaces: interfaces,
                  interface_type: interface_type
 
     - else

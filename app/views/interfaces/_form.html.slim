@@ -1,32 +1,41 @@
-= simple_form_for(interface) do |f|
+= simple_form_for(interface, html: { class: 'interface-form'}) do |f|
   .row
     .form-inputs
       .col-xs-12.col-sm-12.col-lg-6
         = f.input :title
 
-        / radio list of existing interface types and input for new type
-        = f.input :interface_type,
-                  collection: interface_types,
-                  input_html: { class: 'c-select' }
+        = f.input :interface_type
 
         / token input of associated_problem_identifiers
         = f.input :associated_problem_identifiers,
                   as: :string,
-                  input_html: { class: 'tokenized_problem_identifiers', 'data-autocomplete' => known_problem_identifiers }
+                  input_html: { class: 'tokenized_problem_identifiers',
+                                'data-autocomplete' => known_problem_identifiers }
 
-      / input.tokenize type="text"
       .col-xs-12.col-lg-6
+        p.ace-editor-label
+          = t('interfaces.form.attributes.template.label')
+        .code-input#template-editor
         = f.input :template,
-                  input_html: { class: 'form-control code-input', rows: 8 }
+                  as: :hidden,
+                  input_html: { id: 'hidden-template-editor'}
+
       .col-xs-12.col-lg-6
+        p.ace-editor-label
+          = t('interfaces.form.attributes.javascript.label')
+        .code-input#js-editor
         = f.input :java_script,
-                  label: t('interfaces.form.attributes.javascript.label'),
-                  input_html: { class: 'form-control code-input', rows: 8 }
+                  as: :hidden,
+                  input_html: { id: 'hidden-js-editor'}
+
       .col-xs-12.col-lg-6
+        p.ace-editor-label
+          = t('interfaces.form.attributes.stylesheet.label')
+        .code-input#stylesheet-editor
         = f.input :stylesheet,
-                  label: t('interfaces.form.attributes.stylesheet.label'),
-                  input_html: { class: 'form-control code-input', rows: 8 }
-  
+                  as: :hidden,
+                  input_html: { id: 'hidden-stylesheet-editor'}
+
       coffee:
         window.interfacesForm = new window.InterfacesForm()
 
@@ -37,7 +46,7 @@
                method: 'delete',
                confirm: t('delete-confirm'),
                type: 'danger',
-               href: service_path(service),
+               href: interface_path(interface),
                label: t('delete'),
                icon: 'times' if params[:action] == 'edit'
       = render 'shared/button',
