@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629151147) do
+ActiveRecord::Schema.define(version: 20160706082354) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.string   "interface_type"
@@ -77,8 +77,9 @@ ActiveRecord::Schema.define(version: 20160629151147) do
     t.string   "url"
     t.string   "title"
     t.string   "version"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.text     "interface_types"
   end
 
   create_table "users", force: :cascade do |t|

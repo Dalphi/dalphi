@@ -2,9 +2,10 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-	"title":	"Test Bootstrap Service",
-	"version":	"1.0",
-	"description":	"A bootstrap dummy service that just implements the Who Are You API",
-	"role":		"bootstrap",
-	"problem_id":	"ner"
+	"title":		"Test Bootstrap Service",
+	"version":		"1.0",
+	"description":		"A bootstrap dummy service that just implements the Who Are You API",
+	"role":			"bootstrap",
+	"problem_id":		"ner",
+	"interface_types":	["text_nominal"]
 }

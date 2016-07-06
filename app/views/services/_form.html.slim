@@ -20,6 +20,13 @@
                      service_instance: service,
                      children: nil
         = f.input :url, readonly: true, label: false
+      - if service.interface_types.any?
+        .col-xs-12
+          = f.input :interface_types,
+                    as: :check_boxes,
+                    collection: service.interface_types,
+                    checked: service.interface_types,
+                    readonly: true
 
         coffee:
           window.serviceAvailableIndicator = new window.ServiceAvailableIndicator()

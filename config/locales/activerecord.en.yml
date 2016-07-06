@@ -44,7 +44,7 @@ en:
             content:
               type: file type must match raw-datum\'s type
             options:
-              empty: the options array can not be empty
+              empty: the options array cannot be empty
               too-few-options: the options array has to contain at least two options
               type: options should be of type string
             label:
@@ -62,6 +62,9 @@ en:
               wrong_service: the given service is not a machine learning service
         service:
           attributes:
+            interface_types:
+              is_empty: this service role requires at least one interface_type
+              not_empty: this service role cannot specify any interface types
             url:
               regex_mismatch: "the given URL does not start with the HTTP protocol or contains whitespace"
               isNil: the given URL must not be nil

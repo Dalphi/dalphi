@@ -6,6 +6,7 @@ FactoryGirl.define do
     url 'http://www.google.com'
     title 'Active Learning component'
     version 'v2.0.0-rc1'
+    interface_types ['text_nominal']
 
     factory :bootstrap_service do
       role 1
@@ -13,6 +14,7 @@ FactoryGirl.define do
       url 'http://www.google.de'
       title 'NER Bootstrapper'
       version 'v1.0.0.beta3'
+      interface_types ['text_nominal']
     end
 
     factory :machine_learning_service do
@@ -21,6 +23,7 @@ FactoryGirl.define do
       url 'http://www.google.org'
       title 'NER algorithm'
       version '1.8.3'
+      interface_types []
     end
 
     factory :merge_service do
@@ -29,6 +32,7 @@ FactoryGirl.define do
       url 'http://www.google.us'
       title 'Merger'
       version '0.0.1'
+      interface_types []
     end
   end
 end
