@@ -9,6 +9,7 @@
 #= require fastclick
 #= require hammer
 #= require modernizr
+#= require ./jQuery_plugins/jquery.numberedtextarea.js
 
 $ ->
   new FastClick(document.body)

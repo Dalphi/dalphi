@@ -1,0 +1,38 @@
+div.numberedtextarea-wrapper {
+  position: relative;
+
+  textarea {
+    background-color: $color-0;
+    box-sizing: border-box;
+    display: block;
+    padding-left: .5rem;
+  }
+}
+
+div.numberedtextarea-line-numbers {
+  background-color: $color-1;
+
+  border-top: $default-border-size solid $color-2-1;
+  border-right: $default-border-size solid $color-1-4;
+  border-bottom: $default-border-size solid $color-2-1;
+  border-left: $default-border-size solid $color-2-1;
+
+  border-top-right-radius: 0;
+  border-top-left-radius: $default-border-radius;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: $default-border-radius;
+
+  bottom: 0;
+  color: $color-1-4;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 4rem;
+}
+
+div.numberedtextarea-number {
+  padding-right: .375rem;
+  text-align: right;
+}

@@ -1,7 +1,7 @@
 = simple_form_for(interface) do |f|
   .row
     .form-inputs
-      .col-xs-12.col-sm-6
+      .col-xs-12.col-sm-12.col-lg-6
         = f.input :title
 
         / radio list of existing interface types and input for new type
@@ -13,17 +13,22 @@
         = f.input :associated_problem_identifiers,
                   as: :string,
                   input_html: { class: 'tokenized_problem_identifiers', 'data-autocomplete' => known_problem_identifiers }
-                  
-        coffee:
-          window.interfacesForm = new window.InterfacesForm()
 
       / input.tokenize type="text"
-      .col-xs-12.col-sm-6
-        = f.input :template, input_html: { class: 'form-control', rows: 5 }
-      .col-xs-12.col-sm-6
-        = f.input :java_script, input_html: { class: 'form-control', rows: 5 }
-      .col-xs-12.col-sm-6
-        = f.input :stylesheet, input_html: { class: 'form-control', rows: 5 }
+      .col-xs-12.col-lg-6
+        = f.input :template,
+                  input_html: { class: 'form-control code-input', rows: 8 }
+      .col-xs-12.col-lg-6
+        = f.input :java_script,
+                  label: t('interfaces.form.attributes.javascript.label'),
+                  input_html: { class: 'form-control code-input', rows: 8 }
+      .col-xs-12.col-lg-6
+        = f.input :stylesheet,
+                  label: t('interfaces.form.attributes.stylesheet.label'),
+                  input_html: { class: 'form-control code-input', rows: 8 }
+  
+      coffee:
+        window.interfacesForm = new window.InterfacesForm()
 
   .row.btn-row
     .col-xs-12

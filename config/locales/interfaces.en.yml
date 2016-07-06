@@ -4,3 +4,9 @@ en:
       title: 'No interfaces created yet'
       text: 'Add an new interface %{link}.'
       link-text: here
+    form:
+      attributes:
+        javascript:
+          label: 'Java Script / Coffee Script'
+        stylesheet:
+          label: 'CSS / SCSS'
