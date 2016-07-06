@@ -26,4 +26,38 @@ RSpec.describe "Service registration", type: :request do
     active_learning_service = Service.first
     expect(active_learning_service.interface_types).to eq(%w(text_nominal))
   end
+
+  it 'should fail to register a bootstrap service without any interface types' do
+    expect(Service.count).to eq(0)
+    post services_path,
+         params: {
+           service: {
+             role: 'bootstrap',
+             description: 'A bootstrap dummy service that just implements the Who Are You API',
+             problem_id: 'ner',
+             url: 'http://localhost:3002',
+             title: 'Test Bootstrap Service',
+             version: '1.0',
+             interface_types: []
+           }
+         }
+    expect(Service.count).to eq(0)
+  end
+
+  it 'should fail to register a active learning service without any interface types' do
+    expect(Service.count).to eq(0)
+    post services_path,
+         params: {
+           service: {
+             role: 'active_learning',
+             description: 'An active learning dummy service that just implements the Who Are You API',
+             problem_id: 'ner',
+             url: 'http://localhost:3001',
+             title: 'Test Active Learning Service',
+             version: '1.0',
+             interface_types: []
+           }
+         }
+    expect(Service.count).to eq(0)
+  end
 end

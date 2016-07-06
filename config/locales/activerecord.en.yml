@@ -63,7 +63,8 @@ en:
         service:
           attributes:
             interface_types:
-              illegal_value: 'the specified interface types are not legal for this service role'
+              is_empty: this service role requires at least one interface_type
+              not_empty: this service role can not specify any interface type
             url:
               regex_mismatch: "the given URL does not start with the HTTP protocol or contains whitespace"
               isNil: the given URL must not be nil

@@ -39,6 +39,7 @@ RSpec.describe Service, type: :model do
     end
 
     it 'can be machine_learning as integer 2' do
+      @al_service.interface_types = []
       role_is_valid @al_service, 2, 2
     end
 
@@ -55,10 +56,12 @@ RSpec.describe Service, type: :model do
     end
 
     it 'can be string machine_learning' do
+      @al_service.interface_types = []
       role_is_valid @al_service, 'machine_learning', 2
     end
 
     it 'can be string merge' do
+      @al_service.interface_types = []
       role_is_valid @al_service, 'merge', 3
     end
   end
@@ -302,6 +305,11 @@ RSpec.describe Service, type: :model do
       expect(@merge_service).to be_invalid
     end
 
+    it 'can not be empty for bootstrap services' do
+      @bootstrap_service.interface_types = []
+      expect(@bootstrap_service).to be_invalid
+    end
+
     it 'can have one element for bootstrap service' do
       @bootstrap_service.interface_types = %w(fancy_interface)
       expect(@bootstrap_service).to be_valid
@@ -310,6 +318,11 @@ RSpec.describe Service, type: :model do
     it 'can have multiple elements for bootstrap service' do
       @bootstrap_service.interface_types = %w(fancy_interface regular_interface)
       expect(@bootstrap_service).to be_valid
+    end
+
+    it 'can not be empty for active learning services' do
+      @al_service.interface_types = []
+      expect(@al_service).to be_invalid
     end
 
     it 'can have one element for active learning service' do
