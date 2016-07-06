@@ -26,6 +26,8 @@ class Service < ApplicationRecord
 
   enum role: [ :active_learning, :bootstrap, :machine_learning, :merge ]
 
+  serialize :interface_types, Array
+
   has_many :projects
 
   validates :role, :url, :title, :version,
@@ -44,6 +46,7 @@ class Service < ApplicationRecord
 
   validate do |service|
     HttpResponseValidator.validate(service) if service.url
+    ServiceInterfaceTypesValidator.validate(service)
   end
 
   def self.new_from_url(url)

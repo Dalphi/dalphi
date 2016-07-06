@@ -281,9 +281,25 @@ RSpec.describe Service, type: :model do
       expect(@ml_service).to be_valid
     end
 
+    it 'cannot have one or more elements for machine learning service' do
+      @ml_service.interface_types = %w(fancy_interface)
+      expect(@ml_service).to be_invalid
+
+      @ml_service.interface_types = %w(fancy_interface regular_interface)
+      expect(@ml_service).to be_invalid
+    end
+
     it 'can be empty for merge services' do
-      @ml_service.interface_types = []
-      expect(@ml_service).to be_valid
+      @merge_service.interface_types = []
+      expect(@merge_service).to be_valid
+    end
+
+    it 'cannot have one or more elements for merge service' do
+      @merge_service.interface_types = %w(fancy_interface)
+      expect(@merge_service).to be_invalid
+
+      @merge_service.interface_types = %w(fancy_interface regular_interface)
+      expect(@merge_service).to be_invalid
     end
 
     it 'can have one element for bootstrap service' do
