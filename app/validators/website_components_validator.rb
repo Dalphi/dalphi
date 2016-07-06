@@ -6,8 +6,12 @@ class WebsiteComponentsValidator < ActiveModel::Validator
   def self.validate_stylesheet(record)
     return if record.stylesheet.nil?
 
-    sass_engine = Sass::Engine.new(record.stylesheet, syntax: :scss)
-    sass_engine.render
+    container_class = Rails.configuration.x.dalphi['annotation-interface']['container-class-name']
+    nested_stylesheet = ".#{container_class} { #{record.stylesheet} }"
+    sass_engine = Sass::Engine.new(nested_stylesheet, syntax: :scss)
+    compilate = sass_engine.render
+    record.set_validator_compiled_stylesheet = compilate
+
   rescue Sass::SyntaxError
     error_message = I18n.t('activerecord
                             .errors
@@ -22,7 +26,9 @@ class WebsiteComponentsValidator < ActiveModel::Validator
   def self.validate_java_script(record)
     return if record.java_script.nil?
 
-    CoffeeScript.compile record.java_script
+    compilate = CoffeeScript.compile(record.java_script)
+    record.set_validator_compiled_java_script = compilate
+
   rescue ExecJS::RuntimeError
     error_message = I18n.t('activerecord
                            .errors

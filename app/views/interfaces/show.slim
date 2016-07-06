@@ -1,10 +1,11 @@
 - content_for :interface_style_includes do
   style
-    = @interface_style
-
-- content_for :interface_javascript_includes do
-  script type='text/javascript'
-    == @interface_script
+    = @interface.compiled_stylesheet
 
 .container.interfaces
-  == @interface.template
+
+  div class="#{@container_class}"
+    == @interface.template
+
+  script type='text/javascript'
+    == @interface.compiled_java_script

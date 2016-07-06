@@ -179,6 +179,37 @@ RSpec.describe Interface, type: :model do
     end
   end
 
+  describe 'compiled_stylesheet' do
+    it 'can be nil or empty iff stylesheet is nil' do
+      @interface.stylesheet = nil
+      @interface.compiled_stylesheet = nil
+      expect(@interface).to be_valid
+
+      @interface.stylesheet = ''
+      @interface.compiled_stylesheet = ''
+      expect(@interface).to be_valid
+    end
+
+    it 'is the compiled version of the stylesheet' do
+      @interface.stylesheet = '$strong-font-size: 2rem; p { text-align: center; strong { font-size: $strong-font-size; } }'
+      @interface.compiled_stylesheet = 'p {
+                                          text-align: center;
+                                        }
+                                        p strong {
+                                          font-size: 2rem;
+                                        }'
+      @interface.save
+      expect(@interface).to be_valid
+    end
+
+    # it 'can not be something else than the compiled version of the stylesheet' do
+    #   @interface.stylesheet = '$strong-font-size: 2rem; p { text-align: center; strong { font-size: $strong-font-size; } }'
+    #   @interface.compiled_stylesheet = 'p { text-align: very-middel & font-size: large };'
+    #   @interface.save!
+    #   expect(@interface).to be_invalid
+    # end
+  end
+
   describe 'java_script' do
     it 'can be nil' do
       @interface.java_script = nil
@@ -213,4 +244,48 @@ RSpec.describe Interface, type: :model do
     end
   end
 
+  describe 'compiled_java_script' do
+    it 'can be nil or empty iff java_script is nil' do
+      @interface.java_script = nil
+      @interface.compiled_java_script = nil
+      expect(@interface).to be_valid
+
+      @interface.java_script = ''
+      @interface.compiled_java_script = ''
+      expect(@interface).to be_valid
+    end
+
+    it 'is the compiled version of the java_script' do
+      @interface.java_script = '
+        test: ->
+          alert "much coffee!"
+
+        test()
+      '
+      @interface.compiled_java_script = '({
+                                           test: function() {
+                                             return alert("much coffee!");
+                                           }
+                                         });
+
+                                         test();'
+      expect(@interface).to be_valid
+    end
+
+    # it 'can not be something else than the compiled version of the java_script' do
+    #   @interface.java_script = '
+    #     test: ->
+    #       alert "much coffee!"
+    #
+    #     test()
+    #   '
+    #   @interface.compiled_java_script = '
+    #     test: ->
+    #       alert "much coffee!"
+    #
+    #     test()
+    #   '
+    #   expect(@interface).to be_invalid
+    # end
+  end
 end

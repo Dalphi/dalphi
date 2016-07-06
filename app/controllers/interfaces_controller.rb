@@ -18,10 +18,7 @@ class InterfacesController < ApplicationController
 
   # GET /interfaces/1
   def show
-    sass_engine = Sass::Engine.new(@interface.stylesheet, syntax: :scss)
-    @interface_style = sass_engine.render
-
-    @interface_script = CoffeeScript.compile(@interface.java_script)
+    @container_class = Rails.configuration.x.dalphi['annotation-interface']['container-class-name']
   end
 
   # GET /interfaces/new
