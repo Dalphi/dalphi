@@ -218,7 +218,7 @@ RSpec.describe Service, type: :model do
       expect(another_al_service).to be_invalid
     end
 
-    it 'can not be an unreachable resource' do
+    it 'cannot be an unreachable resource' do
       @al_service.url = 'http://example.com/unreachable/resource'
       expect(@al_service).to be_invalid
     end
@@ -305,7 +305,7 @@ RSpec.describe Service, type: :model do
       expect(@merge_service).to be_invalid
     end
 
-    it 'can not be empty for bootstrap services' do
+    it 'cannot be empty for bootstrap services' do
       @bootstrap_service.interface_types = []
       expect(@bootstrap_service).to be_invalid
     end
@@ -320,7 +320,7 @@ RSpec.describe Service, type: :model do
       expect(@bootstrap_service).to be_valid
     end
 
-    it 'can not be empty for active learning services' do
+    it 'cannot be empty for active learning services' do
       @al_service.interface_types = []
       expect(@al_service).to be_invalid
     end
