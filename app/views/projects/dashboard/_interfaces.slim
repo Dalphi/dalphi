@@ -4,4 +4,11 @@
       = t('projects.dashboard-card.interfaces.title')
     .card-block
       p.card-text
-        | foo
+        - if interfaces.any?
+          ul
+          - interfaces.each do |interface_type, interfaces|
+            li
+              = interface_type
+              = interfaces.map(&:title).join(', ')
+        - else
+          | no, no. interface no es home.

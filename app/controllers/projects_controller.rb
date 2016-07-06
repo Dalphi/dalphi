@@ -16,6 +16,7 @@ class ProjectsController < ApplicationController
     :new,
     :show
   ]
+  before_action :set_interfaces
 
   # GET /projects
   def index
@@ -104,6 +105,14 @@ class ProjectsController < ApplicationController
         role_symbol = role.to_sym
         @available_services[role_symbol] = Service.where(role: role_symbol)
       end
+    end
+
+    def set_interfaces
+      associated_problem_identifier = @project.associated_problem_identifiers.first
+      @interfaces = Interface.select do |interface|
+        interface if interface.associated_problem_identifiers.include?(associated_problem_identifier)
+      end
+      @interfaces = @interfaces.group_by(&:interface_type)
     end
 
     def params_with_service_instances

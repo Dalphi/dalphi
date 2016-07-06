@@ -1,6 +1,6 @@
 = simple_form_for project do |f|
   .row.row-eq-height
-    .col-xs-12.col-md-6
+    .col-xs-12
       .card
         h3.card-header
           = t('projects.action.form.general-settings-card.headline')
@@ -20,6 +20,15 @@
                    project: project,
                    available_services: available_services[role.to_sym],
                    service_name: role
+
+    .col-xs-12.col-md-6
+      .card
+        h3.card-header
+          = t('projects.settings.interfaces.headline')
+        - interfaces.each do |interface_type, interfaces|
+          li
+            = interface_type
+            = interfaces.map(&:title).join(', ')
 
     .col-xs-12
       .btn-row

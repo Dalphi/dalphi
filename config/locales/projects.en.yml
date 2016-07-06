@@ -60,5 +60,7 @@ en:
           empty: 'no services associated, please %{add_link} one'
           empty-label: add
     settings:
+      interfaces:
+        headline: Interfaces to use
       services:
         headline: Services to use
