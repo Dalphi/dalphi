@@ -110,7 +110,9 @@ class ProjectsController < ApplicationController
     def set_interfaces
       associated_problem_identifier = @project.associated_problem_identifiers.first
       @interfaces = Interface.select do |interface|
-        interface if interface.associated_problem_identifiers.include?(associated_problem_identifier)
+        interface if interface
+                       .associated_problem_identifiers
+                       .include?(associated_problem_identifier)
       end
       @interfaces = @interfaces.group_by(&:interface_type)
     end
