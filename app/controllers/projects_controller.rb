@@ -17,6 +17,7 @@ class ProjectsController < ApplicationController
     :show
   ]
   before_action :set_interfaces, only: [
+    :edit,
     :new,
     :show
   ]
@@ -111,6 +112,8 @@ class ProjectsController < ApplicationController
     end
 
     def set_interfaces
+      @interfaces = []
+      return @interfaces unless @project
       associated_problem_identifier = @project.associated_problem_identifiers.first
       @interfaces = Interface.select do |interface|
         interface if interface
