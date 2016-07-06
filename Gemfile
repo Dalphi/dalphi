@@ -7,7 +7,7 @@ gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'coffee-rails'
 gem 'cookies_eu'
 gem 'delayed_job_active_record'
-gem 'devise', git: 'https://github.com/plataformatec/devise.git'
+gem 'devise'
 gem 'dotenv-rails'
 gem 'enum_help'
 gem 'fastclick-rails'
@@ -19,9 +19,9 @@ gem 'jbuilder'
 gem 'jquery-rails'
 gem 'modernizr-rails'
 gem 'normalize-rails'
-gem 'paperclip', '5.0.0.beta2'
+gem 'paperclip'
 gem 'puma'
-gem 'rails', '5.0.0.rc2'
+gem 'rails', '5.0.0'
 gem 'rails-assets-tether'
 gem 'rubyzip'
 gem 'sass-rails'
@@ -30,7 +30,7 @@ gem 'slim-rails'
 gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'swagger-blocks'
 gem 'therubyracer'
-gem 'turbolinks', git: 'https://github.com/rails/turbolinks.git'
+gem 'turbolinks'
 gem 'uglifier'
 
 group :doc do
@@ -66,7 +66,7 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '~> 3.5.0.beta4'
+  gem 'rspec-rails'
   gem 'webmock'
 end
 
