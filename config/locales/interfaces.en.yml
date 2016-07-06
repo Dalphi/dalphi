@@ -15,3 +15,7 @@ en:
           label: 'Java Script / Coffee Script code'
         stylesheet:
           label: 'CSS / SCSS code'
+    buttons:
+      new:
+        label: Add interface
+        tooltip: Add a new interface
