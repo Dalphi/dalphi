@@ -1,7 +1,15 @@
-li.list-group-item
-  a href="#{edit_interface_path(interface)}" title="#{interface.title}"
-    = interface.title
-    .problem-labels
-      - interface.associated_problem_identifiers.each do |problem_name|
-        span.label.label-default
-          = problem_name
+li.list-group-item.container
+  .inline-container-col.col-xs-10
+    a href="#{edit_interface_path(interface)}" title="#{interface.title}"
+      = interface.title
+      .problem-labels
+        - interface.associated_problem_identifiers.each do |problem_name|
+          span.label.label-default
+            = problem_name
+
+  .inline-container-col.col-xs-2
+    = render 'shared/button',
+             href: interface_path(interface),
+             tooltip: t('interfaces.cards.buttons.preview'),
+             icon: 'desktop'
+  

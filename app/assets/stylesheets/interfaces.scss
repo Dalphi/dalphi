@@ -2,6 +2,20 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.inline-container-col {
+  padding: 0;
+
+  .problem-labels {
+    .label {
+      margin-left: $inline-margin;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
 .ace-editor-label {
   margin-bottom: $input-label-margin-bottom;
 }
@@ -11,16 +25,6 @@
   margin-bottom: $container-margin;
   position: relative;
   width: 100%;
-}
-
-.problem-labels {
-  .label {
-    margin-left: $inline-margin;
-
-    &:first-of-type {
-      margin-left: 0;
-    }
-  }
 }
 
 .tokenfield {

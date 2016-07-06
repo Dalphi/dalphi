@@ -213,8 +213,4 @@ RSpec.describe Interface, type: :model do
     end
   end
 
-  # describe 'projects' do
-  #   it { should have_many(:projects) }
-  # end
-
 end
