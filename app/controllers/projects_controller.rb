@@ -16,7 +16,10 @@ class ProjectsController < ApplicationController
     :new,
     :show
   ]
-  before_action :set_interfaces
+  before_action :set_interfaces, only: [
+    :new,
+    :show
+  ]
 
   # GET /projects
   def index
