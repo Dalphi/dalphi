@@ -274,4 +274,36 @@ RSpec.describe Service, type: :model do
       expect(@al_service).to be_valid
     end
   end
+
+  describe 'interface types' do
+    it 'can be empty for machine learning services' do
+      @ml_service.interface_types = []
+      expect(@ml_service).to be_valid
+    end
+
+    it 'can be empty for merge services' do
+      @ml_service.interface_types = []
+      expect(@ml_service).to be_valid
+    end
+
+    it 'can have one element for bootstrap service' do
+      @bootstrap_service.interface_types = %w(fancy_interface)
+      expect(@bootstrap_service).to be_valid
+    end
+
+    it 'can have multiple elements for bootstrap service' do
+      @bootstrap_service.interface_types = %w(fancy_interface regular_interface)
+      expect(@bootstrap_service).to be_valid
+    end
+
+    it 'can have one element for active learning service' do
+      @al_service.interface_types = %w(fancy_interface)
+      expect(@al_service).to be_valid
+    end
+
+    it 'can have multiple elements for active learning service' do
+      @al_service.interface_types = %w(fancy_interface regular_interface)
+      expect(@al_service).to be_valid
+    end
+  end
 end
