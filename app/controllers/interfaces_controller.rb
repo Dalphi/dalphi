@@ -67,7 +67,9 @@ class InterfacesController < ApplicationController
     def converted_attributes
       associated_problems = interface_params['associated_problem_identifiers']
       new_params = interface_params
-      new_params['associated_problem_identifiers'] = [associated_problems]
+      new_params['associated_problem_identifiers'] = [associated_problems].unique
+      ap 'ap new_params'
+      ap new_params
       new_params
     end
 

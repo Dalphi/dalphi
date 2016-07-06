@@ -1,13 +1,4 @@
 .container.interfaces
-  .row.btn-row
-    .col-xs-12
-      = render 'shared/button',
-               href: new_interface_path,
-               type: 'primary',
-               tooltip: t('interfaces.buttons.new.tooltip'),
-               label: t('interfaces.buttons.new.label'),
-               icon: 'plus'
-
   .row.row-eq-height
     - if @interfaces.any?
       - @interfaces.each do |interface_type, interfaces|
@@ -23,3 +14,12 @@
           - link = link_to t('interfaces.blank-slate.link-text'),
                            new_interface_path
           == t('interfaces.blank-slate.text', link: link)
+
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button',
+               href: new_interface_path,
+               type: 'primary',
+               tooltip: t('interfaces.buttons.new.tooltip'),
+               label: t('interfaces.buttons.new.label'),
+               icon: 'plus'

@@ -22,3 +22,26 @@
     }
   }
 }
+
+.tokenfield {
+  .token {
+    line-height: 1.3rem;
+    margin-top: 0;
+
+    .close {
+      line-height: 1.4rem;
+    }
+  }
+}
+
+.ui-autocomplete {
+  li {
+    font-size: $h5-font-size;
+    font-family: 'Roboto Light', sans-serif;
+  }
+
+  .ui-state-focus {
+    background-color: $color-1-2;
+    background-image: none;
+  }
+}
