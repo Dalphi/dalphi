@@ -259,3 +259,9 @@ span {
 .card-text {
   width: 100%;
 }
+
+.c-select {
+  &:focus {
+    border-color: $color-5;
+  }
+}
