@@ -33,7 +33,7 @@ class InterfacesController < ApplicationController
   def create
     @interface = Interface.new(converted_attributes)
     if @interface.save
-      redirect_to @interfaces, notice: 'Interface was successfully created.'
+      redirect_to interfaces_path, notice: 'Interface was successfully created.'
     else
       render :new
     end
@@ -42,7 +42,7 @@ class InterfacesController < ApplicationController
   # PATCH/PUT /interfaces/1
   def update
     if @interface.update(converted_attributes)
-      redirect_to @interfaces, notice: 'Interface was successfully updated.'
+      redirect_to interfaces_path, notice: 'Interface was successfully updated.'
     else
       render :edit
     end

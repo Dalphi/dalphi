@@ -12,3 +12,13 @@
   position: relative;
   width: 100%;
 }
+
+.problem-labels {
+  .label {
+    margin-left: $inline-margin;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+}

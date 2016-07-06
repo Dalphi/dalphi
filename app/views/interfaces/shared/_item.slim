@@ -1,3 +1,7 @@
 li.list-group-item
   a href="#{edit_interface_path(interface)}" title="#{interface.title}"
     = interface.title
+    .problem-labels
+      - interface.associated_problem_identifiers.each do |problem_name|
+        span.label.label-default
+          = problem_name

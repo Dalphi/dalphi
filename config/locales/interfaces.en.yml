@@ -4,6 +4,9 @@ en:
       title: 'No interfaces created yet'
       text: 'Add an new interface %{link}.'
       link-text: here
+    cards:
+      header:
+        suffix: Interfaces
     form:
       attributes:
         template:
