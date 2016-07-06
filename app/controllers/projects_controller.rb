@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(params_with_service_instances)
+    @project = Project.new(params_with_associated_models)
     @project.user = current_user
     @project.connect_services
     if @project.save
@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(params_with_service_instances)
+    if @project.update(params_with_associated_models)
       redirect_to project_path(@project), notice: I18n.t('projects.action.update.success')
     else
       flash[:error] = I18n.t('simple_form.error_notification.default_message')
@@ -123,16 +123,26 @@ class ProjectsController < ApplicationController
       @interfaces = @interfaces.group_by(&:interface_type)
     end
 
-    def params_with_service_instances
+    def params_with_associated_models
       new_params = project_params
 
       @roles.each do |role|
         service_symbol = "#{role}_service".to_sym
-        service_instance = Service.find_by_id(project_params[service_symbol])
-        new_params[service_symbol] = service_instance
+        new_params[service_symbol] = Service.find_by_id(project_params[service_symbol])
       end
 
-      new_params
+      add_interfaces_to_params(new_params)
+    end
+
+    # this method smells of :reek:UtilityFunction
+    def add_interfaces_to_params(params)
+      interfaces = []
+      params_interface = params[:interfaces]
+      params_interface.values.each do |interface_id|
+        interfaces << Interface.find(interface_id) if interface_id != ''
+      end if params_interface
+      params[:interfaces] = interfaces
+      params
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -145,7 +155,9 @@ class ProjectsController < ApplicationController
         :machine_learning_service,
         :merge_service,
         :title
-      )
+      ).tap do |whitelisted|
+        whitelisted[:interfaces] = params[:project][:interfaces]
+      end
     end
 
     def redirect_bootstrap_with_flash

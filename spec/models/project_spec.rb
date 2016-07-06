@@ -194,6 +194,38 @@ RSpec.describe Project, type: :model do
 
   describe 'interfaces' do
     it { should have_and_belong_to_many(:interfaces) }
+
+    it 'can be empty' do
+      @project.interfaces = []
+      expect(@project).to be_valid
+    end
+
+    it 'can contain one' do
+      @project.interfaces = [FactoryGirl.build(:interface)]
+      expect(@project).to be_valid
+    end
+
+    it 'can contain two of different interface types' do
+      @project.interfaces = [
+        FactoryGirl.build(:interface,
+                          interface_type: 'text_nominal'),
+        FactoryGirl.build(:interface,
+                          template: 'other template',
+                          interface_type: 'other_interface_type')
+      ]
+      expect(@project).to be_valid
+    end
+
+    it 'cannot contain two of same interface type' do
+      @project.interfaces = [
+        FactoryGirl.build(:interface,
+                          interface_type: 'text_nominal'),
+        FactoryGirl.build(:interface,
+                          template: 'other template',
+                          interface_type: 'text_nominal')
+      ]
+      expect(@project).to be_invalid
+    end
   end
 
   it { should have_many(:raw_data).dependent(:destroy) }

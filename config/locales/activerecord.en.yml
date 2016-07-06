@@ -54,6 +54,8 @@ en:
               not-in-options: the selected label must be an option for this annotation document
         project:
           attributes:
+            interfaces:
+              not_unique: the interfaces are not unique in the scope of the interface types
             active_learning_service:
               no_service: the given active learning service is not recognized
               wrong_service: the given service is not a active learning service
