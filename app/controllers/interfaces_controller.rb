@@ -18,6 +18,10 @@ class InterfacesController < ApplicationController
 
   # GET /interfaces/1
   def show
+    sass_engine = Sass::Engine.new(@interface.stylesheet, syntax: :scss)
+    @interface_style = sass_engine.render
+
+    @interface_script = CoffeeScript.compile(@interface.java_script)
   end
 
   # GET /interfaces/new

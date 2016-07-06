@@ -1,0 +1,10 @@
+- content_for :interface_style_includes do
+  style
+    = @interface_style
+
+- content_for :interface_javascript_includes do
+  script type='text/javascript'
+    == @interface_script
+
+.container.interfaces
+  == @interface.template
