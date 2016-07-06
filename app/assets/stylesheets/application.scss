@@ -244,3 +244,14 @@ input {
 .text-right {
   text-align: right;
 }
+
+span {
+  &.checkbox {
+    cursor: default;
+    pointer-events: none;
+
+    input {
+      margin-right: .5rem;
+    }
+  }
+}

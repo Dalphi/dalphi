@@ -7,5 +7,5 @@ Content-Type: application/json
 	"description":		"A bootstrap dummy service that just implements the Who Are You API",
 	"role":			"bootstrap",
 	"problem_id":		"ner",
-	"interface_type":	"text_nominal"
+	"interface_types":	["text_nominal"]
 }

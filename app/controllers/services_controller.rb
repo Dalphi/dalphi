@@ -29,7 +29,8 @@ class ServicesController < ApplicationController
     url = "#{params[:protocol]}://#{uri}"
 
     @service = Service.new_from_url(url)
-    flash[:error] = new_service_flash_text(uri) # returns nil if everything is alright
+    flash_error = new_service_flash_text(uri)
+    flash[:error] = flash_error if flash_error
 
     redirect_to services_url if !@service || @service.errors.any?
   end
@@ -91,13 +92,15 @@ class ServicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
+      params[:service][:interface_types] -= ['']
       params.require(:service).permit(
         :role,
         :description,
         :problem_id,
         :url,
         :title,
-        :version
+        :version,
+        interface_types: []
       )
     end
 end

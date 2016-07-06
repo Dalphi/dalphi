@@ -13,7 +13,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
         'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
-        'skipped' => false
+        'skipped' => nil
       }
     )
   end
@@ -99,7 +99,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
         'payload' => Base64.encode64("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
-        'skipped' => false
+        'skipped' => nil
       }
     )
   end

@@ -7,5 +7,5 @@ Content-Type: application/json
 	"description":		"An active learning dummy service that just implements the Who Are You API",
 	"role":			"active_learning",
 	"problem_id":		"ner",
-	"interface_type":	"text_nominal"
+	"interface_types":	["text_nominal"]
 }
