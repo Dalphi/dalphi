@@ -16,6 +16,8 @@ class Project < ApplicationRecord
            dependent: :destroy
   has_many :annotation_documents
 
+  has_and_belongs_to_many :interfaces
+
   validates :title,
     presence: true
 

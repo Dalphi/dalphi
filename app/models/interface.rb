@@ -1,4 +1,6 @@
 class Interface < ApplicationRecord
+  has_and_belongs_to_many :projects
+
   serialize :associated_problem_identifiers, Array
 
   validates :interface_type, :associated_problem_identifiers,
@@ -12,5 +14,4 @@ class Interface < ApplicationRecord
     WebsiteComponentsValidator.validate_stylesheet(interface)
     WebsiteComponentsValidator.validate_java_script(interface)
   end
-
 end

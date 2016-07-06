@@ -25,10 +25,19 @@
       .card
         h3.card-header
           = t('projects.settings.interfaces.headline')
-        - interfaces.each do |interface_type, interfaces|
-          li
-            = interface_type
-            = interfaces.map(&:title).join(', ')
+        .card-block
+          - interfaces.each do |interface_type, interfaces|
+            .card-titleo
+              = interface_type
+            .card-text
+              .form-inputs
+                 = f.input :interfaces,
+                           collection: interfaces,
+                           include_blank: t('projects.action.form.services-card.no-service-selected'),
+                           input_html: { class: 'c-select' },
+                           label_method: -> (interface) { interface.title },
+                           label: false,
+                           name: interface_type
 
     .col-xs-12
       .btn-row

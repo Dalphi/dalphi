@@ -192,6 +192,10 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  describe 'interfaces' do
+    it { should have_and_belong_to_many(:interfaces) }
+  end
+
   it { should have_many(:raw_data).dependent(:destroy) }
 
   it { should belong_to(:user) }
