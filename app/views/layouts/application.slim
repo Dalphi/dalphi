@@ -11,7 +11,6 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
   body
     = render partial: 'shared/topbar', locals: { breadcrumbs: @breadcrumbs }
-    = render 'cookies_eu/consent_banner'
     = render 'shared/flash'
     .content-container.container-fluid
       = yield
