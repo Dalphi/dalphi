@@ -92,8 +92,8 @@ class ServicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
-      params[:service][:interface_types] -= ['']
-      params.require(:service).permit(
+      interface_types = params[:service][:interface_types]
+      permitted_params = params.require(:service).permit(
         :role,
         :description,
         :problem_id,
@@ -102,5 +102,7 @@ class ServicesController < ApplicationController
         :version,
         interface_types: []
       )
+      permitted_params[:interface_types] -= [''] if interface_types
+      permitted_params
     end
 end

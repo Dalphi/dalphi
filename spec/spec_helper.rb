@@ -103,6 +103,9 @@ RSpec.configure do |config|
     stub_request(:get, 'http://localhost:3001/').
       with(:headers => {'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'localhost:3001', 'User-Agent' => 'Ruby'}).
       to_return(status: 200, body: '', headers: {})
+    stub_request(:get, "http://localhost:3002/").
+       with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host'=>'localhost:3002', 'User-Agent'=>'Ruby'}).
+       to_return(:status => 200, :body => "", :headers => {})
     stub_request(:get, 'http://www.google.us/').
       with(:headers => {'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'www.google.us', 'User-Agent' => 'Ruby'}).
       to_return(status: 200, body: '', headers: {})

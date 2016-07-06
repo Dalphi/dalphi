@@ -35,9 +35,10 @@ class RawDatum < ApplicationRecord
     }
 
   def self.batch_process(project, data)
+    return { error: [], success: [] } unless data
     data_size = data.size
     data_first = data.first
-    if data_size == 1 && data_first.content_type =~ /\Aapplication/
+    if data_size == 1 && valid_zip?(data_first)
       batch_result = RawDatum.zip_to_data project, data_first.tempfile.path
     elsif data_size >= 1
       batch_data = []
@@ -129,6 +130,14 @@ class RawDatum < ApplicationRecord
     File.size? self.data.path
   end
 
+    def self.valid_zip?(file)
+      zip = Zip::File.open(file)
+      true
+    rescue StandardError
+      false
+    ensure
+      zip.close if zip
+    end
   private
 
     def destroy_raw_datum_with_same_filename
@@ -137,4 +146,5 @@ class RawDatum < ApplicationRecord
         filename: self.filename
       ).destroy_all
     end
+
 end

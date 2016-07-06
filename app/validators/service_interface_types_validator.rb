@@ -4,11 +4,16 @@ class ServiceInterfaceTypesValidator < ActiveModel::Validator
   end
 
   def self.validate(record)
-    if %w(machine_learning merge).include?(record.role) && record.interface_types != []
+    if %w(bootstrap active_learning).include?(record.role) && record.interface_types == []
       error_message = I18n.t('activerecord.errors.models.service.attributes.' \
-                             'interface_types.illegal_value')
-      record.errors[:interface_types] << error_message
+                             'interface_types.is_empty')
+
+    elsif %w(machine_learning merge).include?(record.role) && record.interface_types != []
+      error_message = I18n.t('activerecord.errors.models.service.attributes.' \
+                             'interface_types.not_empty')
     end
+
+    record.errors[:interface_types] << error_message if error_message
   end
 
 end
