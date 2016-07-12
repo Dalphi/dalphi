@@ -23,7 +23,7 @@ class InterfacesForm
     )
 
   initTokenfield: ->
-    $tokenfield = $('.tokenized_problem_identifiers')
+    $tokenfield = $('.tokenized-problem-identifiers')
     known_problem_identifiers = $tokenfield.data('autocomplete')
 
     autocomplete = {

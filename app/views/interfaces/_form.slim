@@ -8,7 +8,7 @@
 
         = f.input :associated_problem_identifiers,
                   as: :string,
-                  input_html: { class: 'tokenized_problem_identifiers',
+                  input_html: { class: 'tokenized-problem-identifiers',
                                 value: f.object.associated_problem_identifiers.join(', '),
                                 'data-autocomplete' => known_problem_identifiers }
 
