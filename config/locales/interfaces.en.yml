@@ -14,8 +14,6 @@ en:
       text: 'Add an new interface %{link}.'
       link-text: here
     cards:
-      header:
-        suffix: Interfaces
       buttons:
         preview: preview this interface
     form:

@@ -1,7 +1,7 @@
 = simple_form_for(interface, html: { class: 'interface-form'}) do |f|
-  .row
-    .form-inputs
-      .col-xs-12.col-sm-12.col-lg-6
+  .form-inputs
+    .row.row-eq-height
+      .col-xs-12.col-xl-6
         = f.input :title
 
         = f.input :interface_type
@@ -12,7 +12,7 @@
                                 value: f.object.associated_problem_identifiers.join(', '),
                                 'data-autocomplete' => known_problem_identifiers }
 
-      .col-xs-12.col-lg-6
+      .col-xs-12.col-xl-6
         p.ace-editor-label
           = t('interfaces.form.attributes.template.label')
         .code-input#template-editor
@@ -20,7 +20,7 @@
                   as: :hidden,
                   input_html: { id: 'hidden-template-editor'}
 
-      .col-xs-12.col-lg-6
+      .col-xs-12.col-xl-6
         p.ace-editor-label
           = t('interfaces.form.attributes.javascript.label')
         .code-input#js-editor
@@ -28,7 +28,7 @@
                   as: :hidden,
                   input_html: { id: 'hidden-js-editor'}
 
-      .col-xs-12.col-lg-6
+      .col-xs-12.col-xl-6
         p.ace-editor-label
           = t('interfaces.form.attributes.stylesheet.label')
         .code-input#stylesheet-editor
