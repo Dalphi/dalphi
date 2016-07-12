@@ -13,7 +13,6 @@ class InterfacesController < ApplicationController
                             interface_type: interface_type
                           )
                         end
-    ap @interfaces
   end
 
   # GET /interfaces/1
