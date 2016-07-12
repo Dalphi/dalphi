@@ -12,6 +12,8 @@ class WebsiteComponentsValidator < ActiveModel::Validator
     compilate = sass_engine.render
     record.set_validator_compiled_stylesheet = compilate
 
+    ap record
+
   rescue Sass::SyntaxError
     error_message = I18n.t('activerecord.errors.models.interface.attributes' \
                            '.stylesheet.syntax-error')

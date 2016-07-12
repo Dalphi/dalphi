@@ -172,16 +172,18 @@ RSpec.describe Interface, type: :model do
 
     it 'is the compiled version of the stylesheet' do
       @interface.stylesheet = '$strong-font-size: 2rem; p { text-align: center; strong { font-size: $strong-font-size; } }'
-      @interface.compiled_stylesheet = <<-CSS.gsub(/^ {8}/, '')
-        p {
-          text-align: center;
-        }
-        p strong {
-          font-size: 2rem;
-        }
-      CSS
+
       @interface.save
-      expect(@interface).to be_valid
+      @interface.reload
+
+      expect(@interface.compiled_stylesheet).to eq(
+        <<-CSS.gsub(/^ {10}/, '')
+          .annotation-interface p {
+            text-align: center; }
+            .annotation-interface p strong {
+              font-size: 2rem; }
+        CSS
+      )
     end
   end
 
@@ -237,17 +239,24 @@ RSpec.describe Interface, type: :model do
 
         test()
       COFFEE
-      @interface.compiled_java_script = <<-JS.gsub(/^ {8}/, '')
-        ({
-          test: function() {
-            return alert("much coffee!");
-          }
-        });
 
-        test();
-      JS
       @interface.save
-      expect(@interface).to be_valid
+      @interface.reload
+
+      expect(@interface.compiled_java_script).to eq(
+        <<-JS.gsub(/^ {10}/, '')
+          (function() {
+            ({
+              test: function() {
+                return alert(\"much coffee!\");
+              }
+            });
+
+            test();
+
+          }).call(this);
+        JS
+      )
     end
   end
 end
