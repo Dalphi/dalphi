@@ -24,10 +24,10 @@ class InterfacesForm
 
   initTokenfield: ->
     $tokenfield = $('.tokenized-problem-identifiers')
-    known_problem_identifiers = $tokenfield.data('autocomplete')
+    knownProblemIdentifiers = $tokenfield.data('autocomplete')
 
     autocomplete = {
-      source: known_problem_identifiers.split(" "),
+      source: knownProblemIdentifiers.split(" "),
       delay: 100
     }
 
