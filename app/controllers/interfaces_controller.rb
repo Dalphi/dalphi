@@ -25,8 +25,10 @@ class InterfacesController < ApplicationController
   def create
     @interface = Interface.new(converted_attributes)
     if @interface.save
-      redirect_to interfaces_path, notice: 'Interface was successfully created.'
+      redirect_to interfaces_path,
+                  notice: t('interfaces.action.create.success')
     else
+      flash[:error] = t('interfaces.action.create.error')
       render :new
     end
   end
@@ -34,8 +36,10 @@ class InterfacesController < ApplicationController
   # PATCH/PUT /interfaces/1
   def update
     if @interface.update(converted_attributes)
-      redirect_to interfaces_path, notice: 'Interface was successfully updated.'
+      redirect_to interfaces_path,
+                  notice: t('interfaces.action.update.success')
     else
+      flash[:error] = t('interfaces.action.update.error')
       render :edit
     end
   end
@@ -43,7 +47,8 @@ class InterfacesController < ApplicationController
   # DELETE /interfaces/1
   def destroy
     @interface.destroy
-    redirect_to interfaces_url, notice: 'Interface was successfully destroyed.'
+    redirect_to interfaces_url,
+                notice: t('interfaces.action.destroy.success')
   end
 
   private
