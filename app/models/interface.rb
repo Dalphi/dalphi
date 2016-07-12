@@ -7,13 +7,13 @@ class Interface < ApplicationRecord
   validates :interface_type, :associated_problem_identifiers,
     presence: true
 
-  validates :title, :template,
-    presence: true,
-    uniqueness: true
+  validates :title,
+    presence: true
 
   validate do |interface|
     WebsiteComponentsValidator.validate_stylesheet(interface)
     WebsiteComponentsValidator.validate_java_script(interface)
+    InterfaceTitleUniquenessValidator.validate_title_uniqueness(interface)
   end
 
   @validator_compiled_stylesheet = nil

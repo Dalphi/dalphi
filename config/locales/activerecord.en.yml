@@ -71,6 +71,8 @@ en:
               badHttpResponse: "the given URL does not respond"
         interface:
           attributes:
+            title:
+              uniqueness: the given interface title is not unique in the scope of the associated problem identifiers
             stylesheet:
               syntax-error: the uploaded stylesheet contains syntax errors
             compiled_stylesheet:
