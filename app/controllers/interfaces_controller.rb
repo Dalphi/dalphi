@@ -4,15 +4,7 @@ class InterfacesController < ApplicationController
 
   # GET /interfaces
   def index
-    @interfaces = {}
-    exemplary_interfaces = Interface.select(:interface_type).distinct
-    exemplary_interfaces.map { |interface| interface.interface_type }
-                        .compact
-                        .each do |interface_type|
-                          @interfaces[interface_type] = Interface.where(
-                            interface_type: interface_type
-                          )
-                        end
+    @interfaces = Interface.all.group_by(&:interface_type)
   end
 
   # GET /interfaces/1
