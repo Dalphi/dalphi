@@ -72,7 +72,6 @@ class Service < ApplicationRecord
   end
 
   def self.problem_identifiers
-    exemplary_services = Service.select(:problem_id).distinct
-    exemplary_services.map { |service| service.problem_id }.compact
+    Service.uniq.pluck(:problem_id)
   end
 end
