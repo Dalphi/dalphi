@@ -213,7 +213,5 @@ RSpec.describe Interface, type: :model do
     end
   end
 
-   describe 'projects' do
-    it { should have_and_belong_to_many(:projects) }
-  end
+  it { should have_and_belong_to_many(:projects) }
 end
