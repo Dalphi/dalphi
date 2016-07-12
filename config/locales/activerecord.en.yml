@@ -74,8 +74,8 @@ en:
             stylesheet:
               syntax-error: the uploaded stylesheet contains syntax errors
             compiled_stylesheet:
-              compilate_mismatch: the stylesheet seems not to be compilated correctly
+              compilate_mismatch: the stylesheet seems not to be compiled correctly
             java_script:
               syntax-error: the uploaded coffee script contains syntax errors
             compiled_java_script:
-              compilate_mismatch: the java script / coffee script seems not to be compilated correctly
+              compilate_mismatch: the java script / coffee script seems not to be compiled correctly

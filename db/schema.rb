@@ -53,13 +53,6 @@ ActiveRecord::Schema.define(version: 20160706141042) do
     t.text     "compiled_java_script"
   end
 
-  create_table "interfaces_projects", id: false, force: :cascade do |t|
-    t.integer "interface_id", null: false
-    t.integer "project_id",   null: false
-    t.index ["interface_id", "project_id"], name: "index_interfaces_projects_on_interface_id_and_project_id"
-    t.index ["project_id", "interface_id"], name: "index_interfaces_projects_on_project_id_and_interface_id"
-  end
-
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
@@ -97,9 +90,8 @@ ActiveRecord::Schema.define(version: 20160706141042) do
     t.string   "url"
     t.string   "title"
     t.string   "version"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.text     "interface_types"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|

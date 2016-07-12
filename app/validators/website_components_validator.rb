@@ -13,13 +13,8 @@ class WebsiteComponentsValidator < ActiveModel::Validator
     record.set_validator_compiled_stylesheet = compilate
 
   rescue Sass::SyntaxError
-    error_message = I18n.t('activerecord
-                            .errors
-                            .models
-                            .interface
-                            .attributes
-                            .stylesheet
-                            .syntax-error')
+    error_message = I18n.t('activerecord.errors.models.interface.attributes' \
+                           '.stylesheet.syntax-error')
     record.errors['stylesheet'] << error_message
   end
 
@@ -30,13 +25,8 @@ class WebsiteComponentsValidator < ActiveModel::Validator
     record.set_validator_compiled_java_script = compilate
 
   rescue ExecJS::RuntimeError
-    error_message = I18n.t('activerecord
-                           .errors
-                           .models
-                           .interface
-                           .attributes
-                           .java_script
-                           .syntax-error')
+    error_message = I18n.t('activerecord.errors.models.interface.attributes' \
+                           '.java_script.syntax-error')
     record.errors['java_script'] << error_message
   end
 end
