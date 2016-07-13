@@ -21,7 +21,7 @@ en:
         template:
           label: 'HTML Template code'
         javascript:
-          label: 'Java Script / Coffee Script code'
+          label: 'JavaScript / CoffeeScript code'
         stylesheet:
           label: 'CSS / SCSS code'
     buttons:
