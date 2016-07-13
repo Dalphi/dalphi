@@ -3,7 +3,7 @@ class AnnotationDocumentsController < ApplicationController
 
   # PATCH /projects/1/annotation_documents/next/10
   def next
-    documents = get_annotation_documents(annotation_document_params['count'])
+    documents = annotation_documents(annotation_document_params['count'])
 
     if documents.count == 0
       render_error_response 404, 'next.no-documents'
@@ -24,7 +24,7 @@ class AnnotationDocumentsController < ApplicationController
       render_error_response 400, 'set-project.not-found'
     end
 
-    def get_annotation_documents(count)
+    def annotation_documents(count)
       count = 1 unless count
       timeout = Rails.configuration.x.dalphi['timeouts']['annotation-document-edit-time']
       now = Time.zone.now
