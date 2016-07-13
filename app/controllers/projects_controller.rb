@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
     :show,
     :update_service,
     :check_problem_identifiers,
+    :check_interfaces,
     :update
   ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'

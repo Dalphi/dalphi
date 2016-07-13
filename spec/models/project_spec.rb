@@ -240,51 +240,82 @@ RSpec.describe Project, type: :model do
     end
 
     it "should return selected interfaces' titles grouped by type" do
-      text_nominal_interface_1 = FactoryGirl.create(:interface,
-                                                    title: 'interface 1',
-                                                    interface_type: 'text_nominal')
-      text_nominal_interface_2 = FactoryGirl.create(:interface,
-                                                    title: 'interface 2',
-                                                    interface_type: 'text_nominal')
+      text_nominal_interface = FactoryGirl.create(:interface,
+                                                  title: 'interface 1',
+                                                  interface_type: 'text_nominal')
       text_not_so_nominal_interface = FactoryGirl.create(:interface,
-                                                         title: 'interface 3',
+                                                         title: 'interface 2',
                                                          interface_type: 'text_not_so_nominal')
 
-      @project.interfaces = [text_nominal_interface_1]
+      @project.interfaces = [text_nominal_interface]
       expect(@project.selected_interfaces).to eq(
         {
-          'text_nominal' => [
-            text_nominal_interface_1.title
-          ]
+          'text_nominal' => text_nominal_interface.title
         }
       )
 
-      @project.interfaces = [text_nominal_interface_1, text_nominal_interface_2]
+      @project.interfaces = [text_nominal_interface, text_nominal_interface]
       expect(@project.selected_interfaces).to eq(
         {
-          'text_nominal' => [
-            text_nominal_interface_1.title,
-            text_nominal_interface_2.title
-          ]
+          'text_nominal' => text_nominal_interface.title
         }
       )
 
       @project.interfaces = [
-        text_nominal_interface_1,
-        text_nominal_interface_2,
+        text_nominal_interface,
         text_not_so_nominal_interface
       ]
       expect(@project.selected_interfaces).to eq(
         {
-          'text_nominal' => [
-            text_nominal_interface_1.title,
-            text_nominal_interface_2.title
-          ],
-          'text_not_so_nominal' => [
-            text_not_so_nominal_interface.title
-          ]
+          'text_nominal' => text_nominal_interface.title,
+          'text_not_so_nominal' => text_not_so_nominal_interface.title
         }
       )
+    end
+  end
+
+  describe 'necessary_interface_types' do
+    it 'should be an empty array for a project with no associated services' do
+      @project.active_learning_service = nil
+      @project.bootstrap_service = nil
+
+      expect(@project.necessary_interface_types).to eq([])
+    end
+
+    it 'should be the interface types of associated services' do
+      active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                   interface_types: %w(text_nominal))
+      bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                             interface_types: %w(text_nominal))
+      @project.active_learning_service = active_learning_service
+      @project.bootstrap_service = bootstrap_service
+
+      expect(@project.necessary_interface_types).to eq(%w(text_nominal))
+    end
+
+    it 'should be the union of interface types of associated services' do
+      active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                   interface_types: %w(text_nominal))
+      bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                             interface_types: %w(text_nominal text_not_so_nominal))
+      @project.active_learning_service = active_learning_service
+      @project.bootstrap_service = bootstrap_service
+
+      expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
+    end
+
+    it 'should not contain interface types of non associated services' do
+      active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                   interface_types: %w(text_nominal))
+      bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                             interface_types: %w(text_nominal text_not_so_nominal))
+      not_associated_service = FactoryGirl.create(:bootstrap_service,
+                                                  url: 'http://www.3antworten.de',
+                                                  interface_types: %w(text_nominal text_not_so_nominal yet_another_interface_type))
+      @project.active_learning_service = active_learning_service
+      @project.bootstrap_service = bootstrap_service
+
+      expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
     end
   end
 end

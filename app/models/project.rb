@@ -55,6 +55,22 @@ class Project < ApplicationRecord
     self.title
   end
 
+  def selected_interfaces
+    selected_interfaces = {}
+    self.necessary_interface_types.each do |interface_type|
+      interface = self.interfaces.find_by(interface_type: interface_type)
+      selected_interfaces[interface_type] = interface.title if interface
+    end
+    selected_interfaces
+  end
+
+  def necessary_interface_types
+    necessary_interface_types = []
+    necessary_interface_types += self.active_learning_service.interface_types if active_learning_service
+    necessary_interface_types += self.bootstrap_service.interface_types if bootstrap_service
+    necessary_interface_types.uniq.sort
+  end
+
   def connect_services
     services = Service.all
     Service.roles.keys.each do |role|
