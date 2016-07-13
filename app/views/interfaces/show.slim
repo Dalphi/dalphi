@@ -1,0 +1,11 @@
+- content_for :interface_style_includes do
+  style
+    = @interface.compiled_stylesheet
+
+.container.interfaces
+
+  div class="#{@container_class}"
+    == @interface.template
+
+  script type='text/javascript'
+    == @interface.compiled_java_script

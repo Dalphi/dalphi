@@ -30,32 +30,37 @@ RSpec.describe Interface, type: :model do
       expect(@interface).to be_valid
     end
 
-    it 'should not be assigned twice' do
-      test_title = 'Super Interface'
+    it 'should not be assigned twice for non disjunct sets of problem identifiers' do
+      @interface.title = 'Duplicate title'
+      @interface.associated_problem_identifiers = %w(ner superNER)
+      @interface.save!
 
-      @another_interface = FactoryGirl.build(:interface_2)
-      expect(@another_interface).to be_valid
-
-      @another_interface.title = test_title
-      @another_interface.template = test_title
-      @another_interface.save!
-
-      @interface.title = test_title
-      expect(@interface).to be_invalid
+      @another_interface = FactoryGirl.build(:interface,
+                                             title: 'Duplicate title',
+                                             associated_problem_identifiers: %w(ner ultraNER))
+      expect(@another_interface).to be_invalid
     end
 
-    it 'can be different' do
-      test_title_1 = 'Wow Interface'
-      test_title_2 = 'Incredible Interface'
+    it 'can be assigned twice for disjunct sets of problem identifiers' do
+      @interface.title = 'Duplicate title'
+      @interface.associated_problem_identifiers = %w(ner superNER)
+      @interface.save!
 
-      @another_interface = FactoryGirl.build(:interface_2)
+      @another_interface = FactoryGirl.build(:interface,
+                                             title: 'Duplicate title',
+                                             associated_problem_identifiers: %w(ultraNER hyperNER))
       expect(@another_interface).to be_valid
+    end
 
-      @another_interface.title = test_title_1
-      @another_interface.save!
+    it 'can be different for non disjunct sets of problem identifiers' do
+      @interface.title = 'Different title'
+      @interface.associated_problem_identifiers = %w(ner superNER)
+      @interface.save!
 
-      @interface.title = test_title_2
-      expect(@interface).to be_valid
+      @another_interface = FactoryGirl.build(:interface,
+                                             title: 'Even more different title',
+                                             associated_problem_identifiers: %w(ner ultraNER))
+      expect(@another_interface).to be_valid
     end
   end
 
@@ -72,11 +77,6 @@ RSpec.describe Interface, type: :model do
 
     it 'can be text_nominal as text string' do
       @interface.interface_type = 'text_nominal'
-      expect(@interface).to be_valid
-    end
-
-    it 'can be text_nominal as integer 0' do
-      @interface.interface_type = 0
       expect(@interface).to be_valid
     end
   end
@@ -108,45 +108,25 @@ RSpec.describe Interface, type: :model do
   end
 
   describe 'template' do
-    it 'should not be nil' do
+    it 'can be nil' do
       @interface.template = nil
-      expect(@interface).to be_invalid
+      expect(@interface).to be_valid
     end
 
-    it 'should not be empty' do
+    it 'can be empty' do
       @interface.template = ''
-      expect(@interface).to be_invalid
+      expect(@interface).to be_valid
+
       @interface.template = '   '
-      expect(@interface).to be_invalid
+      expect(@interface).to be_valid
     end
 
-    describe 'should be unique and' do
-      it 'should not be assigned twice' do
-        test_template = 'Template with {{values}}'
+    it 'can be a valid template' do
+      @interface.template = 'foo'
+      expect(@interface).to be_valid
 
-        @another_interface = FactoryGirl.build(:interface_2)
-        expect(@another_interface).to be_valid
-
-        @another_interface.template = test_template
-        @another_interface.save!
-
-        @interface.template = test_template
-        expect(@interface).to be_invalid
-      end
-
-      it 'can be different' do
-        test_template_1 = 'Template with {{values}}'
-        test_template_2 = 'Template with more {{values}}'
-
-        @another_interface = FactoryGirl.build(:interface_2)
-        expect(@another_interface).to be_valid
-
-        @another_interface.template = test_template_1
-        @another_interface.save!
-
-        @interface.template = test_template_2
-        expect(@interface).to be_valid
-      end
+      @interface.template = '<div>bar</div>'
+      expect(@interface).to be_valid
     end
   end
 
@@ -173,9 +153,37 @@ RSpec.describe Interface, type: :model do
       expect(@interface).to be_valid
     end
 
-    it 'can not be an invalid stylesheet' do
+    it 'cannot be an invalid stylesheet' do
       @interface.stylesheet = 'p { text-align: very-middel & font-size: large };'
       expect(@interface).to be_invalid
+    end
+  end
+
+  describe 'compiled_stylesheet' do
+    it 'can be nil or empty iff stylesheet is nil' do
+      @interface.stylesheet = nil
+      @interface.compiled_stylesheet = nil
+      expect(@interface).to be_valid
+
+      @interface.stylesheet = ''
+      @interface.compiled_stylesheet = ''
+      expect(@interface).to be_valid
+    end
+
+    it 'is the compiled version of the stylesheet' do
+      @interface.stylesheet = '$strong-font-size: 2rem; p { text-align: center; strong { font-size: $strong-font-size; } }'
+
+      @interface.save
+      @interface.reload
+
+      expect(@interface.compiled_stylesheet).to eq(
+        <<-CSS.gsub(/^ {10}/, '')
+          .annotation-interface p {
+            text-align: center; }
+            .annotation-interface p strong {
+              font-size: 2rem; }
+        CSS
+      )
     end
   end
 
@@ -198,12 +206,12 @@ RSpec.describe Interface, type: :model do
     end
 
     it 'can be a valid coffee script' do
-      @interface.java_script = '
+      @interface.java_script = <<-COFFEE.gsub(/^ {8}/, '')
         test: ->
           alert "much coffee!"
 
         test()
-      '
+      COFFEE
       expect(@interface).to be_valid
     end
 
@@ -214,4 +222,43 @@ RSpec.describe Interface, type: :model do
   end
 
   it { should have_and_belong_to_many(:projects) }
+
+  describe 'compiled_java_script' do
+    it 'can be nil or empty iff java_script is nil' do
+      @interface.java_script = nil
+      @interface.compiled_java_script = nil
+      expect(@interface).to be_valid
+
+      @interface.java_script = ''
+      @interface.compiled_java_script = ''
+      expect(@interface).to be_valid
+    end
+
+    it 'is the compiled version of the java_script' do
+      @interface.java_script = <<-COFFEE.gsub(/^ {8}/, '')
+        test: ->
+          alert "much coffee!"
+
+        test()
+      COFFEE
+
+      @interface.save
+      @interface.reload
+
+      expect(@interface.compiled_java_script).to eq(
+        <<-JS.gsub(/^ {10}/, '')
+          (function() {
+            ({
+              test: function() {
+                return alert(\"much coffee!\");
+              }
+            });
+
+            test();
+
+          }).call(this);
+        JS
+      )
+    end
+  end
 end

@@ -1,3 +1,51 @@
 // Place all the styles related to the Interfaces controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.inline-container-col {
+  padding: 0;
+
+  .problem-labels {
+    .label {
+      margin-left: $inline-margin;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.ace-editor-label {
+  margin-bottom: $input-label-margin-bottom;
+}
+
+.code-input {
+  height: 15rem;
+  margin-bottom: $container-margin;
+  position: relative;
+  width: 100%;
+}
+
+.tokenfield {
+  .token {
+    line-height: 1.3rem;
+    margin-top: 0;
+
+    .close {
+      line-height: 1.4rem;
+    }
+  }
+}
+
+.ui-autocomplete {
+  li {
+    font-family: 'Roboto Light', sans-serif;
+    font-size: $h5-font-size;
+  }
+
+  .ui-state-focus {
+    background-color: $color-1-2;
+    background-image: none;
+  }
+}

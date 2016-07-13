@@ -1,17 +1,15 @@
 class InterfacesController < ApplicationController
   before_action :set_interface, only: [:show, :edit, :update, :destroy]
+  before_action :set_problem_identifiers, only: [:edit, :new, :create, :update]
 
   # GET /interfaces
   def index
-    @interfaces = {}
-    @interface_types = Interface.select(:interface_type).distinct
-    @interface_types.each do |interface_type|
-      @interfaces[interface_type] = Interface.where(interface_type: interface_type)
-    end
+    @interfaces = Interface.all.group_by(&:interface_type)
   end
 
   # GET /interfaces/1
   def show
+    @container_class = Rails.configuration.x.dalphi['annotation-interface']['container-class-name']
   end
 
   # GET /interfaces/new
@@ -25,19 +23,23 @@ class InterfacesController < ApplicationController
 
   # POST /interfaces
   def create
-    @interface = Interface.new(interface_params)
+    @interface = Interface.new(converted_attributes)
     if @interface.save
-      redirect_to @interface, notice: 'Interface was successfully created.'
+      redirect_to interfaces_path,
+                  notice: t('interfaces.action.create.success')
     else
+      flash[:error] = t('interfaces.action.create.error')
       render :new
     end
   end
 
   # PATCH/PUT /interfaces/1
   def update
-    if @interface.update(interface_params)
-      redirect_to @interface, notice: 'Interface was successfully updated.'
+    if @interface.update(converted_attributes)
+      redirect_to interfaces_path,
+                  notice: t('interfaces.action.update.success')
     else
+      flash[:error] = t('interfaces.action.update.error')
       render :edit
     end
   end
@@ -45,7 +47,8 @@ class InterfacesController < ApplicationController
   # DELETE /interfaces/1
   def destroy
     @interface.destroy
-    redirect_to interfaces_url, notice: 'Interface was successfully destroyed.'
+    redirect_to interfaces_url,
+                notice: t('interfaces.action.destroy.success')
   end
 
   private
@@ -54,8 +57,28 @@ class InterfacesController < ApplicationController
       @interface = Interface.find(params[:id])
     end
 
+    def set_problem_identifiers
+      @problem_identifiers = Service::problem_identifiers
+    end
+
+    def converted_attributes
+      associated_problems = interface_params['associated_problem_identifiers']
+      new_params = interface_params
+      new_params['associated_problem_identifiers'] = associated_problems.strip
+                                                                        .split(', ')
+                                                                        .uniq
+      new_params
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def interface_params
-      params.fetch(:interface, {})
+      params.require(:interface).permit(
+        :template,
+        :java_script,
+        :stylesheet,
+        :title,
+        :interface_type,
+        :associated_problem_identifiers
+      )
     end
 end

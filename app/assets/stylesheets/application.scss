@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require normalize-rails
+ *= require jquery-ui
  *= require_self
  */
 
@@ -21,6 +22,7 @@
 
 // gems & dependencies
 @import 'bootstrap';
+@import 'bootstrap-tokenfield';
 @import 'font-awesome';
 
 // partial styling
@@ -30,6 +32,7 @@
 @import 'services';
 @import 'styleguide';
 @import 'projects';
+@import 'interfaces';
 @import 'connectivity-indicator';
 
 html,
