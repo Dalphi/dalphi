@@ -1,6 +1,8 @@
 #= require annotation_document_manager
 
 before ->
+  Teaspoon()
+  Teaspoon.hook('create_annotation_document')
   @dalphiUrl = "#{Teaspoon.location}".match(/http[s]*:\/\/[0-9a-z\.:]+/)[0]
   @manager = new window.AnnotationDocumentManager(@dalphiUrl)
 

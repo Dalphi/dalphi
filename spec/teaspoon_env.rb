@@ -1,3 +1,5 @@
+ENV['RAILS_ENV'] ||= 'test'
+
 Teaspoon.configure do |config|
   # Determines where the Teaspoon routes will be mounted. Changing this to "/jasmine" would allow you to browse to
   # `http://localhost:3000/jasmine` to run your tests.
@@ -63,6 +65,15 @@ Teaspoon.configure do |config|
     # Hooks allow you to use `Teaspoon.hook("fixtures")` before, after, or during your spec run. This will make a
     # synchronous Ajax request to the server that will call all of the blocks you've defined for that hook name.
     #suite.hook :fixtures, &proc{}
+    suite.hook :create_annotation_document do
+      require 'factory_girl_rails'
+
+      AnnotationDocument.destroy_all
+
+      FactoryGirl.definition_file_paths = ['./spec/factories']
+      FactoryGirl.find_definitions
+      FactoryGirl.create(:annotation_document)
+    end
 
     # Determine whether specs loaded into the test harness should be embedded as individual script tags or concatenated
     # into a single file. Similar to Rails' asset `debug: true` and `config.assets.debug = true` options. By default,
