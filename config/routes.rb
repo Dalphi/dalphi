@@ -60,6 +60,10 @@ Rails.application.routes.draw do
       to: 'projects#check_problem_identifiers',
       constraints: { id: /\d+/ },
       as: 'check_problem_identifiers'
+  get '/projects/:id/check_interfaces',
+      to: 'projects#check_interfaces',
+      constraints: { id: /\d+/ },
+      as: 'check_interfaces'
 
   # Interfaces
 

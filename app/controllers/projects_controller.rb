@@ -75,6 +75,12 @@ class ProjectsController < ApplicationController
            status: 200
   end
 
+  # GET /projects/1/check_interfaces
+  def check_interfaces
+    render json: { selectedInterfaces: @project.selected_interfaces },
+           status: 200
+  end
+
   # GET /projects/1/bootstrap
   def bootstrap
     bootstrap_service = @project.bootstrap_service

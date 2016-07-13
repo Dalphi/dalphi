@@ -231,4 +231,60 @@ RSpec.describe Project, type: :model do
   it { should have_many(:raw_data).dependent(:destroy) }
 
   it { should belong_to(:user) }
+
+  describe 'selected_interfaces' do
+    it 'should return an empty hash for no selected interfaces' do
+      @project.interfaces = []
+      @project.save!
+      expect(@project.selected_interfaces).to eq({})
+    end
+
+    it "should return selected interfaces' titles grouped by type" do
+      text_nominal_interface_1 = FactoryGirl.create(:interface,
+                                                    title: 'interface 1',
+                                                    interface_type: 'text_nominal')
+      text_nominal_interface_2 = FactoryGirl.create(:interface,
+                                                    title: 'interface 2',
+                                                    interface_type: 'text_nominal')
+      text_not_so_nominal_interface = FactoryGirl.create(:interface,
+                                                         title: 'interface 3',
+                                                         interface_type: 'text_not_so_nominal')
+
+      @project.interfaces = [text_nominal_interface_1]
+      expect(@project.selected_interfaces).to eq(
+        {
+          'text_nominal' => [
+            text_nominal_interface_1.title
+          ]
+        }
+      )
+
+      @project.interfaces = [text_nominal_interface_1, text_nominal_interface_2]
+      expect(@project.selected_interfaces).to eq(
+        {
+          'text_nominal' => [
+            text_nominal_interface_1.title,
+            text_nominal_interface_2.title
+          ]
+        }
+      )
+
+      @project.interfaces = [
+        text_nominal_interface_1,
+        text_nominal_interface_2,
+        text_not_so_nominal_interface
+      ]
+      expect(@project.selected_interfaces).to eq(
+        {
+          'text_nominal' => [
+            text_nominal_interface_1.title,
+            text_nominal_interface_2.title
+          ],
+          'text_not_so_nominal' => [
+            text_not_so_nominal_interface.title
+          ]
+        }
+      )
+    end
+  end
 end
