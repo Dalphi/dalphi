@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706082354) do
+ActiveRecord::Schema.define(version: 20160706141042) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.string   "interface_type"
@@ -38,6 +38,19 @@ ActiveRecord::Schema.define(version: 20160706082354) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "interfaces", force: :cascade do |t|
+    t.string   "title"
+    t.string   "interface_type"
+    t.text     "associated_problem_identifiers"
+    t.text     "template"
+    t.text     "stylesheet"
+    t.text     "java_script"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "compiled_stylesheet"
+    t.text     "compiled_java_script"
   end
 
   create_table "projects", force: :cascade do |t|

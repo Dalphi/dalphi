@@ -73,4 +73,8 @@ class Service < ApplicationRecord
   def label
     self.title
   end
+
+  def self.problem_identifiers
+    Service.uniq.pluck(:problem_id)
+  end
 end

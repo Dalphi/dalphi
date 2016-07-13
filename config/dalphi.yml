@@ -1,11 +1,17 @@
 test:
+  annotation-interface:
+    container-class-name: annotation-interface
   timeouts:
     url-response-checker: 3
 
 development:
+  annotation-interface:
+    container-class-name: annotation-interface
   timeouts:
     url-response-checker: 3
 
 production:
+  annotation-interface:
+    container-class-name: annotation-interface
   timeouts:
     url-response-checker: 20
