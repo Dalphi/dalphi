@@ -28,6 +28,9 @@ en:
       service:
         one: service
         other: services
+      interface:
+        one: interface
+        other: interfaces
     attributes:
       project:
         title: title
@@ -71,3 +74,15 @@ en:
               regex_mismatch: "the given URL does not start with the HTTP protocol or contains whitespace"
               isNil: the given URL must not be nil
               badHttpResponse: "the given URL does not respond"
+        interface:
+          attributes:
+            title:
+              uniqueness: the given interface title is not unique in the scope of the associated problem identifiers
+            stylesheet:
+              syntax-error: the uploaded stylesheet contains syntax errors
+            compiled_stylesheet:
+              compilate_mismatch: the stylesheet seems not to be compiled correctly
+            java_script:
+              syntax-error: the uploaded coffee script contains syntax errors
+            compiled_java_script:
+              compilate_mismatch: the java script / coffee script seems not to be compiled correctly

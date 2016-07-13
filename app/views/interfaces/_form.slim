@@ -1,0 +1,55 @@
+= simple_form_for(interface, html: { class: 'interface-form'}) do |f|
+  .form-inputs
+    .row.row-eq-height
+      .col-xs-12.col-xl-6
+        = f.input :title
+
+        = f.input :interface_type
+
+        = f.input :associated_problem_identifiers,
+                  as: :string,
+                  input_html: { class: 'tokenized-problem-identifiers',
+                                value: f.object.associated_problem_identifiers.join(', '),
+                                'data-autocomplete' => known_problem_identifiers }
+
+      .col-xs-12.col-xl-6
+        p.ace-editor-label
+          = t('interfaces.form.attributes.template.label')
+        .code-input#template-editor
+        = f.input :template,
+                  as: :hidden,
+                  input_html: { id: 'hidden-template-editor'}
+
+      .col-xs-12.col-xl-6
+        p.ace-editor-label
+          = t('interfaces.form.attributes.javascript.label')
+        .code-input#js-editor
+        = f.input :java_script,
+                  as: :hidden,
+                  input_html: { id: 'hidden-js-editor'}
+
+      .col-xs-12.col-xl-6
+        p.ace-editor-label
+          = t('interfaces.form.attributes.stylesheet.label')
+        .code-input#stylesheet-editor
+        = f.input :stylesheet,
+                  as: :hidden,
+                  input_html: { id: 'hidden-stylesheet-editor'}
+
+      coffee:
+        window.interfacesForm = new window.InterfacesForm()
+
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button', type: 'back'
+      = render 'shared/button',
+               method: 'delete',
+               confirm: t('delete-confirm'),
+               type: 'danger',
+               href: interface_path(interface),
+               label: t('delete'),
+               icon: 'times' if params[:action] == 'edit'
+      = render 'shared/button',
+               type: 'submit',
+               label: t('save'),
+               icon: 'check'

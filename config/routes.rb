@@ -67,6 +67,10 @@ Rails.application.routes.draw do
         to: 'annotation_documents#next',
         as: 'next_annotation_documents'
 
+  # Interfaces
+
+  resources :interfaces
+
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html
 
