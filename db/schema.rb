@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712144326) do
+ActiveRecord::Schema.define(version: 20160712121210) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.string   "interface_type"
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 20160712144326) do
     t.text     "java_script"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.text     "compiled_javascript"
     t.text     "compiled_stylesheet"
     t.text     "compiled_java_script"
   end

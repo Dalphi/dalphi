@@ -30,9 +30,9 @@ class AnnotationDocumentsController < ApplicationController
       now = Time.zone.now
       time_range = (now - timeout.minutes)..now
 
-      AnnotationDocument.where(project: @project)
-                        .where(skipped: [nil, false])
-                        .where(requested_at: [nil, time_range])
+      AnnotationDocument.where(project: @project,
+                               skipped: [nil, false],
+                               requested_at: [nil, time_range])
                         .limit(count)
     end
 
