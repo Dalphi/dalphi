@@ -52,6 +52,8 @@ en:
               type: options should be of type string
             label:
               not-in-options: the selected label must be an option for this annotation document
+            requested_at:
+              is-in-future: the annotation document can not be requested in the future (check the setting for Time.zone)
         project:
           attributes:
             active_learning_service:

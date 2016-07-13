@@ -1,0 +1,8 @@
+en:
+  annotation_documents:
+    errors:
+      set-project:
+        not-found: no project with the given project id found
+      next:
+        no-documents: no annotation documents available
+        update-failed: can not update requested_at attribute of the next annotation documents
