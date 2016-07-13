@@ -36,10 +36,10 @@ class AnnotationDocumentsController < ApplicationController
                         .limit(count)
     end
 
-    def render_error_response(code, lacale_key)
+    def render_error_response(code, locale_key)
       render status: code,
              json: {
-               message: I18n.t("annotation_documents.errors.#{lacale_key}")
+               message: I18n.t("annotation_documents.errors.#{locale_key}")
              }
     end
 
