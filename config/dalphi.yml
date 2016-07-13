@@ -1,11 +1,14 @@
 test:
   timeouts:
+    annotation-document-edit-time: 30
     url-response-checker: 3
 
 development:
   timeouts:
+    annotation-document-edit-time: 30
     url-response-checker: 3
 
 production:
   timeouts:
+    annotation-document-edit-time: 30
     url-response-checker: 20

@@ -63,6 +63,10 @@ class AnnotationDocument < ApplicationRecord
       greater_than_or_equal_to: 0
     }
 
+  validate do |annotation_document|
+    AnnotationDocumentValidator.validate_requested_at(annotation_document)
+  end
+
   def relevant_attributes
     {
       id: id,

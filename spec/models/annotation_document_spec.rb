@@ -133,4 +133,26 @@ RSpec.describe AnnotationDocument, type: :model do
       end
     end
   end
+
+  describe 'requested_at' do
+    it 'can be nil' do
+      @annotation_document.requested_at = nil
+      expect(@annotation_document).to be_valid
+    end
+
+    it 'can not be in the future' do
+      @annotation_document.requested_at = Time.zone.now + 1.minute
+      expect(@annotation_document).to be_invalid
+    end
+
+    it 'can be now' do
+      @annotation_document.requested_at = Time.zone.now
+      expect(@annotation_document).to be_valid
+    end
+
+    it 'can be in the past' do
+      @annotation_document.requested_at = Time.zone.now - 1.month
+      expect(@annotation_document).to be_valid
+    end
+  end
 end
