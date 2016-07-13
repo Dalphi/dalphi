@@ -2,13 +2,17 @@
   .card.dashboard-card
     h3.card-header
       = t('projects.dashboard-card.interfaces.title')
-    .card-block
-      p.card-text
-        - if interfaces.any?
-          ul
-          - interfaces.each do |interface_type, interfaces|
-            li
-              = interface_type
-              = interfaces.map(&:title).join(', ')
-        - else
-          | no, no. interface no es home.
+    .card-block.selected-interfaces
+      p.card-text.checking.no-display title="#{t('projects.dashboard-card.interfaces.states.checking')}" data-placement="bottom" data-toggle="tooltip"
+        i.fa.fa-2x.fa-spinner.fa-spin
+      ul.card-text.interface-types.no-display
+      p.card-text.blank-slate.no-display
+        = t 'projects.dashboard-card.interfaces.blank-slate.title'
+        br
+        small
+          == t 'projects.dashboard-card.interfaces.blank-slate.text',
+               set_link: link_to(t('projects.dashboard-card.interfaces.blank-slate.set-service-link-label'),
+                                 edit_project_path(project))
+
+      coffee:
+        window.selectedInterfaces = new window.SelectedInterfaces()

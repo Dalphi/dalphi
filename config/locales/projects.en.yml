@@ -30,6 +30,12 @@ en:
     dashboard-card:
       interfaces:
         title: Interfaces
+        states:
+          checking: 'Checking for selected interfaces'
+        blank-slate:
+          title: None available.
+          text: Please %{set_link} a service to add an interface.
+          set-service-link-label: set
       delimited-problem: '<i>%{problem}</i>'
       raw-data:
         availability-of-raw-data: Availability of raw data

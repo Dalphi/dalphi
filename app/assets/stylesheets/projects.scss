@@ -41,5 +41,11 @@
         margin-left: -$container-margin;
       }
     }
+
+    .selected-interfaces {
+      .checking {
+        text-align: center;
+      }
+    }
   }
 }
