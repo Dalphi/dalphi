@@ -59,7 +59,7 @@ class Project < ApplicationRecord
     selected_interfaces = {}
     self.necessary_interface_types.each do |interface_type|
       interface = self.interfaces.find_by(interface_type: interface_type)
-      selected_interfaces[interface_type] = interface.title if interface
+      selected_interfaces[interface_type] = interface.title rescue nil
     end
     selected_interfaces
   end

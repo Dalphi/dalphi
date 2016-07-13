@@ -233,13 +233,68 @@ RSpec.describe Project, type: :model do
   it { should belong_to(:user) }
 
   describe 'selected_interfaces' do
-    it 'should return an empty hash for no selected interfaces' do
+    it 'should return an empty hash for no necessary interface types' do
+      @project.active_learning_service = nil
+      @project.bootstrap_service = nil
       @project.interfaces = []
       @project.save!
       expect(@project.selected_interfaces).to eq({})
     end
 
+    it 'should return a hash with empty keys for no selected interface types' do
+      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                            interface_types: %w(text_nominal))
+      @project.bootstrap_service = nil
+      @project.interfaces = []
+      @project.save!
+
+      expect(@project.selected_interfaces).to eq(
+        {
+          'text_nominal' => nil
+        }
+      )
+    end
+
+    it 'should return a hash with empty keys for no selected interface types' do
+      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                            interface_types: %w(text_nominal))
+      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                      interface_types: %w(text_nominal text_not_so_nominal))
+      @project.interfaces = []
+      @project.save!
+
+      expect(@project.selected_interfaces).to eq(
+        {
+          'text_nominal' => nil,
+          'text_not_so_nominal' => nil
+        }
+      )
+    end
+
     it "should return selected interfaces' titles grouped by type" do
+      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                            interface_types: %w(text_nominal))
+      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                      interface_types: %w(text_nominal))
+      text_nominal_interface = FactoryGirl.create(:interface,
+                                                  title: 'interface 1',
+                                                  interface_type: 'text_nominal')
+
+      @project.interfaces = [text_nominal_interface]
+      @project.save!
+
+      expect(@project.selected_interfaces).to eq(
+        {
+          'text_nominal' => text_nominal_interface.title
+        }
+      )
+    end
+
+    it "should return selected interfaces' titles grouped by type" do
+      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                            interface_types: %w(text_nominal))
+      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                      interface_types: %w(text_nominal text_not_so_nominal))
       text_nominal_interface = FactoryGirl.create(:interface,
                                                   title: 'interface 1',
                                                   interface_type: 'text_nominal')
@@ -247,24 +302,12 @@ RSpec.describe Project, type: :model do
                                                          title: 'interface 2',
                                                          interface_type: 'text_not_so_nominal')
 
-      @project.interfaces = [text_nominal_interface]
-      expect(@project.selected_interfaces).to eq(
-        {
-          'text_nominal' => text_nominal_interface.title
-        }
-      )
-
-      @project.interfaces = [text_nominal_interface, text_nominal_interface]
-      expect(@project.selected_interfaces).to eq(
-        {
-          'text_nominal' => text_nominal_interface.title
-        }
-      )
-
       @project.interfaces = [
         text_nominal_interface,
         text_not_so_nominal_interface
       ]
+      @project.save!
+
       expect(@project.selected_interfaces).to eq(
         {
           'text_nominal' => text_nominal_interface.title,

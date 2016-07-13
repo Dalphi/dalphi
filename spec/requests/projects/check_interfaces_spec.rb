@@ -6,7 +6,9 @@ RSpec.describe "Problem identifier check", type: :request do
     sign_in(@project.user)
   end
 
-  it 'shows an empty hash for no selected interfaces' do
+  it 'shows an empty hash for no necessary interface types' do
+    @project.active_learning_service = nil
+    @project.bootstrap_service = nil
     @project.interfaces = []
     @project.save!
 
@@ -19,13 +21,56 @@ RSpec.describe "Problem identifier check", type: :request do
     )
   end
 
+  it 'shows a hash with empty keys for no selected interface types' do
+    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                          interface_types: %w(text_nominal))
+    @project.bootstrap_service = nil
+    @project.interfaces = []
+    @project.save!
+
+    get check_interfaces_path(@project), xhr: true
+    expect(response).to be_success
+
+    json = JSON.parse(response.body)
+    expect(json).to eq(
+      {
+        'selectedInterfaces' => {
+          'text_nominal' => nil
+        }
+      }
+    )
+  end
+
+  it 'shows a hash with empty keys for no selected interface types' do
+    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                          interface_types: %w(text_nominal))
+    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                    interface_types: %w(text_nominal text_not_so_nominal))
+    @project.interfaces = []
+    @project.save!
+
+    get check_interfaces_path(@project), xhr: true
+    expect(response).to be_success
+
+    json = JSON.parse(response.body)
+    expect(json).to eq(
+      {
+        'selectedInterfaces' => {
+          'text_nominal' => nil,
+          'text_not_so_nominal' => nil
+        }
+      }
+    )
+  end
+
   it "shows selected interfaces' titles grouped by type" do
+    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                          interface_types: %w(text_nominal))
+    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                    interface_types: %w(text_nominal))
     text_nominal_interface = FactoryGirl.create(:interface,
-                                                  title: 'interface 1',
-                                                  interface_type: 'text_nominal')
-    text_not_so_nominal_interface = FactoryGirl.create(:interface,
-                                                       title: 'interface 3',
-                                                       interface_type: 'text_not_so_nominal')
+                                                title: 'interface 1',
+                                                interface_type: 'text_nominal')
 
     @project.interfaces = [text_nominal_interface]
     @project.save!
@@ -41,6 +86,19 @@ RSpec.describe "Problem identifier check", type: :request do
         }
       }
     )
+  end
+
+  it "shows selected interfaces' titles grouped by type" do
+    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
+                                                          interface_types: %w(text_nominal))
+    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                    interface_types: %w(text_nominal text_not_so_nominal))
+    text_nominal_interface = FactoryGirl.create(:interface,
+                                                title: 'interface 1',
+                                                interface_type: 'text_nominal')
+    text_not_so_nominal_interface = FactoryGirl.create(:interface,
+                                                       title: 'interface 3',
+                                                       interface_type: 'text_not_so_nominal')
 
     @project.interfaces = [
       text_nominal_interface,
