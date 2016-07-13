@@ -1,0 +1,9 @@
+.col-xs-12.col-lg-6.col-xl-4
+  .card
+    h3.card-header
+      = interface_type
+
+    ul.list-group.list-group-flash
+      - interfaces.each do |interface|
+        = render 'interfaces/shared/item',
+                 interface: interface

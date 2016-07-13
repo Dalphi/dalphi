@@ -1,0 +1,30 @@
+en:
+  interfaces:
+    action:
+      create:
+        success: Interface was successfully created.
+        error: An error occured while creating the interface.
+      update:
+        success: Interface was successfully updated.
+        error: An error occured while updating the interface.
+      destroy:
+        success: Interface was successfully destroyed.
+    blank-slate:
+      title: 'No interfaces created yet'
+      text: 'Add an new interface %{link}.'
+      link-text: here
+    cards:
+      buttons:
+        preview: preview this interface
+    form:
+      attributes:
+        template:
+          label: 'HTML Template code'
+        javascript:
+          label: 'JavaScript / CoffeeScript code'
+        stylesheet:
+          label: 'CSS / SCSS code'
+    buttons:
+      new:
+        label: Add interface
+        tooltip: Add a new interface
