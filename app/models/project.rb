@@ -66,8 +66,12 @@ class Project < ApplicationRecord
 
   def necessary_interface_types
     necessary_interface_types = []
-    necessary_interface_types += self.active_learning_service.interface_types if active_learning_service
-    necessary_interface_types += self.bootstrap_service.interface_types if bootstrap_service
+    if active_learning_service
+      necessary_interface_types += active_learning_service.interface_types
+    end
+    if bootstrap_service
+      necessary_interface_types += bootstrap_service.interface_types
+    end
     necessary_interface_types.uniq.sort
   end
 

@@ -119,15 +119,15 @@ class ProjectsController < ApplicationController
     end
 
     def set_interfaces
-      @interfaces = []
-      return @interfaces unless @project
       associated_problem_identifier = @project.associated_problem_identifiers.first
-      @interfaces = Interface.select do |interface|
-        interface if interface
-                       .associated_problem_identifiers
-                       .include?(associated_problem_identifier)
+      @interfaces = {}
+      @project.necessary_interface_types.each do |interface_type|
+        @interfaces[interface_type] = Interface.select do |interface|
+          interface.interface_type == interface_type &&
+          interface.associated_problem_identifiers.include?(associated_problem_identifier)
+        end
       end
-      @interfaces = @interfaces.group_by(&:interface_type)
+      @interfaces
     end
 
     def params_with_associated_models
