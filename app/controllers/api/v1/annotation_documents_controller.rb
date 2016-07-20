@@ -209,7 +209,7 @@ module API
             :raw_datum_id,
             :skipped
           )
-          parameters[:payload] = Base64.decode64(params[:annotation_document][:payload])
+          parameters[:payload] = params[:annotation_document][:payload].to_json
           parameters
         end
     end

@@ -33,7 +33,10 @@ class AnnotationDocument < ApplicationRecord
 
     property :payload do
       key :description, I18n.t('api.annotation_document.description.payload')
-      key :example, '{"label":"testlabel","options":["option1","option2"],"content":"testcontent"}'
+      key :example,
+          JSON.parse(
+            '{"label":"testlabel","options":["option1","option2"],"content":"testcontent"}'
+          )
       key :type, :string
     end
 
@@ -71,7 +74,7 @@ class AnnotationDocument < ApplicationRecord
     {
       id: id,
       interface_type: interface_type,
-      payload: Base64.encode64(payload),
+      payload: JSON.parse(payload),
       rank: rank,
       raw_datum_id: raw_datum_id,
       skipped: skipped
