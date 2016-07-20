@@ -2,7 +2,7 @@ en:
   projects:
     bootstrap:
       title: Bootstrap
-      success: Raw data has successfully been sent to the bootstrap service
+      success: '%{success_count} of %{record_count} annotation documents have successfully been generated'
       error: An error occured after sending raw data to the bootstrap service
     blank-slate:
       title: 'No projects added yet'

@@ -84,17 +84,12 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/bootstrap
   def bootstrap
-    bootstrap_service = @project.bootstrap_service
-    uri = URI.parse(bootstrap_service.url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Post.new uri.request_uri,
-                                  { 'Content-Type' => 'application/json' }
-
-    request.body = @project.bootstrap_data.to_json
-    response = http.request(request)
-
-    if response.kind_of? Net::HTTPSuccess
-      flash[:notice] = I18n.t('projects.bootstrap.success')
+    generate_annotation_documents(@project.bootstrap_data)
+    if @annotation_documents
+      record_count, error_count = save_annotation_documents
+      flash[:notice] = I18n.t 'projects.bootstrap.success',
+                              success_count: (record_count - error_count),
+                              record_count: record_count
       redirect_to project_path(@project)
     else
       redirect_bootstrap_with_flash
@@ -129,6 +124,34 @@ class ProjectsController < ApplicationController
       end
       @interfaces
     end
+
+    def generate_annotation_documents(raw_data)
+      @annotation_documents = false
+      bootstrap_service = @project.bootstrap_service
+      uri = URI.parse(bootstrap_service.url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Post.new uri.request_uri,
+                                    { 'Content-Type' => 'application/json' }
+
+      request.body = raw_data.to_json
+      response = http.request(request)
+
+      @annotation_documents = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
+      @annotation_documents
+    rescue
+      @annotation_documents = false
+    end
+
+  def save_annotation_documents
+    record_count = 0
+    error_count = 0
+    @annotation_documents.each do |annotation_document|
+      new_annotation_document = AnnotationDocument.new(annotation_document)
+      error_count += 1 unless new_annotation_document.save
+      record_count += 1
+    end
+    return record_count, error_count
+  end
 
     def params_with_associated_models
       new_params = project_params
