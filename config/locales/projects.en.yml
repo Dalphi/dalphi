@@ -31,11 +31,16 @@ en:
       interfaces:
         title: Interfaces
         states:
-          checking: 'Checking for selected interfaces'
+          checking: 'checking for selected interfaces'
+          selected: 'an interface has been selected'
+          not-selected: 'no interface has been selected'
         blank-slate:
           title: None available.
           text: Please %{set_link} a service to add an interface.
           set-service-link-label: set
+        error:
+          title: An error occured while checking for selected interfaces
+          text: Please try again later.
       delimited-problem: '<i>%{problem}</i>'
       raw-data:
         availability-of-raw-data: Availability of raw data
