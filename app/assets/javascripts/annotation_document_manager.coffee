@@ -26,7 +26,6 @@ class AnnotationDocumentManager
 
     responseProcessor = (data) ->
       _this.documentStore.push annotationDocument for annotationDocument in data
-
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
   requestNextDocumentPayload: (calleeCallback) ->
@@ -35,21 +34,12 @@ class AnnotationDocumentManager
       calleeCallback(nextDocument) if nextDocument
       this.loadAnnotationDocuments calleeCallback unless nextDocument
       return true
-
     false
 
   next: ->
-    console.log 'next!'
-    console.log this.documentStore
-    console.log this.currentDocument
-
     if this.documentStore.length > 0
-      console.log 'LAGER THAN ZERO'
       this.currentDocument = this.documentStore.shift()
-      console.log this.currentDocument
       return this.currentDocument.payload
-
-    console.log 'NO DOC IN STORE'
     false
 
   count: ->
@@ -69,7 +59,6 @@ class AnnotationDocumentManager
     this.currentDocument = undefined
 
   apiCall: (requestOptions, responseProcessor, postUpdateCallback) ->
-    console.log "call API with project id: #{_this.projectId}"
     $.ajax
       type: requestOptions.type,
       url: requestOptions.url,
@@ -80,9 +69,7 @@ class AnnotationDocumentManager
         responseProcessor(data)
         postUpdateCallback _this.next() if postUpdateCallback
       error: (a, b, c) ->
-        console.log 'error requesting the next annotation documents - request options:'
+        console.log "error requesting the next annotation documents (#{b}; #{c}) - request options:"
         console.log requestOptions
-        console.log "#{b}; #{c}"
-        console.log a
 
 window.AnnotationDocumentManager = AnnotationDocumentManager

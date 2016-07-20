@@ -65,7 +65,6 @@ Teaspoon.configure do |config|
     #suite.hook :fixtures, &proc{}
 
     suite.hook :setup do
-      ap 'teaspoon hook: setup'
       require 'factory_girl_rails'
 
       FactoryGirl.definition_file_paths = ['./spec/factories']
@@ -74,7 +73,6 @@ Teaspoon.configure do |config|
     end
 
     suite.hook :create_annotation_document do
-      ap 'teaspoon hook: create_annotation_document'
       require 'factory_girl_rails'
       AnnotationDocument.destroy_all
 
