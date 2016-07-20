@@ -33,7 +33,11 @@ class SelectedInterfaces
 
     _this.changeState(2)
     $selectedInterfacesList = $('.selected-interfaces .interface-types')
-    itemTemplate = $('.template', $selectedInterfacesList).clone().removeClass('no-display')[0].outerHTML
+    itemTemplate =
+      $('.template', $selectedInterfacesList)
+        .clone()
+        .removeClass('no-display')[0]
+        .outerHTML
     for interfaceType, selectedInterface of data.selectedInterfaces
       displaySelected = if selectedInterface == null then 'no-display' else ''
       displayNotSelected = if selectedInterface == null then '' else 'no-display'
