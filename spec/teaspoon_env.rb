@@ -1,5 +1,3 @@
-ENV['RAILS_ENV'] ||= 'test'
-
 Teaspoon.configure do |config|
   # Determines where the Teaspoon routes will be mounted. Changing this to "/jasmine" would allow you to browse to
   # `http://localhost:3000/jasmine` to run your tests.
@@ -35,8 +33,8 @@ Teaspoon.configure do |config|
     # directives.
     # Note: If no version is specified, the latest is assumed.
     #
-    # Versions: 1.10.0, 1.17.1, 1.18.2, 1.19.0, 2.0.1, 2.1.0, 2.2.4, 2.2.5, 2.3.3
-    suite.use_framework :mocha, "2.3.3"
+    # Versions: 1.3.1, 2.0.3, 2.1.3, 2.2.0, 2.2.1, 2.3.4
+    suite.use_framework :jasmine, "2.3.4"
 
     # Specify a file matcher as a regular expression and all matching files will be loaded when the suite is run. These
     # files need to be within an asset path. You can add asset paths using the `config.asset_paths`.
@@ -65,14 +63,23 @@ Teaspoon.configure do |config|
     # Hooks allow you to use `Teaspoon.hook("fixtures")` before, after, or during your spec run. This will make a
     # synchronous Ajax request to the server that will call all of the blocks you've defined for that hook name.
     #suite.hook :fixtures, &proc{}
-    suite.hook :create_annotation_document do
+
+    suite.hook :setup do
+      ap 'teaspoon hook: setup'
       require 'factory_girl_rails'
 
+      FactoryGirl.definition_file_paths = ['./spec/factories']
+      User.destroy_all
+      @raw_datum = FactoryGirl.create(:raw_datum)
+    end
+
+    suite.hook :create_annotation_document do
+      ap 'teaspoon hook: create_annotation_document'
+      require 'factory_girl_rails'
       AnnotationDocument.destroy_all
 
       FactoryGirl.definition_file_paths = ['./spec/factories']
-      FactoryGirl.find_definitions
-      FactoryGirl.create(:annotation_document)
+      FactoryGirl.create(:annotation_document, raw_datum: @raw_datum)
     end
 
     # Determine whether specs loaded into the test harness should be embedded as individual script tags or concatenated

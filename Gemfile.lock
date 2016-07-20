@@ -333,7 +333,7 @@ GEM
     sysexits (1.2.0)
     teaspoon (1.1.5)
       railties (>= 3.2.5, < 6)
-    teaspoon-mocha (2.3.3)
+    teaspoon-jasmine (2.3.4)
       teaspoon (>= 1.0.0)
     temple (0.7.7)
     term-ansicolor (1.3.2)
@@ -436,7 +436,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3
   swagger-blocks
-  teaspoon-mocha
+  teaspoon-jasmine
   therubyracer
   turbolinks
   uglifier

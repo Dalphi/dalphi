@@ -2,12 +2,21 @@ class AnnotationDocumentManager
 
   _this = undefined
 
-  constructor: (dalphiUrl) ->
+  constructor: (dalphiUrl, projectId, synchronousAjax) ->
     _this = this
     this.dalphiBaseUrl = dalphiUrl
+    this.projectId = projectId
     this.documentStore = []
     this.currentDocument = undefined
+    this.asynchronousAjax = true
+    this.asynchronousAjax = false if synchronousAjax
+    this.initAjax()
     this.loadAnnotationDocuments()
+
+  initAjax: ->
+    $.ajaxSetup
+      headers:
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 
   loadAnnotationDocuments: (postUpdateCallback) ->
     requestOptions = {
@@ -16,8 +25,7 @@ class AnnotationDocumentManager
     }
 
     responseProcessor = (data) ->
-      for annotationDocument of data
-        this.documentStore.push(annotationDocument)
+      _this.documentStore.push annotationDocument for annotationDocument in data
 
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
@@ -31,11 +39,21 @@ class AnnotationDocumentManager
     false
 
   next: ->
+    console.log 'next!'
+    console.log this.documentStore
+    console.log this.currentDocument
+
     if this.documentStore.length > 0
+      console.log 'LAGER THAN ZERO'
       this.currentDocument = this.documentStore.shift()
+      console.log this.currentDocument
       return this.currentDocument.payload
 
+    console.log 'NO DOC IN STORE'
     false
+
+  count: ->
+    this.documentStore.length
 
   save: (modifiedPayload) ->
     annotationDocument = this.currentDocument
@@ -51,15 +69,20 @@ class AnnotationDocumentManager
     this.currentDocument = undefined
 
   apiCall: (requestOptions, responseProcessor, postUpdateCallback) ->
+    console.log "call API with project id: #{_this.projectId}"
     $.ajax
       type: requestOptions.type,
       url: requestOptions.url,
-      dataType: 'json'
+      dataType: 'json',
+      data: { project_id: _this.projectId },
+      async: _this.asynchronousAjax,
       success: (data) ->
         responseProcessor(data)
         postUpdateCallback _this.next() if postUpdateCallback
-      error: ->
+      error: (a, b, c) ->
         console.log 'error requesting the next annotation documents - request options:'
         console.log requestOptions
+        console.log "#{b}; #{c}"
+        console.log a
 
 window.AnnotationDocumentManager = AnnotationDocumentManager

@@ -70,7 +70,7 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
-  gem 'teaspoon-mocha'
+  gem 'teaspoon-jasmine'
   gem 'webmock'
 end
 

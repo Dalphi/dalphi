@@ -1,5 +1,6 @@
 class AnnotationDocumentsController < ApplicationController
   before_action :set_project, only: [ :next ]
+  skip_before_filter :authenticate_user!, only: :next
 
   # PATCH /projects/1/annotation_documents/next/10
   def next
