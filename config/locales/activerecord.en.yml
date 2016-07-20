@@ -56,6 +56,8 @@ en:
               is-in-future: the annotation document can not be requested in the future (check the setting for Time.zone)
         project:
           attributes:
+            interfaces:
+              not_unique: the interfaces are not unique in the scope of the interface types
             active_learning_service:
               no_service: the given active learning service is not recognized
               wrong_service: the given service is not a active learning service

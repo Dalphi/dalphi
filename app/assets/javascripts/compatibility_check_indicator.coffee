@@ -43,15 +43,15 @@ class CompatibilityCheckIndicator
                   .data('compatible')
                   .replace('%problem', associatedProblemIdentifiers[0])
       $('[data-toggle="tooltip"].compatible').attr('data-original-title', message)
-      $messageContainer.html(message)
+      $messageContainer.html('(' + message + ')')
     else if stateIndex == 2
       message = $messageContainer.data('empty')
-      $messageContainer.html(message)
+      $messageContainer.html('(' + message + ')')
     else if stateIndex == 3
       message = $messageContainer
                   .data('incompatible')
                   .replace('%problems', associatedProblemIdentifiers.join(', '))
-      $messageContainer.html(message)
+      $messageContainer.html('(' + message + ')')
     else
       $messageContainer.html('')
     _this.changeIcon(stateIndex)

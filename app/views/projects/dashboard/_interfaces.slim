@@ -1,0 +1,35 @@
+.col-xs-12
+  .card.dashboard-card
+    h3.card-header
+      = t('projects.dashboard-card.interfaces.title')
+    .card-block.selected-interfaces data-href="#{check_interfaces_path}"
+      p.card-text.checking.no-display title="#{t('projects.dashboard-card.interfaces.states.checking')}" data-placement="bottom" data-toggle="tooltip"
+        i.fa.fa-2x.fa-spinner.fa-spin
+      ul.card-text.interface-types.no-display
+        li.template.interface-type-description.no-display
+          .interface-status-sign
+            .interface-status-details
+              .interface-selected-sign.selected.displaySelected data-placement="bottom" data-toggle="tooltip" title="#{t('projects.dashboard-card.interfaces.states.selected')}"
+                = fa_icon 'check-circle'
+              .interface-selected-sign.not-selected.displayNotSelected data-placement="bottom" data-toggle="tooltip" title="#{t('projects.dashboard-card.interfaces.states.not-selected')}"
+                = fa_icon 'exclamation-circle'
+          | interfaceType
+          small.displayNotSelected
+            == "(#{t 'projects.dashboard-card.interfaces.states.not-selected-message',
+                     select_link: link_to(t('projects.dashboard-card.interfaces.states.not-selected-link-label'), edit_project_path(project))})"
+
+      p.card-text.blank-slate.no-display
+        = t 'projects.dashboard-card.interfaces.blank-slate.title'
+        br
+        small
+          == t 'projects.dashboard-card.interfaces.blank-slate.text',
+               set_link: link_to(t('projects.dashboard-card.interfaces.blank-slate.set-service-link-label'),
+                                 edit_project_path(project))
+      p.card-text.error.no-display
+        = t 'projects.dashboard-card.interfaces.error.title'
+        br
+        small
+          = t 'projects.dashboard-card.interfaces.error.text'
+
+      coffee:
+        window.selectedInterfaces = new window.SelectedInterfaces()
