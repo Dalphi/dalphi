@@ -36,6 +36,7 @@ class SelectedInterfaces
     itemTemplate =
       $('.template', $selectedInterfacesList)
         .clone()
+        .removeClass('template')
         .removeClass('no-display')[0]
         .outerHTML
     for interfaceType, selectedInterface of data.selectedInterfaces
@@ -43,9 +44,9 @@ class SelectedInterfaces
       displayNotSelected = if selectedInterface == null then '' else 'no-display'
       $selectedInterfacesList.append(
         itemTemplate
-          .replace('interfaceType', interfaceType)
-          .replace('displaySelected', displaySelected)
-          .replace('displayNotSelected', displayNotSelected)
+          .replace(/interfaceType/g, interfaceType)
+          .replace(/displaySelected/g, displaySelected)
+          .replace(/displayNotSelected/g, displayNotSelected)
       )
     $('[data-toggle="tooltip"]', $selectedInterfacesList).tooltip()
 

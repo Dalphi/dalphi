@@ -14,6 +14,9 @@
               .interface-selected-sign.not-selected.displayNotSelected data-placement="bottom" data-toggle="tooltip" title="#{t('projects.dashboard-card.interfaces.states.not-selected')}"
                 = fa_icon 'exclamation-circle'
           | interfaceType
+          small.displayNotSelected
+            == "(#{t 'projects.dashboard-card.interfaces.states.not-selected-message',
+                     select_link: link_to(t('projects.dashboard-card.interfaces.states.not-selected-link-label'), edit_project_path(project))})"
 
       p.card-text.blank-slate.no-display
         = t 'projects.dashboard-card.interfaces.blank-slate.title'

@@ -34,6 +34,8 @@ en:
           checking: 'checking for selected interfaces'
           selected: 'an interface has been selected'
           not-selected: 'no interface has been selected'
+          not-selected-message: 'no interface has been selected, please %{select_link} one.'
+          not-selected-link-label: 'select'
         blank-slate:
           title: None available.
           text: Please %{set_link} a service to add an interface.
