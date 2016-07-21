@@ -10,11 +10,11 @@ beforeAll ->
   @dalphiUrl = "#{Teaspoon.location}".match(/http[s]*:\/\/[0-9a-z\.:]+/)[0]
   @projectId = $('.data-container-project-reference', parameterFixtures).data('project-reference')
 
-describe 'internal API', ->
-  beforeEach ->
-    Teaspoon.hook('create_annotation_document')
-    @manager = new window.AnnotationDocumentManager(@dalphiUrl, @projectId, true)
+beforeEach ->
+  Teaspoon.hook('create_annotation_document')
+  @manager = new window.AnnotationDocumentManager(@dalphiUrl, @projectId, true)
 
+describe 'internal API', ->
   it('should have created a valid manager object', ->
     expect(@manager).toBeDefined()
     expect(@manager.dalphiBaseUrl).toBe @dalphiUrl
@@ -26,30 +26,76 @@ describe 'internal API', ->
   )
 
   it('decreases the stored documents by calling next()', ->
-    annotaionDocument = @manager.next()
+    annotationDocument = @manager.next()
     expect(@manager.documentStore.length).toBe 0
   )
 
   it('returns an annotation document equal to the FactoryGirl definition', ->
-    annotaionDocument = @manager.next()
-    expect(annotaionDocument).not.toBe false
-    expect(annotaionDocument).toBeDefined()
-    expect(annotaionDocument.label).toBe 'testlabel'
-    expect(annotaionDocument.content).toBe 'testcontent'
-    expect(annotaionDocument.options[0]).toBe 'option1'
-    expect(annotaionDocument.options[1]).toBe 'option2'
+    annotationDocument = @manager.next()
+    expect(annotationDocument).toBeDefined()
+    expect(annotationDocument).not.toBe false
+    expect(annotationDocument.label).toBe 'testlabel'
+    expect(annotationDocument.content).toBe 'testcontent'
+    expect(annotationDocument.options[0]).toBe 'option1'
+    expect(annotationDocument.options[1]).toBe 'option2'
   )
 
 describe 'external API', ->
-  beforeAll ->
-    Teaspoon.hook('create_annotation_document')
+  describe 'requestNextDocumentPayload', ->
+    it('can request documents if some are already loaded', ->
+      expect(@manager.documentStore.length).toBe 1
+      callbackCalled = false
 
-  it('hasn\'t been tested yet')
+      responseProcesor = (annotationDocument) ->
+        expect(annotationDocument).toBeDefined()
+        expect(annotationDocument).not.toBe false
+        expect(annotationDocument.label).toBe 'testlabel'
+        expect(annotationDocument.content).toBe 'testcontent'
+        expect(annotationDocument.options[0]).toBe 'option1'
+        expect(annotationDocument.options[1]).toBe 'option2'
+        callbackCalled = true
 
-  xit('can request documents via requestNextDocumentPayload()', ->
-    expect('complexity').toBe('easily testable');
-  )
+      @manager.requestNextDocumentPayload(responseProcesor)
+      expect(callbackCalled).toBe true
+    )
 
-  xit('can save documents via save()', ->
-    expect('complexity').toBe('easily testable');
-  )
+    it('will load new documents if the buffer is empty', ->
+      expect(@manager.documentStore.length).toBe 1
+      annotationDocument = @manager.next()
+      @manager.currentDocument = undefined
+      expect(@manager.documentStore.length).toBe 0
+
+      callbackCalled = false
+      ajaxRequest = false
+
+      simulatedAjaxResponse = [{
+        payload: {
+          label: 'mockedlabel',
+          content: 'mockedcontent',
+          options: [ 'mockedoption1', 'mockedoption2' ]
+        }
+      }]
+
+      $.ajax = (ajaxOpts) ->
+        ajaxRequest = true
+        successCallback = ajaxOpts.success
+        successCallback(simulatedAjaxResponse)
+
+      responseProcesor = (annotationDocument) ->
+        expect(annotationDocument).toBeDefined()
+        expect(annotationDocument).not.toBe false
+        expect(annotationDocument.label).toBe 'mockedlabel'
+        expect(annotationDocument.content).toBe 'mockedcontent'
+        expect(annotationDocument.options[0]).toBe 'mockedoption1'
+        expect(annotationDocument.options[1]).toBe 'mockedoption2'
+        callbackCalled = true
+
+      @manager.requestNextDocumentPayload(responseProcesor)
+      expect(callbackCalled).toBe true
+      expect(ajaxRequest).toBe true
+    )
+
+  describe 'saveDocumentPayload', ->
+    xit('can save documents via save()', ->
+      expect('complexity').toBe('easily testable');
+    )

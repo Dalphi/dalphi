@@ -14,6 +14,8 @@ class AnnotationDocumentManager
     this.initAjax()
     this.loadAnnotationDocuments()
 
+  # external API:
+
   requestNextDocumentPayload: (calleeCallback) ->
     unless this.currentDocument
       nextDocument = this.next()
@@ -22,7 +24,7 @@ class AnnotationDocumentManager
       return true
     false
 
-  save: (modifiedPayload) ->
+  saveDocumentPayload: (modifiedPayload) ->
     annotationDocument = this.currentDocument
     annotationDocument.payload = modifiedPayload
 
