@@ -22,12 +22,12 @@ describe 'internal API', ->
   )
 
   it('has loaded one annotation document by creation', ->
-    expect(@manager.count()).toBe 1
+    expect(@manager.documentStore.length).toBe 1
   )
 
   it('decreases the stored documents by calling next()', ->
     annotaionDocument = @manager.next()
-    expect(@manager.count()).toBe 0
+    expect(@manager.documentStore.length).toBe 0
   )
 
   it('returns an annotation document equal to the FactoryGirl definition', ->

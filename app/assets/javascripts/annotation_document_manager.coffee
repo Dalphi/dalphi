@@ -2,31 +2,17 @@ class AnnotationDocumentManager
 
   _this = undefined
 
-  constructor: (dalphiUrl, projectId, synchronousAjax) ->
+  constructor: (dalphiUrl, projectId, synchronousAjax = false) ->
     _this = this
     this.dalphiBaseUrl = dalphiUrl
     this.projectId = projectId
     this.documentStore = []
     this.currentDocument = undefined
-    this.asynchronousAjax = true
-    this.asynchronousAjax = false if synchronousAjax
+    this.maxAnnotationDocumentsToLoad = 1
+    this.asynchronousAjax = !synchronousAjax
+
     this.initAjax()
     this.loadAnnotationDocuments()
-
-  initAjax: ->
-    $.ajaxSetup
-      headers:
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-
-  loadAnnotationDocuments: (postUpdateCallback) ->
-    requestOptions = {
-      type: 'PATCH',
-      url: "#{this.dalphiBaseUrl}/annotation_documents/next"
-    }
-
-    responseProcessor = (data) ->
-      _this.documentStore.push annotationDocument for annotationDocument in data
-    this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
   requestNextDocumentPayload: (calleeCallback) ->
     unless this.currentDocument
@@ -35,15 +21,6 @@ class AnnotationDocumentManager
       this.loadAnnotationDocuments calleeCallback unless nextDocument
       return true
     false
-
-  next: ->
-    if this.documentStore.length > 0
-      this.currentDocument = this.documentStore.shift()
-      return this.currentDocument.payload
-    false
-
-  count: ->
-    this.documentStore.length
 
   save: (modifiedPayload) ->
     annotationDocument = this.currentDocument
@@ -58,12 +35,39 @@ class AnnotationDocumentManager
     this.apiCall requestOptions
     this.currentDocument = undefined
 
+  # internal API:
+
+  initAjax: ->
+    $.ajaxSetup
+      headers:
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+
+  loadAnnotationDocuments: (postUpdateCallback) ->
+    requestOptions = {
+      type: 'PATCH',
+      url: "#{this.dalphiBaseUrl}/annotation_documents/next",
+      data: {
+        project_id: _this.projectId,
+        count: _this.maxAnnotationDocumentsToLoad
+      }
+    }
+
+    responseProcessor = (data) ->
+      _this.documentStore.push annotationDocument for annotationDocument in data
+    this.apiCall requestOptions, responseProcessor, postUpdateCallback
+
+  next: ->
+    if this.documentStore.length > 0
+      this.currentDocument = this.documentStore.shift()
+      return this.currentDocument.payload
+    false
+
   apiCall: (requestOptions, responseProcessor, postUpdateCallback) ->
     $.ajax
       type: requestOptions.type,
       url: requestOptions.url,
       dataType: 'json',
-      data: { project_id: _this.projectId },
+      data: requestOptions.data,
       async: _this.asynchronousAjax,
       success: (data) ->
         responseProcessor(data)
