@@ -56,6 +56,25 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
     compare_annotation_document_with_json_response(another_annotation_document, json.last)
   end
 
+  it 'returns 2 annotation documents, even if a count of 10 is specified but only 2 available' do
+    another_annotation_document = FactoryGirl.create(
+                                    :annotation_document_with_different_payload,
+                                    raw_datum: @annotation_document.raw_datum
+                                  )
+    expect(AnnotationDocument.all.count).to eq(2)
+    patch '/annotation_documents/next',
+          params: {
+            count: 10,
+            project_id: @project.id
+          }
+
+    expect(response).to be_success
+    json = JSON.parse(response.body)
+    expect(json.count).to eq(2)
+    compare_annotation_document_with_json_response(@annotation_document, json.first)
+    compare_annotation_document_with_json_response(another_annotation_document, json.last)
+  end
+
   it 'sets the requested_at attribute of a served annotation document' do
     expect(AnnotationDocument.all.count).to eq(1)
     expect(AnnotationDocument.first.requested_at).to eq(nil)
