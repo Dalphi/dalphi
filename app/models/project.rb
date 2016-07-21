@@ -67,6 +67,17 @@ class Project < ApplicationRecord
     data
   end
 
+  def update_merged_raw_datum(params)
+    raw_datum = self.raw_data.find(params['raw_datum_id'])
+    File.open(raw_datum.data.path, 'w') do |file|
+      file.write(Base64.decode64(params['content']))
+    end
+  end
+
+  def delete_merged_annotation_documents(params)
+    AnnotationDocument.where(raw_datum_id: params['raw_datum_id']).delete_all
+  end
+
   def label
     self.title
   end

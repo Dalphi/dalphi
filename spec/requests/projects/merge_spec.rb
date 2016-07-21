@@ -44,7 +44,7 @@ RSpec.describe 'Project merge', type: :request do
       .to_return(
         status: 200,
         body: {
-          content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/unmerged.txt").read),
+          content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/merged.txt").read),
           raw_datum_id: raw_datum.id
         }.to_json,
         headers: { 'Content-Type' => 'application/json' }
@@ -56,7 +56,7 @@ RSpec.describe 'Project merge', type: :request do
       .to_return(
         status: 200,
         body: {
-          content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/unmerged.txt").read),
+          content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/merged.txt").read),
           raw_datum_id: raw_datum.id
         }.to_json,
         headers: { 'Content-Type' => 'application/json' }

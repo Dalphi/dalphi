@@ -185,7 +185,9 @@ class ProjectsController < ApplicationController
         response = http.request(request)
 
         if response.kind_of? Net::HTTPSuccess
-          ap JSON.parse(response.body)
+          response_body = JSON.parse(response.body)
+          @project.update_merged_raw_datum(response_body)
+          @project.delete_merged_annotation_documents(response_body)
         else
           error_count += 1
         end
