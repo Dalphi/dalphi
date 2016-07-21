@@ -442,4 +442,32 @@ RSpec.describe Project, type: :model do
       expect(merge_data[:annotation_documents].first).to eq(annotation_document)
     end
   end
+
+  describe 'update_merged_raw_datum' do
+    it 'should do nothing for an unmatched raw_datum' do
+      raw_datum = FactoryGirl.create :raw_datum,
+                                     project: @project
+      @project.raw_data = [raw_datum]
+      @project.update_merged_raw_datum(
+        {
+          'raw_datum_id' => (raw_datum.id + 1),
+          'content' => Base64.encode64('{"new":"content"}')
+        }
+      )
+      expect(File.new(raw_datum.data.path).read).not_to eq('{"new":"content"}')
+    end
+
+    it 'should update the content of a raw_datum' do
+      raw_datum = FactoryGirl.create :raw_datum,
+                                     project: @project
+      @project.raw_data = [raw_datum]
+      @project.update_merged_raw_datum(
+        {
+          'raw_datum_id' => raw_datum.id,
+          'content' => Base64.encode64('{"new":"content"}')
+        }
+      )
+      expect(File.new(raw_datum.data.path).read).to eq('{"new":"content"}')
+    end
+  end
 end

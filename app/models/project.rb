@@ -72,10 +72,8 @@ class Project < ApplicationRecord
     File.open(raw_datum.data.path, 'w') do |file|
       file.write(Base64.decode64(params['content']))
     end
-  end
-
-  def delete_merged_annotation_documents(params)
-    AnnotationDocument.where(raw_datum_id: params['raw_datum_id']).delete_all
+  rescue
+    nil
   end
 
   def label

@@ -146,13 +146,7 @@ class ProjectsController < ApplicationController
     def generate_annotation_documents(raw_data)
       @annotation_documents = false
       bootstrap_service = @project.bootstrap_service
-      uri = URI.parse(bootstrap_service.url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      request = Net::HTTP::Post.new uri.request_uri,
-                                    { 'Content-Type' => 'application/json' }
-
-      request.body = raw_data.to_json
-      response = http.request(request)
+      response = json_post_request(bootstrap_service.url, raw_data)
 
       @annotation_documents = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
       @annotation_documents
@@ -172,22 +166,13 @@ class ProjectsController < ApplicationController
     end
 
     def merge_annotation_documents
-      record_count = 0
-      error_count = 0
+      record_count = error_count = 0
       @project.merge_data.each do |merge_datum|
         merge_service = @project.merge_service
-        uri = URI.parse(merge_service.url)
-        http = Net::HTTP.new(uri.host, uri.port)
-        request = Net::HTTP::Post.new uri.request_uri,
-                                      { 'Content-Type' => 'application/json' }
-
-        request.body = merge_datum.to_json
-        response = http.request(request)
+        response = json_post_request(merge_service.url, merge_datum)
 
         if response.kind_of? Net::HTTPSuccess
-          response_body = JSON.parse(response.body)
-          @project.update_merged_raw_datum(response_body)
-          @project.delete_merged_annotation_documents(response_body)
+          process_merged_data(JSON.parse(response.body))
         else
           error_count += 1
         end
@@ -195,8 +180,13 @@ class ProjectsController < ApplicationController
       end
 
       return record_count, error_count
-    #rescue
-    #  false
+    rescue
+      false
+    end
+
+    def process_merged_data(response_body)
+      @project.update_merged_raw_datum(response_body)
+      AnnotationDocument.where(raw_datum_id: response_body['raw_datum_id']).delete_all
     end
 
     def params_with_associated_models
@@ -244,5 +234,16 @@ class ProjectsController < ApplicationController
     def redirect_merge_with_flash
       flash[:error] = I18n.t('projects.merge.error')
       redirect_to project_path(@project)
+    end
+
+    # this method smells of :reek:UtilityFunction
+    def json_post_request(url, data)
+      uri = URI.parse(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Post.new uri.request_uri,
+                                    { 'Content-Type' => 'application/json' }
+
+      request.body = data.to_json
+      http.request(request)
     end
 end
