@@ -3,13 +3,14 @@ class ProjectsController < ApplicationController
 
   before_action :set_project, only: [
     :bootstrap,
+    :check_interfaces,
+    :check_problem_identifiers,
     :destroy,
     :edit,
+    :merge,
     :show,
-    :update_service,
-    :check_problem_identifiers,
-    :check_interfaces,
-    :update
+    :update,
+    :update_service
   ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
   before_action :set_available_services, only: [
@@ -99,7 +100,24 @@ class ProjectsController < ApplicationController
     redirect_bootstrap_with_flash
   end
 
+  # GET /projects/1/bootstrap
+  def merge
+    merge_result = merge_annotation_documents
+    if merge_result
+      record_count, error_count = merge_result
+      flash[:notice] = I18n.t 'projects.merge.success',
+                              success_count: (record_count - error_count),
+                              record_count: record_count
+      redirect_to project_path(@project)
+    else
+      redirect_merge_with_flash
+    end
+  #rescue
+  #  redirect_merge_with_flash
+  end
+
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
@@ -142,16 +160,43 @@ class ProjectsController < ApplicationController
       @annotation_documents = false
     end
 
-  def save_annotation_documents
-    record_count = 0
-    error_count = 0
-    @annotation_documents.each do |annotation_document|
-      new_annotation_document = AnnotationDocument.new(annotation_document)
-      error_count += 1 unless new_annotation_document.save
-      record_count += 1
+    def save_annotation_documents
+      record_count = 0
+      error_count = 0
+      @annotation_documents.each do |annotation_document|
+        new_annotation_document = AnnotationDocument.new(annotation_document)
+        error_count += 1 unless new_annotation_document.save
+        record_count += 1
+      end
+      return record_count, error_count
     end
-    return record_count, error_count
-  end
+
+    def merge_annotation_documents
+      record_count = 0
+      error_count = 0
+      ap @project.merge_data
+      @project.merge_data.each do |merge_datum|
+        merge_service = @project.merge_service
+        uri = URI.parse(merge_service.url)
+        http = Net::HTTP.new(uri.host, uri.port)
+        request = Net::HTTP::Post.new uri.request_uri,
+                                      { 'Content-Type' => 'application/json' }
+
+        request.body = merge_datum.to_json
+        response = http.request(request)
+
+        if response.kind_of? Net::HTTPSuccess
+          @annotation_documents = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
+        else
+          error_count += 1
+        end
+        record_count += 1
+      end
+
+      return record_count, error_count
+    #rescue
+    #  false
+    end
 
     def params_with_associated_models
       new_params = project_params
@@ -192,6 +237,11 @@ class ProjectsController < ApplicationController
 
     def redirect_bootstrap_with_flash
       flash[:error] = I18n.t('projects.bootstrap.error')
+      redirect_to project_path(@project)
+    end
+
+    def redirect_merge_with_flash
+      flash[:error] = I18n.t('projects.merge.error')
       redirect_to project_path(@project)
     end
 end

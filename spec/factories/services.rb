@@ -43,5 +43,14 @@ FactoryGirl.define do
       version '0.0.1'
       interface_types []
     end
+
+    factory :merge_service_ci do
+      role 3
+      description 'Merge Service for CI request tests'
+      url 'http://example.com/merge'
+      title 'Merge CI'
+      version '0.1'
+      interface_types []
+    end
   end
 end

@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe 'Project bootstrap', type: :request do
+RSpec.describe 'Project merge', type: :request do
   before(:each) do
-    stub_request(:get, 'http://example.com/bootstrap')
+    stub_request(:get, 'http://example.com/merge')
       .with(:headers => { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'example.com', 'User-Agent' => 'Ruby' })
       .to_return(status: 200, body: '', headers: {})
 
     @project = FactoryGirl.create :project,
-                                  bootstrap_service: FactoryGirl.create(:bootstrap_service_ci)
+                                  merge_service: FactoryGirl.create(:merge_service_ci)
     sign_in(@project.user)
   end
 
-  it "generates annotation documents by sending raw data to a bootstrap service" do
+  it "generates annotation documents by sending raw data to a merge service" do
     raw_datum = FactoryGirl.create :raw_datum,
                                    data: File.new("#{Rails.root}/spec/fixtures/text/spiegel.txt"),
                                    project: @project
@@ -24,7 +24,7 @@ RSpec.describe 'Project bootstrap', type: :request do
                                               paragraph_index: 0
                                             }
 
-    stub_request(:post, 'http://example.com/bootstrap')
+    stub_request(:post, 'http://example.com/merge')
       .with(
         body: @project.bootstrap_data.to_json,
         headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'application/json', 'User-Agent' => 'Ruby' }
@@ -35,9 +35,7 @@ RSpec.describe 'Project bootstrap', type: :request do
         headers: { 'Content-Type' => 'application/json' }
       )
 
-    expect(AnnotationDocument.count).to eq(0)
-
-    get project_bootstrap_path(@project)
+    get project_merge_path(@project)
     expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_url(@project))
 
     expect(AnnotationDocument.count).to eq(1)
