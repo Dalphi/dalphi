@@ -32,7 +32,7 @@ class AnnotationDocumentManager
 
     requestOptions = {
       type: 'PATCH',
-      url: "#{baseUrl}/annotation_documentsX/#{annotationDocument.id}",
+      url: "#{baseUrl}/annotation_documents/#{annotationDocument.id}",
       data: { annotation_document: annotationDocument }
     }
 
