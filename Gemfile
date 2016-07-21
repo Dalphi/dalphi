@@ -69,6 +69,7 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
+  gem 'phantomjs'
   gem 'rspec-rails'
   gem 'teaspoon-jasmine'
   gem 'webmock'
