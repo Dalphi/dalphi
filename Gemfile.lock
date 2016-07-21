@@ -197,7 +197,6 @@ GEM
       mimemagic (~> 0.3.0)
     parser (2.3.1.2)
       ast (~> 2.2)
-    phantomjs (2.1.1.0)
     pkg-config (1.1.7)
     powerpack (0.1.1)
     puma (3.5.0)
@@ -415,7 +414,6 @@ DEPENDENCIES
   mysql2
   normalize-rails
   paperclip
-  phantomjs
   puma
   rack-mini-profiler
   rails (= 5.0.0)
