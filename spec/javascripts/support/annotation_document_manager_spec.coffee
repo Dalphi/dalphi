@@ -123,7 +123,7 @@ describe 'external API', ->
       expect(successStatus).toBe true
     )
 
-    xit('manipulates Dalphi\'s annotation document', ->
+    xit('integration test - manipulates Dalphi\'s annotation document', ->
       # to be discussed: shall we write integration tests from JS client's perspective?
       expect(@manager.documentStore.length).toBe 1
       documentPayload = @manager.next()
