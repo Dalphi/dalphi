@@ -130,21 +130,21 @@ class RawDatum < ApplicationRecord
     File.size? self.data.path
   end
 
-    def self.valid_zip?(file)
-      zip = Zip::File.open(file)
-      true
-    rescue StandardError
-      false
-    ensure
-      zip.close if zip
-    end
+  def self.valid_zip?(file)
+    zip = Zip::File.open(file)
+    true
+  rescue StandardError
+    false
+  ensure
+    zip.close if zip
+  end
+
   private
 
-    def destroy_raw_datum_with_same_filename
-      RawDatum.where(
-        project: self.project,
-        filename: self.filename
-      ).destroy_all
-    end
-
+  def destroy_raw_datum_with_same_filename
+    RawDatum.where(
+      project: self.project,
+      filename: self.filename
+    ).destroy_all
+  end
 end
