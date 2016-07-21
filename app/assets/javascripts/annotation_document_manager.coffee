@@ -67,8 +67,6 @@ class AnnotationDocumentManager
     false
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
-    console.log 'MANAGER: apiCall'
-    console.log JSON.stringify(requestOptions.data)
     $.ajax
       type: requestOptions.type,
       url: requestOptions.url,
@@ -80,7 +78,7 @@ class AnnotationDocumentManager
         postUpdateCallback _this.next() if postUpdateCallback
       error: (a, b, c) ->
         console.log "error requesting the annotation documents API (#{b} #{a.status}; #{c}) - request options & jqXHR:"
-        console.log requestOptions
+        console.log JSON.stringify(requestOptions)
         console.log JSON.stringify(a)
 
 window.AnnotationDocumentManager = AnnotationDocumentManager
