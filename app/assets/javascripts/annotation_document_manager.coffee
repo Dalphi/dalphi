@@ -32,7 +32,7 @@ class AnnotationDocumentManager
 
     requestOptions = {
       type: 'PATCH',
-      url: "#{baseUrl}/annotation_documents/#{annotationDocument.id}",
+      url: "#{baseUrl}/annotation_documentsX/#{annotationDocument.id}",
       data: { annotation_document: annotationDocument }
     }
 
@@ -68,6 +68,7 @@ class AnnotationDocumentManager
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
     console.log 'MANAGER: apiCall'
+    console.log JSON.stringify(requestOptions.data)
     $.ajax
       type: requestOptions.type,
       url: requestOptions.url,
@@ -78,8 +79,8 @@ class AnnotationDocumentManager
         responseProcessor(data) if responseProcessor
         postUpdateCallback _this.next() if postUpdateCallback
       error: (a, b, c) ->
-        console.log "error requesting the annotation documents API (#{b}; #{c}) - request options & jqXHR:"
+        console.log "error requesting the annotation documents API (#{b} #{a.status}; #{c}) - request options & jqXHR:"
         console.log requestOptions
-        console.log a
+        console.log JSON.stringify(a)
 
 window.AnnotationDocumentManager = AnnotationDocumentManager
