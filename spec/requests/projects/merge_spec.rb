@@ -11,38 +11,69 @@ RSpec.describe 'Project merge', type: :request do
     sign_in(@project.user)
   end
 
-  it "generates annotation documents by sending raw data to a merge service" do
+  it "combines annotation documents into a raw datum by sending them to a merge service" do
     raw_datum = FactoryGirl.create :raw_datum,
-                                   data: File.new("#{Rails.root}/spec/fixtures/text/spiegel.txt"),
+                                   data: File.new("#{Rails.root}/spec/fixtures/text/unmerged.txt"),
                                    project: @project
-    annotation_document = FactoryGirl.build :annotation_document,
-                                            project: @project,
-                                            raw_datum: raw_datum,
-                                            payload: {
-                                              options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
-                                              content: File.new(raw_datum.data.path).read,
-                                              paragraph_index: 0
-                                            }
+    annotation_documents = [
+      FactoryGirl.create(:annotation_document,
+                       raw_datum: raw_datum,
+                       rank: 1,
+                       payload: {
+                         options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
+                         label: "Enthält Personennamen",
+                         content: "par1",
+                         paragraph_index: 0
+                       }),
+      FactoryGirl.create(:annotation_document,
+                       raw_datum: raw_datum,
+                       rank: 2,
+                       payload: {
+                         options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
+                         label: "Enthält Personennamen",
+                         content: "par2",
+                         paragraph_index: 2
+                       })
+    ]
 
     stub_request(:post, 'http://example.com/merge')
       .with(
-        body: @project.bootstrap_data.to_json,
+        body: @project.merge_data.to_json,
         headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'application/json', 'User-Agent' => 'Ruby' }
       )
       .to_return(
         status: 200,
-        body: [annotation_document].to_json,
+        body: {
+          content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/unmerged.txt").read),
+          raw_datum_id: raw_datum.id
+        }.to_json,
         headers: { 'Content-Type' => 'application/json' }
       )
+
+    stub_request(:post, "http://example.com/merge").
+             with(
+                           :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'})
+      .to_return(
+        status: 200,
+        body: {
+          content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/unmerged.txt").read),
+          raw_datum_id: raw_datum.id
+        }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+    expect(RawDatum.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(2)
 
     get project_merge_path(@project)
     expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_url(@project))
 
-    expect(AnnotationDocument.count).to eq(1)
+    expect(RawDatum.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(0)
 
-    generated_annotation_document = AnnotationDocument.first
-    %w(interface_type raw_datum_id project_id payload rank skipped requested_at).each do |attribute|
-      expect(generated_annotation_document.send(attribute)).to eq(annotation_document.send(attribute))
-    end
+    raw_datum.reload
+    expect(File.new(raw_datum.data.path).read).to eq(
+      File.new("#{Rails.root}/spec/fixtures/text/merged.txt").read
+    )
   end
 end

@@ -174,7 +174,6 @@ class ProjectsController < ApplicationController
     def merge_annotation_documents
       record_count = 0
       error_count = 0
-      ap @project.merge_data
       @project.merge_data.each do |merge_datum|
         merge_service = @project.merge_service
         uri = URI.parse(merge_service.url)
@@ -186,7 +185,7 @@ class ProjectsController < ApplicationController
         response = http.request(request)
 
         if response.kind_of? Net::HTTPSuccess
-          @annotation_documents = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
+          ap JSON.parse(response.body)
         else
           error_count += 1
         end

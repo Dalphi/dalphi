@@ -1,6 +1,8 @@
 class AnnotationDocument < ApplicationRecord
   include Swagger::Blocks
 
+  serialize :payload, JSON
+
   belongs_to :project
   belongs_to :raw_datum
 
