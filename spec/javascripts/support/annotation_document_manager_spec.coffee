@@ -9,8 +9,6 @@ beforeAll ->
 
   @dalphiUrl = "#{Teaspoon.location}".match(/http[s]*:\/\/[0-9a-z\.:]+/)[0]
   @projectId = $('.data-container-project-reference', parameterFixtures).data('project-reference')
-  console.log 'beforeAll'
-  console.log @projectId
   @projectId = 1337 unless @projectId
 
 beforeEach ->
