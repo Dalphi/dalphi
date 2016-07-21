@@ -9,6 +9,7 @@ class AnnotationDocumentManager
     this.documentStore = []
     this.currentDocument = undefined
     this.maxAnnotationDocumentsToLoad = 1
+    this.apiVersion = 'v1'
     this.asynchronousAjax = !synchronousAjax
 
     this.initAjax()
@@ -24,17 +25,18 @@ class AnnotationDocumentManager
       return true
     false
 
-  saveDocumentPayload: (modifiedPayload) ->
+  saveDocumentPayload: (modifiedPayload, calleeCallback = false) ->
     annotationDocument = this.currentDocument
     annotationDocument.payload = modifiedPayload
+    baseUrl = "#{this.dalphiBaseUrl}/api/#{this.apiVersion}"
 
     requestOptions = {
       type: 'PATCH',
-      url: "#{this.dalphiBaseUrl}/annotation_documents/#{annotationDocument.id}",
-      data: JSON.stringify(annotationDocument)
+      url: "#{baseUrl}/annotation_documents/#{annotationDocument.id}",
+      data: { annotation_document: annotationDocument }
     }
 
-    this.apiCall requestOptions
+    this.apiCall requestOptions, calleeCallback
     this.currentDocument = undefined
 
   # internal API:
@@ -64,7 +66,7 @@ class AnnotationDocumentManager
       return this.currentDocument.payload
     false
 
-  apiCall: (requestOptions, responseProcessor, postUpdateCallback) ->
+  apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
     $.ajax
       type: requestOptions.type,
       url: requestOptions.url,
@@ -72,10 +74,10 @@ class AnnotationDocumentManager
       data: requestOptions.data,
       async: _this.asynchronousAjax,
       success: (data) ->
-        responseProcessor(data)
+        responseProcessor(data) if responseProcessor
         postUpdateCallback _this.next() if postUpdateCallback
       error: (a, b, c) ->
-        console.log "error requesting the next annotation documents (#{b}; #{c}) - request options:"
+        console.log "error requesting the annotation documents API (#{b}; #{c}) - request options:"
         console.log requestOptions
 
 window.AnnotationDocumentManager = AnnotationDocumentManager
