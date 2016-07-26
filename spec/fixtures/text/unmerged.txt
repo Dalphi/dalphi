@@ -1,0 +1,1 @@
+{"id":"doc1","paragraphs":[{"text":"par1"},{"text":"par2","label":true},{"text":"par3","label":false}]}

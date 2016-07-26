@@ -361,4 +361,113 @@ RSpec.describe Project, type: :model do
       expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
     end
   end
+
+  describe 'bootstrap_data' do
+    it 'should be an empty list for no present raw data' do
+      @project.raw_data = []
+      expect(@project.bootstrap_data).to eq([])
+    end
+
+    it 'should contain raw_datum_id and base64 encoded content for one present raw datum' do
+      raw_datum = FactoryGirl.create :raw_datum,
+                                     project: @project
+
+      @project.raw_data = [raw_datum]
+      expect(@project.bootstrap_data.size).to eq(1)
+
+      bootstrap_data = @project.bootstrap_data.first
+      expect(bootstrap_data[:raw_datum_id]).to eq(raw_datum.id)
+      expect(bootstrap_data[:content]).to eq(
+        Base64.encode64(
+          File.new(raw_datum.data.path).read
+        )
+      )
+    end
+
+    it 'should contain multiple items for multiple associated raw data' do
+      raw_data = [
+        FactoryGirl.create(:raw_datum,
+                           filename: 'valid1.md',
+                           data: File.new("#{Rails.root}/spec/fixtures/text/valid1.md"),
+                           project: @project),
+        FactoryGirl.create(:raw_datum,
+                           filename: 'valid2.md',
+                           data: File.new("#{Rails.root}/spec/fixtures/text/valid2.md"),
+                           project: @project)
+      ]
+
+      @project.raw_data = raw_data
+
+      expect(@project.bootstrap_data.size).to eq(2)
+
+      @project.bootstrap_data.each_with_index do |bootstrap_data, i|
+        expect(bootstrap_data[:raw_datum_id]).to eq(raw_data[i].id)
+        expect(bootstrap_data[:content]).to eq(
+          Base64.encode64(
+            File.new(raw_data[i].data.path).read
+          )
+        )
+      end
+    end
+  end
+
+  describe 'merge_data' do
+    it 'should be an empty list for no present raw data' do
+      @project.raw_data = []
+      expect(@project.merge_data).to eq([])
+    end
+
+    it 'should be an empty list for no present annotation documents' do
+      @project.annotation_documents = []
+      expect(@project.merge_data).to eq([])
+    end
+
+    it 'should contain corpus_document, content, raw_datum_id and annotation_documents' do
+      raw_datum = FactoryGirl.create :raw_datum,
+                                     project: @project
+      annotation_document = FactoryGirl.create :annotation_document,
+                                               raw_datum: raw_datum
+
+      @project.raw_data = [raw_datum]
+      expect(@project.merge_data.size).to eq(1)
+
+      merge_data = @project.merge_data.first
+      expect(merge_data[:corpus_document][:raw_datum_id]).to eq(raw_datum.id)
+      expect(merge_data[:corpus_document][:content]).to eq(
+        Base64.encode64(
+          File.new(raw_datum.data.path).read
+        )
+      )
+      expect(merge_data[:annotation_documents].size).to eq(1)
+      expect(merge_data[:annotation_documents].first).to eq(annotation_document)
+    end
+  end
+
+  describe 'update_merged_raw_datum' do
+    it 'should do nothing for an unmatched raw_datum' do
+      raw_datum = FactoryGirl.create :raw_datum,
+                                     project: @project
+      @project.raw_data = [raw_datum]
+      @project.update_merged_raw_datum(
+        {
+          'raw_datum_id' => (raw_datum.id + 1),
+          'content' => Base64.encode64('{"new":"content"}')
+        }
+      )
+      expect(File.new(raw_datum.data.path).read).not_to eq('{"new":"content"}')
+    end
+
+    it 'should update the content of a raw_datum' do
+      raw_datum = FactoryGirl.create :raw_datum,
+                                     project: @project
+      @project.raw_data = [raw_datum]
+      @project.update_merged_raw_datum(
+        {
+          'raw_datum_id' => raw_datum.id,
+          'content' => Base64.encode64('{"new":"content"}')
+        }
+      )
+      expect(File.new(raw_datum.data.path).read).to eq('{"new":"content"}')
+    end
+  end
 end

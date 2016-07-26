@@ -3,13 +3,14 @@ class ProjectsController < ApplicationController
 
   before_action :set_project, only: [
     :bootstrap,
+    :check_interfaces,
+    :check_problem_identifiers,
     :destroy,
     :edit,
+    :merge,
     :show,
-    :update_service,
-    :check_problem_identifiers,
-    :check_interfaces,
-    :update
+    :update,
+    :update_service
   ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
   before_action :set_available_services, only: [
@@ -94,12 +95,24 @@ class ProjectsController < ApplicationController
     else
       redirect_bootstrap_with_flash
     end
+  end
 
-  rescue
-    redirect_bootstrap_with_flash
+  # GET /projects/1/bootstrap
+  def merge
+    merge_result = merge_annotation_documents
+    if merge_result
+      record_count, error_count = merge_result
+      flash[:notice] = I18n.t 'projects.merge.success',
+                              success_count: (record_count - error_count),
+                              record_count: record_count
+      redirect_to project_path(@project)
+    else
+      redirect_merge_with_flash
+    end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
@@ -130,13 +143,7 @@ class ProjectsController < ApplicationController
     def generate_annotation_documents(raw_data)
       @annotation_documents = false
       bootstrap_service = @project.bootstrap_service
-      uri = URI.parse(bootstrap_service.url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      request = Net::HTTP::Post.new uri.request_uri,
-                                    { 'Content-Type' => 'application/json' }
-
-      request.body = raw_data.to_json
-      response = http.request(request)
+      response = json_post_request(bootstrap_service.url, raw_data)
 
       @annotation_documents = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
       @annotation_documents
@@ -153,6 +160,30 @@ class ProjectsController < ApplicationController
         record_count += 1
       end
       return record_count, error_count
+    end
+
+    def merge_annotation_documents
+      record_count = error_count = 0
+      @project.merge_data.each do |merge_datum|
+        merge_service = @project.merge_service
+        response = json_post_request(merge_service.url, merge_datum)
+
+        if response.kind_of? Net::HTTPSuccess
+          process_merged_data(JSON.parse(response.body))
+        else
+          error_count += 1
+        end
+        record_count += 1
+      end
+
+      return record_count, error_count
+    rescue
+      false
+    end
+
+    def process_merged_data(response_body)
+      @project.update_merged_raw_datum(response_body)
+      AnnotationDocument.where(raw_datum_id: response_body['raw_datum_id']).delete_all
     end
 
     def params_with_associated_models
@@ -195,5 +226,20 @@ class ProjectsController < ApplicationController
     def redirect_bootstrap_with_flash
       flash[:error] = I18n.t('projects.bootstrap.error')
       redirect_to project_path(@project)
+    end
+
+    def redirect_merge_with_flash
+      flash[:error] = I18n.t('projects.merge.error')
+      redirect_to project_path(@project)
+    end
+
+    # this method smells of :reek:UtilityFunction
+    def json_post_request(url, data)
+      uri = URI.parse(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Post.new uri.request_uri,
+                                    { 'Content-Type' => 'application/json' }
+      request.body = data.to_json(except: %w(created_at updated_at project_id requested_at))
+      http.request(request)
     end
 end

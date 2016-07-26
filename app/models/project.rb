@@ -51,6 +51,31 @@ class Project < ApplicationRecord
     data
   end
 
+  def merge_data
+    data = []
+    self.annotation_documents.group_by(&:raw_datum).each do |raw_datum, annotation_documents|
+      data << {
+        corpus_document: {
+          raw_datum_id: raw_datum.id,
+          content: Base64.encode64(
+                     File.new(raw_datum.data.path).read
+                   )
+        },
+        annotation_documents: annotation_documents
+      }
+    end
+    data
+  end
+
+  def update_merged_raw_datum(params)
+    raw_datum = self.raw_data.find(params['raw_datum_id'])
+    File.open(raw_datum.data.path, 'w') do |file|
+      file.write(Base64.decode64(params['content']).force_encoding('utf-8'))
+    end
+  rescue
+    nil
+  end
+
   def label
     self.title
   end

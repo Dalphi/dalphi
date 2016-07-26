@@ -1,5 +1,9 @@
 en:
   projects:
+    merge:
+      title: Merge
+      success: '%{success_count} of %{record_count} raw data have successfully been merged'
+      error: An error occured after sending data to the merge service
     bootstrap:
       title: Bootstrap
       success: '%{success_count} of %{record_count} annotation documents have successfully been generated'

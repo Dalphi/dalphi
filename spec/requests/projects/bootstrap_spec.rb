@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe "Project boostrap", type: :request do
+RSpec.describe 'Project bootstrap', type: :request do
   before(:each) do
-  stub_request(:get, "http://example.com/bootstrap").
-           with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host'=>'example.com', 'User-Agent'=>'Ruby'}).
-                    to_return(:status => 200, :body => "", :headers => {})
+    stub_request(:get, 'http://example.com/bootstrap')
+      .with(:headers => { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'example.com', 'User-Agent' => 'Ruby' })
+      .to_return(status: 200, body: '', headers: {})
 
     @project = FactoryGirl.create :project,
-                                  bootstrap_service: FactoryGirl.create(:bootstrap_service_ci)
+                                  bootstrap_service: FactoryGirl.create(:bootstrap_service_request_test)
     sign_in(@project.user)
   end
 

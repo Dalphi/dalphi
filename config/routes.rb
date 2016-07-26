@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   get '/projects/:id/bootstrap',
       to: 'projects#bootstrap',
       as: 'project_bootstrap'
+  get '/projects/:id/merge',
+      to: 'projects#merge',
+      as: 'project_merge'
   get '/projects/:id/check_problem_identifiers',
       to: 'projects#check_problem_identifiers',
       constraints: { id: /\d+/ },
