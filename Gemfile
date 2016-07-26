@@ -68,6 +68,9 @@ group :development do
 end
 
 group :development, :test do
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
