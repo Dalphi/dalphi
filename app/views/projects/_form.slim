@@ -1,6 +1,6 @@
 = simple_form_for project do |f|
   .row.row-eq-height
-    .col-xs-12.col-md-6
+    .col-xs-12
       .card
         h3.card-header
           = t('projects.action.form.general-settings-card.headline')
@@ -20,6 +20,28 @@
                    project: project,
                    available_services: available_services[role.to_sym],
                    service_name: role
+
+    .col-xs-12.col-md-6
+      .card
+        h3.card-header
+          = t('projects.settings.interfaces.headline')
+        .card-block
+          - interfaces.each do |interface_type, interfaces|
+            .card-titleo
+              = interface_type
+            .card-text
+              .form-inputs
+                 ruby:
+                   selected = project.interfaces.find_by(interface_type: interface_type)
+                   selected = selected.id if selected
+                 = f.input :interfaces,
+                           collection: interfaces,
+                           include_blank: t('projects.action.form.services-card.no-service-selected'),
+                           input_html: { class: 'c-select',
+                                         name: "project[interfaces][#{interface_type}]" },
+                           label_method: -> (interface) { interface.title },
+                           label: false,
+                           selected: selected
 
     .col-xs-12
       .btn-row

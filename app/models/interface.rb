@@ -1,6 +1,9 @@
 class Interface < ApplicationRecord
+  has_and_belongs_to_many :projects
+
   before_save :compile_stylesheet
   before_save :compile_java_script
+
 
   serialize :associated_problem_identifiers, Array
 

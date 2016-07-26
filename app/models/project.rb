@@ -16,6 +16,8 @@ class Project < ApplicationRecord
            dependent: :destroy
   has_many :annotation_documents
 
+  has_and_belongs_to_many :interfaces
+
   validates :title,
     presence: true
 
@@ -24,6 +26,7 @@ class Project < ApplicationRecord
     ProjectServiceValidator.validate_bootstrap_service(project)
     ProjectServiceValidator.validate_machine_learning_service(project)
     ProjectServiceValidator.validate_merge_service(project)
+    ProjectInterfacesValidator.validate(project)
   end
 
   def associated_problem_identifiers
@@ -50,6 +53,26 @@ class Project < ApplicationRecord
 
   def label
     self.title
+  end
+
+  def selected_interfaces
+    selected_interfaces = {}
+    self.necessary_interface_types.each do |interface_type|
+      interface = self.interfaces.find_by(interface_type: interface_type)
+      selected_interfaces[interface_type] = interface.title rescue nil
+    end
+    selected_interfaces
+  end
+
+  def necessary_interface_types
+    necessary_interface_types = []
+    if active_learning_service
+      necessary_interface_types += active_learning_service.interface_types
+    end
+    if bootstrap_service
+      necessary_interface_types += bootstrap_service.interface_types
+    end
+    necessary_interface_types.uniq.sort
   end
 
   def connect_services
