@@ -142,16 +142,16 @@ class ProjectsController < ApplicationController
       @annotation_documents = false
     end
 
-  def save_annotation_documents
-    record_count = 0
-    error_count = 0
-    @annotation_documents.each do |annotation_document|
-      new_annotation_document = AnnotationDocument.new(annotation_document)
-      error_count += 1 unless new_annotation_document.save
-      record_count += 1
+    def save_annotation_documents
+      record_count = 0
+      error_count = 0
+      @annotation_documents.each do |annotation_document|
+        new_annotation_document = AnnotationDocument.new(annotation_document)
+        error_count += 1 unless new_annotation_document.save
+        record_count += 1
+      end
+      return record_count, error_count
     end
-    return record_count, error_count
-  end
 
     def params_with_associated_models
       new_params = project_params

@@ -19,9 +19,9 @@ FactoryGirl.define do
 
     factory :bootstrap_service_ci do
       role 1
-      description 'Bootstrap Service for CI request tests'
+      description 'Bootstrap Service for request tests'
       url 'http://example.com/bootstrap'
-      title 'Bootstrap CI'
+      title 'Request Test Bootstrap Service'
       version 'v0.1'
       interface_types ['text_nominal']
     end
