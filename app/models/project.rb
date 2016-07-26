@@ -72,6 +72,8 @@ class Project < ApplicationRecord
     File.open(raw_datum.data.path, 'w') do |file|
       file.write(Base64.decode64(params['content']).force_encoding('utf-8'))
     end
+  rescue
+    nil
   end
 
   def label
