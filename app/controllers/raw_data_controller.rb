@@ -20,21 +20,23 @@ class RawDataController < ApplicationController
   # POST /raw_data
   def create
     data = raw_datum_params[:data]
-    batch_result = RawDatum.batch_process @project, data
-    if batch_result[:success].empty?
+    batch_result = RawDatum.batch_process @project,
+                                          data
+    if batch_result[:success].any?
+      redirect_to project_raw_data_path(@project),
+                  notice: I18n.t('raw-data.action.create.success')
+    else
       @raw_datum = RawDatum.new
       flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :new
-    else
-      redirect_to project_raw_data_path(@project),
-                  notice: I18n.t('raw-data.action.create.success')
     end
   end
 
   # PATCH/PUT /raw_data/1
   def update
     if @raw_datum.update(raw_datum_params)
-      redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.update.success')
+      redirect_to project_raw_data_path(@project),
+                  notice: I18n.t('raw-data.action.update.success')
     else
       flash[:error] = I18n.t('simple_form.error_notification.default_message')
       render :edit
@@ -59,6 +61,8 @@ class RawDataController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def raw_datum_params
-      params.require(:raw_datum).permit(:shape, data: [])
+      data = { data: [] }
+      data = :data if action_name == 'update'
+      params.require(:raw_datum).permit(:shape, data)
     end
 end

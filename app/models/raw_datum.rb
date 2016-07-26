@@ -14,7 +14,8 @@ class RawDatum < ApplicationRecord
   has_many :annotation_documents,
            dependent: :destroy
   has_attached_file :data
-  before_save :destroy_raw_datum_with_same_filename
+  before_create :destroy_raw_datum_with_same_filename
+  before_update :set_filename
 
   validates :project,
     presence: true
@@ -146,5 +147,9 @@ class RawDatum < ApplicationRecord
       project: self.project,
       filename: self.filename
     ).destroy_all
+  end
+
+  def set_filename
+    self.filename = self.data.original_filename
   end
 end
