@@ -95,9 +95,6 @@ class ProjectsController < ApplicationController
     else
       redirect_bootstrap_with_flash
     end
-
-  rescue
-    redirect_bootstrap_with_flash
   end
 
   # GET /projects/1/bootstrap
@@ -112,8 +109,6 @@ class ProjectsController < ApplicationController
     else
       redirect_merge_with_flash
     end
-  #rescue
-  #  redirect_merge_with_flash
   end
 
   private
