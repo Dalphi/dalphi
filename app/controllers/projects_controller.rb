@@ -237,8 +237,7 @@ class ProjectsController < ApplicationController
       http = Net::HTTP.new(uri.host, uri.port)
       request = Net::HTTP::Post.new uri.request_uri,
                                     { 'Content-Type' => 'application/json' }
-
-      request.body = data.to_json
+      request.body = data.to_json(except: %w(created_at updated_at project_id requested_at))
       http.request(request)
     end
 end
