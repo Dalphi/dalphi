@@ -119,8 +119,10 @@ class ProjectsController < ApplicationController
     end
 
     def set_interfaces
-      associated_problem_identifier = @project.associated_problem_identifiers.first
       @interfaces = {}
+      return unless @project
+
+      associated_problem_identifier = @project.associated_problem_identifiers.first
       @project.necessary_interface_types.each do |interface_type|
         @interfaces[interface_type] = Interface.select do |interface|
           interface.interface_type == interface_type &&
