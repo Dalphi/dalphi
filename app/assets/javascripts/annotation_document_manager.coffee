@@ -77,7 +77,8 @@ class AnnotationDocumentManager
         responseProcessor(data) if responseProcessor
         postUpdateCallback _this.next() if postUpdateCallback
       error: (a, b, c) ->
-        console.log "error requesting the annotation documents API (#{b} #{a.status}; #{c}) - request options & jqXHR:"
+        console.log "error requesting the annotation documents API " +
+                    "(#{b} #{a.status}; #{c}) - request options & jqXHR:"
         console.log JSON.stringify(requestOptions)
         console.log JSON.stringify(a)
 
