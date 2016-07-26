@@ -104,6 +104,8 @@ class ProjectsController < ApplicationController
       flash[:alert] = I18n.t 'projects.annotate.errors.no-annotation-documents'
       redirect_to project_path(@project)
     end
+
+    @container_class = Rails.configuration.x.dalphi['annotation-interface']['container-class-name']
   end
 
   # GET /projects/1/bootstrap

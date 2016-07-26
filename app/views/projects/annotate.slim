@@ -1,4 +1,12 @@
-.container.projects
-  .row
-    h2.col-xs-12
-      = "Annotate project: #{@project.title}"
+- content_for :interface_style_includes do
+  style
+    - @project.interfaces.each do |interface|
+      = interface.compiled_stylesheet
+
+.interfaces-staging
+  - @project.interfaces.each do |interface|
+    div class="#{@container_class}" data-interface-type="#{interface.interface_type}"
+      == @interface.template
+
+      script type='text/javascript'
+        == @interface.compiled_java_script
