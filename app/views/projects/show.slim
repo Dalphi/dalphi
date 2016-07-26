@@ -40,6 +40,11 @@
                type: 'primary',
                href: project_bootstrap_path(@project)
       = render 'shared/button',
+               label: t('projects.annotate.title'),
+               icon: 'tags',
+               type: 'primary',
+               href: project_annotate_path(@project)
+      = render 'shared/button',
                label: t('projects.merge.title'),
                icon: 'compress',
                type: 'primary',

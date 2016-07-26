@@ -4,6 +4,10 @@ en:
       title: Merge
       success: '%{success_count} of %{record_count} raw data have successfully been merged'
       error: An error occured after sending data to the merge service
+    annotate:
+      title: Annotate
+      errors:
+        no-annotation-documents: No annotation documents present. Generate some by starting a new iteration.
     bootstrap:
       title: Bootstrap
       success: '%{success_count} of %{record_count} annotation documents have successfully been generated'

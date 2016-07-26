@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   include ServiceRoles
 
   before_action :set_project, only: [
+    :annotate,
     :bootstrap,
     :check_interfaces,
     :check_problem_identifiers,
@@ -94,6 +95,14 @@ class ProjectsController < ApplicationController
       redirect_to project_path(@project)
     else
       redirect_bootstrap_with_flash
+    end
+  end
+
+  # GET /projects/1/annotate
+  def annotate
+    if @project.annotation_documents.empty?
+      flash[:alert] = I18n.t 'projects.annotate.errors.no-annotation-documents'
+      redirect_to project_path(@project)
     end
   end
 
