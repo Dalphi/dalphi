@@ -1,6 +1,8 @@
 .connection-details,
 .compatibility-check-details,
 .raw-data-availability-details,
+.interface-status-details,
+.selected-interfaces,
 .card-text {
   display: inline-block;
   position: relative;
@@ -13,11 +15,13 @@
 .compatibility-status-sign,
 .compatibility-state-sign,
 .connectivity-sign,
+.interface-selected-sign,
 .raw-data-state-sign {
   display: inline-block;
   margin-right: .1rem;
 
   &.available,
+  &.selected,
   &.compatible {
     color: $color-4-1;
   }
@@ -28,6 +32,7 @@
 
   &.down,
   &.not-set,
+  &.not-selected,
   &.unavailable,
   &.incompatible,
   &.empty {

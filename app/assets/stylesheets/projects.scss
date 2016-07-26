@@ -22,6 +22,7 @@
   .dashboard-card {
     .compatibility-check-details,
     .service-status-sign,
+    .interface-status-sign,
     .raw-data-availability-details {
       display: inline-block;
       margin-right: $inline-margin;
@@ -39,6 +40,12 @@
 
       li {
         margin-left: -$container-margin;
+      }
+    }
+
+    .selected-interfaces {
+      .checking {
+        text-align: center;
       }
     }
   }

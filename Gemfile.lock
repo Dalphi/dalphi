@@ -218,6 +218,10 @@ GEM
       railties (= 5.0.0)
       sprockets-rails (>= 2.0.0)
     rails-assets-tether (1.1.1)
+    rails-controller-testing (0.1.1)
+      actionpack (~> 5.x)
+      actionview (~> 5.x)
+      activesupport (~> 5.x)
     rails-dom-testing (2.0.1)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6.0)
@@ -414,6 +418,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 5.0.0)
   rails-assets-tether
+  rails-controller-testing
   rails-jquery-autocomplete
   rails_best_practices
   reek
@@ -443,4 +448,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.12.1
+   1.12.5

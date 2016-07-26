@@ -28,11 +28,25 @@ en:
       destroy:
         success: Project was successfully destroyed.
     dashboard-card:
-      title: Project Dashboard
+      interfaces:
+        title: Interfaces
+        states:
+          checking: 'checking for selected interfaces'
+          selected: 'an interface has been selected'
+          not-selected: 'no interface has been selected'
+          not-selected-message: 'no interface has been selected, please %{select_link} one.'
+          not-selected-link-label: 'select'
+        blank-slate:
+          title: None available.
+          text: Please %{set_link} a service to add an interface.
+          set-service-link-label: set
+        error:
+          title: An error occured while checking for selected interfaces
+          text: Please try again later.
       delimited-problem: '<i>%{problem}</i>'
       raw-data:
         availability-of-raw-data: Availability of raw data
-        no-raw-data-available: (no raw data available, please %{add_link} some)
+        no-raw-data-available: no raw data available, please %{add_link} some
         add-raw-data-label: add
         title: Raw Data
         states:
@@ -44,20 +58,22 @@ en:
         title: Services
         set-and-available:
           title: Set and available
-          no-service-set: (service is currently unset, please %{set_link} it)
+          no-service-set: service is currently unset, please %{set_link} it
           set-service-link-label: set
-          no-service-available: (no service available, please %{add_link} one to Dalphi)
+          no-service-available: no service available, please %{add_link} one to Dalphi
           add-service-link-label: add
         compatibility:
           title: 'Compatibility of services'
           compatibility-of-services: 'Compatibility of services'
-          compatible: (all services handle %problem problems)
-          incompatible: '(various problem identifiers: %problems; please %{fix_link} it)'
+          compatible: all services handle %problem problems
+          incompatible: 'various problem identifiers: %problems; please %{fix_link} it'
           incompatible-label: fix
           undefined: 'An error occured while checking for problem identifiers'
           checking: 'Checking for problem identifiers'
-          empty: '(no services associated, please %{add_link} one)'
+          empty: 'no services associated, please %{add_link} one'
           empty-label: add
     settings:
+      interfaces:
+        headline: Interfaces to use
       services:
         headline: Services to use
