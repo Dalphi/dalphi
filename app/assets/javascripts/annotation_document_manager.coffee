@@ -2,9 +2,9 @@ class AnnotationDocumentManager
 
   _this = undefined
 
-  constructor: (dalphiUrl, projectId, synchronousAjax = false) ->
+  constructor: (dalphiBaseUrl, projectId, synchronousAjax = false) ->
     _this = this
-    this.dalphiBaseUrl = dalphiUrl
+    this.dalphiBaseUrl = dalphiBaseUrl
     this.projectId = projectId
     this.documentStore = []
     this.currentDocument = undefined
