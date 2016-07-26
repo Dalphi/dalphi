@@ -7,7 +7,7 @@ RSpec.describe 'Project bootstrap', type: :request do
       .to_return(status: 200, body: '', headers: {})
 
     @project = FactoryGirl.create :project,
-                                  bootstrap_service: FactoryGirl.create(:bootstrap_service_ci)
+                                  bootstrap_service: FactoryGirl.create(:bootstrap_service_request_test)
     sign_in(@project.user)
   end
 

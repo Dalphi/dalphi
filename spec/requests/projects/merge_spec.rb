@@ -7,7 +7,7 @@ RSpec.describe 'Project merge', type: :request do
       .to_return(status: 200, body: '', headers: {})
 
     @project = FactoryGirl.create :project,
-                                  merge_service: FactoryGirl.create(:merge_service_ci)
+                                  merge_service: FactoryGirl.create(:merge_service_request_test)
     sign_in(@project.user)
   end
 

@@ -17,11 +17,11 @@ FactoryGirl.define do
       interface_types ['text_nominal']
     end
 
-    factory :bootstrap_service_ci do
+    factory :bootstrap_service_request_test do
       role 1
-      description 'Bootstrap Service for CI request tests'
+      description 'Bootstrap Service for request tests'
       url 'http://example.com/bootstrap'
-      title 'Bootstrap CI'
+      title 'Request Test Bootstrap Service'
       version 'v0.1'
       interface_types ['text_nominal']
     end
@@ -44,11 +44,11 @@ FactoryGirl.define do
       interface_types []
     end
 
-    factory :merge_service_ci do
+    factory :merge_service_request_test do
       role 3
-      description 'Merge Service for CI request tests'
+      description 'Merge Service for request tests'
       url 'http://example.com/merge'
-      title 'Merge CI'
+      title 'Request Test Merge Service'
       version '0.1'
       interface_types []
     end
