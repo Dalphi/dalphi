@@ -4,6 +4,10 @@ NestedIterators:
   max_allowed_nesting: 2
 TooManyStatements:
   max_statements: 10
+TooManyMethods:
+  max_methods: 25
+TooManyInstanceVariables:
+  max_instance_variables: 5
 UncommunicativeModuleName:
   accept:
     - !ruby/regexp /V[0-9]+/

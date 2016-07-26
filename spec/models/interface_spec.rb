@@ -221,6 +221,8 @@ RSpec.describe Interface, type: :model do
     end
   end
 
+  it { should have_and_belong_to_many(:projects) }
+
   describe 'compiled_java_script' do
     it 'can be nil or empty iff java_script is nil' do
       @interface.java_script = nil

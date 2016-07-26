@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :raw_datum do
     shape 'text'
     filename 'file.md'
-    data File.new(Rails.root + 'spec/fixtures/text/lorem.txt')
+    data File.new("#{Rails.root}/spec/fixtures/text/lorem.txt")
     project { FactoryGirl.create(:project) }
 
     factory :raw_datum_with_different_user do

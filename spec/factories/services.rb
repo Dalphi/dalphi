@@ -17,6 +17,15 @@ FactoryGirl.define do
       interface_types ['text_nominal']
     end
 
+    factory :bootstrap_service_ci do
+      role 1
+      description 'Bootstrap Service for request tests'
+      url 'http://example.com/bootstrap'
+      title 'Request Test Bootstrap Service'
+      version 'v0.1'
+      interface_types ['text_nominal']
+    end
+
     factory :machine_learning_service do
       role 2
       description 'Harbert algorithm for optimal results'
