@@ -87,6 +87,7 @@ en:
           title: No interfaces to select
           no-services-text: Please select a service first. The selection to choose interfaces from will be inferred of your selection of services.
           no-interfaces-text: No interface of a necessary interface type available. Please %{add_link} one to Dalphi.
-          add-link-label: add
+          more-than-one-problem-identifier: The selected services are incompatible; they reveal different problem identifiers. The selection to choose interfaces from will be inferred of your selection of services. Please select a consistent set of services first.
+          add-interface-link-label: add
       services:
         headline: Services to use

@@ -26,7 +26,13 @@
         h3.card-header
           = t('projects.settings.interfaces.headline')
         .card-block
-          - if interfaces.any?
+          - if @project.associated_problem_identifiers.count > 1
+            .card-block
+              h4.card-titleo
+                = t('projects.settings.interfaces.blank-slate.title')
+              p.card-text
+                = t('projects.settings.interfaces.blank-slate.more-than-one-problem-identifier')
+          - elsif interfaces.any?
             - interfaces.each do |interface_type, interfaces|
               .card-titleo
                 = interface_type
@@ -52,7 +58,7 @@
                   = t('projects.settings.interfaces.blank-slate.no-services-text')
                 - else
                   == t('projects.settings.interfaces.blank-slate.no-interfaces-text',
-                      add_link: link_to(t('projects.settings.interfaces.blank-slate.add-link-label'),
+                      add_link: link_to(t('projects.settings.interfaces.blank-slate.add-interface-link-label'),
                                         interfaces_path))
 
     .col-xs-12
