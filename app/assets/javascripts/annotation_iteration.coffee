@@ -18,3 +18,5 @@ class AnnotationIteration
     window.annotationLifecycle.saveChanges(data)
 
   # internal API:
+
+window.AnnotationIteration = AnnotationIteration

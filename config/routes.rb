@@ -51,14 +51,15 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :raw_data, except: [:show]
+
+    get '/annotate',
+        to: 'annotations#annotate',
+        as: 'annotate'
   end
 
   get '/projects/:id/bootstrap',
       to: 'projects#bootstrap',
       as: 'project_bootstrap'
-  get '/projects/:id/annotate',
-      to: 'projects#annotate',
-      as: 'project_annotate'
   get '/projects/:id/merge',
       to: 'projects#merge',
       as: 'project_merge'
