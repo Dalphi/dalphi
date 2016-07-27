@@ -28,12 +28,12 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = Project
-                  .where(user: current_user)
-                  .paginate(
-                    page: params[:page],
-                    per_page: Rails.configuration.x.dalphi['paginated-objects-per-page']['projects']
-                  )
+    objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['projects']
+    @projects = Project.where(user: current_user)
+                       .paginate(
+                         page: params[:page],
+                         per_page: objects_per_page
+                       )
   end
 
   # GET /projects/1
