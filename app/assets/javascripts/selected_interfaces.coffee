@@ -39,6 +39,7 @@ class SelectedInterfaces
         .removeClass('template')
         .removeClass('no-display')[0]
         .outerHTML
+    $('li:not(.template)', $selectedInterfacesList).remove()
     for interfaceType, selectedInterface of data.selectedInterfaces
       displaySelected = if selectedInterface == null then 'no-display' else ''
       displayNotSelected = if selectedInterface == null then '' else 'no-display'
