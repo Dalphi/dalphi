@@ -4,7 +4,7 @@
 
 .interfaces-staging
   - @project.interfaces.each do |interface|
-    div class="#{@container_class}" data-interface-type="#{interface.interface_type}"
+    .template class="#{@container_class}" data-interface-type="#{interface.interface_type}"
       == interface.template
 
       script type='text/javascript'
