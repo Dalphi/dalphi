@@ -26,10 +26,10 @@
         h3.card-header
           = t('projects.settings.interfaces.headline')
         .card-block
-          - if interfaces.any? && @project.associated_problem_identifiers.count == 1
+          - if interfaces.any? && project.associated_problem_identifiers.count == 1
             p.card-text
               == t('projects.settings.interfaces.description',
-                  problem_identifier: @project.associated_problem_identifiers.first)
+                  problem_identifier: project.associated_problem_identifiers.first)
             - interfaces.each do |interface_type, interfaces|
               .card-titleo
                 = interface_type
@@ -47,7 +47,7 @@
                              label: false,
                              selected: selected
 
-          - elsif @project.associated_problem_identifiers.count > 1
+          - elsif project.associated_problem_identifiers.count > 1
             .card-block
               h4.card-titleo
                 = t('projects.settings.interfaces.blank-slate.title')
