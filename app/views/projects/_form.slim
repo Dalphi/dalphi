@@ -26,22 +26,34 @@
         h3.card-header
           = t('projects.settings.interfaces.headline')
         .card-block
-          - interfaces.each do |interface_type, interfaces|
-            .card-titleo
-              = interface_type
-            .card-text
-              .form-inputs
-                 ruby:
-                   selected = project.interfaces.find_by(interface_type: interface_type)
-                   selected = selected.id if selected
-                 = f.input :interfaces,
-                           collection: interfaces,
-                           include_blank: t('projects.action.form.services-card.no-service-selected'),
-                           input_html: { class: 'c-select',
-                                         name: "project[interfaces][#{interface_type}]" },
-                           label_method: -> (interface) { interface.title },
-                           label: false,
-                           selected: selected
+          - if interfaces.any?
+            - interfaces.each do |interface_type, interfaces|
+              .card-titleo
+                = interface_type
+              .card-text
+                .form-inputs
+                   ruby:
+                     selected = project.interfaces.find_by(interface_type: interface_type)
+                     selected = selected.id if selected
+                   = f.input :interfaces,
+                             collection: interfaces,
+                             include_blank: t('projects.action.form.services-card.no-service-selected'),
+                             input_html: { class: 'c-select',
+                                           name: "project[interfaces][#{interface_type}]" },
+                             label_method: -> (interface) { interface.title },
+                             label: false,
+                             selected: selected
+          - else
+            .card-block
+              h4.card-titleo
+                = t('projects.settings.interfaces.blank-slate.title')
+              p.card-text
+                - if project.necessary_interface_types.empty?
+                  = t('projects.settings.interfaces.blank-slate.no-services-text')
+                - else
+                  == t('projects.settings.interfaces.blank-slate.no-interfaces-text',
+                      add_link: link_to(t('projects.settings.interfaces.blank-slate.add-link-label'),
+                                        interfaces_path))
 
     .col-xs-12
       .btn-row
