@@ -14,11 +14,13 @@ class ProjectsController < ApplicationController
   ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
   before_action :set_available_services, only: [
+    :create,
     :edit,
     :new,
     :show
   ]
   before_action :set_interfaces, only: [
+    :create,
     :edit,
     :new,
     :show
