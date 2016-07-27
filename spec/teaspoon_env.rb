@@ -65,14 +65,16 @@ Teaspoon.configure do |config|
     #suite.hook :fixtures, &proc{}
 
     suite.hook :setup do
-      require 'factory_girl_rails'
+      if Rails.env.test?
+        require 'factory_girl_rails'
 
-      User.destroy_all
-      Project.destroy_all
+        User.destroy_all
+        Project.destroy_all
 
-      FactoryGirl.definition_file_paths = ['./spec/factories']
-      project_with_defined_id = FactoryGirl.create(:project, id: 1337)
-      @raw_datum = FactoryGirl.create(:raw_datum, project: project_with_defined_id)
+        FactoryGirl.definition_file_paths = ['./spec/factories']
+        project_with_defined_id = FactoryGirl.create(:project, id: 1337)
+        @raw_datum = FactoryGirl.create(:raw_datum, project: project_with_defined_id)
+      end
     end
 
     suite.hook :create_annotation_document do

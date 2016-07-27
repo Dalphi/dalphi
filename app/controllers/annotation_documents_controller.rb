@@ -1,6 +1,6 @@
 class AnnotationDocumentsController < ApplicationController
   before_action :set_project, only: [ :next ]
-  skip_before_action :authenticate_user!, only: :next
+  skip_before_action :authenticate_user!, only: :next if Rails.env.test?
 
   # PATCH /projects/1/annotation_documents/next/10
   def next
