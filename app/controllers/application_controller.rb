@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   def set_turbolinks
     blacklist = [
       'projects#show',
-      'projects#annotate'
+      'annotations#annotate'
     ]
     @use_turbolinks = !blacklist.include?("#{controller_name}##{action_name}")
   end
