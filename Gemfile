@@ -35,6 +35,7 @@ gem 'swagger-blocks'
 gem 'therubyracer'
 gem 'turbolinks'
 gem 'uglifier'
+gem 'will_paginate'
 
 group :doc do
   gem 'sdoc'
