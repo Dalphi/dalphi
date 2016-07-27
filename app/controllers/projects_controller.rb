@@ -23,8 +23,7 @@ class ProjectsController < ApplicationController
   before_action :set_interfaces, only: [
     :create,
     :edit,
-    :new,
-    :show
+    :new
   ]
 
   # GET /projects
