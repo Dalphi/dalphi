@@ -15,6 +15,8 @@
 #= require ace/mode-coffee
 #= require ace/mode-scss
 #= require ace/mode-html
+#= require mustache
+#= require jquery.mustache
 #= require annotation_iteration
 
 $ ->

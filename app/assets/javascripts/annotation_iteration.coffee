@@ -4,19 +4,24 @@ class AnnotationIteration
 
   constructor: ->
     _this = this
-    this.register(this)
+    this.register(@constructor.name, this)
 
   # external API:
 
-  register: (object) ->
-    window.annotationLifecycle.registerInterfaceInstance(object)
+  register: (type, object) ->
+    window.annotationLifecycle.registerInterfaceInstance(type, object)
 
-  iterate: (data) ->
-    console.log 'iterate!' # TODO
+  iterate: (template, data) ->
+    $('.interfaces-staging > div:not(.template)').remove()
+    $output = $(
+      Mustache.render(
+        template.outerHtml,
+        data
+      )
+    ).removeClass('template')
+    $('.interfaces-staging').append($output)
 
   saveChanges: (data) ->
     window.annotationLifecycle.saveChanges(data)
-
-  # internal API:
 
 window.AnnotationIteration = AnnotationIteration
