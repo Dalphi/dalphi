@@ -1,6 +1,6 @@
 - content_for :interface_style_includes do
   style
-    = @project.interfaces.map(&:compiled_stylesheet).join()
+    = @project.interfaces.map(&:compiled_stylesheet).join
 
 .interfaces-staging data-dalphi-base-url="#{request.base_url}" data-project-id="#{@project.id}"
   - @project.interfaces.each do |interface|

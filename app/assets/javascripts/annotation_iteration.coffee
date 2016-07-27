@@ -9,13 +9,14 @@ class AnnotationIteration
   # external API:
 
   register: (type, object) ->
+    console.log 'AnnotationIteration register'
     window.annotationLifecycle.registerInterfaceInstance(type, object)
 
   iterate: (template, data) ->
     $('.interfaces-staging > div:not(.template)').remove()
     $output = $(
       Mustache.render(
-        template.outerHtml,
+        template.outerHTML,
         data
       )
     ).removeClass('template')

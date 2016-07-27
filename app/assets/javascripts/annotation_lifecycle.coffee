@@ -8,8 +8,10 @@ class AnnotationLifecycle
     this.templates = {}
     this.interfaceInstances = {}
 
-    this.init()
-    console.log 'inited AnnotationLifecycle'
+    $(document).ready ->
+      _this.init()
+      console.log 'inited AnnotationLifecycle'
+      _this.startIteration()
 
   init: ->
     dalphiBaseUrl = $('.interfaces-staging').data('dalphi-base-url')
@@ -22,8 +24,6 @@ class AnnotationLifecycle
       # $(this).remove()
     )
 
-    this.startIteration()
-
   startIteration: ->
     console.log 'AnnotationLifecycle: start iteration'
 
@@ -34,7 +34,9 @@ class AnnotationLifecycle
 
       interfaceInstance = _this.interfaceInstances[data.interfaceType]
       template = _this.templates[data.interfaceType]
-      interfaceInstance(template, data.payload)
+      console.log 'pre call death'
+      console.log template
+      interfaceInstance.iterate(template, data.payload)
 
     this.annotationDocumentManager.requestNextDocumentPayload(processAnnotationDocument)
 
@@ -51,5 +53,4 @@ class AnnotationLifecycle
     this.annotationDocumentManager.saveDocumentPayload(data, nextIteration)
 
 
-$(document).ready ->
-  window.annotationLifecycle = new AnnotationLifecycle()
+window.annotationLifecycle = new AnnotationLifecycle()
