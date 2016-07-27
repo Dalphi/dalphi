@@ -15,7 +15,7 @@
 #= require ace/mode-coffee
 #= require ace/mode-scss
 #= require ace/mode-html
-#= stub annotation_iteration
+#= require annotation_iteration
 
 $ ->
   new FastClick(document.body)
