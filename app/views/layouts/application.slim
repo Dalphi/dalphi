@@ -12,7 +12,7 @@ html
     = yield :interface_style_includes
 
   - data_hash = {}
-  - data_hash = { 'no-turbolink' => 'true' } unless @use_turbolinks
+  - data_hash = { no_turbolink: 'true' } unless @use_turbolinks
   body data=data_hash
     = render partial: 'shared/topbar', locals: { breadcrumbs: @breadcrumbs }
     = render 'shared/flash'
