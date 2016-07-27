@@ -123,32 +123,3 @@ describe 'external API', ->
       @manager.saveDocumentPayload(documentPayload, responseProcesor)
       expect(successStatus).toBe true
     )
-
-    xit('integration test - manipulates Dalphi\'s annotation document', ->
-      # to be discussed: shall we write integration tests from JS client's perspective?
-      expect(@manager.documentStore.length).toBe 1
-      documentPayload = @manager.next()
-      expect(documentPayload).toBe @manager.currentDocument.payload
-      documentId = @manager.currentDocument.id
-
-      expect(documentPayload.options[0]).toBeDefined()
-      targetOption = documentPayload.options[0]
-
-      expect(documentPayload.label).not.toBe targetOption
-      documentPayload.label = targetOption
-      @manager.saveDocumentPayload(documentPayload)
-
-      response = undefined
-      $.ajax
-        type: 'GET',
-        url: "#{@dalphiUrl}/api/v1/annotation_documents/#{documentId}",
-        dataType: 'json',
-        async: false,
-        success: (data) ->
-          response = data
-        error: ->
-          console.log 'error requesting annotation document\'s API (GET)'
-
-      expect(response).toBeDefined()
-      expect(response.payload.label).toBe targetOption
-    )
