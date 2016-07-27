@@ -4,12 +4,12 @@ class AnnotationIteration
 
   constructor: ->
     _this = this
-    this.register(this)
+    this.register(@constructor.name, this)
 
   # external API:
 
-  register: (object) ->
-    window.annotationLifecycle.registerInterfaceInstance(object)
+  register: (type, object) ->
+    window.annotationLifecycle.registerInterfaceInstance(type, object)
 
   iterate: (template, data) ->
     $('.interfaces-staging > div:not(.template)').remove()
