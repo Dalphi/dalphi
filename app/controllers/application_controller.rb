@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_locale
   before_action :set_copyright_year
+  before_action :set_turbolinks
   before_action :bake_breadcrumbs
 
   private
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
   def set_copyright_year
     require 'date'
     @current_year = Date.today.strftime("%Y")
+  end
+
+  def set_turbolinks
+    @use_turbolinks = !(controller_name == 'projects' && action_name == 'annotate')
   end
 
   def bake_breadcrumbs

@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   get '/projects/:id/bootstrap',
       to: 'projects#bootstrap',
       as: 'project_bootstrap'
+  get '/projects/:id/annotate',
+      to: 'projects#annotate',
+      as: 'project_annotate'
   get '/projects/:id/merge',
       to: 'projects#merge',
       as: 'project_merge'

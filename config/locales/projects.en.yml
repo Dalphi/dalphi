@@ -4,6 +4,10 @@ en:
       title: Merge
       success: '%{success_count} of %{record_count} raw data have successfully been merged'
       error: An error occured after sending data to the merge service
+    annotate:
+      title: Annotate
+      errors:
+        no-annotation-documents: No annotation documents present. Generate some by starting a new iteration.
     bootstrap:
       title: Bootstrap
       success: '%{success_count} of %{record_count} annotation documents have successfully been generated'
@@ -79,10 +83,12 @@ en:
     settings:
       interfaces:
         headline: Interfaces to use
+        description: 'Listing of interfaces capable of handling <strong>%{problem_identifier}</strong> problems:'
         blank-slate:
           title: No interfaces to select
           no-services-text: Please select a service first. The selection to choose interfaces from will be inferred of your selection of services.
           no-interfaces-text: No interface of a necessary interface type available. Please %{add_link} one to Dalphi.
-          add-link-label: add
+          more-than-one-problem-identifier: The selected services are incompatible; they reveal different problem identifiers. The selection to choose interfaces from will be inferred of your selection of services. Please select a consistent set of services first.
+          add-interface-link-label: add
       services:
         headline: Services to use
