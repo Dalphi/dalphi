@@ -40,15 +40,20 @@ class SelectedInterfaces
         .removeClass('no-display')[0]
         .outerHTML
     $('li:not(.template)', $selectedInterfacesList).remove()
+
     for interfaceType, selectedInterface of data.selectedInterfaces
       displaySelected = if selectedInterface == null then 'no-display' else ''
       displayNotSelected = if selectedInterface == null then '' else 'no-display'
+      interfaceDescription = interfaceType
+      interfaceDescription = "#{interfaceType}: #{selectedInterface}" if selectedInterface
+
       $selectedInterfacesList.append(
         itemTemplate
-          .replace(/interfaceType/g, interfaceType)
+          .replace(/interfaceDescription/g, interfaceDescription)
           .replace(/displaySelected/g, displaySelected)
           .replace(/displayNotSelected/g, displayNotSelected)
       )
+
     $('[data-toggle="tooltip"]', $selectedInterfacesList).tooltip()
 
   changeState: (state) ->

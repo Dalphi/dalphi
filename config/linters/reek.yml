@@ -7,7 +7,7 @@ TooManyStatements:
 TooManyMethods:
   max_methods: 25
 TooManyInstanceVariables:
-  max_instance_variables: 5
+  max_instance_variables: 6
 UncommunicativeModuleName:
   accept:
     - !ruby/regexp /V[0-9]+/

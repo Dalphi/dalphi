@@ -10,7 +10,10 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = yield :interface_style_includes
-  body
+
+  - data_hash = {}
+  - data_hash = { 'no-turbolink' => 'true' } unless @use_turbolinks
+  body data=data_hash
     = render partial: 'shared/topbar', locals: { breadcrumbs: @breadcrumbs }
     = render 'shared/flash'
     .content-container.container-fluid
