@@ -2,7 +2,7 @@ class AnnotationDocumentManager
 
   _this = undefined
 
-  constructor: (dalphiBaseUrl, projectId, synchronousAjax = false) ->
+  constructor: (dalphiBaseUrl, projectId, synchronousRequest = false) ->
     _this = this
     this.dalphiBaseUrl = dalphiBaseUrl
     this.projectId = projectId
@@ -10,7 +10,7 @@ class AnnotationDocumentManager
     this.currentDocument = undefined
     this.maxAnnotationDocumentsToLoad = 1
     this.apiVersion = 'v1'
-    this.asynchronousAjax = !synchronousAjax
+    this.asynchronousRequest = !synchronousRequest
 
     this.initAjax()
     this.loadAnnotationDocuments()
@@ -72,7 +72,7 @@ class AnnotationDocumentManager
       url: requestOptions.url,
       dataType: 'json',
       data: requestOptions.data,
-      async: _this.asynchronousAjax,
+      async: _this.asynchronousRequest,
       success: (data) ->
         responseProcessor(data) if responseProcessor
         postUpdateCallback _this.next() if postUpdateCallback
