@@ -1,8 +1,8 @@
 - content_for :interface_style_includes do
   style
-    - @project.interfaces.each(&:compiled_stylesheet)
+    = @project.interfaces.each(&:compiled_stylesheet)
 
-.interfaces-staging
+.interfaces-staging data-dalphi-base-url="#{request.base_url}" data-project-id="#{@project.id}"
   - @project.interfaces.each do |interface|
     div class="#{@container_class}" data-interface-type="#{interface.interface_type}"
       == interface.template
