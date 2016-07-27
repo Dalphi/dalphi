@@ -9,7 +9,7 @@
                   input_html: { class: 'c-select' }
         = f.input :data,
                   as: :file,
-                  input_html: { multiple: true,
+                  input_html: { multiple: (action_name == 'new'),
                                 accept: upload_mime_types.join(',') }
   .row.btn-row
     .col-xs-12
