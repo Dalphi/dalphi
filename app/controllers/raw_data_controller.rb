@@ -4,9 +4,9 @@ class RawDataController < ApplicationController
 
   # GET /raw_data
   def index
-    return render RawDatum.where(project: @project) if request.xhr?
-    @raw_data = RawDatum
-                  .where(project: @project)
+    @raw_data = RawDatum.where(project: @project)
+    return render json: @raw_data if request.xhr?
+    @raw_data = @raw_data
                   .paginate(
                     page: params[:page],
                     per_page: Rails.configuration.x.dalphi['paginated-objects-per-page']['raw-data']

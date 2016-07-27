@@ -270,6 +270,7 @@ span {
 }
 
 .row {
+  // scss-lint:disable SelectorFormat
   &.pagination {
     text-align: center;
     width: 100%;
@@ -279,7 +280,7 @@ span {
       display: inline-block;
       font-size: 0;
 
-      &:before {
+      &::before {
         font-family: FontAwesome;
         font-size: 1rem;
       }
@@ -298,16 +299,16 @@ span {
     .previous_page {
       margin-right: 1rem;
 
-      &:before {
-        content: "";
+      &::before {
+        content: ''; // fa-arrow-left
       }
     }
 
     .next_page {
       margin-left: 1rem;
 
-      &:before {
-        content: "";
+      &::before {
+        content: ''; // fa-arrow-right
       }
     }
   }
