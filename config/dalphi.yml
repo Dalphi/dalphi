@@ -1,4 +1,7 @@
 test:
+  paginated-objects-per-page:
+    projects: 10
+    raw-data: 10
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:
@@ -6,6 +9,9 @@ test:
     url-response-checker: 3
 
 development:
+  paginated-objects-per-page:
+    projects: 10
+    raw-data: 10
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:
@@ -13,6 +19,9 @@ development:
     url-response-checker: 3
 
 production:
+  paginated-objects-per-page:
+    projects: 10
+    raw-data: 10
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:

@@ -53,3 +53,6 @@
                  label: t('activerecord.actions.project.new'),
                  href: new_project_path,
                  icon: 'plus'
+    .row.pagination
+      .col-xs-12
+        = will_paginate @projects

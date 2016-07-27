@@ -268,3 +268,47 @@ span {
     border-color: $color-5;
   }
 }
+
+.row {
+  &.pagination {
+    text-align: center;
+    width: 100%;
+
+    .next_page,
+    .previous_page {
+      display: inline-block;
+      font-size: 0;
+
+      &:before {
+        font-family: FontAwesome;
+        font-size: 1rem;
+      }
+    }
+
+    a,
+    em {
+      margin: .25rem;
+    }
+
+    em {
+      font-style: normal;
+      font-weight: bold;
+    }
+
+    .previous_page {
+      margin-right: 1rem;
+
+      &:before {
+        content: "";
+      }
+    }
+
+    .next_page {
+      margin-left: 1rem;
+
+      &:before {
+        content: "";
+      }
+    }
+  }
+}

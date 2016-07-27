@@ -51,3 +51,6 @@
                   type: 'primary',
                   label: t('activerecord.actions.raw-datum.new'),
                   href: new_project_raw_datum_path(@project), icon: 'plus'
+    .row.pagination
+      .col-xs-12
+        = will_paginate @raw_data
