@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./bin/helpers/message "TEASPOON"
+RAILS_ENV=test bundle exec teaspoon
