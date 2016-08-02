@@ -25,13 +25,15 @@ class AnnotationLifecycle
     )
 
   startIteration: ->
-    console.log 'AnnotationLifecycle: start iteration'
+    console.log 'AnnotationLifecycle: start iteration & clean container "interfaces-staging"'
+    $('.interfaces-staging > div:not(.template)').remove()
 
     processAnnotationDocument = (data) ->
       unless data
         alert('No annotation document payload available!')
         return
 
+      console.log 'process next document payload and call template instance'
       interfaceInstance = _this.interfaceInstances[data.interfaceType]
       template = _this.templates[data.interfaceType]
       interfaceInstance.iterate(template, data.payload)

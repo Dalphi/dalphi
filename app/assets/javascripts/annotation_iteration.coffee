@@ -13,7 +13,6 @@ class AnnotationIteration
     window.annotationLifecycle.registerInterfaceInstance(type, object)
 
   iterate: (template, data) ->
-    $('.interfaces-staging > div:not(.template)').remove()
     @currentData = data
     mustacheParsedTemplate = Mustache.render(
       template.outerHTML,
