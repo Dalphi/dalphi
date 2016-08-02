@@ -58,6 +58,100 @@ Start the application with `foreman`, so that every component is started correct
 foreman start
 ```
 
+## Creating an interface
+
+**TL;DR:**
+You will get all annotation document's payload data as a rendered mustache.js template.
+You will have to write back your changes with `saveChanges` of interited classes of `AnnotationIteration`.
+
+Create a template to render your data in order to be annotated by users.
+
+```html
+<h1>Paragraph Classification</h1>
+<p>{{{content}}}</p>
+{{#options}}
+    <button
+        class="btn btn-secondary"
+        onclick="window.text_nominal.annotateWith('{{.}}')">
+        {{.}}
+    </button>
+{{/options}}
+```
+
+It is allowed to use any valid HTML syntax in combination with the [mustache.js](https://github.com/janl/mustache.js/) templating language.
+The example template above can be avaluated with the following incoming annotation document.
+
+```javascript
+{
+	// ...
+	"content": "My <strong>content</strong>!",
+	"options": ["Yes", "No"]
+	// ...
+}
+```
+
+DALPHI will automatically render your template with the correct interface and iterate over the accessible annotation documents.
+
+You will note the JavaScript method `window.text_nominal.annotateWith` in the `button`'s `onclick` event.
+This method could look like the following and is part of a [coffee](http://coffeescript.org/) class which name has to match the interface type.
+
+```coffee
+class text_nominal extends AnnotationIteration
+    # uncomment to overwrite interface registration at AnnotationLifecylce
+    # constructor: ->
+    #    # implement your registration here or call `super`
+
+    # uncomment to overwrite standard mustache templating
+    # iterate: (template, data) ->
+    #    # implement your rendering here or call `super`
+
+    annotateWith: (label) ->
+        @currentData.label = label
+        this.saveChanges(@currentData)
+
+window.text_nominal = new text_nominal()
+```
+
+The method `text_nominal.annotateWith` is responsible for writing the annotated data back to the iteration's `@currentData` and saves it by calling `this.saveChanges`.
+It is possible to overwrite or hook to the super class' `constructor` and `iterate` method to gain full flexibility for implementing the interface.
+
+Finally you can style your interface with all the rich features of [SCSS](http://sass-lang.com/) like variables, nesting, mixins, inheritance and many more.
+
+```scss
+$white: #fff;
+$green: #93b449;
+$red: #c9302c;
+
+button {
+  color: $white;
+
+  &:active,
+  &:focus,
+  &:hover {
+    color: $white !important;
+  }
+
+  @mixin button-color-scheme($index, $base-color) {
+    &:nth-of-type(#{$index}) {
+      background-color: $base-color;
+      border-color: darken($base-color, 10);
+
+      &:hover {
+        background-color: darken($base-color, 5);
+      }
+
+      &:active,
+      &:focus {
+        background-color: darken($base-color, 10);
+      }
+    }
+  }
+
+  @include button-color-scheme(1, $green);
+  @include button-color-scheme(2, $red);
+}
+```
+
 ## API Documentation
 
 DALPHI uses [Swagger](http://swagger.io/) 2.0 (compatible to [OpenAPI](https://openapis.org/)) for an interactive documentation of its API.
