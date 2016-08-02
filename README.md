@@ -60,6 +60,10 @@ foreman start
 
 ## Creating an interface
 
+**TL;DR:**
+You will get all annotation document's payload data as a rendered mustache.js template.
+You will have to write back your changes with `saveChanges` of interited classes of `AnnotationIteration`.
+
 Create a template to render your data in order to be annotated by users.
 
 ```html
