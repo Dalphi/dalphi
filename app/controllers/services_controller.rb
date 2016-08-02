@@ -75,11 +75,13 @@ class ServicesController < ApplicationController
   # GET /services/1/refresh
   def refresh
     new_params = Service.params_from_url(@service.url)
+    redirect_target = edit_service_path(@service)
+
     if @service.update(new_params)
-      redirect_to edit_service_path(@service),
+      redirect_to redirect_target,
                   notice: I18n.t('services.refresh.success')
     else
-      redirect_to edit_service_path(@service),
+      redirect_to redirect_target,
                   error: I18n.t('services.refresh.error')
     end
   end
