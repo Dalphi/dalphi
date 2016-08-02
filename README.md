@@ -60,7 +60,7 @@ foreman start
 
 ## Creating an interface
 
-To create an interface it is senseful to start with a template to render your data in order to be annotated by users.
+Create a template to render your data in order to be annotated by users.
 
 ```html
 <h1>Paragraph Classification</h1>
@@ -73,6 +73,23 @@ To create an interface it is senseful to start with a template to render your da
     </button>
 {{/options}}
 ```
+
+It is allowed to use any valid HTML syntax in combination with the [mustache.js](https://github.com/janl/mustache.js/) templating language.
+The example template above can be avaluated with the following incoming annotation document.
+
+```json
+{
+	// ...
+	"content": "My <strong>content</strong>!",
+	"options": ["Yes", "No"]
+	// ...
+}
+```
+
+DALPHI will automatically render your template with the correct interface and iterate over the accessible annotation documents.
+
+You will note the JavaScript method `window.text_nominal.annotateWith` in the `button`'s `onclick` event.
+This method as part of the class which class name has to match the interface type could look like the following.
 
 ```coffee
 class text_nominal extends AnnotationIteration
@@ -90,6 +107,11 @@ class text_nominal extends AnnotationIteration
 
 window.text_nominal = new text_nominal()
 ```
+
+The method `text_nominal.annotateWith` is responsible for writing the annotated data back to the iteration's `@currentData` and saves it by calling `this.saveChanges`.
+It is possible to overwrite or hook to the super class' `constructor` and `iterate` method to gain full flexibility for implementing the interface.
+
+Finally you can style your interface with all the rich features of SCSS like variables, nesting, mixins, inheritance and many more.
 
 ```scss
 $white: #fff;
