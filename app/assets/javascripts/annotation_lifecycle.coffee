@@ -34,8 +34,6 @@ class AnnotationLifecycle
 
       interfaceInstance = _this.interfaceInstances[data.interfaceType]
       template = _this.templates[data.interfaceType]
-      console.log 'pre call death'
-      console.log template
       interfaceInstance.iterate(template, data.payload)
 
     this.annotationDocumentManager.requestNextDocumentPayload(processAnnotationDocument)
@@ -52,5 +50,4 @@ class AnnotationLifecycle
 
     this.annotationDocumentManager.saveDocumentPayload(data, nextIteration)
 
-
-window.annotationLifecycle = new AnnotationLifecycle()
+window.AnnotationLifecycle = AnnotationLifecycle
