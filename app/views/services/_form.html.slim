@@ -39,7 +39,7 @@
                method: 'get',
                href: refresh_service_path(service),
                label: t('services.refresh.button-label'),
-               icon: 'refresh' unless action_name == 'new'
+               icon: 'refresh' unless !defined?(service.id) || service.id.nil?
       = render 'shared/button',
                method: 'delete',
                confirm: t('delete-confirm'),
