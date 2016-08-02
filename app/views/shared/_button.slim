@@ -6,35 +6,36 @@ ruby:
   method = 'get' unless defined?(method) && method
   tooltip = false unless defined?(tooltip) && tooltip
   icon = nil unless defined?(icon) && icon
+  data = {} unless defined?(data)
   button_content = render 'shared/button_content',
                           icon: icon,
                           label: label
 
 - if type == 'submit'
   - disable_with = render('shared/button_content', icon: 'spinner', label: label).tr!('"', "'")
-  button name='button' type='submit' class='btn btn-primary' data-disable-with="#{disable_with}"
+  button name='button' type='submit' class='btn btn-primary' data-disable-with="#{disable_with}" data=data
     == button_content
 
 - elsif type == 'back'
-  a.btn.btn-secondary href='javascript:history.back()'
+  a.btn.btn-secondary href='javascript:history.back()' data=data
     == render 'shared/button_content',
               icon: 'chevron-left',
               label: t('back')
 
 - elsif method == 'delete' && tooltip
-  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{tooltip}"
+  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' data=data rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{tooltip}"
     == button_content
 
 - elsif method == 'delete' && !tooltip
-  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' rel='nofollow'
+  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' data=data rel='nofollow'
     == button_content
 
 - elsif tooltip
-  a.btn class="btn-#{type}" href="#{href}" data-toggle='tooltip' data-placement='bottom' title="#{tooltip}"
+  a.btn class="btn-#{type}" href="#{href}" data-toggle='tooltip' data-placement='bottom' data=data title="#{tooltip}"
     == button_content
 
 - else
-  a.btn class="btn-#{type}" href="#{href}"
+  a.btn class="btn-#{type}" href="#{href}" data=data
     == button_content
 
 coffee:

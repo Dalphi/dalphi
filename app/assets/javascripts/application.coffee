@@ -15,7 +15,9 @@
 #= require ace/mode-coffee
 #= require ace/mode-scss
 #= require ace/mode-html
-#= stub annotation_iteration
+#= require mustache
+#= require jquery.mustache
+#= require annotation_iteration
 
 $ ->
   new FastClick(document.body)

@@ -182,6 +182,8 @@ GEM
     minitest (5.9.0)
     modernizr-rails (2.7.1)
     multi_json (1.12.1)
+    mustache-js-rails (2.0.5)
+      railties (>= 3.1, <= 5.0)
     mysql2 (0.4.4)
     nio4r (1.2.1)
     nokogiri (1.6.8)
@@ -417,6 +419,7 @@ DEPENDENCIES
   letter_opener
   listen
   modernizr-rails
+  mustache-js-rails
   mysql2
   normalize-rails
   paperclip

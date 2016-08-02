@@ -1,0 +1,14 @@
+- content_for :interface_style_includes do
+  style
+    = @project.interfaces.map(&:compiled_stylesheet).join
+
+.interfaces-staging data-dalphi-base-url="#{request.base_url}" data-project-id="#{@project.id}"
+  coffee:
+    window.annotationLifecycle = new window.AnnotationLifecycle()
+  - @project.interfaces.each do |interface|
+    .template class="#{@container_class}" data-interface-type="#{interface.interface_type}"
+      == interface.template
+
+    script type='text/javascript'
+      == interface.compiled_java_script
+

@@ -23,7 +23,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_turbolinks
-    @use_turbolinks = !(controller_name == 'projects' && action_name == 'annotate')
+    blacklist = [
+      'projects#show',
+      'annotations#annotate'
+    ]
+    @use_turbolinks = !blacklist.include?("#{controller_name}##{action_name}")
   end
 
   def bake_breadcrumbs

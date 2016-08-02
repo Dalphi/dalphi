@@ -13,7 +13,7 @@ class AnnotationDocumentManager
     this.asynchronousRequest = !synchronousRequest
 
     this.initAjax()
-    this.loadAnnotationDocuments()
+    # this.loadAnnotationDocuments()
 
   # external API:
 
@@ -63,7 +63,10 @@ class AnnotationDocumentManager
   next: ->
     if this.documentStore.length > 0
       this.currentDocument = this.documentStore.shift()
-      return this.currentDocument.payload
+      return {
+        interfaceType: this.currentDocument.interface_type,
+        payload: this.currentDocument.payload
+      }
     false
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
