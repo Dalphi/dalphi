@@ -74,17 +74,14 @@ class ServicesController < ApplicationController
 
   # GET /services/1/refresh
   def refresh
-    ap 'call refresh!'
     new_params = Service.params_from_url(@service.url)
-    ap new_params
     if @service.update(new_params)
-      ap 'service updated'
-      flash[:notice] = I18n.t('services.refresh.success')
+      redirect_to edit_service_path(@service),
+                  notice: I18n.t('services.refresh.success')
     else
-      ap 'service failed to updated'
-      flash[:error] = I18n.t('services.refresh.error')
+      redirect_to edit_service_path(@service),
+                  error: I18n.t('services.refresh.error')
     end
-    render :edit
   end
 
   # DELETE /services/1
