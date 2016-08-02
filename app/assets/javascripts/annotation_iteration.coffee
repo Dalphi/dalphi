@@ -14,12 +14,12 @@ class AnnotationIteration
 
   iterate: (template, data) ->
     $('.interfaces-staging > div:not(.template)').remove()
-    $output = $(
-      Mustache.render(
-        template.outerHTML,
-        data
-      )
-    ).removeClass('template')
+    @currentData = data
+    mustacheParsedTemplate = Mustache.render(
+      template.outerHTML,
+      data
+    )
+    $output = $(mustacheParsedTemplate).removeClass('template')
     $('.interfaces-staging').append($output)
 
   saveChanges: (data) ->
