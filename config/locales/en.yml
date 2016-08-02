@@ -13,3 +13,6 @@ en:
     Even the all-powerful Pointing has no control about the blind texts it is an
   save: Save
   search: Search
+  site-title:
+    default: 'DALPHI'
+    schema: '%{title} • %{current_page}'
