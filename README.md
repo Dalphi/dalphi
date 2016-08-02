@@ -58,6 +58,74 @@ Start the application with `foreman`, so that every component is started correct
 foreman start
 ```
 
+## Creating an interface
+
+To create an interface it is senseful to start with a template to render your data in order to be annotated by users.
+
+```html
+<h1>Paragraph Classification</h1>
+<p>{{{content}}}</p>
+{{#options}}
+    <button
+        class="btn btn-secondary"
+        onclick="window.text_nominal.annotateWith('{{.}}')">
+        {{.}}
+    </button>
+{{/options}}
+```
+
+```coffee
+class text_nominal extends AnnotationIteration
+    # uncomment to overwrite interface registration at AnnotationLifecylce
+    # constructor: ->
+    #    # implement your registration here or call `super`
+
+    # uncomment to overwrite standard mustache templating
+    # iterate: (template, data) ->
+    #    # implement your rendering here or call `super`
+
+    annotateWith: (label) ->
+        @currentData.label = label
+        this.saveChanges(@currentData)
+
+window.text_nominal = new text_nominal()
+```
+
+```scss
+$white: #fff;
+$green: #93b449;
+$red: #c9302c;
+
+button {
+  color: $white;
+
+  &:active,
+  &:focus,
+  &:hover {
+    color: $white !important;
+  }
+
+  @mixin button-color-scheme($index, $base-color) {
+    &:nth-of-type(#{$index}) {
+      background-color: $base-color;
+      border-color: darken($base-color, 10);
+
+      &:hover {
+        background-color: darken($base-color, 5);
+      }
+
+      &:active,
+      &:focus {
+        background-color: darken($base-color, 10);
+      }
+    }
+  }
+
+  @include button-color-scheme(1, $green);
+  @include button-color-scheme(2, $red);
+}
+```
+
 ## API Documentation
 
 DALPHI uses [Swagger](http://swagger.io/) 2.0 (compatible to [OpenAPI](https://openapis.org/)) for an interactive documentation of its API.
