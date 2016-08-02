@@ -28,6 +28,10 @@ Rails.application.routes.draw do
   patch '/services/:id',
         to: 'services#update',
         constraints: { id: /\d+/ }
+  get '/services/:id/refresh',
+      to: 'services#refresh',
+      constraints: { id: /\d+/ },
+      as: 'refresh_service'
   delete '/services/:id',
         to: 'services#destroy',
         constraints: { id: /\d+/ }

@@ -23,3 +23,7 @@ en:
       bootstrap: Bootstrap
       machine-learning: Machine Learning
       merge: Merge
+    refresh:
+      button-label: Refresh
+      success: Service was successfully refreshed.
+      error: Error refreshing service details

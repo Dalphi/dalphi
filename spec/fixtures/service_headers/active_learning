@@ -2,10 +2,10 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-	"title":		"Test Active Learning Service",
+	"title":		"Test AL Service",
 	"version":		"1.0",
-	"description":		"An active learning dummy service that just implements the Who Are You API",
+	"description":		"A netcat based dummy service that pretends to implement the Who Are You API",
 	"role":			"active_learning",
 	"problem_id":		"ner",
-	"interface_types":	["text_nominal"]
+	"interface_types":	["text_nominal", "text_no_so_nominal"]
 }
