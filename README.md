@@ -184,3 +184,11 @@ The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integratio
 ## License
 
 See [LICENSE](https://raw.githubusercontent.com/DALPHI/DALPHI/master/LICENSE).
+
+## About Implisense
+
+![Implisense](https://github.com/Dalphi/dalphi/blob/master/app/assets/images/implisense-logo.png)
+
+DALPHI is maintained and funded by [Implisense](http://implisense.com/).
+
+We love open source software and are [hiring](http://implisense.com/en/jobs/)!
