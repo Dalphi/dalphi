@@ -18,8 +18,11 @@ en:
     name:
       one: Service
       other: Services
+      title-tooltip: version %{version}
     names:
       active-learning: Active Learning
       bootstrap: Bootstrap
       machine-learning: Machine Learning
       merge: Merge
+    label:
+      description: problem identifier

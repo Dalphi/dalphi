@@ -1,11 +1,15 @@
 li.list-group-item
   a href="#{edit_service_path(service)}" title="#{service.description}"
-    = service.title
-    span.label.label-default.pull-xs-right
-      = service.version
+    .service-title data-toggle='tooltip' data-placement='bottom' title="#{t('services.name.title-tooltip', version: service.version)}"
+      = service.title
+    span.label.label-default.pull-xs-right data-toggle='tooltip' data-placement='bottom' title="#{t('services.label.description')}"
+      = service.problem_id
     br
     small
       - if service.id
         = render 'services/shared/connectivity_sign',
                  service_instance: service,
                  children: service.url
+
+coffee:
+  $('[data-toggle="tooltip"]').tooltip()
