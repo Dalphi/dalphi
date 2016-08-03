@@ -2,7 +2,7 @@ li.list-group-item
   a href="#{edit_service_path(service)}" title="#{service.description}"
     .service-title data-toggle='tooltip' data-placement='bottom' title="#{t('services.name.title-tooltip', version: service.version)}"
       = service.title
-    span.label.label-default.pull-xs-right data-toggle='tooltip' data-placement='bottom' title="#{t('services.label.description')}"
+    span.tag.tag-default.pull-xs-right data-toggle='tooltip' data-placement='bottom' title="#{t('services.label.description')}"
       = service.problem_id
     br
     small
