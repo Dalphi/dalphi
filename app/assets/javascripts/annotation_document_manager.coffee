@@ -11,16 +11,28 @@ class AnnotationDocumentManager
     this.maxAnnotationDocumentsToLoad = 1
     this.apiVersion = 'v1'
     this.asynchronousRequest = !synchronousRequest
+    this.waitingForApi = false
+    this.requestNextDocumentCallback = undefined
 
     this.initAjax()
-    # this.loadAnnotationDocuments()
+    this.loadAnnotationDocuments()
 
   # external API:
 
   requestNextDocumentPayload: (calleeCallback) ->
-    unless this.currentDocument
+    if this.waitingForApi
+      # hook into a running request if one if being processed right now
+      _this.requestNextDocumentCallback = calleeCallback
+      return true
+
+    else unless this.currentDocument
+      # no annotation document is currently being processed
       nextDocument = this.next()
+
+      # an annotation document is already preloaded
       calleeCallback(nextDocument) if nextDocument
+
+      # request a new annotation document if none was preloaded
       this.loadAnnotationDocuments calleeCallback unless nextDocument
       return true
     false
@@ -56,17 +68,21 @@ class AnnotationDocumentManager
       }
     }
 
+    this.waitingForApi = true
     responseProcessor = (data) ->
+      console.log "AnnotationDocumentManager: loaded new annotation document (id: #{data[0].id})"
       _this.documentStore.push annotationDocument for annotationDocument in data
+      _this.waitingForApi = false
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
   next: ->
     if this.documentStore.length > 0
       this.currentDocument = this.documentStore.shift()
-      return {
-        interfaceType: this.currentDocument.interface_type,
-        payload: this.currentDocument.payload
-      }
+
+      nextPayload = {}
+      nextPayload[this.currentDocument.interface_type] = this.currentDocument.payload
+
+      return nextPayload
     false
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
@@ -78,7 +94,11 @@ class AnnotationDocumentManager
       async: _this.asynchronousRequest,
       success: (data) ->
         responseProcessor(data) if responseProcessor
-        postUpdateCallback _this.next() if postUpdateCallback
+        if _this.requestNextDocumentCallback
+          _this.requestNextDocumentCallback _this.next()
+          _this.requestNextDocumentCallback = undefined
+        else if postUpdateCallback
+          postUpdateCallback _this.next()
       error: (a, b, c) ->
         console.log "error requesting the annotation documents API " +
                     "(#{b} #{a.status}; #{c}) - request options & jqXHR:"

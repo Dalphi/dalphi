@@ -34,9 +34,11 @@ class AnnotationLifecycle
         return
 
       console.log 'process next document payload and call template instance'
-      interfaceInstance = _this.interfaceInstances[data.interfaceType]
-      template = _this.templates[data.interfaceType]
-      interfaceInstance.iterate(template, data.payload)
+      for interfaceType, payload of data
+        template = _this.templates[interfaceType]
+        interfaceInstance = _this.interfaceInstances[interfaceType]
+        interfaceInstance.iterate(template, payload)
+        break
 
     this.annotationDocumentManager.requestNextDocumentPayload(processAnnotationDocument)
 
