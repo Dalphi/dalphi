@@ -1,6 +1,13 @@
 class AnnotationDocumentsController < ApplicationController
-  before_action :set_project, only: [ :next ]
-  skip_before_action :authenticate_user!, only: :next if Rails.env.test?
+  before_action :set_project,
+                only: [ :next, :index ]
+  skip_before_action :authenticate_user!,
+                     only: :next if Rails.env.test?
+
+  # GET /projects/1/annotation_documents
+  # GET /projects/1/raw_data/1/annotation_documents
+  def index
+  end
 
   # PATCH /projects/1/annotation_documents/next/10
   def next
