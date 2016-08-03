@@ -10,6 +10,12 @@ ruby:
   button_content = render 'shared/button_content',
                           icon: icon,
                           label: label
+  title = ''
+  if tooltip
+    title = tooltip
+    data[:toggle] = 'tooltip'
+    data[:placement] = 'bottom'
+  end
 
 - if type == 'submit'
   - disable_with = render('shared/button_content', icon: 'spinner', label: label).tr!('"', "'")
@@ -22,20 +28,12 @@ ruby:
               icon: 'chevron-left',
               label: t('back')
 
-- elsif method == 'delete' && tooltip
-  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' data=data rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{tooltip}"
-    == button_content
-
-- elsif method == 'delete' && !tooltip
-  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method='delete' data=data rel='nofollow'
-    == button_content
-
-- elsif tooltip
-  a.btn class="btn-#{type}" href="#{href}" data-toggle='tooltip' data-placement='bottom' data=data title="#{tooltip}"
+- elsif method != 'get'
+  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method="#{method}" data=data rel='nofollow' title="#{title}"
     == button_content
 
 - else
-  a.btn class="btn-#{type}" href="#{href}" data=data
+  a.btn class="btn-#{type}" href="#{href}" data=data title="#{title}"
     == button_content
 
 coffee:

@@ -36,17 +36,17 @@
       = render 'shared/button',
                type: 'back'
       = render 'shared/button',
-               method: 'get',
+               method: 'patch',
                href: refresh_service_path(service),
                label: t('services.refresh.button-label'),
-               icon: 'refresh' unless !defined?(service.id) || service.id.nil?
+               icon: 'refresh' if action_name == 'edit'
       = render 'shared/button',
                method: 'delete',
                confirm: t('delete-confirm'),
                type: 'danger',
                href: service_path(service),
                label: t('delete'),
-               icon: 'times' if %w(edit refresh).include? action_name
+               icon: 'times' if action_name == 'edit'
       = render 'shared/button',
                type: 'submit',
                label: t('save'),
