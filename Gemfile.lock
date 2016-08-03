@@ -54,7 +54,7 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
-    bootstrap (4.0.0.alpha3.1)
+    bootstrap (4.0.0.alpha3)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
     bootstrap_tokenfield_rails (0.12.1)
@@ -394,7 +394,7 @@ DEPENDENCIES
   autoprefixer-rails
   awesome_print
   better_errors
-  bootstrap (~> 4.0.0.alpha3)
+  bootstrap (~> 4.0.0.alpha3, < 4.0.0.alpha3.1)
   bootstrap_tokenfield_rails
   brakeman
   byebug
