@@ -32,7 +32,14 @@ describe 'internal API', ->
   )
 
   it('returns an annotation document equal to the FactoryGirl definition', ->
-    documentPayload = @manager.next()
+    nextDocumentDefinition = @manager.next()
+    expect(nextDocumentDefinition).toBeDefined()
+
+    interfaceType = Object.keys(nextDocumentDefinition)[0]
+    expect(interfaceType).toBeDefined()
+    expect(interfaceType).toBe 'text_nominal'
+
+    documentPayload = nextDocumentDefinition[interfaceType]
     expect(documentPayload).toBeDefined()
     expect(documentPayload).not.toBe false
     expect(documentPayload.label).toBe 'testlabel'
@@ -45,7 +52,15 @@ describe 'external API', ->
   describe 'requestNextDocumentPayload', ->
     it('is equal as the manager\'s currentDocument payload', ->
       expect(@manager.documentStore.length).toBe 1
-      documentPayload = @manager.next()
+      nextDocumentDefinition = @manager.next()
+      expect(nextDocumentDefinition).toBeDefined()
+
+      interfaceType = Object.keys(nextDocumentDefinition)[0]
+      expect(interfaceType).toBeDefined()
+      expect(interfaceType).toBe 'text_nominal'
+
+      documentPayload = nextDocumentDefinition[interfaceType]
+      expect(documentPayload).toBeDefined()
       expect(@manager.currentDocument.payload).toBe documentPayload
     )
 
@@ -53,7 +68,9 @@ describe 'external API', ->
       expect(@manager.documentStore.length).toBe 1
       callbackCalled = false
 
-      responseProcesor = (documentPayload) ->
+      responseProcesor = (nextDocumentDefinition) ->
+        interfaceType = Object.keys(nextDocumentDefinition)[0]
+        documentPayload = nextDocumentDefinition[interfaceType]
         expect(documentPayload).toBeDefined()
         expect(documentPayload).not.toBe false
         expect(documentPayload.label).toBe 'testlabel'
@@ -68,7 +85,7 @@ describe 'external API', ->
 
     it('will load new documents if the buffer is empty', ->
       expect(@manager.documentStore.length).toBe 1
-      documentPayload = @manager.next()
+      @manager.next()
       @manager.currentDocument = undefined
       expect(@manager.documentStore.length).toBe 0
 
@@ -76,6 +93,7 @@ describe 'external API', ->
       ajaxRequest = false
 
       simulatedAjaxResponse = [{
+        interface_type: 'mocked_nominal',
         payload: {
           label: 'mockedlabel',
           content: 'mockedcontent',
@@ -88,7 +106,10 @@ describe 'external API', ->
         successCallback = ajaxOpts.success
         successCallback(simulatedAjaxResponse)
 
-      responseProcesor = (documentPayload) ->
+      responseProcesor = (nextDocumentDefinition) ->
+        interfaceType = Object.keys(nextDocumentDefinition)[0]
+        documentPayload = nextDocumentDefinition[interfaceType]
+
         expect(documentPayload).toBeDefined()
         expect(documentPayload).not.toBe false
         expect(documentPayload.label).toBe 'mockedlabel'
