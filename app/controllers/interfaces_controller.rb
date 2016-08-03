@@ -37,11 +37,10 @@ class InterfacesController < ApplicationController
   def update
     if @interface.update(converted_attributes)
       flash[:notice] = t('interfaces.action.update.success')
-      render :edit
     else
       flash[:error] = t('interfaces.action.update.error')
-      render :edit
     end
+    render :edit
   end
 
   # DELETE /interfaces/1
