@@ -27,9 +27,9 @@ class AnnotationDocumentsController < ApplicationController
 
     def annotation_documents(count)
       count = 1 unless count
+      initial_dalphi_commit_datetime = DateTime.parse '07.03.2016 09:39:24 MEZ'
       timeout = Rails.configuration.x.dalphi['timeouts']['annotation-document-edit-time']
-      now = Time.zone.now
-      time_range = (now - timeout.minutes)..now
+      time_range = initial_dalphi_commit_datetime..(Time.zone.now - timeout.minutes)
 
       AnnotationDocument.where(project: @project,
                                skipped: [nil, false],

@@ -61,7 +61,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
     compare_annotation_document_with_json_response(another_annotation_document, json.last)
   end
 
-  it 'returns 2 annotation documents sequential' do
+  it 'returns two different annotation documents sequential' do
     another_annotation_document = FactoryGirl.create(
                                     :annotation_document_with_different_payload,
                                     raw_datum: @annotation_document.raw_datum
