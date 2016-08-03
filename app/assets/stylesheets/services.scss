@@ -22,6 +22,10 @@
     &:first-of-type {
       border-radius: 0;
     }
+
+    .service-title {
+      display: inline-block;
+    }
   }
 
   .address-label {

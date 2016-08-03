@@ -33,14 +33,20 @@
 
   .row.btn-row
     .col-xs-12
-      = render 'shared/button', type: 'back'
+      = render 'shared/button',
+               type: 'back'
+      = render 'shared/button',
+               method: 'patch',
+               href: refresh_service_path(service),
+               label: t('services.refresh.button-label'),
+               icon: 'refresh' if action_name == 'edit'
       = render 'shared/button',
                method: 'delete',
                confirm: t('delete-confirm'),
                type: 'danger',
                href: service_path(service),
                label: t('delete'),
-               icon: 'times' if params[:action] == 'edit'
+               icon: 'times' if action_name == 'edit'
       = render 'shared/button',
                type: 'submit',
                label: t('save'),
