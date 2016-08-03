@@ -106,8 +106,8 @@ class ServicesController < ApplicationController
         flash_text = I18n.t('services.searching.already-taken-url')
         return flash_text if url_error && url_error[:error] == :taken
       else
-        return I18n.t('services.searching.no-url') if uri.empty?
         return I18n.t('services.searching.general-error') if uri.present?
+        return I18n.t('services.searching.no-url')
       end
       nil
     end

@@ -6,7 +6,7 @@ ruby:
   method = 'get' unless defined?(method) && method
   tooltip = false unless defined?(tooltip) && tooltip
   icon = nil unless defined?(icon) && icon
-  data = {} unless defined?(data)
+  data = {} unless defined?(data) && data
   button_content = render 'shared/button_content',
                           icon: icon,
                           label: label
