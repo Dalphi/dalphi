@@ -74,11 +74,8 @@ group :development, :test do
   gem 'phantomjs'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'teaspoon-jasmine', git: 'https://github.com/modeset/teaspoon'
   gem 'webmock'
-
-  git 'https://github.com/modeset/teaspoon' do
-    gem 'teaspoon-jasmine'
-  end
 end
 
 group :production do
