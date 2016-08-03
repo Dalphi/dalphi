@@ -9,6 +9,11 @@ class AnnotationDocumentsController < ApplicationController
   def index
   end
 
+  # GET /projects/1/annotation_documents/1
+  # GET /projects/1/raw_data/1/annotation_documents/1
+  def show
+  end
+
   # PATCH /projects/1/annotation_documents/next/10
   def next
     documents = annotation_documents(annotation_document_params['count'])
