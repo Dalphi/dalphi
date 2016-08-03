@@ -86,6 +86,8 @@ class AnnotationDocumentManager
     false
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
+    console.log "apiCall: request #{requestOptions.url}"
+    console.log requestOptions
     $.ajax
       type: requestOptions.type,
       url: requestOptions.url,
