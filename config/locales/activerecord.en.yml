@@ -5,6 +5,7 @@ en:
       new: 'New'
     submit:
       edit: 'Edit %{model}'
+      refresh: 'Edit %{model}'
   activerecord:
     actions:
       user:

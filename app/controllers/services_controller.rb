@@ -1,7 +1,15 @@
 class ServicesController < ApplicationController
   include ServiceRoles
 
-  before_action :set_service, only: [:show, :edit, :check_connectivity, :update, :destroy]
+  before_action :set_service,
+                only: [
+                  :check_connectivity,
+                  :destroy,
+                  :edit,
+                  :refresh,
+                  :show,
+                  :update
+                ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
 
   # GET /services
@@ -61,6 +69,20 @@ class ServicesController < ApplicationController
       redirect_to services_url, notice: 'Service was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  # GET /services/1/refresh
+  def refresh
+    new_params = Service.params_from_url(@service.url)
+    redirect_target = edit_service_path(@service)
+
+    if @service.update(new_params)
+      redirect_to redirect_target,
+                  notice: I18n.t('services.refresh.success')
+    else
+      redirect_to redirect_target,
+                  error: I18n.t('services.refresh.error')
     end
   end
 
