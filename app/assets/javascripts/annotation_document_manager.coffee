@@ -63,10 +63,11 @@ class AnnotationDocumentManager
   next: ->
     if this.documentStore.length > 0
       this.currentDocument = this.documentStore.shift()
-      return {
-        interfaceType: this.currentDocument.interface_type,
-        payload: this.currentDocument.payload
-      }
+
+      nextPayload = {}
+      nextPayload[this.currentDocument.interface_type] = this.currentDocument.payload
+
+      return nextPayload
     false
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
