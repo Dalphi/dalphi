@@ -11,7 +11,7 @@ nav.topbar.navbar
 
   ol.breadcrumb
     - breadcrumbs.each do |breadcrumb|
-      li
+      li.breadcrumb-item
         a href="#{breadcrumb[:path]}"
           = breadcrumb[:label]
 
