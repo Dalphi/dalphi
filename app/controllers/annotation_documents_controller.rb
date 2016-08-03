@@ -1,12 +1,16 @@
 class AnnotationDocumentsController < ApplicationController
   before_action :set_project,
-                only: [ :next, :index ]
+                only: [:next, :index]
+  before_action :set_raw_datum,
+               only: [:index]
   skip_before_action :authenticate_user!,
                      only: :next if Rails.env.test?
 
   # GET /projects/1/annotation_documents
   # GET /projects/1/raw_data/1/annotation_documents
   def index
+    @annotation_documents = AnnotationDocument.where(project: @project)
+    @annotation_documents = @annotation_documents.where(raw_datum: @raw_datum) if @raw_datum
   end
 
   # GET /projects/1/annotation_documents/1
@@ -35,6 +39,13 @@ class AnnotationDocumentsController < ApplicationController
       @project = Project.find(params[:project_id])
     rescue
       render_error_response 400, 'set-project.not-found'
+    end
+
+    def set_raw_datum
+      raw_datum_id = params[:raw_datum_id]
+      @raw_datum = RawDatum.find(raw_datum_id) if raw_datum_id
+    rescue
+      @raw_datum = false
     end
 
     def annotation_documents(count)

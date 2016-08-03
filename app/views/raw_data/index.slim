@@ -13,15 +13,10 @@
               th
           tbody
             - @raw_data.each do |raw_datum|
-              tr
+              tr data-href="#{edit_project_raw_datum_path(@project, raw_datum)}"
                 td = raw_datum.filename
                 td = raw_datum.shape
                 td.controls
-                  = render 'shared/button',
-                           type: 'link',
-                           href: edit_project_raw_datum_path(@project, raw_datum),
-                           icon: 'edit',
-                           tooltip: t('activerecord.actions.raw-datum.edit')
                   = render 'shared/button',
                            type: 'link',
                            href: project_raw_datum_path(@project, raw_datum),

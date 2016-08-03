@@ -33,6 +33,12 @@ en:
         one: interface
         other: interfaces
     attributes:
+      annotation_document:
+        rank: rank
+        raw_datum: raw datum
+        skipped: skipped
+        annotated: annotated
+        interface_type: interface type
       project:
         title: title
         description: description
