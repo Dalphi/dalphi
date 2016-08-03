@@ -2,7 +2,10 @@ class AnnotationDocumentsController < ApplicationController
   before_action :set_project, only: [ :next ]
   skip_before_action :authenticate_user!, only: :next if Rails.env.test?
 
-  # PATCH /projects/1/annotation_documents/next/10
+
+  INITIAL_DALPHI_COMMIT_DATETIME = DateTime.parse '07.03.2016 09:39:24 MEZ'
+
+  # PATCH /projects/1/annotation_documents/next?count=10
   def next
     documents = annotation_documents(annotation_document_params['count'])
 
@@ -28,8 +31,7 @@ class AnnotationDocumentsController < ApplicationController
     def annotation_documents(count)
       count = 1 unless count
       timeout = Rails.configuration.x.dalphi['timeouts']['annotation-document-edit-time']
-      now = Time.zone.now
-      time_range = (now - timeout.minutes)..now
+      time_range = INITIAL_DALPHI_COMMIT_DATETIME..(Time.zone.now - timeout.minutes)
 
       AnnotationDocument.where(project: @project,
                                skipped: [nil, false],

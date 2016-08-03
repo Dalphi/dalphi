@@ -9,7 +9,6 @@ class AnnotationIteration
   # external API:
 
   register: (type, object) ->
-    console.log 'AnnotationIteration register'
     window.annotationLifecycle.registerInterfaceInstance(type, object)
 
   iterate: (template, data) ->
