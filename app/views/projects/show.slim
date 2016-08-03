@@ -24,6 +24,13 @@
                icon: 'edit',
                href: edit_project_path(@project)
       = render 'shared/button',
+               type: 'danger',
+               label: t('activerecord.actions.project.delete'),
+               href: project_path(@project),
+               icon: 'trash',
+               method: 'delete',
+               confirm: t('delete-confirm')
+      = render 'shared/button',
                label: t('projects.bootstrap.title'),
                icon: 'rocket',
                type: 'primary',

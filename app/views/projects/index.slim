@@ -7,30 +7,11 @@
             tr
               th = t('activerecord.attributes.project.title')
               th = t('activerecord.attributes.project.description')
-              th
           tbody
             - @projects.each do |project|
               tr data-href="#{project_path(project)}"
                 td = project.title
                 td = project.description
-                td.controls
-                  = render 'shared/button',
-                    type: 'link',
-                    tooltip: t('activerecord.actions.raw-datum.edit'),
-                    href: project_raw_data_path(project),
-                    icon: 'database'
-                  = render 'shared/button',
-                    type: 'link',
-                    tooltip: t('activerecord.actions.project.edit'),
-                    href: edit_project_path(project),
-                    icon: 'edit'
-                  = render 'shared/button',
-                    type: 'link',
-                    tooltip: t('activerecord.actions.project.delete'),
-                    href: project_path(project),
-                    icon: 'trash',
-                    method: 'delete',
-                    confirm: t('delete-confirm')
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()
       - else
