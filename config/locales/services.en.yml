@@ -18,6 +18,7 @@ en:
     name:
       one: Service
       other: Services
+      title-tooltip: version %{version}
     names:
       active-learning: Active Learning
       bootstrap: Bootstrap
@@ -27,3 +28,5 @@ en:
       button-label: Refresh
       success: Service was successfully refreshed.
       error: Error refreshing service details
+    label:
+      description: problem identifier
