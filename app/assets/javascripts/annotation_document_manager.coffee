@@ -13,15 +13,18 @@ class AnnotationDocumentManager
     this.asynchronousRequest = !synchronousRequest
     this.waitingForApi = false
     this.requestNextDocumentCallback = undefined
+    this.historyRequest = false
 
     this.initAjax()
-    this.loadAnnotationDocuments()
+    this.initialAnnotationDocumentPreloading()
 
   # external API:
 
   requestNextDocumentPayload: (calleeCallback) ->
+    this.historyRequest = false
+
     if this.waitingForApi
-      # hook into a running request if one if being processed right now
+      # hook into a running request if one is being processed right now
       _this.requestNextDocumentCallback = calleeCallback
       return true
 
@@ -36,6 +39,15 @@ class AnnotationDocumentManager
       this.loadAnnotationDocuments calleeCallback unless nextDocument
       return true
     false
+
+  requestPreviousDocumentPayload: (calleeCallback) ->
+    this.historyRequest = true
+
+    # put the rendered, but not annotated document back in the queue
+    _this.documentStore.unshift _this.currentDocument
+
+    # get a new document id from the history state & load it
+    _this.loadAnnotationDocumentWithId(history.state.annotationDocumentId, calleeCallback)
 
   saveDocumentPayload: (modifiedPayload, calleeCallback = false) ->
     annotationDocument = this.currentDocument
@@ -58,6 +70,11 @@ class AnnotationDocumentManager
       headers:
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 
+  initialAnnotationDocumentPreloading: ->
+    documentId = this.documentIdFromUrl()
+    this.loadAnnotationDocumentWithId(documentId) if documentId
+    this.loadAnnotationDocuments() unless documentId
+
   loadAnnotationDocuments: (postUpdateCallback) ->
     requestOptions = {
       type: 'PATCH',
@@ -75,6 +92,20 @@ class AnnotationDocumentManager
       _this.waitingForApi = false
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
+  loadAnnotationDocumentWithId: (annotationDocumentId, postUpdateCallback) ->
+    baseUrl = "#{this.dalphiBaseUrl}/api/#{this.apiVersion}"
+    requestOptions = {
+      type: 'GET',
+      url: "#{baseUrl}/annotation_documents/#{annotationDocumentId}"
+    }
+
+    this.waitingForApi = true
+    responseProcessor = (annotationDocument) ->
+      console.log "AnnotationDocumentManager: loaded concrete annotation document (id: #{annotationDocument.id}, history request)"
+      _this.documentStore.unshift annotationDocument
+      _this.waitingForApi = false
+    this.apiCall requestOptions, responseProcessor, postUpdateCallback
+
   next: ->
     if this.documentStore.length > 0
       this.currentDocument = this.documentStore.shift()
@@ -82,6 +113,7 @@ class AnnotationDocumentManager
       nextPayload = {}
       nextPayload[this.currentDocument.interface_type] = this.currentDocument.payload
 
+      this.rewriteHistory() unless this.historyRequest
       return nextPayload
     false
 
@@ -104,5 +136,33 @@ class AnnotationDocumentManager
                     "(#{b} #{a.status}; #{c}) - request options & jqXHR:"
         console.log JSON.stringify(requestOptions)
         console.log JSON.stringify(a)
+
+  documentIdFromUrl: ->
+    searchString = document.location.search
+    index = searchString.search(/documentId=[0-9]+/)
+    return undefined if index < 0
+
+    index += + 'documentId='.length
+    endPosition = searchString.indexOf('&', index)
+    searchString.substring(index, endPosition) if endPosition > 0
+    searchString.substring index if endPosition < 0
+
+  rewriteHistory: ->
+    # get the last, through history changeable part of the current url
+    pathnameArray = document.location.pathname.split '/'
+    lastPathElement = pathnameArray[pathnameArray.length - 1]
+
+    # get the search string (GET arguments) and change the current document id
+    currentSearchString = document.location.search
+    documentArgument = "documentId=#{this.currentDocument.id}"
+    if currentSearchString.indexOf('documentId') > 0
+      newSearchString = currentSearchString.replace(/documentId=[0-9]+/, documentArgument)
+    else
+      newSearchString = "#{currentSearchString}&#{documentArgument}" if currentSearchString
+      newSearchString = "?#{documentArgument}" unless currentSearchString
+
+    window.history.pushState { annotationDocumentId: this.currentDocument.id },
+                             document.title,
+                             "#{lastPathElement}#{newSearchString}"
 
 window.AnnotationDocumentManager = AnnotationDocumentManager
