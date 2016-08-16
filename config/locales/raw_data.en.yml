@@ -1,6 +1,9 @@
 en:
   raw-data:
     edit-title: Edit %{raw_datum_label}
+    annotation-documents:
+      title: Associated annotation documents
+      blank-slate: No annotation documents associated.
     action:
       create:
         success: Raw data was successfully created.

@@ -2,7 +2,7 @@
   .row
     .col-xs-12
       .card
-        .card-header
+        h3.card-header
           = t 'raw-data.edit-title',
               raw_datum_label: @raw_datum.label
         .card-block
@@ -14,7 +14,7 @@
   .row
     .col-xs-12
       .card
-        .card-header
+        h3.card-header
           = @raw_datum.label
         .card-block.editor
           .code-input#raw-data
@@ -24,7 +24,15 @@
   .row
     .col-xs-12
       .card
-        .card-header
-          | foo
-        .card-block
-          | bar
+        h3.card-header
+          = t('raw-data.annotation-documents.title')
+        - if @raw_datum.annotation_documents.any?
+          .card-block.table
+            = render 'shared/annotation_documents',
+                     project: @project,
+                     pagination: false,
+                     annotation_documents: @raw_datum.annotation_documents
+        - else
+          .card-block
+            p.card-text
+              = t('raw-data.annotation-documents.blank-slate')

@@ -234,14 +234,25 @@ input {
     margin: $services-list-group-margin;
   }
 
+  h3 {
+    &.card-header {
+      margin-bottom: 0;
+    }
+  }
+
   .card-block {
-    &.editor {
+    &.editor,
+    &.table {
       padding: 0;
 
       // scss-lint:disable SelectorFormat
-      .ace_editor {
-        margin: 0;
+      > .ace_editor {
+        margin-bottom: 0;
         width: 100%;
+      }
+
+      > table {
+        margin-bottom: -1rem;
       }
     }
   }

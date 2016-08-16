@@ -26,6 +26,9 @@
                            tooltip: t('activerecord.actions.raw-datum.delete')
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()
+        .row.pagination
+          .col-xs-12
+            = will_paginate @raw_data
       - else
         .jumbotron
           h1.display-3
@@ -49,6 +52,3 @@
                   type: 'primary',
                   label: t('activerecord.actions.raw-datum.new'),
                   href: new_project_raw_datum_path(@project), icon: 'plus'
-    .row.pagination
-      .col-xs-12
-        = will_paginate @raw_data
