@@ -9,10 +9,10 @@ class AnnotationDocumentsController < ApplicationController
   # GET /projects/1/annotation_documents
   # GET /projects/1/raw_data/1/annotation_documents
   def index
-    @annotation_documents = AnnotationDocument.where(project: @project)
-    @annotation_documents = @annotation_documents.where(raw_datum: @raw_datum) if @raw_datum
+    annotation_documents = AnnotationDocument.where(project: @project)
+    annotation_documents = annotation_documents.where(raw_datum: @raw_datum) if @raw_datum
     per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['annotation-documents']
-    @annotation_documents = @annotation_documents
+    @annotation_documents = annotation_documents
                               .paginate(
                                 page: params[:page],
                                 per_page: per_page
