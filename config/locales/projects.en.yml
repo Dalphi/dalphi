@@ -2,7 +2,7 @@ en:
   projects:
     merge:
       title: Merge
-      tooltip: combine labeled annotation documents with the corpus
+      tooltip: combine labeled annotation documents with correspondig raw data
       success: '%{success_count} of %{record_count} raw data have successfully been merged'
       error: An error occured after sending data to the merge service
     annotate:
