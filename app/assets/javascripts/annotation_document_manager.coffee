@@ -101,7 +101,7 @@ class AnnotationDocumentManager
 
     this.waitingForApi = true
     responseProcessor = (annotationDocument) ->
-      console.log "AnnotationDocumentManager: loaded concrete annotation document (id: #{annotationDocument.id}, history request)"
+      console.log "AnnotationDocumentManager: loaded known annotation document (history request)"
       _this.documentStore.unshift annotationDocument
       _this.waitingForApi = false
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
