@@ -1,0 +1,15 @@
+.container.annotation-documents
+  .row
+    .col-xs-12
+      .card
+        h3.card-header
+          = t('activerecord.attributes.annotation_document.payload')
+        .card-block.editor
+          .code-input#annotation-documents
+            = @annotation_document.payload
+          coffee:
+            window.annotationDocumentsEditor = new window.AnnotationDocumentsEditor()
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button',
+               type: 'back'
