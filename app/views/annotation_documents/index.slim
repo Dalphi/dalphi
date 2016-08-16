@@ -22,6 +22,23 @@
       .col-xs-12
          = render 'shared/button', type: 'back'
          = render 'shared/button',
+                  label: t('projects.annotate.title'),
+                  tooltip: t('projects.annotate.tooltip'),
+                  icon: 'tags',
                   type: 'primary',
-                  label: t('activerecord.actions.raw-datum.new'),
-                  href: new_project_raw_datum_path(@project), icon: 'plus'
+                  data: { no_turbolink: 'true' },
+                  href: project_annotate_path(@project)
+         = render 'shared/button',
+                  label: t('projects.merge.title'),
+                  tooltip: t('projects.merge.tooltip'),
+                  icon: 'compress',
+                  type: 'submit',
+                  href: project_merge_path(@project),
+                  method: 'post'
+         = render 'shared/button',
+                  label: t('projects.bootstrap.title'),
+                  label: t('annotation-documents.blank-slate.generate-annotation-documents'),
+                  icon: 'plus',
+                  type: 'submit',
+                  href: project_bootstrap_path(@project),
+                  method: 'post'
