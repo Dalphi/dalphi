@@ -6,6 +6,8 @@ table.table.table-striped.table-hover
       th
         = t('activerecord.attributes.annotation_document.raw_datum')
       th
+        = t('activerecord.attributes.annotation_document.annotated')
+      th
         = t('activerecord.attributes.annotation_document.skipped')
       th
         = t('activerecord.attributes.annotation_document.interface_type')
@@ -17,6 +19,8 @@ table.table.table-striped.table-hover
         td
           - raw_datum = annotation_document.raw_datum
           = raw_datum.filename
+        td
+          = boolean_icon(annotation_document.skipped == false)
         td
           = boolean_icon(annotation_document.skipped)
         td
