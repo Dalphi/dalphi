@@ -23,4 +23,7 @@ class AnnotationIteration
   saveChanges: (data) ->
     window.annotationLifecycle.saveChanges(data)
 
+  skip: ->
+    window.annotationLifecycle.skip()
+
 window.AnnotationIteration = AnnotationIteration
