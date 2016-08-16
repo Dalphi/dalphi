@@ -1,6 +1,42 @@
 .container
-  == render 'form',
-            project: @project,
-            raw_datum: @raw_datum,
-            raw_data_shapes: RawDatum::SHAPES,
-            upload_mime_types: RawDatum::MIME_TYPES.values.first
+  .row
+    .col-xs-12
+      .card
+        h3.card-header
+          = t 'raw-data.edit-title',
+              raw_datum_label: @raw_datum.label
+        .card-block
+          == render 'form',
+                    project: @project,
+                    raw_datum: @raw_datum,
+                    raw_data_shapes: RawDatum::SHAPES,
+                    upload_mime_types: RawDatum::MIME_TYPES.values.first
+  .row
+    .col-xs-12
+      .card
+        h3.card-header
+          = @raw_datum.label
+        .card-block.editor
+          .code-input#raw-data
+            = File.new(@raw_datum.data.path).read
+          coffee:
+            window.rawDataEditor = new window.RawDataEditor()
+  .row
+    .col-xs-12
+      .card
+        h3.card-header
+          = t('raw-data.annotation-documents.title')
+        - if @raw_datum.annotation_documents.any?
+          .card-block.table
+            = render 'shared/annotation_documents',
+                     project: @project,
+                     pagination: false,
+                     annotation_documents: @raw_datum.annotation_documents
+        - else
+          .card-block
+            p.card-text
+              = t('raw-data.annotation-documents.blank-slate')
+  .row.btn-row
+    .col-xs-12
+      = render 'shared/button',
+               type: 'back'

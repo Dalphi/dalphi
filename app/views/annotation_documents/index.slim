@@ -1,0 +1,10 @@
+.container.annotation-documents
+  = render 'shared/project_header',
+           project: @project,
+           active_label: 'annotation-documents'
+  .row
+    .col-xs-12
+      - if @annotation_documents.any?
+        = render 'shared/annotation_documents',
+                 project: @project,
+                 annotation_documents: @annotation_documents

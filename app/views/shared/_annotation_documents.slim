@@ -1,0 +1,29 @@
+table.table.table-striped.table-hover
+  thead.thead-default
+    tr
+      th
+        = t('activerecord.attributes.annotation_document.rank')
+      th
+        = t('activerecord.attributes.annotation_document.raw_datum')
+      th
+        = t('activerecord.attributes.annotation_document.annotated')
+      th
+        = t('activerecord.attributes.annotation_document.interface_type')
+  tbody
+    - annotation_documents.each do |annotation_document|
+      tr data-href="#{project_annotation_document_path(project, annotation_document)}"
+        td
+          = annotation_document.rank
+        td
+          - raw_datum = annotation_document.raw_datum
+          = raw_datum.filename
+        td
+          = boolean_icon(annotation_document.skipped)
+        td
+          = annotation_document.interface_type
+    coffee:
+      window.clickableTableRow = new window.ClickableTableRow()
+- if !defined?(pagination) || pagination
+  .row.pagination
+    .col-xs-12
+      = will_paginate annotation_documents

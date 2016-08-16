@@ -54,7 +54,11 @@ Rails.application.routes.draw do
   # Projects
 
   resources :projects do
-    resources :raw_data, except: [:show]
+    resources :raw_data, except: [:show] do
+      resources :annotation_documents, only: [:index, :show]
+    end
+
+    resources :annotation_documents, only: [:index, :show]
 
     get '/annotate',
         to: 'annotations#annotate',
