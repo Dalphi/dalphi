@@ -15,8 +15,8 @@ module ApplicationHelper
   end
 
   # this method smells of :reek:ControlParameter
-  def inverse_boolean_icon(boolean_value)
-    return fa_icon('check') if boolean_value == false
+  def boolean_icon(boolean_value)
+    return fa_icon('check') if boolean_value
     fa_icon('times')
   end
 end
