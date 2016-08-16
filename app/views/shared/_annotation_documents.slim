@@ -18,7 +18,7 @@ table.table.table-striped.table-hover
           - raw_datum = annotation_document.raw_datum
           = raw_datum.filename
         td
-          = boolean_icon(annotation_document.skipped)
+          = inverse_boolean_icon(annotation_document.skipped)
         td
           = annotation_document.interface_type
     coffee:
