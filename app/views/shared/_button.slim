@@ -19,8 +19,14 @@ ruby:
 
 - if type == 'submit'
   - disable_with = render('shared/button_content', icon: 'spinner', label: label).tr!('"', "'")
-  button name='button' type='submit' class='btn btn-primary' data-disable-with="#{disable_with}" data=data
-    == button_content
+
+  - if href == '#'
+    button name='button' type='submit' class='btn btn-primary' data-disable-with="#{disable_with}" data=data
+      == button_content
+
+  - else
+    a.btn class='btn-primary' href="#{href}" data-disable-with="#{disable_with}" data=data title="#{title}" data-method="#{method}"
+      == button_content
 
 - elsif type == 'back'
   a.btn.btn-secondary href='javascript:history.back()' data=data
@@ -36,5 +42,6 @@ ruby:
   a.btn class="btn-#{type}" href="#{href}" data=data title="#{title}"
     == button_content
 
-coffee:
-  $('[data-toggle="tooltip"]').tooltip()
+- if tooltip
+  coffee:
+    $('[data-toggle="tooltip"]').tooltip()

@@ -65,10 +65,10 @@ Rails.application.routes.draw do
         as: 'annotate'
   end
 
-  get '/projects/:id/bootstrap',
+  post '/projects/:id/bootstrap',
       to: 'projects#bootstrap',
       as: 'project_bootstrap'
-  get '/projects/:id/merge',
+  post '/projects/:id/merge',
       to: 'projects#merge',
       as: 'project_merge'
   get '/projects/:id/check_problem_identifiers',

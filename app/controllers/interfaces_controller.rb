@@ -36,12 +36,11 @@ class InterfacesController < ApplicationController
   # PATCH/PUT /interfaces/1
   def update
     if @interface.update(converted_attributes)
-      redirect_to interfaces_path,
-                  notice: t('interfaces.action.update.success')
+      flash[:notice] = t('interfaces.action.update.success')
     else
       flash[:error] = t('interfaces.action.update.error')
-      render :edit
     end
+    render :edit
   end
 
   # DELETE /interfaces/1

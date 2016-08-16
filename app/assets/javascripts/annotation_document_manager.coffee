@@ -38,18 +38,13 @@ class AnnotationDocumentManager
     false
 
   saveDocumentPayload: (modifiedPayload, calleeCallback = false) ->
-    annotationDocument = this.currentDocument
-    annotationDocument.payload = modifiedPayload
-    baseUrl = "#{this.dalphiBaseUrl}/api/#{this.apiVersion}"
+    this.currentDocument.payload = modifiedPayload
+    this.currentDocument.skipped = false
+    this.patchCurrentDocument(calleeCallback)
 
-    requestOptions = {
-      type: 'PATCH',
-      url: "#{baseUrl}/annotation_documents/#{annotationDocument.id}",
-      data: { annotation_document: annotationDocument }
-    }
-
-    this.apiCall requestOptions, calleeCallback
-    this.currentDocument = undefined
+  skipDocument: (calleeCallback = false) ->
+    this.currentDocument.skipped = true
+    this.patchCurrentDocument(calleeCallback)
 
   # internal API:
 
@@ -74,6 +69,18 @@ class AnnotationDocumentManager
       _this.documentStore.push annotationDocument for annotationDocument in data
       _this.waitingForApi = false
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
+
+  patchCurrentDocument: (postUpdateCallback) ->
+    baseUrl = "#{this.dalphiBaseUrl}/api/#{this.apiVersion}"
+
+    requestOptions = {
+      type: 'PATCH',
+      url: "#{baseUrl}/annotation_documents/#{this.currentDocument.id}",
+      data: { annotation_document: this.currentDocument }
+    }
+
+    this.apiCall requestOptions, postUpdateCallback
+    this.currentDocument = undefined
 
   next: ->
     if this.documentStore.length > 0

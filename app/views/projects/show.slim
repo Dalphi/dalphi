@@ -32,17 +32,22 @@
                confirm: t('delete-confirm')
       = render 'shared/button',
                label: t('projects.bootstrap.title'),
+               tooltip: t('projects.bootstrap.tooltip'),
                icon: 'rocket',
-               type: 'primary',
-               href: project_bootstrap_path(@project)
+               type: 'submit',
+               href: project_bootstrap_path(@project),
+               method: 'post'
       = render 'shared/button',
                label: t('projects.annotate.title'),
+               tooltip: t('projects.annotate.tooltip'),
                icon: 'tags',
                type: 'primary',
                data: { no_turbolink: 'true' },
                href: project_annotate_path(@project)
       = render 'shared/button',
                label: t('projects.merge.title'),
+               tooltip: t('projects.merge.tooltip'),
                icon: 'compress',
-               type: 'primary',
-               href: project_merge_path(@project)
+               type: 'submit',
+               href: project_merge_path(@project),
+               method: 'post'

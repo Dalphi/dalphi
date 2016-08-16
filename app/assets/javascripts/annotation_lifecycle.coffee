@@ -10,7 +10,7 @@ class AnnotationLifecycle
 
     $(document).ready ->
       _this.init()
-      console.log 'inited AnnotationLifecycle'
+      console.log 'AnnotationLifecycle: inited'
       _this.startIteration()
 
   init: ->
@@ -25,7 +25,7 @@ class AnnotationLifecycle
     )
 
   startIteration: ->
-    console.log 'AnnotationLifecycle: start iteration & clean container "interfaces-staging"'
+    console.log 'AnnotationLifecycle: start new iteration & clean DOM container'
     $('.interfaces-staging > div:not(.template)').remove()
 
     processAnnotationDocument = (data) ->
@@ -33,7 +33,7 @@ class AnnotationLifecycle
         alert('No annotation document payload available!')
         return
 
-      console.log 'process next document payload and call template instance'
+      console.log 'AnnotationLifecycle: process next document payload and render template'
       for interfaceType, payload of data
         template = _this.templates[interfaceType]
         interfaceInstance = _this.interfaceInstances[interfaceType]
@@ -43,15 +43,23 @@ class AnnotationLifecycle
     this.annotationDocumentManager.requestNextDocumentPayload(processAnnotationDocument)
 
   registerInterfaceInstance: (typeName, instance) ->
-    console.log "registering interface: #{typeName}"
+    console.log "AnnotationLifecycle: registering interface: #{typeName}"
     this.interfaceInstances[typeName] = instance
 
   saveChanges: (data) ->
-    console.log 'save changes via ann doc manager'  # call ann doc manager
+    console.log 'AnnotationLifecycle: save changes in payload using the annotation document manager'
 
     nextIteration = ->
       _this.startIteration()
 
     this.annotationDocumentManager.saveDocumentPayload(data, nextIteration)
+
+  skip: ->
+    console.log 'AnnotationLifecycle: skip current document'
+
+    nextIteration = ->
+      _this.startIteration()
+
+    this.annotationDocumentManager.skipDocument(nextIteration)
 
 window.AnnotationLifecycle = AnnotationLifecycle
