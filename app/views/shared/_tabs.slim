@@ -1,0 +1,9 @@
+ul.nav.nav-tabs
+  - items.each do |item|
+    li.nav-item
+      = link_to item[:path],
+                class: "nav-link #{'active' if item[:active]}" do
+        - if item[:icon]
+          = fa_icon(item[:icon])
+          | &nbsp;
+        = t(item[:label_key])

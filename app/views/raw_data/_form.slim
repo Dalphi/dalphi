@@ -13,7 +13,7 @@
                                 accept: upload_mime_types.join(',') }
   .row.btn-row
     .col-xs-12
-      = render 'shared/button', type: 'back'
+      = render 'shared/button', type: 'back' if action_name == 'new'
       = render 'shared/button',
                type: 'submit',
                label: t('save'),

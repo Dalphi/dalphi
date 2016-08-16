@@ -13,4 +13,10 @@ module ApplicationHelper
     return 'exclamation-triangle' if flash_type.eql?('error')
     return 'exclamation' if flash_type.eql?('alert')
   end
+
+  # this method smells of :reek:ControlParameter
+  def boolean_icon(boolean_value)
+    return fa_icon('check') if boolean_value
+    fa_icon('times')
+  end
 end

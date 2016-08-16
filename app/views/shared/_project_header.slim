@@ -1,0 +1,15 @@
+  .row
+    .col-xs-12
+      h2
+        = project.title
+      p
+        - if project.description.empty?
+          i
+            = t('projects.blank-slate.no-description')
+        - else
+          = project.description
+  .row
+    .col-xs-12
+      = render 'shared/project_tabs',
+               project: project,
+               active_label: active_label
