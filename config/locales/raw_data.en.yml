@@ -1,6 +1,7 @@
 en:
   raw-data:
     edit-title: Edit %{raw_datum_label}
+    new-title: New raw datum
     annotation-documents:
       title: Associated annotation documents
       blank-slate: No annotation documents associated.
