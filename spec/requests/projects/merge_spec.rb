@@ -55,7 +55,7 @@ RSpec.describe 'Project merge', type: :request do
     expect(RawDatum.count).to eq(1)
     expect(AnnotationDocument.count).to eq(2)
 
-    get project_merge_path(@project)
+    post project_merge_path(@project)
     expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_url(@project))
 
     expect(RawDatum.count).to eq(1)

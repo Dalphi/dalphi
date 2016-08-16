@@ -89,7 +89,7 @@ class ProjectsController < ApplicationController
            status: 200
   end
 
-  # GET /projects/1/bootstrap
+  # POST /projects/1/bootstrap
   def bootstrap
     generate_annotation_documents(@project.bootstrap_data)
     if @annotation_documents
@@ -103,7 +103,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /projects/1/bootstrap
+  # POST /projects/1/merge
   def merge
     merge_result = merge_annotation_documents
     if merge_result
