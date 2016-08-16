@@ -1,6 +1,30 @@
 .container
-  == render 'form',
-            project: @project,
-            raw_datum: @raw_datum,
-            raw_data_shapes: RawDatum::SHAPES,
-            upload_mime_types: RawDatum::MIME_TYPES.values.first
+  .row
+    .col-xs-12
+      .card
+        .card-header
+          = t 'raw-data.edit-title',
+              raw_datum_label: @raw_datum.label
+        .card-block
+          == render 'form',
+                    project: @project,
+                    raw_datum: @raw_datum,
+                    raw_data_shapes: RawDatum::SHAPES,
+                    upload_mime_types: RawDatum::MIME_TYPES.values.first
+  .row
+    .col-xs-12
+      .card
+        .card-header
+          = @raw_datum.label
+        .card-block.editor
+          .code-input#raw-data
+            = File.new(@raw_datum.data.path).read
+          coffee:
+            window.rawDataEditor = new window.RawDataEditor()
+  .row
+    .col-xs-12
+      .card
+        .card-header
+          | foo
+        .card-block
+          | bar

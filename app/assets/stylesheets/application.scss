@@ -234,6 +234,18 @@ input {
     margin: $services-list-group-margin;
   }
 
+  .card-block {
+    &.editor {
+      padding: 0;
+
+      // scss-lint:disable SelectorFormat
+      .ace_editor {
+        margin: 0;
+        width: 100%;
+      }
+    }
+  }
+
   .list-group-item {
     &:first-of-type {
       border-radius: 0;

@@ -1,5 +1,6 @@
 en:
   raw-data:
+    edit-title: Edit %{raw_datum_label}
     action:
       create:
         success: Raw data was successfully created.
