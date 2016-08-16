@@ -1,0 +1,11 @@
+.jumbotron
+  h1.display-3
+    = t('raw-data.blank-slate.title')
+  p.lead
+    = t('raw-data.blank-slate.text')
+  hr.m-y-2
+  = render 'shared/button',
+           type: 'primary',
+           label: t('activerecord.actions.raw-datum.new'),
+           href: new_project_raw_datum_path(project),
+           icon: 'plus'

@@ -39,6 +39,7 @@ en:
         skipped: skipped
         annotated: annotated
         interface_type: interface type
+        payload: payload
       project:
         title: title
         description: description

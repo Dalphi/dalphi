@@ -1,8 +1,10 @@
 class AnnotationDocumentsController < ApplicationController
   before_action :set_project,
-                only: [:next, :index]
+                only: [:next, :index, :show]
   before_action :set_raw_datum,
                only: [:index]
+  before_action :set_annotation_document,
+                only: [:show]
   skip_before_action :authenticate_user!,
                      only: :next if Rails.env.test?
 
@@ -57,6 +59,10 @@ class AnnotationDocumentsController < ApplicationController
       @raw_datum = false
     end
 
+    def set_annotation_document
+      @annotation_document = AnnotationDocument.find(params[:id])
+    end
+
     def annotation_documents(count)
       count = 1 unless count
       timeout = Rails.configuration.x.dalphi['timeouts']['annotation-document-edit-time']
@@ -71,7 +77,7 @@ class AnnotationDocumentsController < ApplicationController
     def render_error_response(code, locale_key)
       render status: code,
              json: {
-               message: I18n.t("annotation_documents.errors.#{locale_key}")
+               message: I18n.t("annotation-documents.errors.#{locale_key}")
              }
     end
 

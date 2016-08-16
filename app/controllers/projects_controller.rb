@@ -98,7 +98,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = I18n.t 'projects.bootstrap.success',
                               success_count: (record_count - error_count),
                               record_count: record_count
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     else
       redirect_bootstrap_with_flash
     end
@@ -112,7 +112,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = I18n.t 'projects.merge.success',
                               success_count: (record_count - error_count),
                               record_count: record_count
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     else
       redirect_merge_with_flash
     end
@@ -232,12 +232,12 @@ class ProjectsController < ApplicationController
 
     def redirect_bootstrap_with_flash
       flash[:error] = I18n.t('projects.bootstrap.error')
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     end
 
     def redirect_merge_with_flash
       flash[:error] = I18n.t('projects.merge.error')
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     end
 
     # this method smells of :reek:UtilityFunction
