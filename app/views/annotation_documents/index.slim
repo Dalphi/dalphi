@@ -8,3 +8,20 @@
         = render 'shared/annotation_documents',
                  project: @project,
                  annotation_documents: @annotation_documents
+      - elsif @project.raw_data.any?
+        = render 'shared/blank_slates/annotation_documents',
+                 project: @project
+      - else
+        = render 'shared/blank_slates/raw_data',
+                 project: @project
+        .row.btn-row
+          .col-xs-12
+             = render 'shared/button', type: 'back'
+  - if @annotation_documents.any?
+    .row.btn-row
+      .col-xs-12
+         = render 'shared/button', type: 'back'
+         = render 'shared/button',
+                  type: 'primary',
+                  label: t('activerecord.actions.raw-datum.new'),
+                  href: new_project_raw_datum_path(@project), icon: 'plus'

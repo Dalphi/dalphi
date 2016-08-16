@@ -30,17 +30,8 @@
           .col-xs-12
             = will_paginate @raw_data
       - else
-        .jumbotron
-          h1.display-3
-            = t('raw-data.blank-slate.title')
-          p.lead
-            = t('raw-data.blank-slate.text')
-          hr.m-y-2
-          = render 'shared/button',
-                   type: 'primary',
-                   label: t('activerecord.actions.raw-datum.new'),
-                   href: new_project_raw_datum_path(@project),
-                   icon: 'plus'
+        = render 'shared/blank_slates/raw_data',
+                 project: @project
         .row.btn-row
           .col-xs-12
              = render 'shared/button', type: 'back'

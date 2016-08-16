@@ -1,5 +1,9 @@
 en:
-  annotation_documents:
+  annotation-documents:
+    blank-slate:
+      title: 'No documents'
+      text: 'To generate some annotation documents use the button below.'
+      generate-annotation-documents: 'Generate annotation documents'
     errors:
       set-project:
         not-found: no project with the given project id found
