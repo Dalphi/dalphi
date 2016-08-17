@@ -72,7 +72,7 @@
         = render 'shared/button',
                  type: 'danger',
                  label: t('activerecord.actions.project.delete'),
-                 href: project_path(@project),
+                 href: project_path(project),
                  icon: 'trash',
                  method: 'delete',
                  confirm: t('delete-confirm') if action_name == 'edit'
