@@ -134,6 +134,10 @@ p {
     margin: $btn-row-margin;
   }
 
+  [href='javascript:history.back()'] {
+    float: left;
+  }
+
   .btn:last-of-type {
     margin-right: 0;
   }

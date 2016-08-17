@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
 
   def bake_breadcrumbs
     @breadcrumbs = []
+    return if params[:format]
     bakery = BreadcrumbBakery.new(request)
     @breadcrumbs = bakery.breadcrumbs
   end
