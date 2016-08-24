@@ -7,7 +7,13 @@ class RawDataController < ApplicationController
     @raw_data = RawDatum.where(project: @project)
     respond_to do |format|
       format.js { render json: @raw_data }
-      format.zip { render text: 'zippy' }
+      format.zip do
+        timestamp = Time.zone.now.strftime('%Y-%m-%d-%H-%M-%S')
+        send_data RawData.zip(@raw_data),
+                  filename: "#{@project.title.parameterize}-raw-data-#{timestamp}.zip",
+                  disposition: 'inline',
+                  type: 'application/zip'
+      end
       format.html do
         @raw_data = @raw_data
                       .paginate(
