@@ -10,6 +10,17 @@ ruby:
   button_content = render 'shared/button_content',
                           icon: icon,
                           label: label
+
+  if type == 'submit' || (defined?(disable_with) && disable_with == true)
+    disable_with = render 'shared/button_content',
+                          icon: 'spinner',
+                          label: label
+  end
+
+  if defined?(disable_with) && disable_with
+    data[:disable_with] = disable_with.tr('"', "'")
+  end
+
   title = ''
   if tooltip
     title = tooltip
@@ -17,15 +28,20 @@ ruby:
     data[:placement] = 'bottom'
   end
 
-- if type == 'submit'
-  - disable_with = render('shared/button_content', icon: 'spinner', label: label).tr!('"', "'")
+  data[:confirm] = confirm if confirm != ''
+  data[:method] = method if method != 'get'
 
+  attributes = {}
+  attributes[:rel] = 'nofollow' unless method == 'get'
+  attributes[:title] = title unless title == ''
+
+- if type == 'submit'
   - if href == '#'
-    button name='button' type='submit' class='btn btn-primary' data-disable-with="#{disable_with}" data=data
+    button.btn.btn-primary name='button' type='submit' data=data
       == button_content
 
   - else
-    a.btn class='btn-primary' href="#{href}" data-disable-with="#{disable_with}" data=data title="#{title}" data-method="#{method}"
+    a.btn.btn-primary href="#{href}" data=data *attributes
       == button_content
 
 - elsif type == 'back'
@@ -34,12 +50,8 @@ ruby:
               icon: 'chevron-left',
               label: t('back')
 
-- elsif method != 'get'
-  a.btn class="btn-#{type}" href="#{href}" data-confirm="#{confirm}" data-method="#{method}" data=data rel='nofollow' title="#{title}"
-    == button_content
-
 - else
-  a.btn class="btn-#{type}" href="#{href}" data=data title="#{title}"
+  a.btn class="btn-#{type}" href="#{href}" data=data *attributes
     == button_content
 
 - if tooltip
