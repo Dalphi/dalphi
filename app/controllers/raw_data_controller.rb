@@ -8,17 +8,24 @@ class RawDataController < ApplicationController
     respond_to do |format|
       format.js { render json: @raw_data }
       format.zip do
+        file = Tempfile.new('raw-datum-zip')
         timestamp = Time.zone.now.strftime('%Y-%m-%d-%H-%M-%S')
-        send_data RawData.zip(@raw_data),
-                  filename: "#{@project.title.parameterize}-raw-data-#{timestamp}.zip",
-                  disposition: 'inline',
-                  type: 'application/zip'
+        begin
+          send_data RawDatum.zip(file, @raw_data),
+                    filename: "#{@project.title.parameterize}-raw-data-#{timestamp}.zip",
+                    disposition: 'inline',
+                    type: 'application/zip'
+        ensure
+          file.close
+          file.unlink
+        end
       end
       format.html do
+        raw_data_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['raw-data']
         @raw_data = @raw_data
                       .paginate(
                         page: params[:page],
-                        per_page: Rails.configuration.x.dalphi['paginated-objects-per-page']['raw-data']
+                        per_page: raw_data_per_page
                       )
       end
     end

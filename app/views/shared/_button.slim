@@ -7,6 +7,7 @@ ruby:
   tooltip = false unless defined?(tooltip) && tooltip
   icon = nil unless defined?(icon) && icon
   data = {} unless defined?(data) && data
+  turbolinks = true unless defined?(turbolinks) && turbolinks == false
   button_content = render 'shared/button_content',
                           icon: icon,
                           label: label
@@ -30,6 +31,7 @@ ruby:
 
   data[:confirm] = confirm if confirm != ''
   data[:method] = method if method != 'get'
+  data[:turbolinks] = false unless turbolinks
 
   attributes = {}
   attributes[:rel] = 'nofollow' unless method == 'get'

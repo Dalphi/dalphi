@@ -140,6 +140,16 @@ class RawDatum < ApplicationRecord
     zip.close if zip
   end
 
+  def self.zip(file, raw_data)
+    Zip::OutputStream.open(file) { |zos| }
+    Zip::File.open(file.path, Zip::File::CREATE) do |zipfile|
+      raw_data.each do |raw_datum|
+        zipfile.add(raw_datum.filename, raw_datum.data.path)
+      end
+    end
+    return File.read(file)
+  end
+
   private
 
   def destroy_raw_datum_with_same_filename
