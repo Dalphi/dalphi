@@ -13,10 +13,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
 
   it 'returns an annotation document if no count is specified' do
     expect(AnnotationDocument.all.count).to eq(1)
-    patch '/annotation_documents/next',
-          params: {
-            project_id: @project.id
-          }
+    patch "/projects/#{@project.id}/annotation_documents/next"
 
     expect(response).to be_success
     json = JSON.parse(response.body)
@@ -29,10 +26,9 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
                                     raw_datum: @annotation_document.raw_datum
                                   )
     expect(AnnotationDocument.all.count).to eq(2)
-    patch '/annotation_documents/next',
+    patch "/projects/#{@project.id}/annotation_documents/next",
           params: {
-            count: 2,
-            project_id: @project.id
+            count: 2
           }
 
     expect(response).to be_success
@@ -48,10 +44,9 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
                                     raw_datum: @annotation_document.raw_datum
                                   )
     expect(AnnotationDocument.all.count).to eq(2)
-    patch '/annotation_documents/next',
+    patch "/projects/#{@project.id}/annotation_documents/next",
           params: {
-            count: 10,
-            project_id: @project.id
+            count: 10
           }
 
     expect(response).to be_success
@@ -67,10 +62,9 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
                                     raw_datum: @annotation_document.raw_datum
                                   )
     expect(AnnotationDocument.all.count).to eq(2)
-    patch '/annotation_documents/next',
+    patch "/projects/#{@project.id}/annotation_documents/next",
           params: {
-            count: 1,
-            project_id: @project.id
+            count: 1
           }
 
     expect(response).to be_success
@@ -78,10 +72,9 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
     first_response_id = json.first['id']
     expect(first_response_id).to eq(@annotation_document.id)
 
-    patch '/annotation_documents/next',
+    patch "/projects/#{@project.id}/annotation_documents/next",
           params: {
-            count: 1,
-            project_id: @project.id
+            count: 1
           }
 
     expect(response).to be_success
@@ -94,10 +87,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
   it 'sets the requested_at attribute of a served annotation document' do
     expect(AnnotationDocument.all.count).to eq(1)
     expect(AnnotationDocument.first.requested_at).to eq(nil)
-    patch '/annotation_documents/next',
-          params: {
-            project_id: @project.id
-          }
+    patch "/projects/#{@project.id}/annotation_documents/next"
 
     expect(response).to be_success
     expect(AnnotationDocument.first.requested_at).to be <= Time.zone.now
@@ -107,10 +97,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
     expect(AnnotationDocument.all.count).to eq(1)
     @annotation_document.destroy
     expect(AnnotationDocument.all.count).to eq(0)
-    patch '/annotation_documents/next',
-          params: {
-            project_id: @project.id
-          }
+    patch "/projects/#{@project.id}/annotation_documents/next"
 
     expect(response).to have_http_status(404)
   end
@@ -120,10 +107,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
     undefined_project_id = -1
     expect(Project.find_by(id: undefined_project_id)).to eq(nil)
 
-    patch '/annotation_documents/next',
-          params: {
-            project_id: undefined_project_id
-          }
+    patch "/projects/#{undefined_project_id}/annotation_documents/next"
 
     expect(response).to have_http_status(400)
   end

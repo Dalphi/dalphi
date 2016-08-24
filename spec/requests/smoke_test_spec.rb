@@ -25,6 +25,7 @@ RSpec.describe "GET routes", type: :request do
     routes.each do |route|
       path = route[:path]
       path.gsub!(/:role/, 'bootstrap')
+      path.gsub!(/:annotation_document_id/, '1')
       next if blacklist.include?(path)
       get path
       expect([200, 301, 302]).to include(response.status)
