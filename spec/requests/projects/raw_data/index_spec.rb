@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "RawData", type: :request do
+RSpec.describe 'RawData', type: :request do
   before(:each) do
     @raw_datum = FactoryGirl.create(:raw_datum)
     sign_in(@raw_datum.project.user)
@@ -50,5 +50,33 @@ RSpec.describe "RawData", type: :request do
            }
          }
     expect(response).to be_success
+  end
+
+  it 'sends a zip archive containing all raw data' do
+    project = @raw_datum.project
+    project.raw_data = [
+      @raw_datum,
+      FactoryGirl.create(:raw_datum_with_different_data, project: project)
+    ]
+    project.save!
+
+    timestamp = Time.zone.now.strftime('%Y-%m-%d-%H-%M-%S')
+    begin
+      file = Tempfile.new('raw-data-zip')
+      Zip::OutputStream.open(file) { |zos| }
+      Zip::File.open(file.path, Zip::File::CREATE) do |zipfile|
+        project.raw_data.each do |raw_datum|
+          zipfile.add(raw_datum.filename, raw_datum.data.path)
+        end
+      end
+
+      get project_raw_data_path(project, format: :zip)
+
+      expect(response).to be_success
+      expect(response.body).to eq(File.read(file.path))
+    ensure
+      file.close
+      file.unlink
+    end
   end
 end
