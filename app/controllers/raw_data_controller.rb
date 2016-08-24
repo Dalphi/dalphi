@@ -8,17 +8,7 @@ class RawDataController < ApplicationController
     respond_to do |format|
       format.js { render json: @raw_data }
       format.zip do
-        timestamp = Time.zone.now.strftime('%Y-%m-%d-%H-%M-%S')
-        begin
-          file = Tempfile.new('raw-datum-zip')
-          send_data @project.zip(file),
-                    filename: "#{@project.title.parameterize}-raw-data-#{timestamp}.zip",
-                    disposition: 'inline',
-                    type: 'application/zip'
-        ensure
-          file.close
-          file.unlink
-        end
+        raw_data_zip
       end
       format.html do
         raw_data_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['raw-data']
@@ -87,5 +77,19 @@ class RawDataController < ApplicationController
       data = { data: [] }
       data = :data if action_name == 'update'
       params.require(:raw_datum).permit(:shape, data)
+    end
+
+    def raw_data_zip
+      timestamp = Time.zone.now.strftime('%Y-%m-%d-%H-%M-%S')
+      begin
+        file = Tempfile.new('raw-data-zip')
+        send_data @project.zip(file),
+                  filename: "#{@project.title.parameterize}-raw-data-#{timestamp}.zip",
+                  disposition: 'inline',
+                  type: 'application/zip'
+      ensure
+        file.close
+        file.unlink
+      end
     end
 end
