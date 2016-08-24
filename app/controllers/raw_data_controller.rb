@@ -8,10 +8,10 @@ class RawDataController < ApplicationController
     respond_to do |format|
       format.js { render json: @raw_data }
       format.zip do
-        file = Tempfile.new('raw-datum-zip')
         timestamp = Time.zone.now.strftime('%Y-%m-%d-%H-%M-%S')
         begin
-          send_data RawDatum.zip(file, @raw_data),
+          file = Tempfile.new('raw-datum-zip')
+          send_data @project.zip(file),
                     filename: "#{@project.title.parameterize}-raw-data-#{timestamp}.zip",
                     disposition: 'inline',
                     type: 'application/zip'

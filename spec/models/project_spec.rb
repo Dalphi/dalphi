@@ -470,4 +470,55 @@ RSpec.describe Project, type: :model do
       expect(File.new(raw_datum.data.path).read).to eq('{"new":"content"}')
     end
   end
+
+  describe 'zip' do
+    it 'should be an empty zip archive for no associated raw data' do
+      @project.raw_data = []
+
+      begin
+        file1 = Tempfile.new('raw-datum-zip-test1')
+        file2 = Tempfile.new('raw-datum-zip-test2')
+
+        Zip::OutputStream.open(file2) { |zos| }
+        Zip::File.open(file2.path, Zip::File::CREATE) { |zipfile| }
+
+        expect(@project.zip(file1)).to eq(File.read(file2))
+      ensure
+        file1.close
+        file2.close
+        file1.unlink
+        file2.unlink
+      end
+    end
+
+    it 'should be a zip archive containing all raw data' do
+      @project.raw_data = [
+        FactoryGirl.create(:raw_datum, project: @project),
+        FactoryGirl.create(:raw_datum_with_different_data, project: @project)
+      ]
+
+      begin
+        file = Tempfile.new('raw-datum-zip-test1')
+
+        @project.zip(file)
+
+        Zip::File.open(file) do |zip_file|
+          # every zip file exists in raw_data
+          zip_file.each do |entry|
+            raw_datum = @project.raw_data.find_by(filename: entry.name)
+            expect(entry.get_input_stream.read).to eq(File.new(raw_datum.data.path).read)
+          end
+
+          # every raw_datum exist in zip files
+          @project.raw_data.each do |raw_datum|
+            entry = zip_file.glob(raw_datum.filename).first
+            expect(entry).not_to eq(nil)
+          end
+        end
+      ensure
+        file.close
+        file.unlink
+      end
+    end
+  end
 end

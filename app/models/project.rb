@@ -107,4 +107,14 @@ class Project < ApplicationRecord
       self.send("#{role}_service=", role_services.first) if role_services.length == 1
     end
   end
+
+  def zip(file)
+    Zip::OutputStream.open(file) { |zos| }
+    Zip::File.open(file.path, Zip::File::CREATE) do |zipfile|
+      self.raw_data.each do |raw_datum|
+        zipfile.add(raw_datum.filename, raw_datum.data.path)
+      end
+    end
+    return File.read(file)
+  end
 end
