@@ -7,10 +7,11 @@ class BreadcrumbBakery
     subpath = ''
     tokens.each do |token|
       subpath << "#{token}"
+      label = labelize(tokens, token)
       @breadcrumbs << {
-                        label: labelize(tokens, token),
+                        label: label,
                         path: subpath.clone
-                      }
+                      } unless label.empty?
     end
   end
 

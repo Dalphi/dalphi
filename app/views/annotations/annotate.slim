@@ -2,13 +2,21 @@
   style
     = @project.interfaces.map(&:compiled_stylesheet).join
 
-.interfaces-staging data-dalphi-base-url="#{request.base_url}" data-project-id="#{@project.id}"
+ruby:
+  data_hash = {
+    dalphi_base_url: request.base_url,
+    project_id: @project.id
+  }
+  data_hash[:annotation_document_id] = @annotation_document.id if @annotation_document
+
+.interfaces-staging data=data_hash
+
   coffee:
     window.annotationLifecycle = new window.AnnotationLifecycle()
+
   - @project.interfaces.each do |interface|
     .template class="#{@container_class}" data-interface-type="#{interface.interface_type}"
       == interface.template
 
     script type='text/javascript'
       == interface.compiled_java_script
-

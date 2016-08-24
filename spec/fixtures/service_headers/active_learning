@@ -7,5 +7,5 @@ Content-Type: application/json
 	"description":		"A netcat based dummy service that pretends to implement the Who Are You API",
 	"role":			"active_learning",
 	"problem_id":		"ner",
-	"interface_types":	["text_nominal", "text_no_so_nominal"]
+	"interface_types":	["text_nominal", "ner_complete"]
 }

@@ -13,12 +13,13 @@ class AnnotationLifecycle
       console.log 'AnnotationLifecycle: inited'
       _this.startIteration()
 
-    $(window).on 'popstate', ->
-      documentId = history.state.annotationDocumentId if history.state
-      if history.state && documentId && typeof(documentId) == 'number'
-        _this.restartIteration documentId
-      else
-        location.reload()
+    unless $._data(window, 'events')['popstate']
+      $(window).on 'popstate', ->
+        documentId = history.state.annotationDocumentId if history.state
+        if history.state && documentId && typeof(documentId) == 'number'
+          _this.restartIteration documentId
+        else
+          location.reload()
 
   init: ->
     dalphiBaseUrl = $('.interfaces-staging').data('dalphi-base-url')
@@ -33,12 +34,10 @@ class AnnotationLifecycle
 
   startIteration: ->
     console.log 'AnnotationLifecycle: start new iteration & clean DOM container'
-    $('.interfaces-staging > div:not(.template)').remove()
     this.annotationDocumentManager.requestNextDocumentPayload(this.processAnnotationDocument)
 
   restartIteration: ->
     console.log 'AnnotationLifecycle: restart iteration & clean DOM container'
-    $('.interfaces-staging > div:not(.template)').remove()
     this.annotationDocumentManager.requestPreviousDocumentPayload(this.processAnnotationDocument)
 
   processAnnotationDocument: (data) ->
@@ -46,7 +45,9 @@ class AnnotationLifecycle
       alert('No annotation document payload available!')
       return
 
+    $('.interfaces-staging > div:not(.template)').remove()
     console.log 'AnnotationLifecycle: process next document payload and render template'
+
     for interfaceType, payload of data
       template = _this.templates[interfaceType]
       interfaceInstance = _this.interfaceInstances[interfaceType]

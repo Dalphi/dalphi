@@ -14,6 +14,7 @@ class AnnotationDocumentManager
     this.waitingForApi = false
     this.requestNextDocumentCallback = undefined
     this.historyRequest = false
+    this.latestSeenDocumentId = 0
 
     this.initAjax()
     this.initialAnnotationDocumentPreloading()
@@ -21,7 +22,7 @@ class AnnotationDocumentManager
   # external API:
 
   requestNextDocumentPayload: (calleeCallback) ->
-    this.historyRequest = false
+    this.handleHistoryLegacy()
 
     if this.waitingForApi
       # hook into a running request if one is being processed right now
@@ -71,16 +72,17 @@ class AnnotationDocumentManager
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 
   initialAnnotationDocumentPreloading: ->
-    documentId = this.documentIdFromUrl()
+    documentId = $('.interfaces-staging').data('annotation-document-id')
+    documentId = this.documentIdFromUrl() unless documentId
+
     this.loadAnnotationDocumentWithId(documentId) if documentId
     this.loadAnnotationDocuments() unless documentId
 
   loadAnnotationDocuments: (postUpdateCallback) ->
     requestOptions = {
       type: 'PATCH',
-      url: "#{this.dalphiBaseUrl}/annotation_documents/next",
+      url: "#{this.dalphiBaseUrl}/projects/#{_this.projectId}/annotation_documents/next",
       data: {
-        project_id: _this.projectId,
         count: _this.maxAnnotationDocumentsToLoad
       }
     }
@@ -113,7 +115,10 @@ class AnnotationDocumentManager
       nextPayload = {}
       nextPayload[this.currentDocument.interface_type] = this.currentDocument.payload
 
-      this.rewriteHistory() unless this.historyRequest
+      unless this.historyRequest
+        this.latestSeenDocumentId = this.currentDocument.id
+        this.rewriteHistory()
+
       return nextPayload
     false
 
@@ -137,32 +142,33 @@ class AnnotationDocumentManager
         console.log JSON.stringify(requestOptions)
         console.log JSON.stringify(a)
 
+  handleHistoryLegacy: ->
+    if this.historyRequest && this.latestSeenDocumentId > 0
+      numberOfShifts = 0
+      for queuedDocument in this.documentStore
+        break if queuedDocument && queuedDocument.id == this.latestSeenDocumentId
+        numberOfShifts++
+      this.documentStore.shift() for x in [1..numberOfShifts] if numberOfShifts > 0
+
+    this.historyRequest = false
+
   documentIdFromUrl: ->
-    searchString = document.location.search
-    index = searchString.search(/documentId=[0-9]+/)
+    pathname = document.location.pathname
+    index = pathname.search(/annotate\/[0-9]+/)
     return undefined if index < 0
 
-    index += + 'documentId='.length
-    endPosition = searchString.indexOf('&', index)
-    searchString.substring(index, endPosition) if endPosition > 0
-    searchString.substring index if endPosition < 0
+    index += + 'annotate/'.length
+    endPosition = index + pathname.substring(index).search(/\D/)
+    searchString.substring(index, endPosition) if endPosition > index
+    searchString.substring index if endPosition < index
 
   rewriteHistory: ->
-    # get the last, through history changeable part of the current url
-    pathnameArray = document.location.pathname.split '/'
-    lastPathElement = pathnameArray[pathnameArray.length - 1]
-
-    # get the search string (GET arguments) and change the current document id
-    currentSearchString = document.location.search
-    documentArgument = "documentId=#{this.currentDocument.id}"
-    if currentSearchString.indexOf('documentId') > 0
-      newSearchString = currentSearchString.replace(/documentId=[0-9]+/, documentArgument)
-    else
-      newSearchString = "#{currentSearchString}&#{documentArgument}" if currentSearchString
-      newSearchString = "?#{documentArgument}" unless currentSearchString
+    replacement = "annotate/#{this.currentDocument.id}"
+    newLocationPath = document.location.pathname.replace(/annotate(\/[0-9]+)?/, replacement)
+    newLocationPath += document.location.search if document.location.search
 
     window.history.pushState { annotationDocumentId: this.currentDocument.id },
                              document.title,
-                             "#{lastPathElement}#{newSearchString}"
+                             newLocationPath
 
 window.AnnotationDocumentManager = AnnotationDocumentManager
