@@ -65,9 +65,9 @@ Rails.application.routes.draw do
         as: 'annotate'
   end
 
-  post '/projects/:id/bootstrap',
-      to: 'projects#bootstrap',
-      as: 'project_bootstrap'
+  post '/projects/:id/iterate',
+      to: 'projects#iterate',
+      as: 'project_iterate'
   post '/projects/:id/merge',
       to: 'projects#merge',
       as: 'project_merge'

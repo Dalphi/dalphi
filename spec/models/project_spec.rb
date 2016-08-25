@@ -53,21 +53,21 @@ RSpec.describe Project, type: :model do
     end
   end
 
-  describe 'bootstrap_service' do
+  describe 'iterate_service' do
     it 'can be nil' do
-      @project.bootstrap_service = nil
+      @project.iterate_service = nil
       expect(@project).to be_valid
     end
 
-    it 'can be a valid Bootstrap service' do
-      service = FactoryGirl.create(:bootstrap_service)
-      @project.bootstrap_service = service
+    it 'can be a valid iterate service' do
+      service = FactoryGirl.create(:iterate_service)
+      @project.iterate_service = service
       expect(@project).to be_valid
     end
 
-    it 'cannot be an invalid Bootstrap service' do
+    it 'cannot be an invalid iterate service' do
       service = FactoryGirl.create(:machine_learning_service)
-      @project.bootstrap_service = service
+      @project.iterate_service = service
       expect(@project).to be_invalid
     end
   end
@@ -104,7 +104,7 @@ RSpec.describe Project, type: :model do
     end
 
     it 'cannot be an invalid merge service' do
-      service = FactoryGirl.create(:bootstrap_service)
+      service = FactoryGirl.create(:iterate_service)
       @project.merge_service = service
       expect(@project).to be_invalid
     end
@@ -112,7 +112,7 @@ RSpec.describe Project, type: :model do
 
   describe 'associated_problem_identifiers' do
     it 'should return an empty list if no service is associated' do
-      @project.bootstrap_service = nil
+      @project.iterate_service = nil
       @project.machine_learning_service = nil
       @project.merge_service = nil
 
@@ -120,7 +120,7 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should return a singleton if all associated services handle the same problem identifier' do
-      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service, problem_id: 'NER')
+      @project.iterate_service = FactoryGirl.create(:iterate_service, problem_id: 'NER')
       @project.machine_learning_service = FactoryGirl.create(:machine_learning_service, problem_id: 'NER')
       @project.merge_service = FactoryGirl.create(:merge_service, problem_id: 'NER')
 
@@ -128,7 +128,7 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should return a set of different problem identifiers if associated services handle them' do
-      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service, problem_id: 'HyperNER')
+      @project.iterate_service = FactoryGirl.create(:iterate_service, problem_id: 'HyperNER')
       @project.machine_learning_service = FactoryGirl.create(:machine_learning_service, problem_id: 'MegaNER')
       @project.merge_service = FactoryGirl.create(:merge_service, problem_id: 'NER')
 
@@ -140,17 +140,17 @@ RSpec.describe Project, type: :model do
     it 'should not connect services if no service available' do
       Service.destroy_all
       @project.connect_services
-      expect(@project.bootstrap_service).to eq(nil)
+      expect(@project.iterate_service).to eq(nil)
       expect(@project.machine_learning_service).to eq(nil)
       expect(@project.merge_service).to eq(nil)
     end
 
     it 'should connect services from different types if exactly one service per type exists' do
       Service.destroy_all
-      bootstrap_service = FactoryGirl.create(:bootstrap_service)
+      iterate_service = FactoryGirl.create(:iterate_service)
       merge_service = FactoryGirl.create(:merge_service)
       @project.connect_services
-      expect(@project.bootstrap_service).to eq(bootstrap_service)
+      expect(@project.iterate_service).to eq(iterate_service)
       expect(@project.machine_learning_service).to eq(nil)
       expect(@project.merge_service).to eq(merge_service)
     end
@@ -159,9 +159,9 @@ RSpec.describe Project, type: :model do
       Service.destroy_all
       FactoryGirl.create(:merge_service)
       FactoryGirl.create(:merge_service, url: 'http://yet-another-dalphi-service.com')
-      bootstrap_service = FactoryGirl.create(:bootstrap_service)
+      iterate_service = FactoryGirl.create(:iterate_service)
       @project.connect_services
-      expect(@project.bootstrap_service).to eq(bootstrap_service)
+      expect(@project.iterate_service).to eq(iterate_service)
       expect(@project.machine_learning_service).to eq(nil)
       expect(@project.merge_service).to eq(nil)
     end
@@ -209,15 +209,15 @@ RSpec.describe Project, type: :model do
 
   describe 'selected_interfaces' do
     it 'should return an empty hash for no necessary interface types' do
-      @project.bootstrap_service = nil
+      @project.iterate_service = nil
       @project.interfaces = []
       @project.save!
       expect(@project.selected_interfaces).to eq({})
     end
 
     it 'should return a hash with empty keys for no selected interface types' do
-      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                      interface_types: %w(text_nominal))
+      @project.iterate_service = FactoryGirl.create(:iterate_service,
+                                                    interface_types: %w(text_nominal))
       @project.interfaces = []
       @project.save!
 
@@ -229,8 +229,8 @@ RSpec.describe Project, type: :model do
     end
 
     it "should return selected interfaces' titles grouped by type" do
-      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                      interface_types: %w(text_nominal))
+      @project.iterate_service = FactoryGirl.create(:iterate_service,
+                                                    interface_types: %w(text_nominal))
       text_nominal_interface = FactoryGirl.create(:interface,
                                                   title: 'interface 1',
                                                   interface_type: 'text_nominal')
@@ -246,8 +246,8 @@ RSpec.describe Project, type: :model do
     end
 
     it "should return selected interfaces' titles grouped by type" do
-      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                      interface_types: %w(text_nominal text_not_so_nominal))
+      @project.iterate_service = FactoryGirl.create(:iterate_service,
+                                                    interface_types: %w(text_nominal text_not_so_nominal))
       text_nominal_interface = FactoryGirl.create(:interface,
                                                   title: 'interface 1',
                                                   interface_type: 'text_nominal')
@@ -272,43 +272,43 @@ RSpec.describe Project, type: :model do
 
   describe 'necessary_interface_types' do
     it 'should be an empty array for a project with no associated services' do
-      @project.bootstrap_service = nil
+      @project.iterate_service = nil
 
       expect(@project.necessary_interface_types).to eq([])
     end
 
     it 'should be the interface types of associated services' do
-      bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                             interface_types: %w(text_nominal))
-      @project.bootstrap_service = bootstrap_service
+      iterate_service = FactoryGirl.create(:iterate_service,
+                                           interface_types: %w(text_nominal))
+      @project.iterate_service = iterate_service
 
       expect(@project.necessary_interface_types).to eq(%w(text_nominal))
     end
 
     it 'should be the union of interface types of associated services' do
-      bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                             interface_types: %w(text_nominal text_not_so_nominal))
-      @project.bootstrap_service = bootstrap_service
+      iterate_service = FactoryGirl.create(:iterate_service,
+                                           interface_types: %w(text_nominal text_not_so_nominal))
+      @project.iterate_service = iterate_service
 
       expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
     end
 
     it 'should not contain interface types of non associated services' do
-      bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                             interface_types: %w(text_nominal text_not_so_nominal))
-      not_associated_service = FactoryGirl.create(:bootstrap_service,
+      iterate_service = FactoryGirl.create(:iterate_service,
+                                           interface_types: %w(text_nominal text_not_so_nominal))
+      not_associated_service = FactoryGirl.create(:iterate_service,
                                                   url: 'http://www.3antworten.de',
                                                   interface_types: %w(text_nominal text_not_so_nominal yet_another_interface_type))
-      @project.bootstrap_service = bootstrap_service
+      @project.iterate_service = iterate_service
 
       expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
     end
   end
 
-  describe 'bootstrap_data' do
+  describe 'iterate_data' do
     it 'should be an empty list for no present raw data' do
       @project.raw_data = []
-      expect(@project.bootstrap_data).to eq([])
+      expect(@project.iterate_data).to eq([])
     end
 
     it 'should contain raw_datum_id and base64 encoded content for one present raw datum' do
@@ -316,11 +316,11 @@ RSpec.describe Project, type: :model do
                                      project: @project
 
       @project.raw_data = [raw_datum]
-      expect(@project.bootstrap_data.size).to eq(1)
+      expect(@project.iterate_data.size).to eq(1)
 
-      bootstrap_data = @project.bootstrap_data.first
-      expect(bootstrap_data[:raw_datum_id]).to eq(raw_datum.id)
-      expect(bootstrap_data[:content]).to eq(
+      iterate_data = @project.iterate_data.first
+      expect(iterate_data[:raw_datum_id]).to eq(raw_datum.id)
+      expect(iterate_data[:content]).to eq(
         Base64.encode64(
           File.new(raw_datum.data.path).read
         )
@@ -341,11 +341,11 @@ RSpec.describe Project, type: :model do
 
       @project.raw_data = raw_data
 
-      expect(@project.bootstrap_data.size).to eq(2)
+      expect(@project.iterate_data.size).to eq(2)
 
-      @project.bootstrap_data.each_with_index do |bootstrap_data, i|
-        expect(bootstrap_data[:raw_datum_id]).to eq(raw_data[i].id)
-        expect(bootstrap_data[:content]).to eq(
+      @project.iterate_data.each_with_index do |iterate_data, i|
+        expect(iterate_data[:raw_datum_id]).to eq(raw_data[i].id)
+        expect(iterate_data[:content]).to eq(
           Base64.encode64(
             File.new(raw_data[i].data.path).read
           )

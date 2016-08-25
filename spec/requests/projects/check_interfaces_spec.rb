@@ -7,7 +7,7 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows an empty hash for no necessary interface types' do
-    @project.bootstrap_service = nil
+    @project.iterate_service = nil
     @project.interfaces = []
     @project.save!
 
@@ -21,8 +21,8 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows a hash with empty keys for no selected interface types' do
-    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                    interface_types: %w(text_nominal))
+    @project.iterate_service = FactoryGirl.create(:iterate_service,
+                                                  interface_types: %w(text_nominal))
     @project.interfaces = []
     @project.save!
 
@@ -40,8 +40,8 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows a hash with empty keys for no selected interface types' do
-    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                    interface_types: %w(text_nominal text_not_so_nominal))
+    @project.iterate_service = FactoryGirl.create(:iterate_service,
+                                                  interface_types: %w(text_nominal text_not_so_nominal))
     @project.interfaces = []
     @project.save!
 
@@ -60,8 +60,8 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it "shows selected interfaces' titles grouped by type" do
-    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                    interface_types: %w(text_nominal))
+    @project.iterate_service = FactoryGirl.create(:iterate_service,
+                                                  interface_types: %w(text_nominal))
     text_nominal_interface = FactoryGirl.create(:interface,
                                                 title: 'interface 1',
                                                 interface_type: 'text_nominal')
@@ -83,8 +83,8 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it "shows selected interfaces' titles grouped by type" do
-    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                    interface_types: %w(text_nominal text_not_so_nominal))
+    @project.iterate_service = FactoryGirl.create(:iterate_service,
+                                                  interface_types: %w(text_nominal text_not_so_nominal))
     text_nominal_interface = FactoryGirl.create(:interface,
                                                 title: 'interface 1',
                                                 interface_type: 'text_nominal')

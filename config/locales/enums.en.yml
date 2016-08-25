@@ -2,6 +2,6 @@ en:
   enums:
     service:
       role:
-        bootstrap: Bootstrap
+        iterate: Iterate
         machine_learning: Machine Learning
         merge: Merge

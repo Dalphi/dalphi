@@ -20,7 +20,7 @@ en:
       other: Services
       title-tooltip: version %{version}
     names:
-      bootstrap: Bootstrap
+      iterate: Iterate
       machine-learning: Machine Learning
       merge: Merge
     refresh:
