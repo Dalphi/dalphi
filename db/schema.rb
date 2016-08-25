@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712121210) do
+ActiveRecord::Schema.define(version: 20160825161109) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.string   "interface_type"
@@ -67,11 +67,9 @@ ActiveRecord::Schema.define(version: 20160712121210) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "user_id"
-    t.integer  "active_learning_service_id"
     t.integer  "bootstrap_service_id"
     t.integer  "machine_learning_service_id"
     t.integer  "merge_service_id"
-    t.index ["active_learning_service_id"], name: "index_projects_on_active_learning_service_id"
     t.index ["bootstrap_service_id"], name: "index_projects_on_bootstrap_service_id"
     t.index ["machine_learning_service_id"], name: "index_projects_on_machine_learning_service_id"
     t.index ["merge_service_id"], name: "index_projects_on_merge_service_id"
