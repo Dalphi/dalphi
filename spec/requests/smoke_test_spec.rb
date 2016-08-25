@@ -24,8 +24,7 @@ RSpec.describe "GET routes", type: :request do
     routes.each do |route|
       path = route[:path]
       path.gsub!(/:role/, 'iterate')
-      # path.gsub!(/:role/, 'bootstrap')
-      # path.gsub!(/:annotation_document_id/, '1')
+      path.gsub!(/:annotation_document_id/, '1')
       get path
       expect([200, 301, 302]).to include(response.status)
     end
