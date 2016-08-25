@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160825161109) do
     t.text     "java_script"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.text     "compiled_javascript"
     t.text     "compiled_stylesheet"
     t.text     "compiled_java_script"
   end
