@@ -10,3 +10,7 @@ en:
       next:
         no-documents: no annotation documents available
         update-failed: can not update requested_at attribute of the next annotation documents
+    show:
+      annotate-button:
+        title: Annotate this
+        tooltip: set or change the label
