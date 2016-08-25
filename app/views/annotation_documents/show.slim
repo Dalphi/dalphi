@@ -2,6 +2,7 @@
   = render 'shared/project_header',
            project: @project,
            active_label: 'annotation-documents'
+
   .row
     .col-xs-12
       .card
@@ -10,9 +11,18 @@
         .card-block.editor
           .code-input#annotation-documents
             = @annotation_document.payload
+
           coffee:
             window.annotationDocumentsEditor = new window.AnnotationDocumentsEditor()
+
   .row.btn-row
     .col-xs-12
       = render 'shared/button',
                type: 'back'
+      = render 'shared/button',
+               label: t('annotation-documents.show.annotate-button.title'),
+               tooltip: t('annotation-documents.show.annotate-button.tooltip'),
+               icon: 'tags',
+               type: 'primary',
+               turbolinks: false,
+               href: project_annotate_document_path(@project, @annotation_document)

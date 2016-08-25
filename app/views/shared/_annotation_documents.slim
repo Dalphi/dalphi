@@ -11,6 +11,7 @@ table.table.table-striped.table-hover
         = t('activerecord.attributes.annotation_document.skipped')
       th
         = t('activerecord.attributes.annotation_document.interface_type')
+
   tbody
     - annotation_documents.each do |annotation_document|
       tr data-href="#{project_annotation_document_path(project, annotation_document)}"
@@ -25,8 +26,10 @@ table.table.table-striped.table-hover
           = boolean_icon(annotation_document.skipped)
         td
           = annotation_document.interface_type
+
     coffee:
       window.clickableTableRow = new window.ClickableTableRow()
+
 - if !defined?(pagination) || pagination
   .row.pagination
     .col-xs-12
