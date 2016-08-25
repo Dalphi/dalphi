@@ -11,6 +11,32 @@
 ![DALPHI](https://github.com/Dalphi/dalphi/blob/master/app/assets/images/dalphi-logo.png)
 DALPHI - Active Learning Platform for Human Interaction
 
+## Introduction
+
+DALPHI helps you to build and maintain your annotated data for machine learning tasks.
+It is completely agnostic regarding the document content of your data to allow for a wide range of labeling problems.
+Internally, each document is treated as a blob, only the services you provide understand its content.
+These JSON-based services define the machine learning problem you want to solve.
+
+Due to its rather early stage, the communication protocol between DALPHI and the external services is still evolving and changes constantly.
+This is just to give you an idea of how the process works.
+Currently, the following endpoints must be provided by your service in order to run DALPHI:
+
+* **iterate**
+  * Input: The whole corpus including all labeled and unlabeled documents
+  * Output: A list of _AnnotationDocuments_
+  
+* **merge**
+  * Input: One raw _CorpusDocument_ and one or more corresponding _AnnotationDocuments_
+  * Output: The _CorpusDocument_ containing the merged feedback from the _AnnotationDocuments_
+
+You can think of an _AnnotationDocument_ as a question to the human annotator.
+This may be a simple closed question like "Is there a cat on the picture?" or "Is this a valid person name?".
+Or it may require custom rendering asking for complex feedback.
+Therefore you have to register a custom HTML interface to render complex questions.
+We are still working on the concrete API documentation and example services.
+These are planned to be available by December 2016.
+
 ## Getting started
 
 ### Kickstart with Docker
