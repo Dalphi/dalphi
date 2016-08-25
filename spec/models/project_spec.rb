@@ -53,25 +53,6 @@ RSpec.describe Project, type: :model do
     end
   end
 
-  describe 'active_learning_service' do
-    it 'can be nil' do
-      @project.active_learning_service = nil
-      expect(@project).to be_valid
-    end
-
-    it 'can be a valid AL service' do
-      service = FactoryGirl.create(:active_learning_service)
-      @project.active_learning_service = service
-      expect(@project).to be_valid
-    end
-
-    it 'cannot be an invalid AL service' do
-      service = FactoryGirl.create(:bootstrap_service)
-      @project.active_learning_service = service
-      expect(@project).to be_invalid
-    end
-  end
-
   describe 'bootstrap_service' do
     it 'can be nil' do
       @project.bootstrap_service = nil
@@ -104,7 +85,7 @@ RSpec.describe Project, type: :model do
     end
 
     it 'cannot be an invalid machine learning service' do
-      service = FactoryGirl.create(:active_learning_service)
+      service = FactoryGirl.create(:merge_service)
       @project.machine_learning_service = service
       expect(@project).to be_invalid
     end
@@ -123,7 +104,7 @@ RSpec.describe Project, type: :model do
     end
 
     it 'cannot be an invalid merge service' do
-      service = FactoryGirl.create(:active_learning_service)
+      service = FactoryGirl.create(:bootstrap_service)
       @project.merge_service = service
       expect(@project).to be_invalid
     end
@@ -131,7 +112,6 @@ RSpec.describe Project, type: :model do
 
   describe 'associated_problem_identifiers' do
     it 'should return an empty list if no service is associated' do
-      @project.active_learning_service = nil
       @project.bootstrap_service = nil
       @project.machine_learning_service = nil
       @project.merge_service = nil
@@ -140,7 +120,6 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should return a singleton if all associated services handle the same problem identifier' do
-      @project.active_learning_service = FactoryGirl.create(:active_learning_service, problem_id: 'NER')
       @project.bootstrap_service = FactoryGirl.create(:bootstrap_service, problem_id: 'NER')
       @project.machine_learning_service = FactoryGirl.create(:machine_learning_service, problem_id: 'NER')
       @project.merge_service = FactoryGirl.create(:merge_service, problem_id: 'NER')
@@ -149,12 +128,11 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should return a set of different problem identifiers if associated services handle them' do
-      @project.active_learning_service = FactoryGirl.create(:active_learning_service, problem_id: 'UltraNER')
       @project.bootstrap_service = FactoryGirl.create(:bootstrap_service, problem_id: 'HyperNER')
       @project.machine_learning_service = FactoryGirl.create(:machine_learning_service, problem_id: 'MegaNER')
       @project.merge_service = FactoryGirl.create(:merge_service, problem_id: 'NER')
 
-      expect(@project.associated_problem_identifiers.sort).to eq(['UltraNER', 'HyperNER', 'MegaNER', 'NER'].sort)
+      expect(@project.associated_problem_identifiers.sort).to eq(['HyperNER', 'MegaNER', 'NER'].sort)
     end
   end
 
@@ -162,7 +140,6 @@ RSpec.describe Project, type: :model do
     it 'should not connect services if no service available' do
       Service.destroy_all
       @project.connect_services
-      expect(@project.active_learning_service).to eq(nil)
       expect(@project.bootstrap_service).to eq(nil)
       expect(@project.machine_learning_service).to eq(nil)
       expect(@project.merge_service).to eq(nil)
@@ -170,22 +147,20 @@ RSpec.describe Project, type: :model do
 
     it 'should connect services from different types if exactly one service per type exists' do
       Service.destroy_all
-      active_learning_service = FactoryGirl.create(:active_learning_service)
       bootstrap_service = FactoryGirl.create(:bootstrap_service)
+      merge_service = FactoryGirl.create(:merge_service)
       @project.connect_services
-      expect(@project.active_learning_service).to eq(active_learning_service)
       expect(@project.bootstrap_service).to eq(bootstrap_service)
       expect(@project.machine_learning_service).to eq(nil)
-      expect(@project.merge_service).to eq(nil)
+      expect(@project.merge_service).to eq(merge_service)
     end
 
     it 'should only connect thoses services where exactly one service per type exists' do
       Service.destroy_all
-      FactoryGirl.create(:active_learning_service)
-      FactoryGirl.create(:active_learning_service, url: 'http://yet-another-dalphi-service.com')
+      FactoryGirl.create(:merge_service)
+      FactoryGirl.create(:merge_service, url: 'http://yet-another-dalphi-service.com')
       bootstrap_service = FactoryGirl.create(:bootstrap_service)
       @project.connect_services
-      expect(@project.active_learning_service).to eq(nil)
       expect(@project.bootstrap_service).to eq(bootstrap_service)
       expect(@project.machine_learning_service).to eq(nil)
       expect(@project.merge_service).to eq(nil)
@@ -234,7 +209,6 @@ RSpec.describe Project, type: :model do
 
   describe 'selected_interfaces' do
     it 'should return an empty hash for no necessary interface types' do
-      @project.active_learning_service = nil
       @project.bootstrap_service = nil
       @project.interfaces = []
       @project.save!
@@ -242,9 +216,8 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should return a hash with empty keys for no selected interface types' do
-      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                            interface_types: %w(text_nominal))
-      @project.bootstrap_service = nil
+      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                      interface_types: %w(text_nominal))
       @project.interfaces = []
       @project.save!
 
@@ -255,25 +228,7 @@ RSpec.describe Project, type: :model do
       )
     end
 
-    it 'should return a hash with empty keys for no selected interface types' do
-      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                            interface_types: %w(text_nominal))
-      @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
-                                                      interface_types: %w(text_nominal text_not_so_nominal))
-      @project.interfaces = []
-      @project.save!
-
-      expect(@project.selected_interfaces).to eq(
-        {
-          'text_nominal' => nil,
-          'text_not_so_nominal' => nil
-        }
-      )
-    end
-
     it "should return selected interfaces' titles grouped by type" do
-      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                            interface_types: %w(text_nominal))
       @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                                       interface_types: %w(text_nominal))
       text_nominal_interface = FactoryGirl.create(:interface,
@@ -291,8 +246,6 @@ RSpec.describe Project, type: :model do
     end
 
     it "should return selected interfaces' titles grouped by type" do
-      @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                            interface_types: %w(text_nominal))
       @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                                       interface_types: %w(text_nominal text_not_so_nominal))
       text_nominal_interface = FactoryGirl.create(:interface,
@@ -319,43 +272,33 @@ RSpec.describe Project, type: :model do
 
   describe 'necessary_interface_types' do
     it 'should be an empty array for a project with no associated services' do
-      @project.active_learning_service = nil
       @project.bootstrap_service = nil
 
       expect(@project.necessary_interface_types).to eq([])
     end
 
     it 'should be the interface types of associated services' do
-      active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                   interface_types: %w(text_nominal))
       bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                              interface_types: %w(text_nominal))
-      @project.active_learning_service = active_learning_service
       @project.bootstrap_service = bootstrap_service
 
       expect(@project.necessary_interface_types).to eq(%w(text_nominal))
     end
 
     it 'should be the union of interface types of associated services' do
-      active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                   interface_types: %w(text_nominal))
       bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                              interface_types: %w(text_nominal text_not_so_nominal))
-      @project.active_learning_service = active_learning_service
       @project.bootstrap_service = bootstrap_service
 
       expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
     end
 
     it 'should not contain interface types of non associated services' do
-      active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                   interface_types: %w(text_nominal))
       bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                              interface_types: %w(text_nominal text_not_so_nominal))
       not_associated_service = FactoryGirl.create(:bootstrap_service,
                                                   url: 'http://www.3antworten.de',
                                                   interface_types: %w(text_nominal text_not_so_nominal yet_another_interface_type))
-      @project.active_learning_service = active_learning_service
       @project.bootstrap_service = bootstrap_service
 
       expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))

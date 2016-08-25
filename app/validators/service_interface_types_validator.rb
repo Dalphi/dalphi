@@ -4,7 +4,7 @@ class ServiceInterfaceTypesValidator < ActiveModel::Validator
   end
 
   def self.validate(record)
-    if %w(bootstrap active_learning).include?(record.role) && record.interface_types == []
+    if record.role == 'bootstrap' && record.interface_types == []
       error_message = I18n.t('activerecord.errors.models.service.attributes.' \
                              'interface_types.is_empty')
 

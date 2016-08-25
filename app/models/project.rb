@@ -1,8 +1,5 @@
 class Project < ApplicationRecord
   belongs_to :user
-  belongs_to :active_learning_service,
-             class_name: 'Service',
-             foreign_type: 'active_learning_service_id'
   belongs_to :bootstrap_service,
              class_name: 'Service',
              foreign_type: 'bootstrap_service'
@@ -22,7 +19,6 @@ class Project < ApplicationRecord
     presence: true
 
   validate do |project|
-    ProjectServiceValidator.validate_active_learning_service(project)
     ProjectServiceValidator.validate_bootstrap_service(project)
     ProjectServiceValidator.validate_machine_learning_service(project)
     ProjectServiceValidator.validate_merge_service(project)
@@ -91,9 +87,6 @@ class Project < ApplicationRecord
 
   def necessary_interface_types
     necessary_interface_types = []
-    if active_learning_service
-      necessary_interface_types += active_learning_service.interface_types
-    end
     if bootstrap_service
       necessary_interface_types += bootstrap_service.interface_types
     end

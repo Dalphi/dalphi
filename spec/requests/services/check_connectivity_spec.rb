@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Connectivity check", type: :request do
   before(:each) do
-    @service = FactoryGirl.create(:active_learning_service)
+    @service = FactoryGirl.create(:merge_service)
   end
 
   it 'should have a valid factory' do

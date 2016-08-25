@@ -2,7 +2,6 @@ en:
   enums:
     service:
       role:
-        active_learning: Active Learning
         bootstrap: Bootstrap
         machine_learning: Machine Learning
         merge: Merge

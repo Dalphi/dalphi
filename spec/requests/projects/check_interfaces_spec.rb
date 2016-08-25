@@ -7,7 +7,6 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows an empty hash for no necessary interface types' do
-    @project.active_learning_service = nil
     @project.bootstrap_service = nil
     @project.interfaces = []
     @project.save!
@@ -22,9 +21,8 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows a hash with empty keys for no selected interface types' do
-    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                          interface_types: %w(text_nominal))
-    @project.bootstrap_service = nil
+    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
+                                                    interface_types: %w(text_nominal))
     @project.interfaces = []
     @project.save!
 
@@ -42,8 +40,6 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows a hash with empty keys for no selected interface types' do
-    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                          interface_types: %w(text_nominal))
     @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                                     interface_types: %w(text_nominal text_not_so_nominal))
     @project.interfaces = []
@@ -64,8 +60,6 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it "shows selected interfaces' titles grouped by type" do
-    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                          interface_types: %w(text_nominal))
     @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                                     interface_types: %w(text_nominal))
     text_nominal_interface = FactoryGirl.create(:interface,
@@ -89,8 +83,6 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it "shows selected interfaces' titles grouped by type" do
-    @project.active_learning_service = FactoryGirl.create(:active_learning_service,
-                                                          interface_types: %w(text_nominal))
     @project.bootstrap_service = FactoryGirl.create(:bootstrap_service,
                                                     interface_types: %w(text_nominal text_not_so_nominal))
     text_nominal_interface = FactoryGirl.create(:interface,
