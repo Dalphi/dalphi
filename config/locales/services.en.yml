@@ -20,7 +20,6 @@ en:
       other: Services
       title-tooltip: version %{version}
     names:
-      active-learning: Active Learning
       bootstrap: Bootstrap
       machine-learning: Machine Learning
       merge: Merge

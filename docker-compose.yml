@@ -5,11 +5,6 @@ web:
 worker:
   build: .
   command: bundle exec rake jobs:work
-active_learning:
-  build: .
-  command: bash -c 'while true; do nc -l 3001 < spec/fixtures/service_headers/active_learning; done'
-  ports:
-    - '3001:3001'
 bootstrap:
   build: .
   command: bash -c 'while true; do nc -l 3002 < spec/fixtures/service_headers/bootstrap; done'

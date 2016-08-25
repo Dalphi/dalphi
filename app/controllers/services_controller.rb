@@ -20,7 +20,7 @@ class ServicesController < ApplicationController
     end
   end
 
-  # GET /services/active_learning
+  # GET /services/iterate
   def role_services
     role = params[:role]
     raise ActionController::RoutingError.new('Not Found') unless Service.roles.keys.include?(role)

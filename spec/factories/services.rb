@@ -1,15 +1,15 @@
 FactoryGirl.define do
-  factory :active_learning_service, class: Service do
+  factory :service, class: Service do
     role 0
     description 'Arnnes algorithm for optimal results'
     problem_id 'NER'
     url 'http://www.google.com'
-    title 'Active Learning component'
+    title 'Dummy service component'
     version 'v2.0.0-rc1'
     interface_types ['text_nominal']
 
     factory :bootstrap_service do
-      role 1
+      role 0
       description 'Rorik algorithm for optimal results'
       url 'http://www.google.de'
       title 'NER Bootstrapper'
@@ -18,7 +18,7 @@ FactoryGirl.define do
     end
 
     factory :bootstrap_service_request_test do
-      role 1
+      role 0
       description 'Bootstrap Service for request tests'
       url 'http://example.com/bootstrap'
       title 'Request Test Bootstrap Service'
@@ -36,7 +36,7 @@ FactoryGirl.define do
     end
 
     factory :merge_service do
-      role 3
+      role 1
       description 'Merge annotation documents and preprocessed raw_data'
       url 'http://www.google.us'
       title 'Merger'
@@ -45,7 +45,7 @@ FactoryGirl.define do
     end
 
     factory :merge_service_request_test do
-      role 3
+      role 1
       description 'Merge Service for request tests'
       url 'http://example.com/merge'
       title 'Request Test Merge Service'

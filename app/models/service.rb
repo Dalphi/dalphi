@@ -24,7 +24,7 @@ class Service < ApplicationRecord
     end
   end
 
-  enum role: [ :active_learning, :bootstrap, :machine_learning, :merge ]
+  enum role: [:bootstrap, :merge, :machine_learning]
 
   serialize :interface_types, Array
 

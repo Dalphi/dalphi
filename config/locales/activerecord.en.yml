@@ -66,15 +66,15 @@ en:
           attributes:
             interfaces:
               not_unique: the interfaces are not unique in the scope of the interface types
-            active_learning_service:
-              no_service: the given active learning service is not recognized
-              wrong_service: the given service is not a active learning service
             bootstrap_service:
               no_service: the given bootstrap service is not recognized
               wrong_service: the given service is not a bootstrap service
             machine_learning_service:
               no_service: the given machine learning service is not recognized
               wrong_service: the given service is not a machine learning service
+            merge_service:
+              no_service: the given merge service is not recognized
+              wrong_service: the given service is not a merge service
         service:
           attributes:
             interface_types:
