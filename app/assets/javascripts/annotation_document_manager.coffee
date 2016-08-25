@@ -144,28 +144,24 @@ class AnnotationDocumentManager
 
   handleHistoryLegacy: ->
     if this.historyRequest && this.latestSeenDocumentId > 0
-      numberOfShifts = 0
-      for queuedDocument in this.documentStore
-        break if queuedDocument && queuedDocument.id == this.latestSeenDocumentId
-        numberOfShifts++
-      this.documentStore.shift() for x in [1..numberOfShifts] if numberOfShifts > 0
+      idList = (item.id for item in this.documentStore)
+      for documentId in idList
+        break if documentId == this.latestSeenDocumentId
+        this.documentStore.shift()
 
     this.historyRequest = false
 
   documentIdFromUrl: ->
-    pathname = document.location.pathname
-    regex = /.*\/annotate\/([0-9]+)\D*/
-    result = regex.exec(pathname)
-    return result unless result
-    result[1]
+    regexSearchGroup = /.*\/annotate\/([0-9]+)\D*/.exec(document.location.pathname)
+    return undefined unless regexSearchGroup
+    regexSearchGroup[1]
 
   rewriteHistory: ->
     replacement = "annotate/#{this.currentDocument.id}"
     newLocationPath = document.location.pathname.replace(/annotate(\/[0-9]+)?/, replacement)
-    newLocationPath += document.location.search if document.location.search
 
     window.history.pushState { annotationDocumentId: this.currentDocument.id },
                              document.title,
-                             newLocationPath
+                             newLocationPath + document.location.search
 
 window.AnnotationDocumentManager = AnnotationDocumentManager
