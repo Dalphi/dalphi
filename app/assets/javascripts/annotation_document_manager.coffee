@@ -154,13 +154,10 @@ class AnnotationDocumentManager
 
   documentIdFromUrl: ->
     pathname = document.location.pathname
-    index = pathname.search(/annotate\/[0-9]+/)
-    return undefined if index < 0
-
-    index += + 'annotate/'.length
-    endPosition = index + pathname.substring(index).search(/\D/)
-    searchString.substring(index, endPosition) if endPosition > index
-    searchString.substring index if endPosition < index
+    regex = /.*\/annotate\/([0-9]+)\D*/
+    result = regex.exec(pathname)
+    return result unless result
+    result[1]
 
   rewriteHistory: ->
     replacement = "annotate/#{this.currentDocument.id}"
