@@ -2,6 +2,7 @@
   = render 'shared/project_header',
            project: @project,
            active_label: 'annotation-documents'
+
   .row
     .col-xs-12
       - if @annotation_documents.any?
@@ -17,6 +18,7 @@
         .row.btn-row
           .col-xs-12
              = render 'shared/button', type: 'back'
+
   - if @annotation_documents.any?
     .row.btn-row
       .col-xs-12
@@ -26,7 +28,7 @@
                   tooltip: t('projects.annotate.tooltip'),
                   icon: 'tags',
                   type: 'primary',
-                  data: { no_turbolink: 'true' },
+                  turbolinks: false,
                   href: project_annotate_path(@project)
          = render 'shared/button',
                   label: t('projects.merge.title'),
