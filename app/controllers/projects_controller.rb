@@ -42,6 +42,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @project.connect_services
   end
 
   # GET /projects/1/edit
@@ -89,7 +90,7 @@ class ProjectsController < ApplicationController
            status: 200
   end
 
-  # GET /projects/1/bootstrap
+  # POST /projects/1/bootstrap
   def bootstrap
     generate_annotation_documents(@project.bootstrap_data)
     if @annotation_documents
@@ -97,13 +98,13 @@ class ProjectsController < ApplicationController
       flash[:notice] = I18n.t 'projects.bootstrap.success',
                               success_count: (record_count - error_count),
                               record_count: record_count
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     else
       redirect_bootstrap_with_flash
     end
   end
 
-  # GET /projects/1/bootstrap
+  # POST /projects/1/merge
   def merge
     merge_result = merge_annotation_documents
     if merge_result
@@ -111,7 +112,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = I18n.t 'projects.merge.success',
                               success_count: (record_count - error_count),
                               record_count: record_count
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     else
       redirect_merge_with_flash
     end
@@ -231,12 +232,12 @@ class ProjectsController < ApplicationController
 
     def redirect_bootstrap_with_flash
       flash[:error] = I18n.t('projects.bootstrap.error')
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     end
 
     def redirect_merge_with_flash
       flash[:error] = I18n.t('projects.merge.error')
-      redirect_to project_path(@project)
+      redirect_to project_annotation_documents_path(@project)
     end
 
     # this method smells of :reek:UtilityFunction

@@ -54,7 +54,11 @@ Rails.application.routes.draw do
   # Projects
 
   resources :projects do
-    resources :raw_data, except: [:show]
+    resources :raw_data, except: [:show] do
+      resources :annotation_documents, only: [:index, :show]
+    end
+
+    resources :annotation_documents, only: [:index, :show]
 
     # Annotation Documents
 
@@ -70,10 +74,10 @@ Rails.application.routes.draw do
           as: 'next_annotation_documents'
   end
 
-  get '/projects/:id/bootstrap',
+  post '/projects/:id/bootstrap',
       to: 'projects#bootstrap',
       as: 'project_bootstrap'
-  get '/projects/:id/merge',
+  post '/projects/:id/merge',
       to: 'projects#merge',
       as: 'project_merge'
   get '/projects/:id/check_problem_identifiers',

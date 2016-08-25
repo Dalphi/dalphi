@@ -66,4 +66,12 @@ class AnnotationLifecycle
 
     this.annotationDocumentManager.saveDocumentPayload(data, nextIteration)
 
+  skip: ->
+    console.log 'AnnotationLifecycle: skip current document'
+
+    nextIteration = ->
+      _this.startIteration()
+
+    this.annotationDocumentManager.skipDocument(nextIteration)
+
 window.AnnotationLifecycle = AnnotationLifecycle

@@ -1,16 +1,9 @@
 .container.projects
-  .row
-    h2.col-xs-12
-      = @project.title
-  .row
-    p.col-xs-12
-      - if @project.description.empty?
-        i
-          = t('projects.blank-slate.no-description')
-      - else
-        = @project.description
+  = render 'shared/project_header',
+           project: @project,
+           active_label: 'dashboard'
 
-  .row.row-eq-height
+  .dashboard.row.row-eq-height
     = render 'projects/dashboard/services',
              project: @project,
              available_services: @available_services,
@@ -27,26 +20,6 @@
     .col-xs-12
       = render 'shared/button', type: 'back'
       = render 'shared/button',
-               label: t('activerecord.actions.raw-datum.edit'),
-               icon: 'edit',
-               href: project_raw_data_path(@project)
-      = render 'shared/button',
                label: t('activerecord.actions.project.edit'),
                icon: 'edit',
                href: edit_project_path(@project)
-      = render 'shared/button',
-               label: t('projects.bootstrap.title'),
-               icon: 'rocket',
-               type: 'primary',
-               href: project_bootstrap_path(@project)
-      = render 'shared/button',
-               label: t('projects.annotate.title'),
-               icon: 'tags',
-               type: 'primary',
-               data: { no_turbolink: 'true' },
-               href: project_annotate_path(@project)
-      = render 'shared/button',
-               label: t('projects.merge.title'),
-               icon: 'compress',
-               type: 'primary',
-               href: project_merge_path(@project)

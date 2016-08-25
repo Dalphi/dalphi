@@ -1,0 +1,11 @@
+ruby:
+  items = [
+    { label_key: 'dashboard', path: project_path(project), icon: 'tachometer' },
+    { label_key: 'raw-data', path: project_raw_data_path(project), icon: 'database' },
+    { label_key: 'annotation-documents', path: project_annotation_documents_path(project), icon: 'file', disabled: project.raw_data.empty? }
+  ]
+  items.select { |i| i[:label_key] == active_label }.first[:active] = true
+  items.map { |i| i[:label_key] = "projects.project-tabs.#{i[:label_key]}" }
+
+= render 'shared/tabs',
+         items: items

@@ -37,8 +37,8 @@ RSpec.describe 'Project bootstrap', type: :request do
 
     expect(AnnotationDocument.count).to eq(0)
 
-    get project_bootstrap_path(@project)
-    expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_url(@project))
+    post project_bootstrap_path(@project)
+    expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_annotation_documents_url(@project))
 
     expect(AnnotationDocument.count).to eq(1)
 

@@ -20,13 +20,11 @@ RSpec.describe "GET routes", type: :request do
   end
 
   it 'should be error-free' do
-    blacklist = %w(/projects/1/bootstrap /projects/1/merge)
     routes = ROUTES.select { |r| r[:method] == 'GET' }
     routes.each do |route|
       path = route[:path]
       path.gsub!(/:role/, 'bootstrap')
       path.gsub!(/:annotation_document_id/, '1')
-      next if blacklist.include?(path)
       get path
       expect([200, 301, 302]).to include(response.status)
     end

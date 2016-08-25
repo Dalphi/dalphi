@@ -1,6 +1,15 @@
-.container
-  == render 'form',
-            project: @project,
-            raw_datum: @raw_datum,
-            raw_data_shapes: RawDatum::SHAPES,
-            upload_mime_types: RawDatum::MIME_TYPES.values.first + %w(application/zip)
+.container.raw-data
+  = render 'shared/project_header',
+           project: @project,
+           active_label: 'raw-data'
+  .row
+    .col-xs-12
+      .card
+        h3.card-header
+          = t('raw-data.new-title')
+        .card-block
+          == render 'form',
+                    project: @project,
+                    raw_datum: @raw_datum,
+                    raw_data_shapes: RawDatum::SHAPES,
+                    upload_mime_types: RawDatum::MIME_TYPES.values.first + %w(application/zip)

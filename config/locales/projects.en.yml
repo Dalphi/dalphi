@@ -1,15 +1,22 @@
 en:
   projects:
+    project-tabs:
+      dashboard: 'Dashboard'
+      raw-data: 'Raw Data'
+      annotation-documents: 'Annotation Documents'
     merge:
       title: Merge
+      tooltip: combine labeled annotation documents with correspondig raw data
       success: '%{success_count} of %{record_count} raw data have successfully been merged'
       error: An error occured after sending data to the merge service
     annotate:
       title: Annotate
+      tooltip: label annotation documents
       errors:
         no-annotation-documents: No annotation documents present. Generate some by starting a new iteration.
     bootstrap:
       title: Bootstrap
+      tooltip: Generate new annotation documents
       success: '%{success_count} of %{record_count} annotation documents have successfully been generated'
       error: An error occured after sending raw data to the bootstrap service
     blank-slate:

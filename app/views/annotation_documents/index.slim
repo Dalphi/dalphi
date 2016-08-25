@@ -1,0 +1,43 @@
+.container.annotation-documents
+  = render 'shared/project_header',
+           project: @project,
+           active_label: 'annotation-documents'
+  .row
+    .col-xs-12
+      - if @annotation_documents.any?
+        = render 'shared/annotation_documents',
+                 project: @project,
+                 annotation_documents: @annotation_documents
+      - elsif @project.raw_data.any?
+        = render 'shared/blank_slates/annotation_documents',
+                 project: @project
+      - else
+        = render 'shared/blank_slates/raw_data',
+                 project: @project
+        .row.btn-row
+          .col-xs-12
+             = render 'shared/button', type: 'back'
+  - if @annotation_documents.any?
+    .row.btn-row
+      .col-xs-12
+         = render 'shared/button', type: 'back'
+         = render 'shared/button',
+                  label: t('projects.annotate.title'),
+                  tooltip: t('projects.annotate.tooltip'),
+                  icon: 'tags',
+                  type: 'primary',
+                  data: { no_turbolink: 'true' },
+                  href: project_annotate_path(@project)
+         = render 'shared/button',
+                  label: t('projects.merge.title'),
+                  tooltip: t('projects.merge.tooltip'),
+                  icon: 'compress',
+                  type: 'submit',
+                  href: project_merge_path(@project),
+                  method: 'post'
+         = render 'shared/button',
+                  label: t('annotation-documents.blank-slate.generate-annotation-documents'),
+                  icon: 'plus',
+                  type: 'submit',
+                  href: project_bootstrap_path(@project),
+                  method: 'post'

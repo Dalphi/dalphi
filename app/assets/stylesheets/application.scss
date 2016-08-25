@@ -234,6 +234,29 @@ input {
     margin: $services-list-group-margin;
   }
 
+  h3 {
+    &.card-header {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-block {
+    &.editor,
+    &.table {
+      padding: 0;
+
+      // scss-lint:disable SelectorFormat
+      > .ace_editor {
+        margin-bottom: 0;
+        width: 100%;
+      }
+
+      > table {
+        margin-bottom: -1rem;
+      }
+    }
+  }
+
   .list-group-item {
     &:first-of-type {
       border-radius: 0;
@@ -311,6 +334,16 @@ span {
       &::before {
         content: ''; // fa-arrow-right
       }
+    }
+  }
+}
+
+.nav-tabs {
+  margin-bottom: 1rem;
+
+  .nav-link {
+    &.disabled {
+      pointer-events: none;
     }
   }
 }

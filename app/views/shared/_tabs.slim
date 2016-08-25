@@ -1,0 +1,11 @@
+ul.nav.nav-tabs
+  - items.each do |item|
+    - active = item[:active]
+    - disabled = defined?(item[:disabled]) && item[:disabled]
+    li.nav-item
+      = link_to item[:path],
+                class: "nav-link #{'active' if active} #{'disabled' if disabled}" do
+        - if item[:icon]
+          = fa_icon(item[:icon])
+          | &nbsp;
+        = t(item[:label_key])
