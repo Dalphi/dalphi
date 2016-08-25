@@ -6,7 +6,7 @@ test:
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:
-    annotation-document-edit-time: 30
+    annotation-document-edit-time: 5
     url-response-checker: 3
 
 development:
@@ -17,7 +17,7 @@ development:
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:
-    annotation-document-edit-time: 30
+    annotation-document-edit-time: 5
     url-response-checker: 3
 
 production:
@@ -28,5 +28,5 @@ production:
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:
-    annotation-document-edit-time: 30
+    annotation-document-edit-time: 5
     url-response-checker: 20

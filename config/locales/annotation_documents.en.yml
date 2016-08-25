@@ -1,9 +1,14 @@
 en:
   annotation-documents:
     blank-slate:
-      title: 'No documents'
-      text: 'To generate some annotation documents use the button below.'
-      generate-annotation-documents: 'Generate annotation documents'
+      index:
+        title: 'No documents'
+        text: 'To generate some annotation documents use the button below.'
+        button-label: 'Generate annotation documents'
+      annotate:
+        title: 'No documents left'
+        text: 'To generate some more annotation documents, merge the annotated ones and start a new iteration.'
+        button-back-to-documents-label: 'Back to annotation documents overview'
     errors:
       set-project:
         not-found: no project with the given project id found

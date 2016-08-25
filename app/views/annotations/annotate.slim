@@ -20,3 +20,7 @@ ruby:
 
     script type='text/javascript'
       == interface.compiled_java_script
+
+.no-annotation-document-blank-slate
+  = render 'shared/blank_slates/annotate',
+           project: @project
