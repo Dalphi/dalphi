@@ -1,11 +1,11 @@
 .jumbotron
   h1.display-3
-    = t('annotation-documents.blank-slate.title')
+    = t('annotation-documents.blank-slate.index.title')
   p.lead
-    = t('annotation-documents.blank-slate.text')
+    = t('annotation-documents.blank-slate.index.text')
   hr.m-y-2
   = render 'shared/button',
-           label: t('annotation-documents.blank-slate.generate-annotation-documents'),
+           label: t('annotation-documents.blank-slate.index.button-label'),
            icon: 'plus',
            type: 'submit',
            href: project_bootstrap_path(project),

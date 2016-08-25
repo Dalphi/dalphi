@@ -7,6 +7,7 @@ class AnnotationLifecycle
     this.annotationDocumentManager = undefined
     this.templates = {}
     this.interfaceInstances = {}
+    this.$blankSlate = undefined
 
     $(document).ready ->
       _this.init()
@@ -32,6 +33,9 @@ class AnnotationLifecycle
       # $(this).remove()
     )
 
+    this.$blankSlate = $('.no-annotation-document-blank-slate')
+    this.$blankSlate.css('display', 'none')
+
   startIteration: ->
     console.log 'AnnotationLifecycle: start new iteration & clean DOM container'
     this.annotationDocumentManager.requestNextDocumentPayload(this.processAnnotationDocument)
@@ -41,12 +45,12 @@ class AnnotationLifecycle
     this.annotationDocumentManager.requestPreviousDocumentPayload(this.processAnnotationDocument)
 
   processAnnotationDocument: (data) ->
-    unless data
-      alert('No annotation document payload available!')
-      return
-
-    $('.interfaces-staging > div:not(.template)').remove()
     console.log 'AnnotationLifecycle: process next document payload and render template'
+    $('.interfaces-staging > div:not(.template)').remove()
+
+    if data.code == 404
+      _this.$blankSlate.fadeIn()
+      return
 
     for interfaceType, payload of data
       template = _this.templates[interfaceType]

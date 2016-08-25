@@ -1,9 +1,20 @@
-// Place all the styles related to the annotations controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 .interfaces-staging {
   .template {
     display: none;
+  }
+}
+
+.blank-slate {
+  .easter-egg {
+    padding-left: 1.875rem;
+
+    img {
+      float: right;
+      width: 15rem;
+    }
+  }
+
+  p {
+    width: calc(100% - 16.875rem);
   }
 }

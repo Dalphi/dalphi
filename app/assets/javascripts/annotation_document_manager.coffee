@@ -15,6 +15,9 @@ class AnnotationDocumentManager
     this.requestNextDocumentCallback = undefined
     this.historyRequest = false
     this.latestSeenDocumentId = 0
+    this.errorObjects = {
+      404: { code: 404, description: 'no documents left' }
+    }
 
     this.initAjax()
     this.initialAnnotationDocumentPreloading()
@@ -136,18 +139,29 @@ class AnnotationDocumentManager
       dataType: 'json',
       data: requestOptions.data,
       async: _this.asynchronousRequest,
+
       success: (data) ->
         responseProcessor(data) if responseProcessor
-        if _this.requestNextDocumentCallback
-          _this.requestNextDocumentCallback _this.next()
-          _this.requestNextDocumentCallback = undefined
-        else if postUpdateCallback
-          postUpdateCallback _this.next()
+        _this.generalResponseHandlingWithObject(postUpdateCallback, _this.next())
+
       error: (a, b, c) ->
-        console.log "error requesting the annotation documents API " +
-                    "(#{b} #{a.status}; #{c}) - request options & jqXHR:"
-        console.log JSON.stringify(requestOptions)
-        console.log JSON.stringify(a)
+        if a.status == 404
+          # all annotation documents are annotated; nothing to do
+          _this.generalResponseHandlingWithObject(postUpdateCallback, _this.errorObjects[404])
+
+        else
+          # an unexpected error occured
+          console.log 'error requesting the annotation documents API',
+                      "(#{b} #{a.status}; #{c}) - request options & jqXHR:",
+                      JSON.stringify(requestOptions),
+                      JSON.stringify(a)
+
+  generalResponseHandlingWithObject: (postUpdateCallback, responseObject) ->
+    if this.requestNextDocumentCallback
+      this.requestNextDocumentCallback responseObject
+      this.requestNextDocumentCallback = undefined
+    else if postUpdateCallback
+      postUpdateCallback responseObject
 
   handleHistoryLegacy: ->
     if this.historyRequest && this.latestSeenDocumentId > 0
