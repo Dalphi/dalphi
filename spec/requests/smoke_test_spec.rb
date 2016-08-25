@@ -7,11 +7,11 @@ RSpec.describe "GET routes", type: :request do
     @project = @raw_datum.project
     @user = @project.user
 
-    @bootstrap_service = FactoryGirl.create :bootstrap_service
+    @iterate_service = FactoryGirl.create :iterate_service
     @merge_service = FactoryGirl.create :merge_service
     @interface = FactoryGirl.create :interface
 
-    @project.bootstrap_service = @bootstrap_service
+    @project.iterate_service = @iterate_service
     @project.merge_service = @merge_service
     @project.interfaces = [@interface]
     @project.save!
@@ -23,8 +23,9 @@ RSpec.describe "GET routes", type: :request do
     routes = ROUTES.select { |r| r[:method] == 'GET' }
     routes.each do |route|
       path = route[:path]
-      path.gsub!(/:role/, 'bootstrap')
-      path.gsub!(/:annotation_document_id/, '1')
+      path.gsub!(/:role/, 'iterate')
+      # path.gsub!(/:role/, 'bootstrap')
+      # path.gsub!(/:annotation_document_id/, '1')
       get path
       expect([200, 301, 302]).to include(response.status)
     end

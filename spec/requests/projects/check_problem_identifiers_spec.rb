@@ -7,7 +7,7 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows an empty set of associated problem identifiers if no service is set' do
-    @project.bootstrap_service = nil
+    @project.iterate_service = nil
     @project.machine_learning_service = nil
     @project.merge_service = nil
     @project.save!
@@ -22,7 +22,7 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'shows a singleton if all associated services handle the same problem identifier' do
-    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service, problem_id: 'NER')
+    @project.iterate_service = FactoryGirl.create(:iterate_service, problem_id: 'NER')
     @project.machine_learning_service = FactoryGirl.create(:machine_learning_service, problem_id: 'NER')
     @project.merge_service = FactoryGirl.create(:merge_service, problem_id: 'NER')
     @project.save!
@@ -37,7 +37,7 @@ RSpec.describe "Problem identifier check", type: :request do
   end
 
   it 'should return a set of different problem identifiers if associated services handle them' do
-    @project.bootstrap_service = FactoryGirl.create(:bootstrap_service, problem_id: 'HyperNER')
+    @project.iterate_service = FactoryGirl.create(:iterate_service, problem_id: 'HyperNER')
     @project.machine_learning_service = FactoryGirl.create(:machine_learning_service, problem_id: 'MegaNER')
     @project.merge_service = FactoryGirl.create(:merge_service, problem_id: 'NER')
     @project.save!

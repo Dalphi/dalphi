@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   include ServiceRoles
 
   before_action :set_project, only: [
-    :bootstrap,
+    :iterate,
     :check_interfaces,
     :check_problem_identifiers,
     :destroy,
@@ -90,17 +90,17 @@ class ProjectsController < ApplicationController
            status: 200
   end
 
-  # POST /projects/1/bootstrap
-  def bootstrap
-    generate_annotation_documents(@project.bootstrap_data)
+  # POST /projects/1/iterate
+  def iterate
+    generate_annotation_documents(@project.iterate_data)
     if @annotation_documents
       record_count, error_count = save_annotation_documents
-      flash[:notice] = I18n.t 'projects.bootstrap.success',
+      flash[:notice] = I18n.t 'projects.iterate.success',
                               success_count: (record_count - error_count),
                               record_count: record_count
       redirect_to project_annotation_documents_path(@project)
     else
-      redirect_bootstrap_with_flash
+      redirect_iterate_with_flash
     end
   end
 
@@ -149,8 +149,8 @@ class ProjectsController < ApplicationController
 
     def generate_annotation_documents(raw_data)
       @annotation_documents = false
-      bootstrap_service = @project.bootstrap_service
-      response = json_post_request(bootstrap_service.url, raw_data)
+      iterate_service = @project.iterate_service
+      response = json_post_request(iterate_service.url, raw_data)
 
       @annotation_documents = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
       @annotation_documents
@@ -218,7 +218,7 @@ class ProjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.require(:project).permit(
-        :bootstrap_service,
+        :iterate_service,
         :data,
         :description,
         :machine_learning_service,
@@ -229,8 +229,8 @@ class ProjectsController < ApplicationController
       end
     end
 
-    def redirect_bootstrap_with_flash
-      flash[:error] = I18n.t('projects.bootstrap.error')
+    def redirect_iterate_with_flash
+      flash[:error] = I18n.t('projects.iterate.error')
       redirect_to project_annotation_documents_path(@project)
     end
 

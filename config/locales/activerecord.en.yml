@@ -66,9 +66,9 @@ en:
           attributes:
             interfaces:
               not_unique: the interfaces are not unique in the scope of the interface types
-            bootstrap_service:
-              no_service: the given bootstrap service is not recognized
-              wrong_service: the given service is not a bootstrap service
+            iterate_service:
+              no_service: the given iterate service is not recognized
+              wrong_service: the given service is not a iterate service
             machine_learning_service:
               no_service: the given machine learning service is not recognized
               wrong_service: the given service is not a machine learning service

@@ -142,7 +142,7 @@ RSpec.configure do |config|
     stub_request(:get, "http://yet-another-dalphi-service.com/").
         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host'=>'yet-another-dalphi-service.com', 'User-Agent'=>'Ruby'}).
         to_return(:status => 200, :body => "", :headers => {})
-    stub_request(:get, "http://example.com/bootstrap/").
+    stub_request(:get, "http://example.com/iterate/").
         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host'=>'example.com', 'User-Agent'=>'Ruby'}).
         to_return(:status => 200, :body => "", :headers => {})
   end

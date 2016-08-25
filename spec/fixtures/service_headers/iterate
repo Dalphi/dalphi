@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+	"title":		"Test Iterate Service",
+	"version":		"1.0",
+	"description":		"An iterate dummy service that just implements the Who Are You API",
+	"role":			"iterate",
+	"problem_id":		"ner",
+	"interface_types":	["text_nominal"]
+}

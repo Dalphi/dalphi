@@ -3,8 +3,8 @@ class ProjectServiceValidator < ActiveModel::Validator
   def initialize(_model)
   end
 
-  def self.validate_bootstrap_service(record)
-    validate_service(record, 'bootstrap_service')
+  def self.validate_iterate_service(record)
+    validate_service(record, 'iterate_service')
   end
 
   def self.validate_machine_learning_service(record)

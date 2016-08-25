@@ -6,14 +6,14 @@ end
 
 RSpec.describe Service, type: :model do
   before(:each) do
-    @bootstrap_service = FactoryGirl.build(:bootstrap_service)
+    @iterate_service = FactoryGirl.build(:iterate_service)
     @ml_service = FactoryGirl.build(:machine_learning_service)
     @merge_service = FactoryGirl.build(:merge_service)
   end
 
   it 'should have a valid factory' do
     expect(@ml_service).to be_valid
-    expect(@bootstrap_service).to be_valid
+    expect(@iterate_service).to be_valid
     expect(@merge_service).to be_valid
   end
 
@@ -28,8 +28,8 @@ RSpec.describe Service, type: :model do
       expect(@merge_service).to be_invalid
     end
 
-    it 'can be bootstrap as integer 0' do
-      role_is_valid @bootstrap_service, 0, 0
+    it 'can be iterate as integer 0' do
+      role_is_valid @iterate_service, 0, 0
     end
 
     it 'can be merge as integer 1' do
@@ -40,8 +40,8 @@ RSpec.describe Service, type: :model do
       role_is_valid @ml_service, 2, 2
     end
 
-    it 'can be string bootstrap' do
-      role_is_valid @bootstrap_service, 'bootstrap', 0
+    it 'can be string iterate' do
+      role_is_valid @iterate_service, 'iterate', 0
     end
 
     it 'can be string merge' do
@@ -294,19 +294,19 @@ RSpec.describe Service, type: :model do
       expect(@merge_service).to be_invalid
     end
 
-    it 'cannot be empty for bootstrap services' do
-      @bootstrap_service.interface_types = []
-      expect(@bootstrap_service).to be_invalid
+    it 'cannot be empty for iterate services' do
+      @iterate_service.interface_types = []
+      expect(@iterate_service).to be_invalid
     end
 
-    it 'can have one element for bootstrap service' do
-      @bootstrap_service.interface_types = %w(fancy_interface)
-      expect(@bootstrap_service).to be_valid
+    it 'can have one element for iterate service' do
+      @iterate_service.interface_types = %w(fancy_interface)
+      expect(@iterate_service).to be_valid
     end
 
-    it 'can have multiple elements for bootstrap service' do
-      @bootstrap_service.interface_types = %w(fancy_interface regular_interface)
-      expect(@bootstrap_service).to be_valid
+    it 'can have multiple elements for iterate service' do
+      @iterate_service.interface_types = %w(fancy_interface regular_interface)
+      expect(@iterate_service).to be_valid
     end
   end
 end

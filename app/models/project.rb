@@ -1,8 +1,8 @@
 class Project < ApplicationRecord
   belongs_to :user
-  belongs_to :bootstrap_service,
+  belongs_to :iterate_service,
              class_name: 'Service',
-             foreign_type: 'bootstrap_service'
+             foreign_type: 'iterate_service'
   belongs_to :machine_learning_service,
              class_name: 'Service',
              foreign_type: 'machine_learning_service'
@@ -19,7 +19,7 @@ class Project < ApplicationRecord
     presence: true
 
   validate do |project|
-    ProjectServiceValidator.validate_bootstrap_service(project)
+    ProjectServiceValidator.validate_iterate_service(project)
     ProjectServiceValidator.validate_machine_learning_service(project)
     ProjectServiceValidator.validate_merge_service(project)
     ProjectInterfacesValidator.validate(project)
@@ -34,7 +34,7 @@ class Project < ApplicationRecord
     problem_identifiers.uniq.sort
   end
 
-  def bootstrap_data
+  def iterate_data
     data = []
     self.raw_data.each do |raw_datum|
       data << {
@@ -87,8 +87,8 @@ class Project < ApplicationRecord
 
   def necessary_interface_types
     necessary_interface_types = []
-    if bootstrap_service
-      necessary_interface_types += bootstrap_service.interface_types
+    if iterate_service
+      necessary_interface_types += iterate_service.interface_types
     end
     necessary_interface_types.uniq.sort
   end

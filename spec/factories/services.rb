@@ -8,20 +8,20 @@ FactoryGirl.define do
     version 'v2.0.0-rc1'
     interface_types ['text_nominal']
 
-    factory :bootstrap_service do
+    factory :iterate_service do
       role 0
       description 'Rorik algorithm for optimal results'
       url 'http://www.google.de'
-      title 'NER Bootstrapper'
+      title 'NER Iterator'
       version 'v1.0.0.beta3'
       interface_types ['text_nominal']
     end
 
-    factory :bootstrap_service_request_test do
+    factory :iterate_service_request_test do
       role 0
-      description 'Bootstrap Service for request tests'
-      url 'http://example.com/bootstrap'
-      title 'Request Test Bootstrap Service'
+      description 'Iterate Service for request tests'
+      url 'http://example.com/iterate'
+      title 'Request Test Iterate Service'
       version 'v0.1'
       interface_types ['text_nominal']
     end

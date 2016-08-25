@@ -14,11 +14,11 @@ en:
       tooltip: label annotation documents
       errors:
         no-annotation-documents: No annotation documents present. Generate some by starting a new iteration.
-    bootstrap:
-      title: Bootstrap
+    iterate:
+      title: Iterate
       tooltip: Generate new annotation documents
       success: '%{success_count} of %{record_count} annotation documents have successfully been generated'
-      error: An error occured after sending raw data to the bootstrap service
+      error: An error occured after sending raw data to the iterate service
     blank-slate:
       title: 'No projects added yet'
       text: 'To start with a new project use the button below.'
