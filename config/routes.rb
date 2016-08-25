@@ -60,9 +60,18 @@ Rails.application.routes.draw do
 
     resources :annotation_documents, only: [:index, :show]
 
+    # Annotation Documents
+
     get '/annotate',
         to: 'annotations#annotate',
         as: 'annotate'
+    get '/annotate/:annotation_document_id',
+        to: 'annotations#annotate',
+        constraints: { annotation_document_id: /\d+/ },
+        as: 'annotate_document'
+    patch '/annotation_documents/next',
+          to: 'annotation_documents#next',
+          as: 'next_annotation_documents'
   end
 
   post '/projects/:id/bootstrap',
@@ -79,12 +88,6 @@ Rails.application.routes.draw do
       to: 'projects#check_interfaces',
       constraints: { id: /\d+/ },
       as: 'check_interfaces'
-
-  # Annotation Documents
-
-  patch '/annotation_documents/next',
-        to: 'annotation_documents#next',
-        as: 'next_annotation_documents'
 
   # Interfaces
 

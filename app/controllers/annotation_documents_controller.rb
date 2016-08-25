@@ -69,7 +69,7 @@ class AnnotationDocumentsController < ApplicationController
       time_range = INITIAL_DALPHI_COMMIT_DATETIME..(Time.zone.now - timeout.minutes)
 
       AnnotationDocument.where(project: @project,
-                               skipped: [nil, false],
+                               skipped: nil,
                                requested_at: [nil, time_range])
                         .limit(count)
     end

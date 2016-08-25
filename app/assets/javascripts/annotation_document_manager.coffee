@@ -13,15 +13,19 @@ class AnnotationDocumentManager
     this.asynchronousRequest = !synchronousRequest
     this.waitingForApi = false
     this.requestNextDocumentCallback = undefined
+    this.historyRequest = false
+    this.latestSeenDocumentId = 0
 
     this.initAjax()
-    this.loadAnnotationDocuments()
+    this.initialAnnotationDocumentPreloading()
 
   # external API:
 
   requestNextDocumentPayload: (calleeCallback) ->
+    this.handleHistoryLegacy()
+
     if this.waitingForApi
-      # hook into a running request if one if being processed right now
+      # hook into a running request if one is being processed right now
       _this.requestNextDocumentCallback = calleeCallback
       return true
 
@@ -36,6 +40,15 @@ class AnnotationDocumentManager
       this.loadAnnotationDocuments calleeCallback unless nextDocument
       return true
     false
+
+  requestPreviousDocumentPayload: (calleeCallback) ->
+    this.historyRequest = true
+
+    # put the rendered, but not annotated document back in the queue
+    _this.documentStore.unshift _this.currentDocument
+
+    # get a new document id from the history state & load it
+    _this.loadAnnotationDocumentWithId(history.state.annotationDocumentId, calleeCallback)
 
   saveDocumentPayload: (modifiedPayload, calleeCallback = false) ->
     this.currentDocument.payload = modifiedPayload
@@ -53,12 +66,18 @@ class AnnotationDocumentManager
       headers:
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 
+  initialAnnotationDocumentPreloading: ->
+    documentId = $('.interfaces-staging').data('annotation-document-id')
+    documentId = this.documentIdFromUrl() unless documentId
+
+    this.loadAnnotationDocumentWithId(documentId) if documentId
+    this.loadAnnotationDocuments() unless documentId
+
   loadAnnotationDocuments: (postUpdateCallback) ->
     requestOptions = {
       type: 'PATCH',
-      url: "#{this.dalphiBaseUrl}/annotation_documents/next",
+      url: "#{this.dalphiBaseUrl}/projects/#{_this.projectId}/annotation_documents/next",
       data: {
-        project_id: _this.projectId,
         count: _this.maxAnnotationDocumentsToLoad
       }
     }
@@ -67,6 +86,20 @@ class AnnotationDocumentManager
     responseProcessor = (data) ->
       console.log "AnnotationDocumentManager: loaded new annotation document (id: #{data[0].id})"
       _this.documentStore.push annotationDocument for annotationDocument in data
+      _this.waitingForApi = false
+    this.apiCall requestOptions, responseProcessor, postUpdateCallback
+
+  loadAnnotationDocumentWithId: (annotationDocumentId, postUpdateCallback) ->
+    baseUrl = "#{this.dalphiBaseUrl}/api/#{this.apiVersion}"
+    requestOptions = {
+      type: 'GET',
+      url: "#{baseUrl}/annotation_documents/#{annotationDocumentId}"
+    }
+
+    this.waitingForApi = true
+    responseProcessor = (annotationDocument) ->
+      console.log "AnnotationDocumentManager: loaded known annotation document (history request)"
+      _this.documentStore.unshift annotationDocument
       _this.waitingForApi = false
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
@@ -88,6 +121,10 @@ class AnnotationDocumentManager
 
       nextPayload = {}
       nextPayload[this.currentDocument.interface_type] = this.currentDocument.payload
+
+      unless this.historyRequest
+        this.latestSeenDocumentId = this.currentDocument.id
+        this.rewriteHistory()
 
       return nextPayload
     false
@@ -111,5 +148,27 @@ class AnnotationDocumentManager
                     "(#{b} #{a.status}; #{c}) - request options & jqXHR:"
         console.log JSON.stringify(requestOptions)
         console.log JSON.stringify(a)
+
+  handleHistoryLegacy: ->
+    if this.historyRequest && this.latestSeenDocumentId > 0
+      idList = (item.id for item in this.documentStore)
+      for documentId in idList
+        break if documentId == this.latestSeenDocumentId
+        this.documentStore.shift()
+
+    this.historyRequest = false
+
+  documentIdFromUrl: ->
+    regexSearchGroup = /.*\/annotate\/([0-9]+)\D*/.exec(document.location.pathname)
+    return undefined unless regexSearchGroup
+    regexSearchGroup[1]
+
+  rewriteHistory: ->
+    replacement = "annotate/#{this.currentDocument.id}"
+    newLocationPath = document.location.pathname.replace(/annotate(\/[0-9]+)?/, replacement)
+
+    window.history.pushState { annotationDocumentId: this.currentDocument.id },
+                             document.title,
+                             newLocationPath + document.location.search
 
 window.AnnotationDocumentManager = AnnotationDocumentManager
