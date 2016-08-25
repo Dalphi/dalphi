@@ -40,6 +40,10 @@
       .col-xs-12
          = render 'shared/button', type: 'back'
          = render 'shared/button',
+                  label: t('raw-data.download'),
+                  href: project_raw_data_path(@project, format: :zip),
+                  icon: 'download'
+         = render 'shared/button',
                   type: 'primary',
                   label: t('activerecord.actions.raw-datum.new'),
                   href: new_project_raw_datum_path(@project), icon: 'plus'
