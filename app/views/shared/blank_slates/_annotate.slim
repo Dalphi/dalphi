@@ -1,13 +1,16 @@
-.jumbotron.blank-slate
-  .hidden-lg-down.easter-egg
-    = image_tag 'done.png'
-  h1.display-3
-    = t('annotation-documents.blank-slate.annotate.title')
-  p.lead
-    = t('annotation-documents.blank-slate.annotate.text')
-  hr.m-y-2
-  = render 'shared/button',
-           label: t('annotation-documents.blank-slate.annotate.button-back-to-documents-label'),
-           icon: 'file',
-           type: 'submit',
-           href: project_annotation_documents_path(project)
+.container
+  .row
+    .col-xs-12
+      .jumbotron.blank-slate
+        .hidden-lg-down.easter-egg
+          = image_tag 'done.png'
+        h1.display-3
+          = t('annotation-documents.blank-slate.annotate.title')
+        p.lead
+          = t('annotation-documents.blank-slate.annotate.text')
+        hr.m-y-2
+        = render 'shared/button',
+                 label: t('annotation-documents.blank-slate.annotate.button-back-to-documents-label'),
+                 icon: 'file',
+                 type: 'submit',
+                 href: project_annotation_documents_path(project)
