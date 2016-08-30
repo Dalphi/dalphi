@@ -4,6 +4,9 @@ class Interface < ApplicationRecord
   before_save :compile_stylesheet
   before_save :compile_java_script
 
+  has_attached_file :java_script
+  has_attached_file :stylesheet
+  has_attached_file :template
 
   serialize :associated_problem_identifiers, Array
 
@@ -12,6 +15,15 @@ class Interface < ApplicationRecord
 
   validates :title,
     presence: true
+
+  validates_attachment_content_type :java_script,
+                                    content_type: 'application/javascript'
+
+  validates_attachment_content_type :stylesheet,
+                                    content_type: 'text/css'
+
+  validates_attachment_content_type :template,
+                                    content_type: 'text/html'
 
   validate do |interface|
     WebsiteComponentsValidator.validate_stylesheet(interface)
