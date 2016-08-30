@@ -4,6 +4,8 @@ linters:
   Indentation:
     severity: warning
     width: 2
+  SpaceAfterComment:
+    enabled: false
   Comment:
     enabled: false
   VendorPrefixes:
