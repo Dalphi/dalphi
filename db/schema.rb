@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160830133804) do
+ActiveRecord::Schema.define(version: 20160830140521) do
 
   create_table "annotation_documents", force: :cascade do |t|
     t.string   "interface_type"
@@ -48,6 +48,13 @@ ActiveRecord::Schema.define(version: 20160830133804) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "interface_types_services", id: false, force: :cascade do |t|
+    t.integer "interface_type_id", null: false
+    t.integer "service_id",        null: false
+    t.index ["interface_type_id", "service_id"], name: "index_iface_types_services_on_iface_type_id_and_service_id"
+    t.index ["service_id", "interface_type_id"], name: "index_services_iface_types_on_iface_type_id_and_service_id"
+  end
+
   create_table "interfaces", force: :cascade do |t|
     t.string   "title"
     t.text     "associated_problem_identifiers"
@@ -56,7 +63,6 @@ ActiveRecord::Schema.define(version: 20160830133804) do
     t.text     "java_script"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.text     "compiled_javascript"
     t.text     "compiled_stylesheet"
     t.text     "compiled_java_script"
     t.integer  "interface_type_id"

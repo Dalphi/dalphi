@@ -26,9 +26,8 @@ class Service < ApplicationRecord
 
   enum role: [:iterate, :merge, :machine_learning]
 
-  serialize :interface_types, Array
-
   has_many :projects
+  has_and_belongs_to_many :interface_types
 
   validates :role, :url, :title, :version,
     presence: true
