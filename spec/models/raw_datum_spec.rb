@@ -272,6 +272,13 @@ RSpec.describe RawDatum, type: :model do
       expect(@raw_datum).to be_valid
     end
 
+    it 'can be a json file if shape is text' do
+      @raw_datum.shape = 'text'
+      file_path = Rails.root.join('spec/fixtures/text/data.json')
+      @raw_datum.data = File.new(file_path)
+      expect(@raw_datum).to be_valid
+    end
+
     it 'should be a text file if shape is text' do
       @raw_datum.shape = 'text'
       file_path = Rails.root.join('spec/fixtures/image/implisense-logo.png')
