@@ -1,11 +1,6 @@
 Paperclip.options[:content_type_mappings] = {
+  css: ['text/plain', 'inode/x-empty'],
+  html: ['text/plain', 'inode/x-empty'],
+  js: ['text/plain', 'inode/x-empty'],
   json: 'text/plain'
 }
-#require 'paperclip/media_type_spoof_detector'
-#module Paperclip
-#  class MediaTypeSpoofDetector
-#    def spoofed?
-#      false
-#    end
-#  end
-#end

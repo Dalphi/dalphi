@@ -1,0 +1,14 @@
+.description-container {
+	margin: 0 auto;
+	text-align: center;
+	width: 60%;
+}
+
+.paragraph-container {
+	margin-top: 2.3rem;
+
+	strong {
+		color: #A70000;
+		font-size: 1.2rem;
+	}
+}

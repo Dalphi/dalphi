@@ -45,13 +45,22 @@ ActiveRecord::Schema.define(version: 20160830103035) do
     t.string   "title"
     t.string   "interface_type"
     t.text     "associated_problem_identifiers"
-    t.text     "template"
-    t.text     "stylesheet"
-    t.text     "java_script"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.text     "compiled_stylesheet"
     t.text     "compiled_java_script"
+    t.string   "template_file_name"
+    t.string   "template_content_type"
+    t.integer  "template_file_size"
+    t.datetime "template_updated_at"
+    t.string   "stylesheet_file_name"
+    t.string   "stylesheet_content_type"
+    t.integer  "stylesheet_file_size"
+    t.datetime "stylesheet_updated_at"
+    t.string   "java_script_file_name"
+    t.string   "java_script_content_type"
+    t.integer  "java_script_file_size"
+    t.datetime "java_script_updated_at"
   end
 
   create_table "interfaces_projects", id: false, force: :cascade do |t|
@@ -78,26 +87,14 @@ ActiveRecord::Schema.define(version: 20160830103035) do
 
   create_table "raw_data", force: :cascade do |t|
     t.string   "shape"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "data_file_name"
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.datetime "data_updated_at"
     t.integer  "project_id"
     t.string   "filename"
-    t.string   "template_file_name"
-    t.string   "template_content_type"
-    t.integer  "template_file_size"
-    t.datetime "template_updated_at"
-    t.string   "stylesheet_file_name"
-    t.string   "stylesheet_content_type"
-    t.integer  "stylesheet_file_size"
-    t.datetime "stylesheet_updated_at"
-    t.string   "java_script_file_name"
-    t.string   "java_script_content_type"
-    t.integer  "java_script_file_size"
-    t.datetime "java_script_updated_at"
     t.index ["project_id"], name: "index_raw_data_on_project_id"
   end
 

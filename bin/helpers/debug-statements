@@ -1,0 +1,11 @@
+#!/bin/bash
+
+./bin/helpers/message "DEBUG STATEMENTS"
+
+if grep -R -E '^\s*ap[^a-zA-Z0-9]\s*\({0,1}' app spec; then
+	echo -e "\ndebug statements detected"
+	false
+else
+	echo "no debug statements detected"
+	true
+fi

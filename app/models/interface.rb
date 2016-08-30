@@ -17,13 +17,13 @@ class Interface < ApplicationRecord
     presence: true
 
   validates_attachment_content_type :java_script,
-                                    content_type: 'application/javascript'
+                                    content_type: /(text\/.*|inode\/x-empty)/
 
   validates_attachment_content_type :stylesheet,
-                                    content_type: 'text/css'
+                                    content_type: /(text\/.*|inode\/x-empty)/
 
   validates_attachment_content_type :template,
-                                    content_type: 'text/html'
+                                    content_type: /(text\/.*|inode\/x-empty)/
 
   validate do |interface|
     WebsiteComponentsValidator.validate_stylesheet(interface)

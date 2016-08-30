@@ -114,18 +114,12 @@ RSpec.describe Interface, type: :model do
     end
 
     it 'can be empty' do
-      @interface.template = ''
-      expect(@interface).to be_valid
-
-      @interface.template = '   '
+      @interface.template = File.new("#{Rails.root}/spec/fixtures/interfaces/empty.html")
       expect(@interface).to be_valid
     end
 
     it 'can be a valid template' do
-      @interface.template = 'foo'
-      expect(@interface).to be_valid
-
-      @interface.template = '<div>bar</div>'
+      @interface.template = File.new("#{Rails.root}/spec/fixtures/interfaces/text_nominal.html")
       expect(@interface).to be_valid
     end
   end
@@ -137,24 +131,22 @@ RSpec.describe Interface, type: :model do
     end
 
     it 'can be empty' do
-      @interface.stylesheet = ''
-      expect(@interface).to be_valid
-      @interface.stylesheet = '   '
+      @interface.stylesheet = File.new("#{Rails.root}/spec/fixtures/interfaces/empty.css")
       expect(@interface).to be_valid
     end
 
     it 'can be a valid stylesheet' do
-      @interface.stylesheet = 'p { text-align: center; font-size: 2rem; }'
+      @interface.stylesheet = File.new("#{Rails.root}/spec/fixtures/interfaces/text_nominal.css")
       expect(@interface).to be_valid
     end
 
     it 'can be a valid SCSS stylesheet' do
-      @interface.stylesheet = '$strong-font-size: 2rem; p { text-align: center; strong { font-size: $strong-font-size; } }'
+      @interface.stylesheet = File.new("#{Rails.root}/spec/fixtures/interfaces/text_nominal.css")
       expect(@interface).to be_valid
     end
 
     it 'cannot be an invalid stylesheet' do
-      @interface.stylesheet = 'p { text-align: very-middel & font-size: large };'
+      @interface.stylesheet = File.new("#{Rails.root}/spec/fixtures/interfaces/text_nominal_invalid.css")
       expect(@interface).to be_invalid
     end
   end
@@ -165,25 +157,33 @@ RSpec.describe Interface, type: :model do
       @interface.compiled_stylesheet = nil
       expect(@interface).to be_valid
 
-      @interface.stylesheet = ''
+      @interface.stylesheet = File.new("#{Rails.root}/spec/fixtures/interfaces/empty.css")
       @interface.compiled_stylesheet = ''
       expect(@interface).to be_valid
     end
 
     it 'is the compiled version of the stylesheet' do
-      @interface.stylesheet = '$strong-font-size: 2rem; p { text-align: center; strong { font-size: $strong-font-size; } }'
+      begin
+        file = Tempfile.new('stylesheet')
+        file.write('$strong-font-size: 2rem; p { text-align: center; strong { font-size: $strong-font-size; } }')
+        file.rewind
 
-      @interface.save
-      @interface.reload
+        @interface.stylesheet = file
+        @interface.save
+        @interface.reload
 
-      expect(@interface.compiled_stylesheet).to eq(
-        <<-CSS.gsub(/^ {10}/, '')
-          .annotation-interface p {
-            text-align: center; }
-            .annotation-interface p strong {
-              font-size: 2rem; }
-        CSS
-      )
+        expect(@interface.compiled_stylesheet).to eq(
+          <<-CSS.gsub(/^ {12}/, '')
+            .annotation-interface p {
+              text-align: center; }
+              .annotation-interface p strong {
+                font-size: 2rem; }
+          CSS
+        )
+      ensure
+        file.close
+        file.unlink
+      end
     end
   end
 
@@ -194,29 +194,22 @@ RSpec.describe Interface, type: :model do
     end
 
     it 'can be empty' do
-      @interface.java_script = ''
-      expect(@interface).to be_valid
-      @interface.java_script = '   '
+      @interface.java_script = File.new("#{Rails.root}/spec/fixtures/interfaces/empty.js")
       expect(@interface).to be_valid
     end
 
     it 'can be a valid java script' do
-      @interface.java_script = 'alert("wow, such JS");'
+      @interface.java_script = File.new("#{Rails.root}/spec/fixtures/interfaces/text_nominal.js")
       expect(@interface).to be_valid
     end
 
     it 'can be a valid coffee script' do
-      @interface.java_script = <<-COFFEE.gsub(/^ {8}/, '')
-        test: ->
-          alert "much coffee!"
-
-        test()
-      COFFEE
+      @interface.java_script = File.new("#{Rails.root}/spec/fixtures/interfaces/text_nominal.js")
       expect(@interface).to be_valid
     end
 
     it 'cannot be an invalid coffee script' do
-      @interface.java_script = 'alert(this is not a JS string!) -> if 0'
+      @interface.java_script = File.new("#{Rails.root}/spec/fixtures/interfaces/text_nominal_invalid.js")
       expect(@interface).to be_invalid
     end
   end
@@ -229,36 +222,46 @@ RSpec.describe Interface, type: :model do
       @interface.compiled_java_script = nil
       expect(@interface).to be_valid
 
-      @interface.java_script = ''
+      @interface.java_script = File.new("#{Rails.root}/spec/fixtures/interfaces/empty.js")
       @interface.compiled_java_script = ''
       expect(@interface).to be_valid
     end
 
     it 'is the compiled version of the java_script' do
-      @interface.java_script = <<-COFFEE.gsub(/^ {8}/, '')
-        test: ->
-          alert "much coffee!"
+      begin
+        file = Tempfile.new('java_script')
+        file.write(
+          <<-COFFEE.gsub(/^ {12}/, '')
+            test: ->
+              alert "much coffee!"
 
-        test()
-      COFFEE
+            test()
+          COFFEE
+        )
+        file.rewind
 
-      @interface.save
-      @interface.reload
+        @interface.java_script = file
+        @interface.save
+        @interface.reload
 
-      expect(@interface.compiled_java_script).to eq(
-        <<-JS.gsub(/^ {10}/, '')
-          (function() {
-            ({
-              test: function() {
-                return alert(\"much coffee!\");
-              }
-            });
+        expect(@interface.compiled_java_script).to eq(
+          <<-JS.gsub(/^ {12}/, '')
+            (function() {
+              ({
+                test: function() {
+                  return alert(\"much coffee!\");
+                }
+              });
 
-            test();
+              test();
 
-          }).call(this);
-        JS
-      )
+            }).call(this);
+          JS
+        )
+      ensure
+        file.close
+        file.unlink
+      end
     end
   end
 end
