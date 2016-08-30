@@ -1,4 +1,5 @@
 class Interface < ApplicationRecord
+  belongs_to :interface_type
   has_and_belongs_to_many :projects
 
   before_save :compile_stylesheet
@@ -7,11 +8,10 @@ class Interface < ApplicationRecord
 
   serialize :associated_problem_identifiers, Array
 
-  validates :interface_type, :associated_problem_identifiers,
-    presence: true
-
   validates :title,
-    presence: true
+            :interface_type,
+            :associated_problem_identifiers,
+            presence: true
 
   validate do |interface|
     WebsiteComponentsValidator.validate_stylesheet(interface)

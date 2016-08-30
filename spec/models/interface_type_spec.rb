@@ -57,4 +57,8 @@ RSpec.describe InterfaceType, type: :model do
       expect(@interface_type).to be_valid
     end
   end
+
+  it { should have_many(:interfaces).dependent(:destroy) }
+  # it { should have_many(:services) }
+  # it { should have_many(:annotation_documents) }
 end

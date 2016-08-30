@@ -1,4 +1,7 @@
 class InterfaceType < ApplicationRecord
+  has_many :interfaces,
+           dependent: :destroy
+
   validates :name,
     presence: true
 

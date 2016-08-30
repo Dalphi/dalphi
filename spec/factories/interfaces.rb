@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :interface do
     title 'Fast NER Annotion'
-    interface_type 'text_nominal'
+    interface_type { FactoryGirl.create(:interface_type) }
     associated_problem_identifiers ['ner']
     template '<p class="question">Please anwer the question: {{question}}</p>'
     stylesheet 'p { color: #000000 }'

@@ -70,15 +70,7 @@ RSpec.describe Interface, type: :model do
       expect(@interface).to be_invalid
     end
 
-    it 'may not be empty string' do
-      @interface.interface_type = ''
-      expect(@interface).to be_invalid
-    end
-
-    it 'can be text_nominal as text string' do
-      @interface.interface_type = 'text_nominal'
-      expect(@interface).to be_valid
-    end
+    it { should belong_to(:interface_type) }
   end
 
   describe 'associated_problem_identifiers' do
