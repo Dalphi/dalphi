@@ -11,7 +11,7 @@ class AnnotationIteration
   register: (type, object) ->
     window.annotationLifecycle.registerInterfaceInstance(type, object)
 
-  iterate: (template, data) ->
+  render: (template, data) ->
     @currentData = data
     mustacheParsedTemplate = Mustache.render(
       template.outerHTML,
