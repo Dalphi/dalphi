@@ -5,6 +5,7 @@ class AnnotationDocument < ApplicationRecord
 
   belongs_to :project
   belongs_to :raw_datum
+  belongs_to :interface_type
 
   before_validation do
     self.project = raw_datum.project if raw_datum

@@ -30,15 +30,7 @@ RSpec.describe AnnotationDocument, type: :model do
       expect(@annotation_document).to be_invalid
     end
 
-    it 'may not be empty string' do
-      @annotation_document.interface_type = ''
-      expect(@annotation_document).to be_invalid
-    end
-
-    it 'can be text_nominal as text string' do
-      @annotation_document.interface_type = 'text_nominal'
-      expect(@annotation_document).to be_valid
-    end
+    it { should belong_to(:interface_type) }
   end
 
   describe 'payload' do

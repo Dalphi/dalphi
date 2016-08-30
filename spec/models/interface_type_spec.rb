@@ -60,5 +60,5 @@ RSpec.describe InterfaceType, type: :model do
 
   it { should have_many(:interfaces).dependent(:destroy) }
   it { should have_and_belong_to_many(:services) }
-  # it { should have_many(:annotation_documents) }
+  it { should have_many(:annotation_documents) }
 end

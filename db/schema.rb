@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160830140521) do
+ActiveRecord::Schema.define(version: 20160830145004) do
 
   create_table "annotation_documents", force: :cascade do |t|
-    t.string   "interface_type"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "raw_datum_id"
     t.integer  "project_id"
     t.text     "payload"
     t.integer  "rank"
     t.boolean  "skipped"
     t.datetime "requested_at"
+    t.integer  "interface_type_id"
+    t.index ["interface_type_id"], name: "index_annotation_documents_on_interface_type_id"
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
   end

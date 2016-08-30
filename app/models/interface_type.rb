@@ -1,4 +1,5 @@
 class InterfaceType < ApplicationRecord
+  has_many :annotation_documents
   has_many :interfaces,
            dependent: :destroy
   has_and_belongs_to_many :services
