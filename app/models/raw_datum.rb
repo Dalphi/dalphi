@@ -4,7 +4,8 @@ class RawDatum < ApplicationRecord
       'text/plain',
       'text/markdown',
       'text/html',
-      'text/rtf'
+      'text/rtf',
+      'application/json'
     ],
   }
   MIME_TYPES_LIST = MIME_TYPES.values.flatten
