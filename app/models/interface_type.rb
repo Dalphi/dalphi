@@ -5,7 +5,8 @@ class InterfaceType < ApplicationRecord
   has_and_belongs_to_many :services
 
   validates :name,
-    presence: true
+    presence: true,
+    uniqueness: true
 
   validate do |interface_type|
     json_string = interface_type.test_payload

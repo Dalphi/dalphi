@@ -1,4 +1,5 @@
 FactoryGirl.define do
+  # interface_type_instance = FactoryGirl.create(:interface_type)
   factory :service, class: Service do
     role 0
     description 'Arnnes algorithm for optimal results'
@@ -6,7 +7,7 @@ FactoryGirl.define do
     url 'http://www.google.com'
     title 'Dummy service component'
     version 'v2.0.0-rc1'
-    interface_types [ FactoryGirl.create(:interface_type) ]
+    interface_types {[ FactoryGirl.create(:interface_type) ]}
 
     factory :iterate_service do
       role 0
@@ -14,7 +15,7 @@ FactoryGirl.define do
       url 'http://www.google.de'
       title 'NER Iterator'
       version 'v1.0.0.beta3'
-      interface_types [ FactoryGirl.create(:interface_type) ]
+      interface_types {[ FactoryGirl.create(:interface_type) ]}
     end
 
     factory :iterate_service_request_test do
@@ -23,7 +24,7 @@ FactoryGirl.define do
       url 'http://example.com/iterate'
       title 'Request Test Iterate Service'
       version 'v0.1'
-      interface_types [ FactoryGirl.create(:interface_type) ]
+      interface_types {[ FactoryGirl.create(:interface_type) ]}
     end
 
     factory :machine_learning_service do

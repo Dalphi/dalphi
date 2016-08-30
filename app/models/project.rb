@@ -80,17 +80,14 @@ class Project < ApplicationRecord
     selected_interfaces = {}
     self.necessary_interface_types.each do |interface_type|
       interface = self.interfaces.find_by(interface_type: interface_type)
-      selected_interfaces[interface_type] = interface.title rescue nil
+      selected_interfaces[interface_type.name] = interface.title rescue nil
     end
     selected_interfaces
   end
 
   def necessary_interface_types
-    necessary_interface_types = []
-    if iterate_service
-      necessary_interface_types += iterate_service.interface_types
-    end
-    necessary_interface_types.uniq.sort
+    return iterate_service.interface_types if iterate_service
+    []
   end
 
   def connect_services

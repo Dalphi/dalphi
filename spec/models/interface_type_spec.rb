@@ -24,6 +24,15 @@ RSpec.describe InterfaceType, type: :model do
       @interface_type.name = 'ner_complete'
       expect(@interface_type).to be_valid
     end
+
+    it 'can not be another text_nominal' do
+      @interface_type.name = 'ner_complete'
+      @interface_type.save!
+
+      another_interface_type = FactoryGirl.create(:interface_type_other)
+      another_interface_type.name = 'ner_complete'
+      expect(another_interface_type).to be_invalid
+    end
   end
 
   describe 'test_payload' do
