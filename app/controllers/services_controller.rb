@@ -16,11 +16,6 @@ class ServicesController < ApplicationController
                   :create,
                   :update
                 ]
-  after_action :destroy_abandoned_interface_types,
-                only: [
-                  :create,
-                  :destroy
-                ]
 
   # GET /services
   def index
@@ -105,6 +100,7 @@ class ServicesController < ApplicationController
   # DELETE /services/1
   def destroy
     @service.destroy
+    InterfaceType.destroy_abandoned
     redirect_to services_url, notice: 'Service was successfully destroyed.'
   end
 
@@ -116,15 +112,13 @@ class ServicesController < ApplicationController
 
     def set_interface_type
       @interface_types = []
-      if service_params[:interface_types]
-        service_params[:interface_types].each do |type_name|
+      interface_type_names = service_params[:interface_types]
+
+      if interface_type_names
+        interface_type_names.each do |type_name|
           @interface_types << InterfaceType.find_or_create_by(name: type_name)
         end
       end
-    end
-
-    def destroy_abandoned_interface_types
-      InterfaceType.destroy_abandoned
     end
 
     # generate a meaningful flash text in case of any error for service#new
