@@ -1,6 +1,18 @@
 class InterfacesController < ApplicationController
-  before_action :set_interface, only: [:show, :edit, :update, :destroy]
-  before_action :set_problem_identifiers, only: [:edit, :new, :create, :update]
+  before_action :set_interface,
+                only: [
+                  :show,
+                  :edit,
+                  :update,
+                  :destroy
+                ]
+  before_action :set_problem_identifiers,
+                only: [
+                  :edit,
+                  :new,
+                  :create,
+                  :update
+                ]
 
   # GET /interfaces
   def index

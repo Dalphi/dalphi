@@ -11,6 +11,16 @@ class ServicesController < ApplicationController
                   :update
                 ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
+  before_action :set_interface_type,
+                only: [
+                  :create,
+                  :update
+                ]
+  after_action :destroy_abandoned_interface_types,
+                only: [
+                  :create,
+                  :destroy
+                ]
 
   # GET /services
   def index
@@ -55,7 +65,10 @@ class ServicesController < ApplicationController
 
   # POST /services
   def create
-    @service = Service.new(service_params)
+    update_params = service_params
+    update_params[:interface_types] = @interface_types
+
+    @service = Service.new(update_params)
     if @service.save
       redirect_to services_url, notice: 'Service was successfully created.'
     else
@@ -65,7 +78,10 @@ class ServicesController < ApplicationController
 
   # PATCH/PUT /services/1
   def update
-    if @service.update(service_params)
+    update_params = service_params
+    update_params[:interface_types] = @interface_types
+
+    if @service.update(update_params)
       redirect_to services_url, notice: 'Service was successfully updated.'
     else
       render :edit
@@ -96,6 +112,19 @@ class ServicesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])
+    end
+
+    def set_interface_type
+      @interface_types = []
+      if service_params[:interface_types]
+        service_params[:interface_types].each do |type_name|
+          @interface_types << InterfaceType.find_or_create_by(name: type_name)
+        end
+      end
+    end
+
+    def destroy_abandoned_interface_types
+      InterfaceType.destroy_abandoned
     end
 
     # generate a meaningful flash text in case of any error for service#new

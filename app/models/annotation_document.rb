@@ -76,7 +76,7 @@ class AnnotationDocument < ApplicationRecord
   def relevant_attributes
     {
       id: id,
-      interface_type: interface_type,
+      interface_type: interface_type.name,
       payload: JSON.parse(payload),
       rank: rank,
       raw_datum_id: raw_datum_id,

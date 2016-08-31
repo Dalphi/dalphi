@@ -9,6 +9,7 @@ RSpec.describe "Service registration", type: :request do
 
   it 'should register interface types' do
     expect(Service.count).to eq(0)
+    interface_type = FactoryGirl.create(:interface_type)
     post services_path,
          params: {
            service: {
@@ -18,13 +19,13 @@ RSpec.describe "Service registration", type: :request do
              url: 'http://localhost:3001',
              title: 'Test Iterate Service',
              version: '1.0',
-             interface_types: %w(text_nominal)
+             interface_types: [interface_type.name]
            }
          }
     expect(Service.count).to eq(1)
 
     iterate_service = Service.first
-    expect(iterate_service.interface_types).to eq(%w(text_nominal))
+    expect(iterate_service.interface_types).to eq([interface_type])
   end
 
   it 'should fail to register an iterate service without any interface types' do

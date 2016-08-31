@@ -12,14 +12,19 @@ RSpec.describe 'Project iterate', type: :request do
   end
 
   it "generates annotation documents by sending raw data to an iterate service" do
+    compatible_interface_type = @project.iterate_service.interface_types.first
     raw_datum = FactoryGirl.create :raw_datum,
                                    data: File.new("#{Rails.root}/spec/fixtures/text/spiegel.txt"),
                                    project: @project
     annotation_document = FactoryGirl.build :annotation_document,
                                             project: @project,
+                                            interface_type: compatible_interface_type,
                                             raw_datum: raw_datum,
                                             payload: {
-                                              options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
+                                              options: [
+                                                'Enthält Personennamen',
+                                                'Enthält keine Personennamen'
+                                              ],
                                               content: File.new(raw_datum.data.path).read,
                                               paragraph_index: 0
                                             }

@@ -3,7 +3,17 @@ module API
     class AnnotationDocumentsController < BaseController
       include Swagger::Blocks
 
-      before_action :set_annotation_document, only: [:show, :update, :destroy]
+      before_action :set_annotation_document,
+                    only: [
+                      :show,
+                      :update,
+                      :destroy
+                    ]
+      before_action :set_interface_type,
+                    only: [
+                      :create,
+                      :update
+                    ]
 
       swagger_path '/annotation_documents/{id}' do
         operation :get do
@@ -140,7 +150,10 @@ module API
 
       # POST /api/v1/annotation_documents
       def create
-        @annotation_document = AnnotationDocument.new(annotation_document_params)
+        create_params = annotation_document_params
+        create_params[:interface_type] = @interface_type
+        @annotation_document = AnnotationDocument.new(create_params)
+
         if @annotation_document.save
           render status: 200,
                  json: @annotation_document.relevant_attributes
@@ -162,7 +175,10 @@ module API
 
       # PATCH/PUT /api/v1/annotation_documents/1
       def update
-        if @annotation_document.update(annotation_document_params)
+        update_params = annotation_document_params
+        update_params[:interface_type] = @interface_type
+
+        if @annotation_document.update(update_params)
           render json: @annotation_document.relevant_attributes
         else
           render status: 400,
@@ -191,6 +207,11 @@ module API
                  json: {
                    message: I18n.t('api.annotation_document.show.error')
                  }
+        end
+
+        def set_interface_type
+          type_name = annotation_document_params[:interface_type]
+          @interface_type = InterfaceType.find_or_create_by(name: type_name)
         end
 
         def return_parameter_type_mismatch

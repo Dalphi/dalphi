@@ -9,7 +9,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     expect(json).to eq(
       {
         'id' => 1,
-        'interface_type' => 'text_nominal',
+        'interface_type' => 'type_name',
         'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
@@ -29,7 +29,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
              'raw_datum_id' => raw_datum.id,
              'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
              'skipped' => nil,
-             'interface_type' => 'text_nominal'
+             'interface_type' => 'type_name'
            }
          }
 
@@ -38,7 +38,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     expect(json).to eq(
       {
         'id' => 1,
-        'interface_type' => 'text_nominal',
+        'interface_type' => 'type_name',
         'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => 0,
         'raw_datum_id' => raw_datum.id,
@@ -55,7 +55,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     patch "/api/v1/annotation_documents/#{annotation_document.id}",
           params: {
             annotation_document: {
-              'interface_type' => 'text_nominal',
+              'interface_type' => 'type_name',
               'rank' => 123,
               'payload' => JSON.parse("{\"new\":\"payload\"}"),
               'skipped' => true
@@ -68,7 +68,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     json = JSON.parse(response.body)
     expect(json).to eq(
       'id' => 1,
-      'interface_type' => 'text_nominal',
+      'interface_type' => 'type_name',
       'raw_datum_id' => 1,
       'payload' => JSON.parse("{\"new\":\"payload\"}"),
       'rank' => 123,
@@ -76,7 +76,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     )
 
     annotation_document.reload
-    expect(annotation_document.interface_type).to eq('text_nominal')
+    expect(annotation_document.interface_type.name).to eq('type_name')
     expect(annotation_document.rank).to eq(123)
     expect(annotation_document.payload).to eq("{\"new\":\"payload\"}")
     expect(annotation_document.skipped).to eq(true)
@@ -95,7 +95,7 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     expect(json).to eq(
       {
         'id' => 1,
-        'interface_type' => 'text_nominal',
+        'interface_type' => 'type_name',
         'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,

@@ -13,4 +13,16 @@ class InterfaceType < ApplicationRecord
     next if json_string.nil? or json_string.empty?
     JsonValidator.validate_json(interface_type, json_string)
   end
+
+  def self.destroy_abandoned
+    InterfaceType.includes(:services)
+                 .includes(:interfaces)
+                 .includes(:annotation_documents)
+                 .where(
+                   services: { id: nil },
+                   interfaces: { id: nil },
+                   annotation_documents: { id: nil }
+                 )
+                 .destroy_all
+  end
 end
