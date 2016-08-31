@@ -1,26 +1,43 @@
-- content_for :interface_style_includes do
-  style
-    = @project.interfaces.map(&:compiled_stylesheet).join
+.annotations
+  .navigation
+    .btn-toolbar role='toolbar'
+      .btn-group role='group'
+        button.btn.btn-secondary type='button' disabled=true
+          = fa_icon 'fast-backward'
+        button.btn.btn-secondary type='button' disabled=true
+          = fa_icon 'backward'
+      .btn-group role='group'
+        span.btn-group-label
+          | 1/1
+      .btn-group role='group'
+        button.btn.btn-secondary type='button' disabled=true
+          = fa_icon 'forward'
+        button.btn.btn-secondary type='button' disabled=true
+          = fa_icon 'fast-forward'
 
-ruby:
-  data_hash = {
-    dalphi_base_url: request.base_url,
-    project_id: @project.id
-  }
-  data_hash[:annotation_document_id] = @annotation_document.id if @annotation_document
+  - content_for :interface_style_includes do
+    style
+      = @project.interfaces.map(&:compiled_stylesheet).join
 
-.interfaces-staging data=data_hash
+  ruby:
+    data_hash = {
+      dalphi_base_url: request.base_url,
+      project_id: @project.id
+    }
+    data_hash[:annotation_document_id] = @annotation_document.id if @annotation_document
 
-  coffee:
-    window.annotationLifecycle = new window.AnnotationLifecycle()
+  .interfaces-staging data=data_hash
 
-  - @project.interfaces.each do |interface|
-    .template class="#{@container_class}" data-interface-type="#{interface.interface_type}"
-      == interface.template
+    coffee:
+      window.annotationLifecycle = new window.AnnotationLifecycle()
 
-    script type='text/javascript'
-      == interface.compiled_java_script
+    - @project.interfaces.each do |interface|
+      .template class="#{@container_class}" data-interface-type="#{interface.interface_type}"
+        == Paperclip.io_adapters.for(interface.template).read
 
-.no-annotation-document-blank-slate
-  = render 'shared/blank_slates/annotate',
-           project: @project
+      script type='text/javascript'
+        == interface.compiled_java_script
+
+  .no-annotation-document-blank-slate
+    = render 'shared/blank_slates/annotate',
+             project: @project

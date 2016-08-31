@@ -18,3 +18,12 @@
     width: calc(100% - 16.875rem);
   }
 }
+
+.navigation {
+  margin: 0 0 1rem;
+  text-align: center;
+
+  .btn-toolbar {
+    display: inline-block;
+  }
+}
