@@ -1,6 +1,7 @@
 ---
 en:
   back: Back
+  update: Update
   delete: Delete
   delete-confirm: Are you sure?
   details: Details

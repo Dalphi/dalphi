@@ -53,6 +53,10 @@
                label: t('delete'),
                icon: 'times' if params[:action] == 'edit'
       = render 'shared/button',
+               href: edit_interface_path(interface),
+               label: t('update'),
+               icon: 'refresh'
+      = render 'shared/button',
                type: 'submit',
                label: t('save'),
                icon: 'check'
