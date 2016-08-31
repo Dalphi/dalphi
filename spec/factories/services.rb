@@ -15,7 +15,7 @@ FactoryGirl.define do
       url 'http://www.google.de'
       title 'NER Iterator'
       version 'v1.0.0.beta3'
-      interface_types {[ FactoryGirl.create(:interface_type) ]}
+      interface_types {[ FactoryGirl.create(:interface_type_text_nominal) ]}
     end
 
     factory :iterate_service_request_test do
@@ -24,7 +24,7 @@ FactoryGirl.define do
       url 'http://example.com/iterate'
       title 'Request Test Iterate Service'
       version 'v0.1'
-      interface_types {[ FactoryGirl.create(:interface_type) ]}
+      interface_types {[ FactoryGirl.create(:interface_type_other) ]}
     end
 
     factory :machine_learning_service do

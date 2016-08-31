@@ -7,6 +7,10 @@ FactoryGirl.define do
       name 'text_nominal'
     end
 
+    factory :interface_type_ner_complete do
+      name 'ner_complete'
+    end
+
     factory :interface_type_other do
       name 'other_interface_type'
     end
