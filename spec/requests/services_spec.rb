@@ -19,7 +19,7 @@ RSpec.describe "Service registration", type: :request do
              url: 'http://localhost:3001',
              title: 'Test Iterate Service',
              version: '1.0',
-             interface_types: [interface_type.name]
+             interface_types: [interface_type.id]
            }
          }
     expect(Service.count).to eq(1)

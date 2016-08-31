@@ -12,7 +12,7 @@ RSpec.describe 'Project iterate', type: :request do
   end
 
   it "generates annotation documents by sending raw data to an iterate service" do
-    compatible_interface_type = @project.iterate_service.interface_types.first
+    compatible_interface_type = FactoryGirl.create(:interface_type) #@project.iterate_service.interface_types.first
     raw_datum = FactoryGirl.create :raw_datum,
                                    data: File.new("#{Rails.root}/spec/fixtures/text/spiegel.txt"),
                                    project: @project
@@ -21,13 +21,16 @@ RSpec.describe 'Project iterate', type: :request do
                                             interface_type: compatible_interface_type,
                                             raw_datum: raw_datum,
                                             payload: {
-                                              options: [
-                                                'Enthält Personennamen',
-                                                'Enthält keine Personennamen'
-                                              ],
-                                              content: File.new(raw_datum.data.path).read,
-                                              paragraph_index: 0
-                                            }
+                                                        options: [
+                                                          'Enthält Personennamen',
+                                                          'Enthält keine Personennamen'
+                                                        ],
+                                                        content: File.new(raw_datum.data.path).read,
+                                                        paragraph_index: 0
+                                                      }
+
+    response_body = annotation_document.as_json
+    response_body[:interface_type] = compatible_interface_type.name
 
     stub_request(:post, 'http://example.com/iterate')
       .with(
@@ -36,7 +39,7 @@ RSpec.describe 'Project iterate', type: :request do
       )
       .to_return(
         status: 200,
-        body: [annotation_document].to_json,
+        body: [response_body].to_json,
         headers: { 'Content-Type' => 'application/json' }
       )
 

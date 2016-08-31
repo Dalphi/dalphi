@@ -32,6 +32,9 @@ en:
       interface:
         one: interface
         other: interfaces
+      interface-type:
+        one: interface type
+        other: interface types
     attributes:
       annotation_document:
         rank: rank
@@ -84,6 +87,9 @@ en:
               regex_mismatch: "the given URL does not start with the HTTP protocol or contains whitespace"
               isNil: the given URL must not be nil
               badHttpResponse: "the given URL does not respond"
+          methods:
+            params_from_url:
+              lookup-timeout: timeout of %{timeout} seconds to look up service exceeded
         interface:
           attributes:
             title:

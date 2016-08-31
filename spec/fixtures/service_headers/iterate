@@ -7,5 +7,5 @@ Content-Type: application/json
 	"description":		"An iterate dummy service that just implements the Who Are You API",
 	"role":			"iterate",
 	"problem_id":		"ner",
-	"interface_types":	["text_nominal"]
+	"interface_types":	["text_nominal", "text_not_so_nominal"]
 }

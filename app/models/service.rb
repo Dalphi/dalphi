@@ -59,10 +59,12 @@ class Service < ApplicationRecord
     Timeout::timeout(timeout) do
       data = JSON.parse(URI.parse(url).read)
       data['url'] = url
+      data['interface_types'] = InterfaceType.convert_interface_types(data['interface_types'])
       return data
     end
   rescue
-    raise "timeout of #{timeout} seconds to look up service exceeded"
+    raise I18n.t('activerecord.errors.models.service.methods.params_from_url.lookup-timeout',
+                 timeout: timeout)
   end
 
   def is_available?

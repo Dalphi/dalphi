@@ -13,3 +13,6 @@ InstanceVariableAssumption:
 UncommunicativeModuleName:
   accept:
     - !ruby/regexp /V[0-9]+/
+FeatureEnvy:
+  exclude:
+    - "ProjectsController#save_annotation_documents"

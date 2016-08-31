@@ -11,11 +11,6 @@ class ServicesController < ApplicationController
                   :update
                 ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
-  before_action :set_interface_type,
-                only: [
-                  :create,
-                  :update
-                ]
 
   # GET /services
   def index
@@ -60,10 +55,7 @@ class ServicesController < ApplicationController
 
   # POST /services
   def create
-    update_params = service_params
-    update_params[:interface_types] = @interface_types
-
-    @service = Service.new(update_params)
+    @service = Service.new(converted_attributes)
     if @service.save
       redirect_to services_url, notice: 'Service was successfully created.'
     else
@@ -73,10 +65,7 @@ class ServicesController < ApplicationController
 
   # PATCH/PUT /services/1
   def update
-    update_params = service_params
-    update_params[:interface_types] = @interface_types
-
-    if @service.update(update_params)
+    if @service.update(converted_attributes)
       redirect_to services_url, notice: 'Service was successfully updated.'
     else
       render :edit
@@ -110,17 +99,6 @@ class ServicesController < ApplicationController
       @service = Service.find(params[:id])
     end
 
-    def set_interface_type
-      @interface_types = []
-      interface_type_names = service_params[:interface_types]
-
-      if interface_type_names
-        interface_type_names.each do |type_name|
-          @interface_types << InterfaceType.find_or_create_by(name: type_name)
-        end
-      end
-    end
-
     # generate a meaningful flash text in case of any error for service#new
     def new_service_flash_text(uri)
       if @service
@@ -133,6 +111,21 @@ class ServicesController < ApplicationController
         return I18n.t('services.searching.no-url')
       end
       nil
+    end
+
+    def converted_attributes
+      interface_type_ids = service_params[:interface_types]
+      return service_params unless interface_type_ids and interface_type_ids.any?
+
+      converted_params = service_params
+      interface_types = []
+
+      interface_type_ids.each do |interface_type_id|
+        interface_types << InterfaceType.find_or_create_by(id: interface_type_id)
+      end
+
+      converted_params[:interface_types] = interface_types
+      converted_params
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
