@@ -37,6 +37,7 @@ RSpec.describe Interface, type: :model do
 
       @another_interface = FactoryGirl.build(:interface,
                                              title: 'Duplicate title',
+                                             interface_type: @interface.interface_type,
                                              associated_problem_identifiers: %w(ner ultraNER))
       expect(@another_interface).to be_invalid
     end
@@ -48,6 +49,7 @@ RSpec.describe Interface, type: :model do
 
       @another_interface = FactoryGirl.build(:interface,
                                              title: 'Duplicate title',
+                                             interface_type: @interface.interface_type,
                                              associated_problem_identifiers: %w(ultraNER hyperNER))
       expect(@another_interface).to be_valid
     end
@@ -59,6 +61,7 @@ RSpec.describe Interface, type: :model do
 
       @another_interface = FactoryGirl.build(:interface,
                                              title: 'Even more different title',
+                                             interface_type: @interface.interface_type,
                                              associated_problem_identifiers: %w(ner ultraNER))
       expect(@another_interface).to be_valid
     end

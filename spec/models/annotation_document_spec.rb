@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe AnnotationDocument, type: :model do
   before(:each) do
     @annotation_document = FactoryGirl.build(:annotation_document)
-    @annotation_document_with_different_user = FactoryGirl.build(:annotation_document_with_different_user)
+    @annotation_document_with_different_user = FactoryGirl.build(:annotation_document_with_different_user,
+                                                                 interface_type: @annotation_document.interface_type)
   end
 
   it 'should have a valid factory' do
