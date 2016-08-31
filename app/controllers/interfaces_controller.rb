@@ -1,4 +1,5 @@
 class InterfacesController < ApplicationController
+  before_action :set_tempfiles, only: [:create, :update]
   before_action :set_interface, only: [:show, :edit, :update, :destroy]
   before_action :set_problem_identifiers, only: [:edit, :new, :create, :update]
 
@@ -23,24 +24,32 @@ class InterfacesController < ApplicationController
 
   # POST /interfaces
   def create
-    @interface = Interface.new(converted_attributes)
-    if @interface.save
-      redirect_to interfaces_path,
-                  notice: t('interfaces.action.create.success')
-    else
-      flash[:error] = t('interfaces.action.create.error')
-      render :new
+    begin
+      @interface = Interface.new(converted_attributes)
+      if @interface.save
+        redirect_to edit_interface_path(@interface),
+                    notice: t('interfaces.action.create.success')
+      else
+        flash[:error] = t('interfaces.action.create.error')
+        render :new
+      end
+    ensure
+      unset_tempfiles
     end
   end
 
   # PATCH/PUT /interfaces/1
   def update
-    if @interface.update(converted_attributes)
-      flash[:notice] = t('interfaces.action.update.success')
-    else
-      flash[:error] = t('interfaces.action.update.error')
+    begin
+      if @interface.update(converted_attributes)
+        flash[:notice] = t('interfaces.action.update.success')
+      else
+        flash[:error] = t('interfaces.action.update.error')
+      end
+      render :edit
+    ensure
+      unset_tempfiles
     end
-    render :edit
   end
 
   # DELETE /interfaces/1
@@ -66,7 +75,30 @@ class InterfacesController < ApplicationController
       new_params['associated_problem_identifiers'] = associated_problems.strip
                                                                         .split(', ')
                                                                         .uniq
+      %w(template java_script stylesheet).each do |resource|
+        new_params[resource] = string_to_filestream(resource)
+      end
       new_params
+    end
+
+    def set_tempfiles
+      @tempfiles = {}
+      %w(template java_script stylesheet).each do |resource|
+        @tempfiles[resource] = Tempfile.new(resource)
+      end
+    end
+
+    def unset_tempfiles
+      %w(template java_script stylesheet).each do |resource|
+        @tempfiles[resource].close
+        @tempfiles[resource].unlink
+      end
+    end
+
+    def string_to_filestream(resource)
+      @tempfiles[resource].write(interface_params[resource])
+      @tempfiles[resource].rewind
+      @tempfiles[resource]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
