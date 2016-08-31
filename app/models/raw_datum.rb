@@ -37,11 +37,11 @@ class RawDatum < ApplicationRecord
     }
 
   def self.batch_process(project, data)
-    return { error: [], success: [] } unless data
+    return { error: [], success: [] } unless data || data == []
     data_size = data.size
-    data_first = data.first
-    if data_size == 1 && valid_zip?(data_first.tempfile)
-      batch_result = RawDatum.zip_to_data project, data_first.tempfile.path
+    data_first = data.first.tempfile
+    if data_size == 1 && valid_zip?(data_first)
+      batch_result = RawDatum.zip_to_data project, data_first.path
     elsif data_size >= 1
       batch_data = []
       data.each do |datum|
