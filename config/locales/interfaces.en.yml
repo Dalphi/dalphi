@@ -10,9 +10,8 @@ en:
       destroy:
         success: Interface was successfully destroyed.
     blank-slate:
-      title: 'No interfaces created yet'
-      text: 'Add an new interface %{link}.'
-      link-text: here
+      title: 'No interfaces'
+      text: 'To create an interface use the button below.'
     cards:
       buttons:
         preview: preview this interface
@@ -24,7 +23,3 @@ en:
           label: 'CoffeeScript code'
         stylesheet:
           label: 'SCSS code'
-    buttons:
-      new:
-        label: Add interface
-        tooltip: Add a new interface
