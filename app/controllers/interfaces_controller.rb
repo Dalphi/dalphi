@@ -34,7 +34,7 @@ class InterfacesController < ApplicationController
         render :new
       end
     ensure
-      unset_tempfiles
+      unset_files(@tempfiles)
     end
   end
 
@@ -55,7 +55,7 @@ class InterfacesController < ApplicationController
       end
       render :edit
     ensure
-      unset_tempfiles
+      unset_files(@tempfiles)
     end
   end
 
@@ -95,17 +95,19 @@ class InterfacesController < ApplicationController
       end
     end
 
-    def unset_tempfiles
-      %w(template java_script stylesheet).each do |resource|
-        @tempfiles[resource].close
-        @tempfiles[resource].unlink
+    # this method smells of :reek:UtilityFunction
+    def unset_files(files)
+      files.each do |_, file|
+        file.close
+        file.unlink
       end
     end
 
     def string_to_filestream(resource)
-      @tempfiles[resource].write(interface_params[resource])
-      @tempfiles[resource].rewind
-      @tempfiles[resource]
+      tempfile = @tempfiles[resource]
+      tempfile.write(interface_params[resource])
+      tempfile.rewind
+      tempfile
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

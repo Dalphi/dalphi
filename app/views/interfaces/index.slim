@@ -18,6 +18,12 @@
                    type: 'primary',
                    label: t('activerecord.actions.interface.new'),
                    icon: 'plus'
-        .row.btn-row
-          .col-xs-12
-             = render 'shared/button', type: 'back'
+  .row.btn-row
+    .col-xs-12
+       = render 'shared/button',
+                type: 'back'
+       = render 'shared/button',
+                href: new_interface_path,
+                type: 'primary',
+                label: t('activerecord.actions.interface.new'),
+                icon: 'plus' if @interfaces.any?

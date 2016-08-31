@@ -46,7 +46,7 @@
     .col-xs-12
       = render 'shared/button',
                type: 'back'
-      - if params[:action] == 'edit'
+      - if %w(edit update).include?(action_name)
         = render 'shared/button',
                  method: 'delete',
                  confirm: t('delete-confirm'),
@@ -64,10 +64,10 @@
                type: 'submit',
                label: t('save'),
                icon: 'check'
-  - if params[:action] == 'edit'
+  - if %w(edit update).include?(action_name)
     .row
       .col-xs-12
-        .card
+        .card.pro-tip
           .card-header
             h4.card-title
               = t('interfaces.pro-tip.title')
