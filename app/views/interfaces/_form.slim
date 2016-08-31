@@ -44,19 +44,38 @@
 
   .row.btn-row
     .col-xs-12
-      = render 'shared/button', type: 'back'
       = render 'shared/button',
-               method: 'delete',
-               confirm: t('delete-confirm'),
-               type: 'danger',
-               href: interface_path(interface),
-               label: t('delete'),
-               icon: 'times' if params[:action] == 'edit'
-      = render 'shared/button',
-               href: edit_interface_path(interface),
-               label: t('update'),
-               icon: 'refresh'
+               type: 'back'
+      - if params[:action] == 'edit'
+        = render 'shared/button',
+                 method: 'delete',
+                 confirm: t('delete-confirm'),
+                 type: 'danger',
+                 href: interface_path(interface),
+                 label: t('delete'),
+                 icon: 'times'
+        = render 'shared/button',
+                 method: 'post',
+                 href: refresh_interface_path(interface),
+                 label: t('refresh'),
+                 tooltip: t('interfaces.action.refresh.tooltip'),
+                 icon: 'refresh'
       = render 'shared/button',
                type: 'submit',
                label: t('save'),
                icon: 'check'
+  - if params[:action] == 'edit'
+    .row
+      .col-xs-12
+        .card
+          .card-header
+            h4.card-title
+              = t('interfaces.pro-tip.title')
+            p.card-text
+              = t('interfaces.pro-tip.text')
+              ul
+                - %w(template java_script stylesheet).each do |resource|
+                  li
+                    - path = interface.send(resource).path
+                    a href="file://#{path}" target="_blank"
+                      = path

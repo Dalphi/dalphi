@@ -1,5 +1,8 @@
 en:
   interfaces:
+    pro-tip:
+      title: Pro Tip
+      text: It is possible to directly edit HTML, CoffeeScript and SCSS code under the following paths and refresh the interface afterwards.
     action:
       create:
         success: Interface was successfully created.
@@ -9,6 +12,9 @@ en:
         error: An error occured while updating the interface.
       destroy:
         success: Interface was successfully destroyed.
+      refresh:
+        success: Interface was sucessfully refreshed.
+        tooltip: Refreshs the interface and recompiles CoffeeScript and SCSS code.
     blank-slate:
       title: 'No interfaces'
       text: 'To create an interface use the button below.'

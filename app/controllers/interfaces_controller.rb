@@ -1,6 +1,6 @@
 class InterfacesController < ApplicationController
   before_action :set_tempfiles, only: [:create, :update]
-  before_action :set_interface, only: [:show, :edit, :update, :destroy]
+  before_action :set_interface, only: [:show, :edit, :update, :destroy, :refresh]
   before_action :set_problem_identifiers, only: [:edit, :new, :create, :update]
 
   # GET /interfaces
@@ -36,6 +36,13 @@ class InterfacesController < ApplicationController
     ensure
       unset_tempfiles
     end
+  end
+
+  # POST /interfaces/1
+  def refresh
+    @interface.save!
+    redirect_to edit_interface_path(@interface),
+                notice: t('interfaces.action.refresh.success')
   end
 
   # PATCH/PUT /interfaces/1
