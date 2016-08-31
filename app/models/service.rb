@@ -75,6 +75,6 @@ class Service < ApplicationRecord
   end
 
   def self.problem_identifiers
-    Service.uniq.pluck(:problem_id)
+    Service.distinct.pluck(:problem_id)
   end
 end
