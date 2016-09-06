@@ -55,7 +55,7 @@ class AnnotationLifecycle
     for interfaceType, payload of data
       template = _this.templates[interfaceType]
       interfaceInstance = _this.interfaceInstances[interfaceType]
-      interfaceInstance.iterate(template, payload)
+      interfaceInstance.render(template, payload)
       break
 
   registerInterfaceInstance: (typeName, instance) ->
