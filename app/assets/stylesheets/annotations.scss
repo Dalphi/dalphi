@@ -23,7 +23,7 @@
   background-color: $color-0;
   border-radius: .25rem;
   bottom: 0;
-  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.26);
+  box-shadow: $annotation-document-controls-box-shadow;
   height: 2.4rem;
   left: 50%;
   margin: 0 0 1rem;
