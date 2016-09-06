@@ -1,7 +1,7 @@
 .container
   = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
     .row
-      .col-xs-12.col-sm-push-3.col-sm-6.col-lg-push-4.col-lg-4
+      .col-xs-12.offset-sm-3.col-sm-6.offset-lg-4.col-lg-4
         h2
           = t('devise.change-password')
         = f.input :reset_password_token, as: :hidden
@@ -10,6 +10,6 @@
           = f.input :password, label: t('devise.edit-password.new-password'), required: true, autofocus: true
           = f.input :password_confirmation, label: t('devise.edit-password.confirm-new-password'), required: true
     .row.btn-row
-      .col-xs-12.col-sm-push-3.col-sm-6.col-lg-push-4.col-lg-4
+      .col-xs-12.offset-sm-3.col-sm-6.offset-lg-4.col-lg-4
         = render 'devise/shared/links'
         = render 'shared/button', type: 'submit', label: t('devise.change-password'), icon: 'unlock-alt'
