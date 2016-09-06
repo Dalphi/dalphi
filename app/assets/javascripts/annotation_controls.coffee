@@ -9,7 +9,8 @@ class AnnotationControls
     _this.$previousButton = $('.annotations .navigation .previous')
     _this.$nextButton = $('.annotations .navigation .next')
     _this.$lastButton = $('.annotations .navigation .last')
-    _this.$currentAnnotationDocumentIndexLabel = $('.annotations .navigation .current-annotation-document-index')
+    _this.$currentAnnotationDocumentIndexLabel =
+      $('.annotations .navigation .current-annotation-document-index')
     _this.$annotationDocumentCountLabel = $('.annotations .navigation .annotation-document-count')
 
     $('.annotations .navigation .btn').on 'click', ->
