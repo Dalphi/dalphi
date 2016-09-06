@@ -78,6 +78,10 @@ class InterfacesController < ApplicationController
       new_params['associated_problem_identifiers'] = associated_problems.strip
                                                                         .split(', ')
                                                                         .uniq
+
+      interface_type_name = interface_params['interface_type']
+      return new_params unless interface_type_name
+      new_params['interface_type'] = InterfaceType.find_or_create_by(name: interface_type_name)
       new_params
     end
 
