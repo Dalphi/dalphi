@@ -20,8 +20,21 @@
 }
 
 .navigation {
+  background-color: $color-0;
+  border-radius: .25rem;
+  bottom: 0;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.26);
+  height: 2.4rem;
+  left: 50%;
   margin: 0 0 1rem;
+  position: fixed;
   text-align: center;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  @include media-breakpoint-up(md) {
+    left: calc(50% + #{$sidebar-width / 2});
+  }
 
   .btn-toolbar {
     display: inline-block;

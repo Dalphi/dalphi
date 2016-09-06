@@ -2,18 +2,27 @@
   .navigation
     .btn-toolbar role='toolbar'
       .btn-group role='group'
-        button.btn.btn-secondary type='button' disabled=true
-          = fa_icon 'fast-backward'
-        button.btn.btn-secondary type='button' disabled=true
-          = fa_icon 'backward'
+        - { 'first' => 'fast-backward',
+            'previous' => 'backward' }.each do |type, icon|
+          button.btn.btn-secondary class="#{type}" type='button' disabled=true title="#{t("annotation-documents.navigation.#{type}")}"
+            = fa_icon icon
       .btn-group role='group'
-        span.btn-group-label
-          | 1/1
+        div.btn-group-label
+          span.current-annotation-document-index
+            | 1
+          | /
+          span.annotation-document-count
+            | 1
       .btn-group role='group'
-        button.btn.btn-secondary type='button' disabled=true
-          = fa_icon 'forward'
-        button.btn.btn-secondary type='button' disabled=true
-          = fa_icon 'fast-forward'
+        - { 'next' => 'forward',
+            'last' => 'fast-forward' }.each do |type, icon|
+          button.btn.btn-secondary class="#{type}" type='button' disabled=true title="#{t("annotation-documents.navigation.#{type}")}"
+            = fa_icon icon
+    coffee:
+      $('.annotations .navigation button').tooltip
+        'placement': 'top'
+        'delay': 'show': 500
+      window.annotationControls = new window.AnnotationControls()
 
   - content_for :interface_style_includes do
     style

@@ -1,5 +1,10 @@
 en:
   annotation-documents:
+    navigation:
+      first: 'Go to first annotation document'
+      last: 'Go to last annotation document'
+      next: 'Go to next annotation document'
+      previous: 'Go to previous annotation document'
     blank-slate:
       index:
         title: 'No documents'
