@@ -21,7 +21,7 @@ class InterfaceTest
     # fake annotation_lifecycle functionallity
     window[$staging.data('interface-type-name')] = new AnnotationLifecycleFaker()
 
-    # render templat with test payload & append to DOM
+    # render template with test payload & append to DOM
     mustacheParsedTemplate = Mustache.render(
       $staging.data('template'),
       $staging.data('test-payload')
