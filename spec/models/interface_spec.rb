@@ -74,6 +74,7 @@ RSpec.describe Interface, type: :model do
     end
 
     it { should belong_to(:interface_type) }
+    it { should accept_nested_attributes_for :interface_type }
   end
 
   describe 'associated_problem_identifiers' do

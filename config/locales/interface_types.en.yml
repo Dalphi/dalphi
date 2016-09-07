@@ -1,0 +1,6 @@
+en:
+  interface-types:
+    form:
+      attributes:
+        name:
+          label: 'Interface type name'

@@ -4,7 +4,9 @@
       .col-xs-12.col-xl-6
         = f.input :title
 
-        = f.input :interface_type
+        = f.simple_fields_for :interface_type do |i|
+          = i.input :name,
+                    label: t('interface-types.form.attributes.name.label')
 
         = f.input :associated_problem_identifiers,
                   as: :string,
