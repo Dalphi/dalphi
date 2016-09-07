@@ -3,7 +3,7 @@
     - if @interfaces.any?
       - @interfaces.each do |interface_type, interfaces|
         = render 'interfaces/shared/card',
-                 xl_size: (@interfaces.count <= 4? (12 / @interfaces.count) : 3 ),
+                 xl_size: @interfaces.count <= 4 ? 12 / @interfaces.count : 3,
                  interfaces: interfaces,
                  interface_type: interface_type
 
