@@ -92,6 +92,9 @@ Rails.application.routes.draw do
   # Interfaces
 
   resources :interfaces
+  post '/interfaces/:id',
+       to: 'interfaces#refresh',
+       as: 'refresh_interface'
 
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html

@@ -1,5 +1,8 @@
 en:
   interfaces:
+    pro-tip:
+      title: Pro Tip
+      text: It is possible to directly edit HTML, CoffeeScript and SCSS code under the following paths.<br />Don't forget to refresh this interface after you changed the scource files to apply your changes.
     action:
       create:
         success: Interface was successfully created.
@@ -9,10 +12,12 @@ en:
         error: An error occured while updating the interface.
       destroy:
         success: Interface was successfully destroyed.
+      refresh:
+        success: Interface was sucessfully refreshed.
+        tooltip: Refreshes the interface and recompiles CoffeeScript and SCSS code.
     blank-slate:
-      title: 'No interfaces created yet'
-      text: 'Add an new interface %{link}.'
-      link-text: here
+      title: 'No interfaces'
+      text: 'To create an interface use the button below.'
     cards:
       buttons:
         preview: preview this interface
@@ -24,7 +29,3 @@ en:
           label: 'CoffeeScript code'
         stylesheet:
           label: 'SCSS code'
-    buttons:
-      new:
-        label: Add interface
-        tooltip: Add a new interface

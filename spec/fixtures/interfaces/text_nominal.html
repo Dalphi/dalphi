@@ -1,0 +1,21 @@
+<div class="description-container">
+	<h1>Paragraph Classification</h1>
+	<p>
+		Choose whether the text below contains a real person name or not.
+	</p>
+	{{#options}}
+		<button class="btn btn-secondary annotation-button" onclick="window.text_nominal.annotateWith('{{.}}')">
+			{{.}}
+		</button>
+	{{/options}}
+	<button class="btn btn-secondary annotation-button" onclick="window.text_nominal.skip()">
+		Skip this document
+	</button>
+</div>
+<div class="row paragraph-container">
+	<div class="col-xs-12 col-sm-8 offset-sm-2">
+		<p>
+			{{{content}}}
+		</p>
+	</div>
+</div>

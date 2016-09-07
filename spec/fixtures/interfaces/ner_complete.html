@@ -1,0 +1,33 @@
+<div class="description-container">
+	<h1>Named Enity Recognition</h1>
+	<button class="btn btn-secondary annotation-button" onclick="window.ner_complete.skip()">
+		Skip this document
+	</button>
+</div>
+<div class="row paragraph-container">
+	<div class="col-xs-12 col-sm-8 offset-sm-2">
+		{{#content}}
+			<div class="paragraph">
+				{{#.}}
+					<div class="sentence">
+						{{#.}}
+							{{#annotation}}
+								<span class="token {{annotation.label}}" data-token-length="{{annotation.length}}">
+									{{term}}
+								</span>
+							{{/annotation}}
+							{{^annotation}}
+								<span class="token">
+									{{term}}
+								</span>
+							{{/annotation}}
+						{{/.}}
+					</div>
+				{{/.}}
+			</div>
+		{{/content}}
+	</div>
+</div>
+<button class="btn btn-secondary annotation-button" onclick="window.ner_complete.saveAnnotation()">
+	Save annotation
+</button>

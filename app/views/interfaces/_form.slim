@@ -18,7 +18,8 @@
         .code-input#template-editor
         = f.input :template,
                   as: :hidden,
-                  input_html: { id: 'hidden-template-editor'}
+                  input_html: { id: 'hidden-template-editor',
+                                value: Paperclip.io_adapters.for(interface.template).read }
 
       .col-xs-12.col-xl-6
         p.ace-editor-label
@@ -26,7 +27,8 @@
         .code-input#js-editor
         = f.input :java_script,
                   as: :hidden,
-                  input_html: { id: 'hidden-js-editor'}
+                  input_html: { id: 'hidden-js-editor',
+                                value: Paperclip.io_adapters.for(interface.java_script).read }
 
       .col-xs-12.col-xl-6
         p.ace-editor-label
@@ -34,22 +36,48 @@
         .code-input#stylesheet-editor
         = f.input :stylesheet,
                   as: :hidden,
-                  input_html: { id: 'hidden-stylesheet-editor'}
+                  input_html: { id: 'hidden-stylesheet-editor',
+                                value: Paperclip.io_adapters.for(interface.stylesheet).read }
 
       coffee:
         window.interfacesForm = new window.InterfacesForm()
 
   .row.btn-row
     .col-xs-12
-      = render 'shared/button', type: 'back'
       = render 'shared/button',
-               method: 'delete',
-               confirm: t('delete-confirm'),
-               type: 'danger',
-               href: interface_path(interface),
-               label: t('delete'),
-               icon: 'times' if params[:action] == 'edit'
+               type: 'back'
+      - if %w(edit update).include?(action_name)
+        = render 'shared/button',
+                 method: 'delete',
+                 confirm: t('delete-confirm'),
+                 type: 'danger',
+                 href: interface_path(interface),
+                 label: t('delete'),
+                 icon: 'times'
+        = render 'shared/button',
+                 method: 'post',
+                 href: refresh_interface_path(interface),
+                 label: t('refresh'),
+                 tooltip: t('interfaces.action.refresh.tooltip'),
+                 icon: 'refresh'
       = render 'shared/button',
                type: 'submit',
                label: t('save'),
                icon: 'check'
+
+- if %w(edit update).include?(action_name)
+  .row
+    .col-xs-12
+      .card.pro-tip
+        .card-header
+          h4.card-title
+            = t('interfaces.pro-tip.title')
+          p.card-text
+            == t('interfaces.pro-tip.text')
+            ul
+              - %w(template java_script stylesheet).each do |resource|
+                li
+                  - path = interface.send(resource).path
+                  samp
+                    a href="file://#{path}" target="_blank"
+                      = path

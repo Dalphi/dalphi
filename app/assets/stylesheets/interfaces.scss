@@ -49,3 +49,13 @@
     background-image: none;
   }
 }
+
+.card {
+  &.pro-tip {
+    margin-top: 2rem;
+
+    ul {
+      font-size: .75rem;
+    }
+  }
+}

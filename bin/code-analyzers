@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ./bin/helpers/git-merge &&\
+./bin/helpers/debug-statements &&\
 ./bin/helpers/brakeman &&\
 ./bin/helpers/rails-best-practices &&\
 ./bin/helpers/reek

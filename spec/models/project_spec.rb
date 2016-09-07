@@ -185,7 +185,7 @@ RSpec.describe Project, type: :model do
         FactoryGirl.build(:interface,
                           interface_type: 'text_nominal'),
         FactoryGirl.build(:interface,
-                          template: 'other template',
+                          template: File.new("#{Rails.root}/spec/fixtures/interfaces/ner_complete.html"),
                           interface_type: 'other_interface_type')
       ]
       expect(@project).to be_valid
@@ -196,7 +196,7 @@ RSpec.describe Project, type: :model do
         FactoryGirl.build(:interface,
                           interface_type: 'text_nominal'),
         FactoryGirl.build(:interface,
-                          template: 'other template',
+                          template: File.new("#{Rails.root}/spec/fixtures/interfaces/ner_complete.html"),
                           interface_type: 'text_nominal')
       ]
       expect(@project).to be_invalid

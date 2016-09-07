@@ -1,5 +1,6 @@
 class InterfacesController < ApplicationController
-  before_action :set_interface, only: [:show, :edit, :update, :destroy]
+  before_action :set_tempfiles, only: [:create, :update]
+  before_action :set_interface, only: [:show, :edit, :update, :destroy, :refresh]
   before_action :set_problem_identifiers, only: [:edit, :new, :create, :update]
 
   # GET /interfaces
@@ -23,24 +24,39 @@ class InterfacesController < ApplicationController
 
   # POST /interfaces
   def create
-    @interface = Interface.new(converted_attributes)
-    if @interface.save
-      redirect_to interfaces_path,
-                  notice: t('interfaces.action.create.success')
-    else
-      flash[:error] = t('interfaces.action.create.error')
-      render :new
+    begin
+      @interface = Interface.new(converted_attributes)
+      if @interface.save
+        redirect_to edit_interface_path(@interface),
+                    notice: t('interfaces.action.create.success')
+      else
+        flash[:error] = t('interfaces.action.create.error')
+        render :new
+      end
+    ensure
+      unset_files(@tempfiles)
     end
+  end
+
+  # POST /interfaces/1
+  def refresh
+    @interface.save!
+    redirect_to edit_interface_path(@interface),
+                notice: t('interfaces.action.refresh.success')
   end
 
   # PATCH/PUT /interfaces/1
   def update
-    if @interface.update(converted_attributes)
-      flash[:notice] = t('interfaces.action.update.success')
-    else
-      flash[:error] = t('interfaces.action.update.error')
+    begin
+      if @interface.update(converted_attributes)
+        flash[:notice] = t('interfaces.action.update.success')
+      else
+        flash[:error] = t('interfaces.action.update.error')
+      end
+      render :edit
+    ensure
+      unset_files(@tempfiles)
     end
-    render :edit
   end
 
   # DELETE /interfaces/1
@@ -66,7 +82,32 @@ class InterfacesController < ApplicationController
       new_params['associated_problem_identifiers'] = associated_problems.strip
                                                                         .split(', ')
                                                                         .uniq
+      %w(template java_script stylesheet).each do |resource|
+        new_params[resource] = string_to_filestream(resource)
+      end
       new_params
+    end
+
+    def set_tempfiles
+      @tempfiles = {}
+      %w(template java_script stylesheet).each do |resource|
+        @tempfiles[resource] = Tempfile.new(resource)
+      end
+    end
+
+    # this method smells of :reek:UtilityFunction
+    def unset_files(files)
+      files.each do |_, file|
+        file.close
+        file.unlink
+      end
+    end
+
+    def string_to_filestream(resource)
+      tempfile = @tempfiles[resource]
+      tempfile.write(interface_params[resource])
+      tempfile.rewind
+      tempfile
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

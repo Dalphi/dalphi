@@ -1,6 +1,8 @@
 ---
 en:
   back: Back
+  update: Update
+  refresh: Refresh
   delete: Delete
   delete-confirm: Are you sure?
   details: Details

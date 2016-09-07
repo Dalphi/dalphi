@@ -19,6 +19,10 @@ en:
         new: New raw datum
         edit: Edit raw datum
         delete: Delete raw datum
+      interface:
+        new: New interface
+        edit: Edit interface
+        delete: Delete interface
     models:
       project:
         one: project
@@ -53,7 +57,7 @@ en:
             chunk_offset:
               too_large: the chunk_offset is larger than the related raw_datum byte size
             content:
-              type: file type must match raw-datum\'s type
+              type: "file type must match raw datum's type"
             options:
               empty: the options array cannot be empty
               too-few-options: the options array has to contain at least two options
