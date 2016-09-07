@@ -16,11 +16,11 @@
                 th
                   = statistic.key
           tbody
-            - statistics.each do |iteration_index, statistics|
+            - statistics.each do |iteration_index, iteration_statistics|
               tr
                 td
                   = iteration_index
-                - statistics.each do |statistic|
+                - iteration_statistics.each do |statistic|
                   td
                     code
                       = statistic.value
