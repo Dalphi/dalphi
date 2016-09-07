@@ -1,29 +1,20 @@
+ruby:
+  table = true
+  graphs = false
+  table, graphs = graphs, table if request.query_parameters.keys.include?('graphs')
 .container.statistics
   = render 'shared/project_header',
            project: @project,
            active_label: 'statistics'
-
   .row
     .col-xs-12
       - if @statistics.any?
-        - statistics = @statistics.group_by(&:iteration_index)
-        table.table.table-striped.table-hover
-          thead.thead-default
-            tr
-              th
-                = t('statistics.iteration-index')
-              - statistics.values.first.each do |statistic|
-                th
-                  = statistic.key
-          tbody
-            - statistics.each do |iteration_index, iteration_statistics|
-              tr
-                td
-                  = iteration_index
-                - iteration_statistics.each do |statistic|
-                  td
-                    code
-                      = statistic.value
+        - if table
+          = render 'table',
+                   statistics: @statistics.group_by(&:iteration_index)
+        - if graphs
+          = render 'graphs',
+                   statistics: @statistics.group_by(&:key)
         .row.pagination
           .col-xs-12
              = will_paginate @statistics.values

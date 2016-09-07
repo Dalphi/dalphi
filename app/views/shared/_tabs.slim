@@ -1,11 +1,21 @@
 ul.nav.nav-tabs
   - items.each do |item|
-    - active = item[:active]
-    - disabled = defined?(item[:disabled]) && item[:disabled]
-    li.nav-item
-      = link_to item[:path],
-                class: "nav-link #{'active' if active} #{'disabled' if disabled}" do
+    ruby:
+      active = item[:active]
+      disabled = defined?(item[:disabled]) && item[:disabled]
+      attributes = {}
+      attributes = { 'data-toggle' => 'dropdown', role: 'button', 'aria-haspopup' => 'true', 'aria-expanded' => 'false' } if item[:children]
+    li.nav-item class="#{'dropdown' if item[:children]}"
+      a.nav-link href="#{item[:path]}" class="#{'active' if active} #{'disabled' if disabled} #{'dropdown-toggle' if item[:children]}" *attributes
         - if item[:icon]
           = fa_icon(item[:icon])
           | &nbsp;
         = t(item[:label_key])
+      - if item[:children]
+        .dropdown-menu
+          - item[:children].each do |child|
+            a.dropdown-item href="#{child[:path]}"
+              - if child[:icon]
+                = fa_icon(child[:icon])
+                | &nbsp;
+              = t(child[:label_key])

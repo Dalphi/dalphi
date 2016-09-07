@@ -1,0 +1,14 @@
+- statistics.each do |key, key_statistics|
+  .card
+    h3.card-header
+      = key
+    .card-block
+      /= area_chart key_statistics.group_by(&:iteration_index).count
+      ruby:
+        plot_data = {}
+        key_statistics.group_by(&:iteration_index).each do |iteration_index, statistics|
+          statistics.each do |statistic|
+            plot_data[iteration_index] = statistic.value if statistic.key == key
+          end
+        end
+      = area_chart plot_data

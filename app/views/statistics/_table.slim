@@ -1,0 +1,17 @@
+table.table.table-striped.table-hover
+  thead.thead-default
+    tr
+      th
+        = t('statistics.iteration-index')
+      - statistics.values.first.each do |statistic|
+        th
+          = statistic.key
+  tbody
+    - statistics.each do |iteration_index, iteration_statistics|
+      tr
+        td
+          = iteration_index
+        - iteration_statistics.each do |statistic|
+          td
+            samp
+              = statistic.value

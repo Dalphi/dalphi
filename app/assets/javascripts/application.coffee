@@ -18,6 +18,8 @@
 #= require mustache
 #= require jquery.mustache
 #= require annotation_iteration
+#= require Chart.bundle
+#= require chartkick
 
 $ ->
   new FastClick(document.body)
