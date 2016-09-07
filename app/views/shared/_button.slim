@@ -43,8 +43,7 @@ ruby:
     - group.each do |button|
       = render partial: 'shared/button', locals: button
 
-- else
-  - if type == 'submit'
+- elsif type == 'submit'
     - if href == '#'
       button.btn.btn-primary name='button' type='submit' data=data
         == button_content
@@ -53,12 +52,12 @@ ruby:
       a.btn.btn-primary href="#{href}" data=data *attributes
         == button_content
 
-  - elsif type == 'back'
-    a.btn.btn-secondary href='javascript:history.back()' data=data
-      == render 'shared/button_content',
-                icon: 'chevron-left',
-                label: t('back')
+- elsif type == 'back'
+  a.btn.btn-secondary href='javascript:history.back()' data=data
+    == render 'shared/button_content',
+              icon: 'chevron-left',
+              label: t('back')
 
-  - else
-    a.btn class="btn-#{type}" href="#{href}" data=data *attributes
-      == button_content
+- else
+  a.btn class="btn-#{type}" href="#{href}" data=data *attributes
+    == button_content

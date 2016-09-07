@@ -146,11 +146,11 @@ p {
 
   .btn-group {
     .btn {
+      margin-left: $btn-group-btn-overlapping-margin;
       margin-right: 0;
-      margin-left: -0.04rem;
     }
 
-    &> .btn:first-child {
+    > .btn:first-child {
       margin-left: 0;
     }
   }

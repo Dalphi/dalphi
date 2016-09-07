@@ -2,7 +2,8 @@
   .row
     .col-xs-12
       h2
-        = t('interface-types.form.title', interface_type_name: @interface.interface_type.name)
+        - interface_type = @interface.interface_type
+        = t('interface-types.form.title', interface_type_name: interface_type.name)
       p
         = t('interface-types.form.description')
 
