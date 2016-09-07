@@ -9,11 +9,6 @@ module API
                       :update,
                       :destroy
                     ]
-      before_action :set_interface_type,
-                    only: [
-                      :create,
-                      :update
-                    ]
 
       swagger_path '/annotation_documents/{id}' do
         operation :get do
@@ -150,9 +145,7 @@ module API
 
       # POST /api/v1/annotation_documents
       def create
-        create_params = annotation_document_params
-        create_params[:interface_type] = @interface_type
-        @annotation_document = AnnotationDocument.new(create_params)
+        @annotation_document = AnnotationDocument.new(annotation_document_params)
 
         if @annotation_document.save
           render status: 200,
@@ -175,10 +168,7 @@ module API
 
       # PATCH/PUT /api/v1/annotation_documents/1
       def update
-        update_params = annotation_document_params
-        update_params[:interface_type] = @interface_type
-
-        if @annotation_document.update(update_params)
+        if @annotation_document.update(annotation_document_params)
           render json: @annotation_document.relevant_attributes
         else
           render status: 400,
@@ -209,11 +199,6 @@ module API
                  }
         end
 
-        def set_interface_type
-          type_name = annotation_document_params[:interface_type]
-          @interface_type = InterfaceType.find_or_create_by(name: type_name)
-        end
-
         def return_parameter_type_mismatch
           render status: 400,
                  json: {
@@ -222,6 +207,7 @@ module API
         end
 
         def annotation_document_params
+          params_annotation_document = params[:annotation_document]
           parameters = params.require(:annotation_document).permit(
             :id,
             :interface_type,
@@ -230,7 +216,10 @@ module API
             :raw_datum_id,
             :skipped
           )
-          parameters[:payload] = params[:annotation_document][:payload].to_json
+          parameters[:payload] = params_annotation_document[:payload].to_json
+          parameters[:interface_type] = InterfaceType.find_or_create_by(
+                                          name: params_annotation_document[:interface_type]
+                                        )
           parameters
         end
     end
