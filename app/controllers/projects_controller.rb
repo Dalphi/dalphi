@@ -92,8 +92,9 @@ class ProjectsController < ApplicationController
 
   # POST /projects/1/iterate
   def iterate
-    generate_annotation_documents(@project.iterate_data)
+    process_iteration_data(@project.iterate_data)
     if @annotation_documents
+      save_statistics
       record_count, error_count = save_annotation_documents
       flash[:notice] = I18n.t 'projects.iterate.success',
                               success_count: (record_count - error_count),
@@ -147,13 +148,13 @@ class ProjectsController < ApplicationController
       @interfaces
     end
 
-    def generate_annotation_documents(raw_data)
+    def process_iteration_data(raw_data)
       @annotation_documents = false
       iterate_service = @project.iterate_service
       response = json_post_request(iterate_service.url, raw_data)
-
-      @annotation_documents = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
-      @annotation_documents
+      response_body = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
+      @statistics = response_body['statistics']
+      @annotation_documents = response_body['annotation_documents']
     rescue
       @annotation_documents = false
     end
@@ -167,6 +168,23 @@ class ProjectsController < ApplicationController
         record_count += 1
       end
       return record_count, error_count
+    end
+
+    def save_statistics
+      return unless @statistics
+      Statistic.transaction do
+        iteration_index = Statistic.where(project: @project).maximum(:iteration_index) || 0
+        iteration_index += 1
+        @statistics.each do |key, value|
+          statistic = Statistic.new(
+                        key: key,
+                        value: value,
+                        iteration_index: iteration_index,
+                        project: @project
+                      )
+          statistic.save!
+        end
+      end
     end
 
     def merge_annotation_documents

@@ -205,6 +205,8 @@ RSpec.describe Project, type: :model do
 
   it { should have_many(:raw_data).dependent(:destroy) }
 
+  it { should have_many(:statistics).dependent(:destroy) }
+
   it { should belong_to(:user) }
 
   describe 'selected_interfaces' do

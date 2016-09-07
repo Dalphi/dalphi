@@ -11,6 +11,8 @@ class Project < ApplicationRecord
              foreign_type: 'merge_service'
   has_many :raw_data,
            dependent: :destroy
+  has_many :statistics,
+           dependent: :destroy
   has_many :annotation_documents
 
   has_and_belongs_to_many :interfaces

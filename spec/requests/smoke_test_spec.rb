@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "GET routes", type: :request do
   before(:each) do
     @annotation_document = FactoryGirl.create :annotation_document
+    @statistic = FactoryGirl.create :statistic
     @raw_datum = @annotation_document.raw_datum
     @project = @raw_datum.project
     @user = @project.user

@@ -1,0 +1,29 @@
+ruby:
+  table = true
+  graphs = false
+  table, graphs = graphs, table if request.query_parameters.keys.include?('graphs')
+.container.statistics
+  = render 'shared/project_header',
+           project: @project,
+           active_label: 'statistics'
+  .row
+    .col-xs-12
+      - if @statistics.any?
+        - if table
+          = render 'table',
+                   statistics: @statistics.group_by(&:iteration_index)
+        - if graphs
+          = render 'graphs',
+                   statistics: @statistics.group_by(&:key)
+        .row.pagination
+          .col-xs-12
+             = will_paginate @statistics.values
+      - else
+        .jumbotron
+          h1.display-3
+            = t('statistics.blank-slate.title')
+          p.lead
+            = t('statistics.blank-slate.text')
+  .row.btn-row
+    .col-xs-12
+       = render 'shared/button', type: 'back'

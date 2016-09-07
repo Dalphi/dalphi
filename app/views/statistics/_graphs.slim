@@ -1,0 +1,6 @@
+- statistics.each do |key, key_statistics|
+  .card
+    h3.card-header
+      = key
+    .card-block
+      = area_chart key_statistics.map { |s| [s.iteration_index, s.value] }
