@@ -54,6 +54,8 @@ Rails.application.routes.draw do
   # Projects
 
   resources :projects do
+    resources :statistics, only: [:index]
+
     resources :raw_data, except: [:show] do
       resources :annotation_documents, only: [:index, :show]
     end
