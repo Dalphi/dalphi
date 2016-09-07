@@ -20,4 +20,6 @@ RSpec.describe Statistic, type: :model do
   it { should validate_presence_of(:key) }
 
   it { should validate_uniqueness_of(:key).scoped_to(:iteration_index) }
+
+  it { should belong_to(:project) }
 end

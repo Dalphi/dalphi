@@ -1,4 +1,6 @@
 class Statistic < ApplicationRecord
+  belongs_to :project
+
   validates :key,
             presence: true
 
