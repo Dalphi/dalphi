@@ -64,18 +64,20 @@
                type: 'submit',
                label: t('save'),
                icon: 'check'
-  - if %w(edit update).include?(action_name)
-    .row
-      .col-xs-12
-        .card.pro-tip
-          .card-header
-            h4.card-title
-              = t('interfaces.pro-tip.title')
-            p.card-text
-              = t('interfaces.pro-tip.text')
-              ul
-                - %w(template java_script stylesheet).each do |resource|
-                  li
-                    - path = interface.send(resource).path
+
+- if %w(edit update).include?(action_name)
+  .row
+    .col-xs-12
+      .card.pro-tip
+        .card-header
+          h4.card-title
+            = t('interfaces.pro-tip.title')
+          p.card-text
+            == t('interfaces.pro-tip.text')
+            ul
+              - %w(template java_script stylesheet).each do |resource|
+                li
+                  - path = interface.send(resource).path
+                  samp
                     a href="file://#{path}" target="_blank"
                       = path
