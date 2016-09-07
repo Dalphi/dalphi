@@ -15,6 +15,7 @@ en:
       link-text: here
     cards:
       buttons:
+        test-payload: test payload
         preview: preview this interface
     form:
       attributes:

@@ -52,14 +52,14 @@
                        { href: interface_interface_type_path(interface),
                          label: t('interfaces.buttons.preview-group.config.label'),
                          tooltip: t('interfaces.buttons.preview-group.config.tooltip'),
-                         icon: 'wrench' }] if action_name == 'edit'
+                         icon: 'wrench' }] if interface.id
       = render 'shared/button',
                method: 'delete',
                confirm: t('delete-confirm'),
                type: 'danger',
                href: interface_path(interface),
                label: t('delete'),
-               icon: 'times' if action_name == 'edit'
+               icon: 'times' if interface.id
       = render 'shared/button',
                type: 'submit',
                label: t('save'),

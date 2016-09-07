@@ -28,6 +28,7 @@ class InterfacesController < ApplicationController
   # GET /interfaces/new
   def new
     @interface = Interface.new
+    @interface.interface_type = InterfaceType.new
   end
 
   # GET /interfaces/1/edit

@@ -1,6 +1,11 @@
-// Place all the styles related to the Interfaces controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.interfaces {
+  .btn-sm {
+    position: absolute;
+    right: $services-btn-sm-right;
+    top: $services-btn-sm-top;
+    z-index: 1;
+  }
+}
 
 .inline-container-col {
   padding: 0;
