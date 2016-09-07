@@ -130,8 +130,13 @@ p {
 .btn-row {
   text-align: right;
 
-  .btn {
+  .btn,
+  .btn-group {
     margin: $btn-row-margin;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 
   [href='javascript:history.back()'] {
@@ -139,8 +144,15 @@ p {
     margin-left: 0;
   }
 
-  .btn:last-of-type {
-    margin-right: 0;
+  .btn-group {
+    .btn {
+      margin-right: 0;
+      margin-left: -0.04rem;
+    }
+
+    &> .btn:first-child {
+      margin-left: 0;
+    }
   }
 }
 

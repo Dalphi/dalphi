@@ -28,3 +28,10 @@ en:
       new:
         label: Add interface
         tooltip: Add a new interface
+      preview-group:
+        preview:
+          label: Preview
+          tooltip: render test payload
+        config:
+          label: configure
+          tooltip: change test payload

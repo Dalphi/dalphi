@@ -91,7 +91,11 @@ Rails.application.routes.draw do
 
   # Interfaces
 
-  resources :interfaces
+  resources :interfaces do
+    get '/interface_type',
+        to: 'interfaces#interface_type',
+        as: 'interface_type'
+  end
 
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html

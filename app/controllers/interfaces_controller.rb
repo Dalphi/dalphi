@@ -4,7 +4,8 @@ class InterfacesController < ApplicationController
                   :show,
                   :edit,
                   :update,
-                  :destroy
+                  :destroy,
+                  :interface_type
                 ]
   before_action :set_problem_identifiers,
                 only: [
@@ -52,7 +53,10 @@ class InterfacesController < ApplicationController
     else
       flash[:error] = t('interfaces.action.update.error')
     end
-    render :edit
+
+    interface_type_error = @interface.errors.key? :'interface_type.test_payload'
+    render :edit unless interface_type_error
+    redirect_to interface_interface_type_path(@interface) if interface_type_error
   end
 
   # DELETE /interfaces/1
@@ -62,10 +66,15 @@ class InterfacesController < ApplicationController
                 notice: t('interfaces.action.destroy.success')
   end
 
+  # GET /interfaces/1/interface_type
+  def interface_type
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interface
-      @interface = Interface.find(params[:id])
+      @interface = Interface.find_by(id: params[:id])
+      @interface ||= Interface.find_by(id: params[:interface_id])
     end
 
     def set_problem_identifiers
@@ -73,11 +82,13 @@ class InterfacesController < ApplicationController
     end
 
     def converted_attributes
-      associated_problems = interface_params['associated_problem_identifiers']
       new_params = interface_params
-      new_params['associated_problem_identifiers'] = associated_problems.strip
-                                                                        .split(', ')
-                                                                        .uniq
+      associated_problems = interface_params['associated_problem_identifiers']
+      if associated_problems
+        new_params['associated_problem_identifiers'] = associated_problems.strip
+                                                                          .split(', ')
+                                                                          .uniq
+      end
       new_params
     end
 
@@ -89,7 +100,7 @@ class InterfacesController < ApplicationController
         :stylesheet,
         :title,
         :associated_problem_identifiers,
-        interface_type_attributes: [:id, :name]
+        interface_type_attributes: [:id, :name, :test_payload]
       )
     end
 end

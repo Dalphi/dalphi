@@ -1,0 +1,28 @@
+.container
+  .row
+    .col-xs-12
+      h2
+        = t('interface-types.form.title', interface_type_name: @interface.interface_type.name)
+      p
+        = t('interface-types.form.description')
+
+  = simple_form_for(@interface, html: { class: 'interface-type-form'}) do |f|
+    .form-inputs
+      .row.row-eq-height
+        .col-xs-12
+          = f.simple_fields_for :interface_type do |i|
+            .code-input#test-payload-editor
+            = i.input :test_payload,
+                      as: :hidden,
+                      input_html: { id: 'hidden-test-payload-editor' }
+
+        coffee:
+          window.interfaceTypesForm = new window.InterfaceTypesForm()
+
+    .row.btn-row
+      .col-xs-12
+        = render 'shared/button', type: 'back'
+        = render 'shared/button',
+                 type: 'submit',
+                 label: t('save'),
+                 icon: 'check'
