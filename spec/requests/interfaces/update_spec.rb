@@ -15,7 +15,7 @@ RSpec.describe 'Interface update', type: :request do
           interface: {
             id: @interface.id,
             title: 'Testtitle',
-            interface_type_attributes: {
+            interface_type: {
               name: 'test-type'
             },
             associated_problem_identifiers: 'ner, super_ner',
