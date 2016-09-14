@@ -15,7 +15,7 @@ en:
       link-text: here
     cards:
       buttons:
-        test-payload: test payload
+        test-payload: Payload for testing
         preview: preview this interface
     form:
       attributes:
@@ -32,7 +32,7 @@ en:
       preview-group:
         preview:
           label: Preview
-          tooltip: render test payload
+          tooltip: render the interface with the configured payload for testing
         config:
-          label: configure
-          tooltip: change test payload
+          label: Configure
+          tooltip: change the payload for testing

@@ -105,4 +105,4 @@ en:
         interface_type:
           attributes:
             test_payload:
-              not-json: the test_payload is not formatted in valid, serialized JSON
+              not-json: the payload for testing is not a valid JSON string
