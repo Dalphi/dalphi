@@ -20,6 +20,7 @@
 #= require annotation_iteration
 #= require Chart.bundle
 #= require chartkick
+#= require clipboard
 
 $ ->
   new FastClick(document.body)

@@ -74,10 +74,15 @@
             = t('interfaces.pro-tip.title')
           p.card-text
             == t('interfaces.pro-tip.text')
-            ul
-              - %w(template java_script stylesheet).each do |resource|
-                li
-                  - path = interface.send(resource).path
-                  samp
-                    a href="file://#{path}" target="_blank"
-                      = path
+
+            - %w(template java_script stylesheet).each do |resource|
+              .input-group
+                code
+                  input.form-control.form-control-sm id="#{resource}-path-input" type="text" value="#{interface.send(resource).path}" readonly='readonly'
+                span.input-group-btn
+                  - tooltip = t('interfaces.form.tooltips.copy-path-to-clipboard-on-click')
+                  button.btn.btn-secondary.btn-sm.copy-to-clipboard-button type="button" data-clipboard-target="##{resource}-path-input" data-toggle='tooltip' data-placement='bottom' title="#{tooltip}"  data-trigger='click'
+                    = fa_icon 'clipboard'
+
+            coffee:
+              window.copyToClipboard = new window.CopyToClipboard()
