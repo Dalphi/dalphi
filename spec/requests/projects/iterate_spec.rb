@@ -8,41 +8,26 @@ RSpec.describe 'Project iterate', type: :request do
 
     @project = FactoryGirl.create :project,
                                   iterate_service: FactoryGirl.create(:iterate_service_request_test)
+    @interface_type = @project.iterate_service.interface_types.first
     @raw_datum = FactoryGirl.create :raw_datum,
                                     data: File.new("#{Rails.root}/spec/fixtures/text/spiegel.txt"),
                                     project: @project
     @annotation_document = FactoryGirl.build :annotation_document,
                                              project: @project,
+                                             interface_type: @interface_type,
                                              raw_datum: @raw_datum,
                                              payload: {
                                                options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
                                                content: File.new(@raw_datum.data.path).read,
                                                paragraph_index: 0
                                              }
+    @response_body = @annotation_document.as_json
+    @response_body[:interface_type] = @interface_type.name
+
     sign_in(@project.user)
   end
 
   it 'generates annotation documents by sending raw data to an iterate service' do
-    compatible_interface_type = @project.iterate_service.interface_types.first
-    raw_datum = FactoryGirl.create :raw_datum,
-                                   data: File.new("#{Rails.root}/spec/fixtures/text/spiegel.txt"),
-                                   project: @project
-    annotation_document = FactoryGirl.build :annotation_document,
-                                            project: @project,
-                                            interface_type: compatible_interface_type,
-                                            raw_datum: raw_datum,
-                                            payload: {
-                                                        options: [
-                                                          'Enthält Personennamen',
-                                                          'Enthält keine Personennamen'
-                                                        ],
-                                                        content: File.new(raw_datum.data.path).read,
-                                                        paragraph_index: 0
-                                                      }
-
-    response_body = annotation_document.as_json
-    response_body[:interface_type] = compatible_interface_type.name
-
     stub_request(:post, 'http://example.com/iterate')
       .with(
         body: @project.iterate_data.to_json,
@@ -50,7 +35,9 @@ RSpec.describe 'Project iterate', type: :request do
       )
       .to_return(
         status: 200,
-        body: [response_body].to_json,
+        body: {
+          'annotation_documents' => [@response_body]
+        }.to_json,
         headers: { 'Content-Type' => 'application/json' }
       )
 
@@ -82,7 +69,7 @@ RSpec.describe 'Project iterate', type: :request do
                   f1_score: 0.4736818346968625,
                   num_annotations: 4
                 },
-                'annotation_documents' => [@annotation_document]
+                'annotation_documents' => [@response_body]
               }.to_json,
         headers: { 'Content-Type' => 'application/json' }
       )
