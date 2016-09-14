@@ -73,6 +73,7 @@ GEM
     chartkick (2.1.1)
     climate_control (0.0.3)
       activesupport (>= 3.0)
+    clipboard-rails (1.5.10)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     code_analyzer (0.4.7)
@@ -406,6 +407,7 @@ DEPENDENCIES
   brakeman
   byebug
   chartkick
+  clipboard-rails
   codeclimate-test-reporter
   coffee-rails
   coffeelint

@@ -30,6 +30,8 @@ en:
           label: 'CoffeeScript code'
         stylesheet:
           label: 'SCSS code'
+      tooltips:
+        copy-path-to-clipboard-on-click: 'Copied to clipboard'
     buttons:
       new:
         label: Add interface

@@ -1,9 +1,11 @@
 .interfaces {
   .btn-sm {
-    position: absolute;
-    right: $card-header-btn-sm-right;
-    top: $card-header-btn-sm-top;
-    z-index: 1;
+    &:not(.copy-to-clipboard-button) {
+      position: absolute;
+      right: $card-header-btn-sm-right;
+      top: $card-header-btn-sm-top;
+      z-index: 1;
+    }
   }
 
   .interface-preview-btn {
