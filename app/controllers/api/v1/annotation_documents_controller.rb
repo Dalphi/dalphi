@@ -3,7 +3,12 @@ module API
     class AnnotationDocumentsController < BaseController
       include Swagger::Blocks
 
-      before_action :set_annotation_document, only: [:show, :update, :destroy]
+      before_action :set_annotation_document,
+                    only: [
+                      :show,
+                      :update,
+                      :destroy
+                    ]
 
       swagger_path '/annotation_documents/{id}' do
         operation :get do
@@ -141,6 +146,7 @@ module API
       # POST /api/v1/annotation_documents
       def create
         @annotation_document = AnnotationDocument.new(annotation_document_params)
+
         if @annotation_document.save
           render status: 200,
                  json: @annotation_document.relevant_attributes
@@ -201,6 +207,7 @@ module API
         end
 
         def annotation_document_params
+          params_annotation_document = params[:annotation_document]
           parameters = params.require(:annotation_document).permit(
             :id,
             :interface_type,
@@ -209,7 +216,10 @@ module API
             :raw_datum_id,
             :skipped
           )
-          parameters[:payload] = params[:annotation_document][:payload].to_json
+          parameters[:payload] = params_annotation_document[:payload].to_json
+          parameters[:interface_type] = InterfaceType.find_or_create_by(
+                                          name: params_annotation_document[:interface_type]
+                                        )
           parameters
         end
     end

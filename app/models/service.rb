@@ -26,9 +26,8 @@ class Service < ApplicationRecord
 
   enum role: [:iterate, :merge, :machine_learning]
 
-  serialize :interface_types, Array
-
   has_many :projects
+  has_and_belongs_to_many :interface_types
 
   validates :role, :url, :title, :version,
     presence: true
@@ -60,9 +59,10 @@ class Service < ApplicationRecord
     Timeout::timeout(timeout) do
       data = JSON.parse(URI.parse(url).read)
       data['url'] = url
+      data['interface_types'] = InterfaceType.convert_interface_types(data['interface_types'])
       return data
     end
-  rescue
+  rescue Timeout::Error
     raise "timeout of #{timeout} seconds to look up service exceeded"
   end
 

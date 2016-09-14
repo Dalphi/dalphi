@@ -5,8 +5,8 @@
 
   .btn-sm {
     position: absolute;
-    right: $services-btn-sm-right;
-    top: $services-btn-sm-top;
+    right: $card-header-btn-sm-right;
+    top: $card-header-btn-sm-top;
     z-index: 1;
   }
 
@@ -38,6 +38,30 @@
 
     .connection-details {
       display: inline-block;
+    }
+  }
+
+  .interface-types {
+    .checkbox {
+      display: block;
+
+      input {
+        display: none;
+      }
+
+      label {
+        margin-bottom: 0;
+
+        &::before {
+          content: '\f00c'; // fa-check
+          display: inline-block;
+          font-family: FontAwesome;
+          font-style: normal;
+          font-weight: normal;
+          margin: 0 $list-style-margin;
+          text-decoration: inherit;
+        }
+      }
     }
   }
 }

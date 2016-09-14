@@ -23,7 +23,8 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
   it 'returns 2 annotation documents if a count of 2 is specified' do
     another_annotation_document = FactoryGirl.create(
                                     :annotation_document_with_different_payload,
-                                    raw_datum: @annotation_document.raw_datum
+                                    raw_datum: @annotation_document.raw_datum,
+                                    interface_type: @annotation_document.interface_type
                                   )
     expect(AnnotationDocument.all.count).to eq(2)
     patch "/projects/#{@project.id}/annotation_documents/next",
@@ -41,7 +42,8 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
   it 'returns 2 annotation documents, even if a count of 10 is specified but only 2 available' do
     another_annotation_document = FactoryGirl.create(
                                     :annotation_document_with_different_payload,
-                                    raw_datum: @annotation_document.raw_datum
+                                    raw_datum: @annotation_document.raw_datum,
+                                    interface_type: @annotation_document.interface_type
                                   )
     expect(AnnotationDocument.all.count).to eq(2)
     patch "/projects/#{@project.id}/annotation_documents/next",
@@ -59,7 +61,8 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
   it 'returns two different annotation documents sequentially' do
     another_annotation_document = FactoryGirl.create(
                                     :annotation_document_with_different_payload,
-                                    raw_datum: @annotation_document.raw_datum
+                                    raw_datum: @annotation_document.raw_datum,
+                                    interface_type: @annotation_document.interface_type
                                   )
     expect(AnnotationDocument.all.count).to eq(2)
     patch "/projects/#{@project.id}/annotation_documents/next",

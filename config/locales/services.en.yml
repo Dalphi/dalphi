@@ -29,3 +29,4 @@ en:
       error: Error refreshing service details
     label:
       description: problem identifier
+      interface-types: Interface types of generated annotation documents

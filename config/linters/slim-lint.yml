@@ -8,6 +8,7 @@ linters:
       - Lint/UselessAssignment
       - Lint/Void
       - Metrics/LineLength
+      - Style/AlignArray
       - Style/AlignHash
       - Style/AlignParameters
       - Style/BlockNesting

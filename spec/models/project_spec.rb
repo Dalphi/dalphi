@@ -182,22 +182,21 @@ RSpec.describe Project, type: :model do
 
     it 'can contain two of different interface types' do
       @project.interfaces = [
-        FactoryGirl.build(:interface,
-                          interface_type: 'text_nominal'),
-        FactoryGirl.build(:interface,
-                          template: File.new("#{Rails.root}/spec/fixtures/interfaces/ner_complete.html"),
-                          interface_type: 'other_interface_type')
+        FactoryGirl.build(:interface_text_nominal),
+        FactoryGirl.build(:interface_other,
+                          template: File.new("#{Rails.root}/spec/fixtures/interfaces/ner_complete.html"))
       ]
       expect(@project).to be_valid
     end
 
     it 'cannot contain two of same interface type' do
+      interface = FactoryGirl.build :interface_text_nominal
+      other_interface = FactoryGirl.build :interface_text_nominal,
+                                          interface_type: interface.interface_type,
+                                          template: File.new("#{Rails.root}/spec/fixtures/interfaces/ner_complete.html")
       @project.interfaces = [
-        FactoryGirl.build(:interface,
-                          interface_type: 'text_nominal'),
-        FactoryGirl.build(:interface,
-                          template: File.new("#{Rails.root}/spec/fixtures/interfaces/ner_complete.html"),
-                          interface_type: 'text_nominal')
+        interface,
+        other_interface
       ]
       expect(@project).to be_invalid
     end
@@ -218,8 +217,9 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should return a hash with empty keys for no selected interface types' do
+      interface_type = FactoryGirl.create(:interface_type_text_nominal)
       @project.iterate_service = FactoryGirl.create(:iterate_service,
-                                                    interface_types: %w(text_nominal))
+                                                    interface_types: [interface_type])
       @project.interfaces = []
       @project.save!
 
@@ -231,11 +231,12 @@ RSpec.describe Project, type: :model do
     end
 
     it "should return selected interfaces' titles grouped by type" do
+      interface_type = FactoryGirl.create(:interface_type_text_nominal)
       @project.iterate_service = FactoryGirl.create(:iterate_service,
-                                                    interface_types: %w(text_nominal))
+                                                    interface_types: [interface_type])
       text_nominal_interface = FactoryGirl.create(:interface,
                                                   title: 'interface 1',
-                                                  interface_type: 'text_nominal')
+                                                  interface_type: interface_type)
 
       @project.interfaces = [text_nominal_interface]
       @project.save!
@@ -248,25 +249,26 @@ RSpec.describe Project, type: :model do
     end
 
     it "should return selected interfaces' titles grouped by type" do
+      text_nominal_interface = FactoryGirl.create(:interface_text_nominal,
+                                                  title: 'interface 1')
+      other_interface = FactoryGirl.create(:interface_other,
+                                           title: 'interface 2')
       @project.iterate_service = FactoryGirl.create(:iterate_service,
-                                                    interface_types: %w(text_nominal text_not_so_nominal))
-      text_nominal_interface = FactoryGirl.create(:interface,
-                                                  title: 'interface 1',
-                                                  interface_type: 'text_nominal')
-      text_not_so_nominal_interface = FactoryGirl.create(:interface,
-                                                         title: 'interface 2',
-                                                         interface_type: 'text_not_so_nominal')
+                                                    interface_types: [
+                                                      text_nominal_interface.interface_type,
+                                                      other_interface.interface_type
+                                                    ])
 
       @project.interfaces = [
         text_nominal_interface,
-        text_not_so_nominal_interface
+        other_interface
       ]
       @project.save!
 
       expect(@project.selected_interfaces).to eq(
         {
           'text_nominal' => text_nominal_interface.title,
-          'text_not_so_nominal' => text_not_so_nominal_interface.title
+          'other_interface_type' => other_interface.title
         }
       )
     end
@@ -280,30 +282,50 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should be the interface types of associated services' do
+      interface_type_1 = FactoryGirl.create(:interface_type)
       iterate_service = FactoryGirl.create(:iterate_service,
-                                           interface_types: %w(text_nominal))
+                                           interface_types: [interface_type_1])
       @project.iterate_service = iterate_service
 
-      expect(@project.necessary_interface_types).to eq(%w(text_nominal))
+      expect(@project.necessary_interface_types).to eq([
+        interface_type_1
+      ])
     end
 
     it 'should be the union of interface types of associated services' do
+      interface_type_1 = FactoryGirl.create(:interface_type)
+      interface_type_2 = FactoryGirl.create(:interface_type_text_nominal)
+
       iterate_service = FactoryGirl.create(:iterate_service,
-                                           interface_types: %w(text_nominal text_not_so_nominal))
+                                           interface_types: [interface_type_1, interface_type_2])
       @project.iterate_service = iterate_service
 
-      expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
+      expect(@project.necessary_interface_types).to eq([
+        interface_type_1,
+        interface_type_2
+      ])
     end
 
     it 'should not contain interface types of non associated services' do
+      interface_type_1 = FactoryGirl.create(:interface_type)
+      interface_type_2 = FactoryGirl.create(:interface_type_text_nominal)
+      interface_type_3 = FactoryGirl.create(:interface_type_other)
+
       iterate_service = FactoryGirl.create(:iterate_service,
-                                           interface_types: %w(text_nominal text_not_so_nominal))
+                                           interface_types: [interface_type_1, interface_type_2])
       not_associated_service = FactoryGirl.create(:iterate_service,
                                                   url: 'http://www.3antworten.de',
-                                                  interface_types: %w(text_nominal text_not_so_nominal yet_another_interface_type))
+                                                  interface_types: [
+                                                    interface_type_1,
+                                                    interface_type_2,
+                                                    interface_type_3
+                                                  ])
       @project.iterate_service = iterate_service
 
-      expect(@project.necessary_interface_types).to eq(%w(text_nominal text_not_so_nominal))
+      expect(@project.necessary_interface_types).to eq([
+        interface_type_1,
+        interface_type_2
+      ])
     end
   end
 

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :annotation_document do
     raw_datum { FactoryGirl.create(:raw_datum) }
-    interface_type 'text_nominal'
+    interface_type { FactoryGirl.create(:interface_type) }
     payload '{"label":"testlabel","options":["option1","option2"],"content":"testcontent"}'
     requested_at nil
 

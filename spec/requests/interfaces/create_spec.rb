@@ -13,7 +13,9 @@ RSpec.describe 'Interface creation', type: :request do
          params: {
            interface: {
              title: 'Testtitle',
-             interface_type: 'test-type',
+             interface_type_attributes: {
+               name: 'test-type'
+             },
              associated_problem_identifiers: 'ner, super_ner',
              template: '<div class="test">test</div>',
              java_script: 'console.log("test");',
@@ -26,7 +28,7 @@ RSpec.describe 'Interface creation', type: :request do
 
     interface = Interface.first
     expect(interface.title).to eq('Testtitle')
-    expect(interface.interface_type).to eq('test-type')
+    expect(interface.interface_type.name).to eq('test-type')
     expect(interface.associated_problem_identifiers.sort).to eq(%w(ner super_ner).sort)
     expect(Paperclip.io_adapters.for(interface.template).read).to eq('<div class="test">test</div>')
     expect(Paperclip.io_adapters.for(interface.java_script).read).to eq('console.log("test");')

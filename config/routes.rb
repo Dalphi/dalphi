@@ -93,7 +93,11 @@ Rails.application.routes.draw do
 
   # Interfaces
 
-  resources :interfaces
+  resources :interfaces do
+    get '/interface_type',
+        to: 'interfaces#interface_type',
+        as: 'interface_type'
+  end
   post '/interfaces/:id',
        to: 'interfaces#refresh',
        as: 'refresh_interface'

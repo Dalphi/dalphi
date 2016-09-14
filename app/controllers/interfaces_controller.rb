@@ -1,7 +1,25 @@
 class InterfacesController < ApplicationController
-  before_action :set_tempfiles, only: [:create, :update]
-  before_action :set_interface, only: [:show, :edit, :update, :destroy, :refresh]
-  before_action :set_problem_identifiers, only: [:edit, :new, :create, :update]
+  before_action :set_tempfiles,
+                only: [
+                  :create,
+                  :update
+                ]
+  before_action :set_interface,
+                only: [
+                  :show,
+                  :edit,
+                  :update,
+                  :destroy,
+                  :refresh,
+                  :interface_type
+                ]
+  before_action :set_problem_identifiers,
+                only: [
+                  :edit,
+                  :new,
+                  :create,
+                  :update
+                ]
 
   # GET /interfaces
   def index
@@ -16,6 +34,7 @@ class InterfacesController < ApplicationController
   # GET /interfaces/new
   def new
     @interface = Interface.new
+    @interface.interface_type = InterfaceType.new
   end
 
   # GET /interfaces/1/edit
@@ -53,10 +72,13 @@ class InterfacesController < ApplicationController
       else
         flash[:error] = t('interfaces.action.update.error')
       end
-      render :edit
     ensure
       unset_files(@tempfiles)
     end
+
+    interface_type_error = @interface.errors.key? :'interface_type.test_payload'
+    render :edit unless interface_type_error
+    redirect_to interface_interface_type_path(@interface) if interface_type_error
   end
 
   # DELETE /interfaces/1
@@ -66,10 +88,15 @@ class InterfacesController < ApplicationController
                 notice: t('interfaces.action.destroy.success')
   end
 
+  # GET /interfaces/1/interface_type
+  def interface_type
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interface
-      @interface = Interface.find(params[:id])
+      @interface = Interface.find_by(id: params[:id])
+      @interface ||= Interface.find_by(id: params[:interface_id])
     end
 
     def set_problem_identifiers
@@ -77,11 +104,13 @@ class InterfacesController < ApplicationController
     end
 
     def converted_attributes
-      associated_problems = interface_params['associated_problem_identifiers']
       new_params = interface_params
-      new_params['associated_problem_identifiers'] = associated_problems.strip
-                                                                        .split(', ')
-                                                                        .uniq
+      associated_problems = interface_params['associated_problem_identifiers']
+      if associated_problems
+        new_params['associated_problem_identifiers'] = associated_problems.strip
+                                                                          .split(', ')
+                                                                          .uniq
+      end
       %w(template java_script stylesheet).each do |resource|
         new_params[resource] = string_to_filestream(resource)
       end
@@ -117,8 +146,8 @@ class InterfacesController < ApplicationController
         :java_script,
         :stylesheet,
         :title,
-        :interface_type,
-        :associated_problem_identifiers
+        :associated_problem_identifiers,
+        interface_type_attributes: [:id, :name, :test_payload]
       )
     end
 end

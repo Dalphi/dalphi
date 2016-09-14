@@ -20,6 +20,7 @@ en:
       text: 'To create an interface use the button below.'
     cards:
       buttons:
+        test-payload: Payload for testing
         preview: preview this interface
     form:
       attributes:
@@ -29,3 +30,14 @@ en:
           label: 'CoffeeScript code'
         stylesheet:
           label: 'SCSS code'
+    buttons:
+      new:
+        label: Add interface
+        tooltip: Add a new interface
+      preview-group:
+        preview:
+          label: Preview
+          tooltip: render the interface with the configured payload for testing
+        config:
+          label: Configure
+          tooltip: change the payload for testing

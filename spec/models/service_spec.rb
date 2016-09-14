@@ -268,44 +268,56 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'interface types' do
+    it { should have_and_belong_to_many(:interface_types) }
+
     it 'can be empty for machine learning services' do
-      @ml_service.interface_types = []
+      @ml_service.interface_types.clear
       expect(@ml_service).to be_valid
     end
 
     it 'cannot have one or more elements for machine learning service' do
-      @ml_service.interface_types = %w(fancy_interface)
+      interface_type_1 = FactoryGirl.create(:interface_type, name: 'fancy_interface')
+      @ml_service.interface_types << interface_type_1
       expect(@ml_service).to be_invalid
 
-      @ml_service.interface_types = %w(fancy_interface regular_interface)
+
+      interface_type_2 = FactoryGirl.create(:interface_type, name: 'regular_interface')
+      @ml_service.interface_types  << interface_type_2
       expect(@ml_service).to be_invalid
     end
 
     it 'can be empty for merge services' do
-      @merge_service.interface_types = []
+      @merge_service.interface_types.clear
       expect(@merge_service).to be_valid
     end
 
     it 'cannot have one or more elements for merge service' do
-      @merge_service.interface_types = %w(fancy_interface)
+      interface_type_1 = FactoryGirl.create(:interface_type, name: 'fancy_interface')
+      @merge_service.interface_types << interface_type_1
       expect(@merge_service).to be_invalid
 
-      @merge_service.interface_types = %w(fancy_interface regular_interface)
+
+      interface_type_2 = FactoryGirl.create(:interface_type, name: 'regular_interface')
+      @merge_service.interface_types << interface_type_2
       expect(@merge_service).to be_invalid
     end
 
     it 'cannot be empty for iterate services' do
-      @iterate_service.interface_types = []
+      @iterate_service.interface_types.clear
       expect(@iterate_service).to be_invalid
     end
 
     it 'can have one element for iterate service' do
-      @iterate_service.interface_types = %w(fancy_interface)
+      @iterate_service.interface_types << FactoryGirl.create(:interface_type,
+                                                            name: 'fancy_interface')
       expect(@iterate_service).to be_valid
     end
 
     it 'can have multiple elements for iterate service' do
-      @iterate_service.interface_types = %w(fancy_interface regular_interface)
+      @iterate_service.interface_types << FactoryGirl.create(:interface_type,
+                                                             name: 'fancy_interface')
+      @iterate_service.interface_types << FactoryGirl.create(:interface_type,
+                                                             name: 'regular_interface')
       expect(@iterate_service).to be_valid
     end
   end

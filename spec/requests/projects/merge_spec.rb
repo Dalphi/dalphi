@@ -11,13 +11,15 @@ RSpec.describe 'Project merge', type: :request do
     sign_in(@project.user)
   end
 
-  it "combines annotation documents into a raw datum by sending them to a merge service" do
+  it 'combines annotation documents into a raw datum by sending them to a merge service' do
+    arbitrary_interface_type = FactoryGirl.create(:interface_type)
     raw_datum = FactoryGirl.create :raw_datum,
                                    data: File.new("#{Rails.root}/spec/fixtures/text/unmerged.txt"),
                                    project: @project
     annotation_documents = [
       FactoryGirl.create(:annotation_document,
                        raw_datum: raw_datum,
+                       interface_type: arbitrary_interface_type,
                        rank: 1,
                        payload: {
                          options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
@@ -27,6 +29,7 @@ RSpec.describe 'Project merge', type: :request do
                        }),
       FactoryGirl.create(:annotation_document,
                        raw_datum: raw_datum,
+                       interface_type: arbitrary_interface_type,
                        rank: 2,
                        payload: {
                          options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
