@@ -9,7 +9,7 @@ class InterfaceType < ApplicationRecord
 
   validate do |interface_type|
     json_string = interface_type.test_payload
-    next if json_string.nil? or json_string.empty?
+    next if json_string.nil? || json_string.empty?
     JsonValidator.validate_json(interface_type, json_string)
   end
 
@@ -27,7 +27,7 @@ class InterfaceType < ApplicationRecord
 
   def self.convert_interface_types(interface_type_names)
     interface_types = []
-    return interface_types unless interface_type_names or interface_type_names.any?
+    return interface_types unless interface_type_names || interface_type_names.any?
 
     interface_type_names.each do |type_name|
       interface_types << InterfaceType.find_or_create_by(name: type_name)
