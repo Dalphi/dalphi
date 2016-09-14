@@ -158,6 +158,7 @@ class ProjectsController < ApplicationController
       @annotation_documents = false
     end
 
+    # this method smells of :reek:FeatureEnvy
     def save_annotation_documents
       record_count = 0
       error_count = 0
