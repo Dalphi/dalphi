@@ -1,7 +1,7 @@
 class Interface < ApplicationRecord
   belongs_to :interface_type
   has_and_belongs_to_many :projects
-  accepts_nested_attributes_for :interface_type
+  # accepts_nested_attributes_for :interface_type
 
   before_save :compile_stylesheet
   before_save :compile_java_script

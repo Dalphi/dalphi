@@ -45,6 +45,8 @@ class InterfacesController < ApplicationController
   def create
     begin
       @interface = Interface.new(converted_attributes)
+      set_interface_type_from_params
+
       if @interface.save
         redirect_to edit_interface_path(@interface),
                     notice: t('interfaces.action.create.success')
@@ -57,6 +59,12 @@ class InterfacesController < ApplicationController
     end
   end
 
+  def set_interface_type_from_params
+    interface_type_name = params['interface']['interface_type']['name']
+    interface_type = InterfaceType.find_or_create_by(name: interface_type_name)
+    @interface.interface_type = interface_type
+  end
+
   # POST /interfaces/1
   def refresh
     @interface.save!
@@ -67,6 +75,7 @@ class InterfacesController < ApplicationController
   # PATCH/PUT /interfaces/1
   def update
     begin
+      set_interface_type_from_params
       if @interface.update(converted_attributes)
         flash[:notice] = t('interfaces.action.update.success')
       else
@@ -111,9 +120,11 @@ class InterfacesController < ApplicationController
                                                                           .split(', ')
                                                                           .uniq
       end
+
       %w(template java_script stylesheet).each do |resource|
         new_params[resource] = string_to_filestream(resource)
       end
+
       new_params
     end
 
@@ -146,8 +157,7 @@ class InterfacesController < ApplicationController
         :java_script,
         :stylesheet,
         :title,
-        :associated_problem_identifiers,
-        interface_type_attributes: [:id, :name, :test_payload]
+        :associated_problem_identifiers
       )
     end
 end

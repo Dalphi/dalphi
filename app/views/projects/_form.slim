@@ -32,7 +32,7 @@
                   problem_identifier: project.associated_problem_identifiers.first)
             - interfaces.each do |interface_type, interfaces|
               .card-titleo
-                = interface_type
+                = interface_type.name
               .card-text
                 .form-inputs
                    ruby:

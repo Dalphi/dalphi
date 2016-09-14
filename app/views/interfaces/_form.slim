@@ -6,6 +6,7 @@
 
         = f.simple_fields_for :interface_type do |i|
           = i.input :name,
+                    input_html: { value: interface.interface_type.name },
                     label: t('interface-types.interface-form.attributes.name.label')
 
         = f.input :associated_problem_identifiers,
