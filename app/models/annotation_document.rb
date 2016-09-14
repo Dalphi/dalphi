@@ -5,6 +5,7 @@ class AnnotationDocument < ApplicationRecord
 
   belongs_to :project
   belongs_to :raw_datum
+  belongs_to :interface_type
 
   before_validation do
     self.project = raw_datum.project if raw_datum
@@ -75,7 +76,7 @@ class AnnotationDocument < ApplicationRecord
   def relevant_attributes
     {
       id: id,
-      interface_type: interface_type,
+      interface_type: interface_type.name,
       payload: JSON.parse(payload),
       rank: rank,
       raw_datum_id: raw_datum_id,

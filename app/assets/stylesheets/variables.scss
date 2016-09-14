@@ -49,26 +49,29 @@ $sidebar-width: 15.63rem;
 $sidebar-xs-width: 80%;
 $small-font-size: .75rem;
 $topbar-height: 3.375rem;
+$list-style-margin: .5rem;
+$card-header-btn-sm-right: .5625rem;
+$card-header-btn-sm-top: .5625rem;
+$card-item-button-margin: 1rem;
 
 // durations
 $default-transition-duration: .5s;
 
 // global definitions
-$navigation-box-shadow: .3125rem $color-6;
-$btn-row-margin: .25rem;
-$td-controls-width: 12rem;
 $alert-button-top: .8rem;
-$input-boolean-margin-right: .25rem;
-$gravatar-border-radius: 8rem;
+$btn-row-margin: .25rem;
+$btn-group-btn-overlapping-margin: -.06rem;
 $form-label-margin-bottom: .5rem;
+$gravatar-border-radius: 8rem;
+$input-boolean-margin-right: .25rem;
+$navigation-box-shadow: .3125rem $color-6;
+$td-controls-width: 12rem;
 
 // projects
 $projects-list-group-margin-top: -.4rem;
 
 // services
 $services-service-search-margin-bottom: 1rem;
-$services-btn-sm-right: .5625rem;
-$services-btn-sm-top: .5625rem;
 $services-list-group-margin: -.0625rem;
 
 // sidebar

@@ -1,5 +1,7 @@
 class Interface < ApplicationRecord
+  belongs_to :interface_type
   has_and_belongs_to_many :projects
+  # accepts_nested_attributes_for :interface_type
 
   before_save :compile_stylesheet
   before_save :compile_java_script
@@ -10,11 +12,10 @@ class Interface < ApplicationRecord
 
   serialize :associated_problem_identifiers, Array
 
-  validates :interface_type, :associated_problem_identifiers,
-    presence: true
-
   validates :title,
-    presence: true
+            :interface_type,
+            :associated_problem_identifiers,
+            presence: true
 
   validates_attachment_content_type :java_script,
                                     content_type: /(text\/.*|inode\/x-empty)/

@@ -21,11 +21,14 @@
                      children: nil
         = f.input :url, readonly: true, label: false
       - if service.interface_types.any?
-        .col-xs-12
+        .col-xs-12.interface-types
+          .interface-type-label
+            = t('services.label.interface-types')
           = f.input :interface_types,
                     as: :check_boxes,
                     collection: service.interface_types,
-                    checked: service.interface_types,
+                    input_html: { checked: true },
+                    label: false,
                     readonly: true
 
         coffee:

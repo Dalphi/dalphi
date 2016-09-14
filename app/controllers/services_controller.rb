@@ -55,7 +55,7 @@ class ServicesController < ApplicationController
 
   # POST /services
   def create
-    @service = Service.new(service_params)
+    @service = Service.new(converted_attributes)
     if @service.save
       redirect_to services_url, notice: 'Service was successfully created.'
     else
@@ -65,7 +65,7 @@ class ServicesController < ApplicationController
 
   # PATCH/PUT /services/1
   def update
-    if @service.update(service_params)
+    if @service.update(converted_attributes)
       redirect_to services_url, notice: 'Service was successfully updated.'
     else
       render :edit
@@ -89,6 +89,7 @@ class ServicesController < ApplicationController
   # DELETE /services/1
   def destroy
     @service.destroy
+    InterfaceType.destroy_abandoned
     redirect_to services_url, notice: 'Service was successfully destroyed.'
   end
 
@@ -110,6 +111,21 @@ class ServicesController < ApplicationController
         return I18n.t('services.searching.no-url')
       end
       nil
+    end
+
+    def converted_attributes
+      interface_type_ids = service_params[:interface_types]
+      return service_params unless interface_type_ids and interface_type_ids.any?
+
+      converted_params = service_params
+      interface_types = []
+
+      interface_type_ids.each do |interface_type_id|
+        interface_types << InterfaceType.find_or_create_by(id: interface_type_id)
+      end
+
+      converted_params[:interface_types] = interface_types
+      converted_params
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

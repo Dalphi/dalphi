@@ -13,15 +13,16 @@
 ActiveRecord::Schema.define(version: 20160907114349) do
 
   create_table "annotation_documents", force: :cascade do |t|
-    t.string   "interface_type"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "raw_datum_id"
     t.integer  "project_id"
     t.text     "payload"
     t.integer  "rank"
     t.boolean  "skipped"
     t.datetime "requested_at"
+    t.integer  "interface_type_id"
+    t.index ["interface_type_id"], name: "index_annotation_documents_on_interface_type_id"
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
   end
@@ -41,9 +42,22 @@ ActiveRecord::Schema.define(version: 20160907114349) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "interface_types", force: :cascade do |t|
+    t.string   "name"
+    t.text     "test_payload"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "interface_types_services", id: false, force: :cascade do |t|
+    t.integer "interface_type_id", null: false
+    t.integer "service_id",        null: false
+    t.index ["interface_type_id", "service_id"], name: "index_iface_types_services_on_iface_type_id_and_service_id"
+    t.index ["service_id", "interface_type_id"], name: "index_services_iface_types_on_iface_type_id_and_service_id"
+  end
+
   create_table "interfaces", force: :cascade do |t|
     t.string   "title"
-    t.string   "interface_type"
     t.text     "associated_problem_identifiers"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
@@ -61,6 +75,8 @@ ActiveRecord::Schema.define(version: 20160907114349) do
     t.string   "java_script_content_type"
     t.integer  "java_script_file_size"
     t.datetime "java_script_updated_at"
+    t.integer  "interface_type_id"
+    t.index ["interface_type_id"], name: "index_interfaces_on_interface_type_id"
   end
 
   create_table "interfaces_projects", id: false, force: :cascade do |t|

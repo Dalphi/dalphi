@@ -1,6 +1,10 @@
 class AnnotationDocumentsController < ApplicationController
   before_action :set_project,
-                only: [:next, :index, :show]
+                only: [
+                  :next,
+                  :index,
+                  :show
+                ]
   before_action :set_raw_datum,
                only: [:index]
   before_action :set_annotation_document,

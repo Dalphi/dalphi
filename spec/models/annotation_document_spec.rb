@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe AnnotationDocument, type: :model do
   before(:each) do
     @annotation_document = FactoryGirl.build(:annotation_document)
-    @annotation_document_with_different_user = FactoryGirl.build(:annotation_document_with_different_user)
+    @annotation_document_with_different_user = FactoryGirl.build(:annotation_document_with_different_user,
+                                                                 interface_type: @annotation_document.interface_type)
   end
 
   it 'should have a valid factory' do
@@ -30,15 +31,7 @@ RSpec.describe AnnotationDocument, type: :model do
       expect(@annotation_document).to be_invalid
     end
 
-    it 'may not be empty string' do
-      @annotation_document.interface_type = ''
-      expect(@annotation_document).to be_invalid
-    end
-
-    it 'can be text_nominal as text string' do
-      @annotation_document.interface_type = 'text_nominal'
-      expect(@annotation_document).to be_valid
-    end
+    it { should belong_to(:interface_type) }
   end
 
   describe 'payload' do

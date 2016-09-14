@@ -1,0 +1,9 @@
+en:
+  interface-types:
+    form:
+      title: '%{interface_type_name} payload for testing'
+      description: Describe a test payload manually and use it as a data source to test and preview interfaces of this type.
+    interface-form:
+      attributes:
+        name:
+          label: 'Interface type name'

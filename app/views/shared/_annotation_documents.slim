@@ -25,7 +25,8 @@ table.table.table-striped.table-hover
         td
           = boolean_icon(annotation_document.skipped)
         td
-          = annotation_document.interface_type
+          - interface_type = annotation_document.interface_type
+          = interface_type.name
 
     coffee:
       window.clickableTableRow = new window.ClickableTableRow()

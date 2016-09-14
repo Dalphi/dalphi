@@ -4,7 +4,11 @@
       .col-xs-12.col-xl-6
         = f.input :title
 
-        = f.input :interface_type
+        = f.simple_fields_for :interface_type do |i|
+          - interface_type = interface.interface_type
+          = i.input :name,
+                    input_html: { value: interface_type.name },
+                    label: t('interface-types.interface-form.attributes.name.label')
 
         = f.input :associated_problem_identifiers,
                   as: :string,
@@ -46,7 +50,21 @@
     .col-xs-12
       = render 'shared/button',
                type: 'back'
-      - if %w(edit update).include?(action_name)
+      - if interface.id
+        = render 'shared/button',
+                 group: [{ href: interface_path(interface),
+                           label: t('interfaces.buttons.preview-group.preview.label'),
+                           tooltip: t('interfaces.buttons.preview-group.preview.tooltip'),
+                           icon: 'desktop' },
+                         { href: interface_interface_type_path(interface),
+                           label: t('interfaces.buttons.preview-group.config.label'),
+                           tooltip: t('interfaces.buttons.preview-group.config.tooltip'),
+                           icon: 'wrench' },
+                         { method: 'post',
+                           href: refresh_interface_path(interface),
+                           label: t('refresh'),
+                           tooltip: t('interfaces.action.refresh.tooltip'),
+                           icon: 'refresh' }]
         = render 'shared/button',
                  method: 'delete',
                  confirm: t('delete-confirm'),
@@ -54,12 +72,6 @@
                  href: interface_path(interface),
                  label: t('delete'),
                  icon: 'times'
-        = render 'shared/button',
-                 method: 'post',
-                 href: refresh_interface_path(interface),
-                 label: t('refresh'),
-                 tooltip: t('interfaces.action.refresh.tooltip'),
-                 icon: 'refresh'
       = render 'shared/button',
                type: 'submit',
                label: t('save'),

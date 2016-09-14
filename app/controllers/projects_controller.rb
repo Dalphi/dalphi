@@ -159,10 +159,13 @@ class ProjectsController < ApplicationController
       @annotation_documents = false
     end
 
+    # this method smells of :reek:FeatureEnvy
     def save_annotation_documents
       record_count = 0
       error_count = 0
       @annotation_documents.each do |annotation_document|
+        type_name = annotation_document['interface_type']
+        annotation_document['interface_type'] = InterfaceType.find_or_create_by(name: type_name)
         new_annotation_document = AnnotationDocument.new(annotation_document)
         error_count += 1 unless new_annotation_document.save
         record_count += 1

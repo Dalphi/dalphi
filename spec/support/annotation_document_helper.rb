@@ -5,7 +5,7 @@ module AnnotationDocumentHelper
     expect(json_object).to eq(
       {
         'id' => model_instance.id,
-        'interface_type' => model_instance.interface_type,
+        'interface_type' => model_instance.interface_type.name,
         'payload' => JSON.parse(model_instance.payload),
         'rank' => model_instance.rank,
         'raw_datum_id' => model_instance.raw_datum.id,

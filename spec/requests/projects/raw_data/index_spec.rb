@@ -60,7 +60,6 @@ RSpec.describe 'RawData', type: :request do
     ]
     project.save!
 
-    timestamp = Time.zone.now.strftime('%Y-%m-%d-%H-%M-%S')
     begin
       file = Tempfile.new('raw-data-zip')
       Zip::OutputStream.open(file) { |zos| }
