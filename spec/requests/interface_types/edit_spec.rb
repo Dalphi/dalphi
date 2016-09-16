@@ -23,7 +23,7 @@ RSpec.describe 'InterfaceType edit payload for testing', type: :request do
             }
           }
 
-    expect(response).to be_success
+    expect(response).to be_redirect
     expect(Interface.count).to eq(1)
     expect(InterfaceType.count).to eq(1)
 
@@ -32,7 +32,7 @@ RSpec.describe 'InterfaceType edit payload for testing', type: :request do
     expect(interface_type.test_payload).to eq(target_test_payload)
   end
 
-  it 'does not affet related interfaces attributes' do
+  it 'does not affect related interfaces attributes' do
     expect(Interface.count).to eq(1)
     expect(InterfaceType.count).to eq(1)
     expect(@interface.interface_type).to eq(@interface_type)
@@ -53,7 +53,7 @@ RSpec.describe 'InterfaceType edit payload for testing', type: :request do
             }
           }
 
-    expect(response).to be_success
+    expect(response).to be_redirect
     expect(Interface.count).to eq(1)
     expect(InterfaceType.count).to eq(1)
 
