@@ -7,4 +7,3 @@ en:
     /users/sign_in: 'Sign in user'
     /projects/1/annotate/1: ''
     /projects/1/iterate: 'Iterate'
-    /interfaces/1/interface_type: 'Payload for testing'

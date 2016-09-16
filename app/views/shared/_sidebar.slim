@@ -35,7 +35,7 @@
             = t('activerecord.models.service.other')
 
         - active_class = ''
-        - active_class = 'active' if params[:controller] == 'interfaces'
+        - active_class = 'active' if %w(interfaces interface_types).include? params[:controller]
         li class="#{active_class}"
           a href="#{interfaces_path}"
             = t('activerecord.models.interface.other')

@@ -13,6 +13,10 @@ class InterfaceType < ApplicationRecord
     JsonValidator.validate_json(interface_type, json_string)
   end
 
+  def label
+    self.name
+  end
+
   def self.destroy_abandoned
     InterfaceType.includes(:services)
                  .includes(:interfaces)

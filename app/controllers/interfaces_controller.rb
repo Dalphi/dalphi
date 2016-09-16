@@ -59,12 +59,6 @@ class InterfacesController < ApplicationController
     end
   end
 
-  def set_interface_type_from_params
-    interface_type_name = params['interface']['interface_type']['name']
-    interface_type = InterfaceType.find_or_create_by(name: interface_type_name)
-    @interface.interface_type = interface_type
-  end
-
   # POST /interfaces/1
   def refresh
     @interface.save!
@@ -110,6 +104,16 @@ class InterfacesController < ApplicationController
 
     def set_problem_identifiers
       @problem_identifiers = Service::problem_identifiers
+    end
+
+    def set_interface_type_from_params
+      interface_type_name = params['interface']['interface_type']['name']
+
+      if interface_type_name
+        interface_type = InterfaceType.find_or_create_by(name: interface_type_name)
+      end
+
+      @interface.interface_type = interface_type
     end
 
     def converted_attributes
