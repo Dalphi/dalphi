@@ -5,13 +5,15 @@ class BreadcrumbBakery
     tokens = url_tokens(request.original_url)
     @breadcrumbs = []
     subpath = ''
+    predecessor_token = nil
     tokens.each do |token|
       subpath << "#{token}"
-      label = labelize(tokens, token)
+      label = labelize(tokens, token, predecessor_token)
       @breadcrumbs << {
                         label: label,
                         path: subpath.clone
                       } unless label.empty?
+      predecessor_token = token
     end
   end
 
@@ -45,19 +47,18 @@ class BreadcrumbBakery
     Rails.application.routes.recognize_path(path) rescue false
   end
 
-  def labelize(tokens, token)
+  def labelize(tokens, token, predecessor_token)
     token['/'] = ''
-    token_predecessor = predecessor(tokens, token)
     return exception_label(tokens) if has_breadcrumb_exception?(tokens)
-    return integer_label(token, token_predecessor) if is_integer?(token)
+    return integer_label(token, predecessor_token) if is_integer?(token)
     return class_label(token) if is_class?(token)
-    return integer_and_action_label(token, token_predecessor) if is_integer_and_action?(token)
+    return integer_and_action_label(token, predecessor_token) if is_integer_and_action?(token)
     return action_label(token) if is_action?(token)
     token
   end
 
-  def integer_label(integer, token_predecessor)
-    token_predecessor
+  def integer_label(integer, predecessor_token)
+    predecessor_token
       .singularize
       .classify
       .constantize
@@ -74,11 +75,11 @@ class BreadcrumbBakery
       .pluralize
   end
 
-  def integer_and_action_label(token, token_predecessor)
+  def integer_and_action_label(token, predecessor_token)
     token_chunks = token.split('/')
     integer = token_chunks.first
     action = token_chunks.second
-    model = token_predecessor
+    model = predecessor_token
               .singularize
               .classify
               .constantize
@@ -89,10 +90,6 @@ class BreadcrumbBakery
 
   def action_label(action)
     I18n.t("helpers.actions.#{action}")
-  end
-
-  def predecessor(array, item)
-    array[array.find_index(item) - 1] rescue nil
   end
 
   def exception_label(tokens)
