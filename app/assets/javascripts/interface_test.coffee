@@ -10,6 +10,9 @@ class AnnotationLifecycleFaker
   skip: ->
     console.log 'skip this annotation document'
 
+  registerInterfaceInstance: (typeName, _) ->
+    console.log "registering interface: #{typeName}"
+
 class InterfaceTest
   _this = undefined
 
@@ -20,6 +23,7 @@ class InterfaceTest
 
     # fake annotation_lifecycle functionallity
     window[$staging.data('interface-type-name')] = new AnnotationLifecycleFaker()
+    window.annotationLifecycle = new AnnotationLifecycleFaker()
 
     # render template with test payload & append to DOM
     mustacheParsedTemplate = Mustache.render(
