@@ -93,14 +93,17 @@ Rails.application.routes.draw do
 
   # Interfaces
 
-  resources :interfaces do
-    get '/interface_type',
-        to: 'interfaces#interface_type',
-        as: 'interface_type'
-  end
+  resources :interfaces
   post '/interfaces/:id',
        to: 'interfaces#refresh',
        as: 'refresh_interface'
+
+  # Interface Types
+
+  resources :interface_types, only: [:edit, :update]
+  # get '/interface_types/:id',
+  #     to: 'interface_types#edit',
+  #     as: 'interface_type'
 
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html

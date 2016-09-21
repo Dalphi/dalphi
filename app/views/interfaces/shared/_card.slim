@@ -4,7 +4,7 @@
     h3.card-header
       = interface_type.name
 
-      a.btn.btn-sm.btn-secondary href="#{interface_interface_type_path(interfaces.first)}"
+      a.btn.btn-sm.btn-secondary href="#{edit_interface_type_path(interfaces.first.interface_type)}"
         = t('interfaces.cards.buttons.test-payload')
 
     ul.list-group.list-group-flash
