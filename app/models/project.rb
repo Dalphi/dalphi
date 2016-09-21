@@ -67,7 +67,7 @@ class Project < ApplicationRecord
 
   def update_merged_raw_datum(params)
     raw_datum = self.raw_data.find(params['raw_datum_id'])
-    File.open(raw_datum.data.path, 'w') do |file|
+    File.open(raw_datum.data.path, 'wb') do |file|
       file.write(Base64.decode64(params['content']).force_encoding('utf-8'))
     end
   rescue

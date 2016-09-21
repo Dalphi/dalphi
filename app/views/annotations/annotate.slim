@@ -15,11 +15,11 @@ ruby:
     window.annotationLifecycle = new window.AnnotationLifecycle()
 
   - @project.interfaces.each do |interface|
-    .template class="#{@container_class}" data-interface-type="#{interface.interface_type}"
-      == interface.template
+    .template class="#{@container_class}" data-interface-type="#{interface.interface_type.name}"
+      == Paperclip.io_adapters.for(interface.template).read
 
-    script type='text/javascript'
-      == interface.compiled_java_script
+      script type='text/javascript'
+        == interface.compiled_java_script
 
 .no-annotation-document-blank-slate
   = render 'shared/blank_slates/annotate',
