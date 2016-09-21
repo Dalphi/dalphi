@@ -111,9 +111,8 @@ class InterfacesController < ApplicationController
 
       if interface_type_name
         interface_type = InterfaceType.find_or_create_by(name: interface_type_name)
+        @interface.interface_type = interface_type
       end
-
-      @interface.interface_type = interface_type
     end
 
     def converted_attributes
