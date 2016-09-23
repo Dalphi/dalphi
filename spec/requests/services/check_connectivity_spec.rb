@@ -11,7 +11,7 @@ RSpec.describe "Connectivity check", type: :request do
 
   it 'shows service connectivity status' do
     raw_datum = FactoryGirl.create(:raw_datum)
-    sign_in(raw_datum.project.user)
+    sign_in(raw_datum.project.admin)
 
     get check_connectivity_path(@service), xhr: true
     expect(response).to be_success

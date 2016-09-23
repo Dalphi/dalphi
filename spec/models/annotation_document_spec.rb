@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe AnnotationDocument, type: :model do
   before(:each) do
     @annotation_document = FactoryGirl.build(:annotation_document)
-    @annotation_document_with_different_user = FactoryGirl.build(:annotation_document_with_different_user,
-                                                                 interface_type: @annotation_document.interface_type)
+    @annotation_document_with_different_admin = FactoryGirl.build(:annotation_document_with_different_admin,
+                                                                  interface_type: @annotation_document.interface_type)
   end
 
   it 'should have a valid factory' do
     expect(@annotation_document).to be_valid
-    expect(@annotation_document_with_different_user).to be_valid
+    expect(@annotation_document_with_different_admin).to be_valid
   end
 
   describe 'raw_datum' do
@@ -49,11 +49,11 @@ RSpec.describe AnnotationDocument, type: :model do
 
     describe 'should be unique within one project and' do
       it 'should not be assigned twice' do
-        common_project = @annotation_document_with_different_user.raw_datum.project
+        common_project = @annotation_document_with_different_admin.raw_datum.project
         test_string = 'The company Implisense GmbH in Berlin.'
 
-        @annotation_document_with_different_user.payload = test_string
-        @annotation_document_with_different_user.save!
+        @annotation_document_with_different_admin.payload = test_string
+        @annotation_document_with_different_admin.save!
 
         @annotation_document.payload = test_string
         @annotation_document.raw_datum.project = common_project
@@ -61,12 +61,12 @@ RSpec.describe AnnotationDocument, type: :model do
       end
 
       it 'can be different' do
-        common_project = @annotation_document_with_different_user.raw_datum.project
+        common_project = @annotation_document_with_different_admin.raw_datum.project
         test_string_1 = 'The company Implisense GmbH in Berlin.'
         test_string_2 = 'The company 3antworten UG in Berlin.'
 
-        @annotation_document_with_different_user.payload = test_string_1
-        @annotation_document_with_different_user.save!
+        @annotation_document_with_different_admin.payload = test_string_1
+        @annotation_document_with_different_admin.save!
 
         @annotation_document.payload = test_string_2
         @annotation_document.raw_datum.project = common_project
@@ -78,9 +78,9 @@ RSpec.describe AnnotationDocument, type: :model do
         project_2 = FactoryGirl.create(:another_project)
         test_string = 'The company Implisense GmbH in Berlin.'
 
-        @annotation_document_with_different_user.payload = test_string
-        @annotation_document_with_different_user.raw_datum.project = project_1
-        @annotation_document_with_different_user.save!
+        @annotation_document_with_different_admin.payload = test_string
+        @annotation_document_with_different_admin.raw_datum.project = project_1
+        @annotation_document_with_different_admin.save!
 
         @annotation_document.payload = test_string
         @annotation_document.raw_datum.project = project_2

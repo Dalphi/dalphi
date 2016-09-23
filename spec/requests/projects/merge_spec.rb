@@ -8,7 +8,7 @@ RSpec.describe 'Project merge', type: :request do
 
     @project = FactoryGirl.create :project,
                                   merge_service: FactoryGirl.create(:merge_service_request_test)
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'combines annotation documents into a raw datum by sending them to a merge service' do

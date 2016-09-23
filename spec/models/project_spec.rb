@@ -206,7 +206,7 @@ RSpec.describe Project, type: :model do
 
   it { should have_many(:statistics).dependent(:destroy) }
 
-  it { should belong_to(:user) }
+  it { should belong_to(:admin) }
 
   describe 'selected_interfaces' do
     it 'should return an empty hash for no necessary interface types' do

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Service create', type: :request do
   before(:each) do
     @project = FactoryGirl.create(:project)
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'creates a service' do

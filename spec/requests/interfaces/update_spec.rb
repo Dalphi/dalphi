@@ -4,7 +4,7 @@ RSpec.describe 'Interface update', type: :request do
   before(:each) do
     @project = FactoryGirl.create(:project)
     @interface = FactoryGirl.create(:interface)
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'updates an interface' do

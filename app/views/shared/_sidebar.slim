@@ -12,7 +12,7 @@
       span
         | for Human Interaction
 
-    - if user_signed_in?
+    - if admin_signed_in?
       ul.nav
         ruby:
           projects_controller = %w(

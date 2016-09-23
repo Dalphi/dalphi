@@ -8,8 +8,8 @@ en:
       refresh: 'Edit %{model}'
   activerecord:
     actions:
-      user:
-        edit: Edit user profile
+      admin:
+        edit: Edit admin profile
         sign-out: Sign out
       project:
         new: New project
