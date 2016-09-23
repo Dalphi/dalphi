@@ -37,6 +37,8 @@ Therefore you have to register a custom HTML interface to render complex questio
 We are still working on the concrete API documentation and example services.
 These are planned to be available by December 2016.
 
+Check also out our [DALPHI production presentation](https://dalphi.github.io/presentation/).
+
 ## Getting started
 
 ### Kickstart with Docker
