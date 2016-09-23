@@ -14,8 +14,10 @@ ruby:
   coffee:
     window.annotationLifecycle = new window.AnnotationLifecycle()
 
-  - @project.interfaces.each do |interface|
-    .template class="#{@container_class}" data-interface-type="#{interface.interface_type.name}"
+  - interfaces = @project.interfaces
+  - interfaces.each do |interface|
+    - interface_type = interface.interface_type
+    .template class="#{@container_class}" data-interface-type="#{interface_type.name}"
       == Paperclip.io_adapters.for(interface.template).read
 
       script type='text/javascript'
