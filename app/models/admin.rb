@@ -5,4 +5,6 @@ class Admin < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :projects, dependent: :destroy
+
+  has_many :annotation_documents, as: :annotable
 end

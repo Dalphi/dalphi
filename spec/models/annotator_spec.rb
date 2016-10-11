@@ -9,11 +9,9 @@ RSpec.describe Annotator, type: :model do
     expect(@annotator).to be_valid
   end
 
-  describe 'name' do
-    it { should validate_presence_of(:name) }
-  end
+  it { should validate_presence_of(:name) }
 
-  describe 'projects' do
-    it { should have_and_belong_to_many(:projects) }
-  end
+  it { should have_and_belong_to_many(:projects) }
+
+  it { should have_many(:annotation_documents) }
 end

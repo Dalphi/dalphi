@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011140404) do
+ActiveRecord::Schema.define(version: 20161011144622) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(version: 20161011140404) do
     t.boolean  "skipped"
     t.datetime "requested_at"
     t.integer  "interface_type_id"
+    t.string   "annotable_type"
+    t.integer  "annotable_id"
+    t.index ["annotable_type", "annotable_id"], name: "index_annotation_documents_on_annotable_type_and_annotable_id"
     t.index ["interface_type_id"], name: "index_annotation_documents_on_interface_type_id"
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"

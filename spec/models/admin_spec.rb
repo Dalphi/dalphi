@@ -10,4 +10,6 @@ RSpec.describe Admin, :type => :model do
   end
 
   it { should have_many(:projects).dependent(:destroy) }
+
+  it { should have_many(:annotation_documents) }
 end
