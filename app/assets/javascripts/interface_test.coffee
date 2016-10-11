@@ -19,20 +19,21 @@ class InterfaceTest
   constructor: ->
     _this = this
 
-    $staging = $('.interfaces-staging')
+    interfaceContainer = $('.interfaces-staging').data('container-class-name')
+    $interfaceContainer = $(".#{interfaceContainer}")
 
     # fake annotation_lifecycle functionallity
-    window[$staging.data('interface-type-name')] = new AnnotationLifecycleFaker()
+    window[$interfaceContainer.data('interface-type-name')] = new AnnotationLifecycleFaker()
     window.annotationLifecycle = new AnnotationLifecycleFaker()
 
     # render template with test payload & append to DOM
     mustacheParsedTemplate = Mustache.render(
-      $staging.data('template'),
-      $staging.data('test-payload')
+      $interfaceContainer.data('template'),
+      $interfaceContainer.data('test-payload')
     )
-    $('.interfaces-staging').append(mustacheParsedTemplate)
+    $interfaceContainer.append(mustacheParsedTemplate)
 
     # append JS to DOM
-    $('.interfaces-staging').append("<script>#{$staging.data('js-script')}</script>")
+    $interfaceContainer.append("<script>#{$interfaceContainer.data('js-script')}</script>")
 
 window.InterfaceTest = InterfaceTest
