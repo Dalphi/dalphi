@@ -13,3 +13,6 @@ InstanceVariableAssumption:
 UncommunicativeModuleName:
   accept:
     - !ruby/regexp /V[0-9]+/
+FeatureEnvy:
+  exclude:
+    - 'API::V1::AnnotationDocumentsController#create_params_from_plaintext_payload'
