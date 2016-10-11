@@ -3,8 +3,9 @@
     = @interface.compiled_stylesheet
 
 .container.interfaces
-  - interface_type = @interface.interface_type
-  div class="#{@container_class} interfaces-staging" data-test-payload="#{interface_type.test_payload}" data-js-script="#{@interface.compiled_java_script}" data-template="#{Paperclip.io_adapters.for(@interface.template).read}" data-interface-type-name="#{interface_type.name}"
+  .interfaces-staging data-container-class-name="#{@container_class}"
+    - interface_type = @interface.interface_type
+    div class="#{@container_class}" data-test-payload="#{interface_type.test_payload}" data-js-script="#{@interface.compiled_java_script}" data-template="#{Paperclip.io_adapters.for(@interface.template).read}" data-interface-type-name="#{interface_type.name}"
 
   coffee:
     window.interfaceTest = new window.InterfaceTest()

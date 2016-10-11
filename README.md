@@ -37,7 +37,7 @@ Therefore you have to register a custom HTML interface to render complex questio
 We are still working on the concrete API documentation and example services.
 These are planned to be available by December 2016.
 
-Check also out our [DALPHI production presentation](https://dalphi.github.io/presentation/).
+Check also out our [DALPHI product presentation](https://dalphi.github.io/presentation/).
 
 ## Getting started
 
@@ -211,7 +211,19 @@ The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integratio
 
 ## License
 
-See [LICENSE](https://raw.githubusercontent.com/DALPHI/DALPHI/master/LICENSE).
+Copyright 2016 Implisense GmbH
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 ## About Implisense
 
