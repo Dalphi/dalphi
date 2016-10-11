@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011130154) do
+ActiveRecord::Schema.define(version: 20161011140404) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -60,6 +60,13 @@ ActiveRecord::Schema.define(version: 20161011130154) do
     t.string   "name"
     t.index ["email"], name: "index_annotators_on_email", unique: true
     t.index ["reset_password_token"], name: "index_annotators_on_reset_password_token", unique: true
+  end
+
+  create_table "annotators_projects", id: false, force: :cascade do |t|
+    t.integer "annotator_id", null: false
+    t.integer "project_id",   null: false
+    t.index ["annotator_id", "project_id"], name: "index_annotators_projects_on_annotator_id_and_project_id"
+    t.index ["project_id", "annotator_id"], name: "index_annotators_projects_on_project_id_and_annotator_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
