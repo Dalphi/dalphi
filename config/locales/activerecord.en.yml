@@ -8,6 +8,8 @@ en:
       refresh: 'Edit %{model}'
   activerecord:
     actions:
+      annotator:
+        new: New annotator
       admin:
         edit: Edit admin profile
         sign-out: Sign out
@@ -24,6 +26,9 @@ en:
         edit: Edit interface
         delete: Delete interface
     models:
+      annotator:
+        one: Annotator
+        other: Annotators
       project:
         one: project
         other: projects

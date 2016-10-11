@@ -1,0 +1,8 @@
+en:
+  annotators:
+    action:
+      create:
+        success: Annotator was successfully created.
+    blank-slate:
+      title: 'No annotators added yet'
+      text: 'To create some users use the button below.'

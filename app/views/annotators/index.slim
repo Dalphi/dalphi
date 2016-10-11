@@ -1,0 +1,39 @@
+.container.annotators
+  .row
+    .col-xs-12
+      - if @annotators.any?
+        table.table.table-striped.table-hover
+          thead.thead-default
+            tr
+              th = t('activerecord.attributes.annotator.title')
+              th = t('activerecord.attributes.annotator.description')
+          tbody
+            - @annotators.each do |annotator|
+              tr data-href="#{annotator_path(annotator)}"
+                td = annotator.title
+                td = annotator.description
+            coffee:
+              window.clickableTableRow = new window.ClickableTableRow()
+      - else
+        .jumbotron
+          h1.display-3
+            = t('annotators.blank-slate.title')
+          p.lead
+            = t('annotators.blank-slate.text')
+          hr.m-y-2
+          = render 'shared/button',
+                   type: 'primary',
+                   label: t('activerecord.actions.annotator.new'),
+                   href: new_annotator_path,
+                   icon: 'plus'
+  - if @annotators.any?
+    .row.btn-row
+      .col-xs-12
+        = render 'shared/button',
+                 type: 'primary',
+                 label: t('activerecord.actions.annotator.new'),
+                 href: new_annotator_path,
+                 icon: 'plus'
+    .row.pagination
+      .col-xs-12
+        = will_paginate @annotators

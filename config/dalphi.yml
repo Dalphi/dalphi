@@ -4,6 +4,7 @@ test:
     projects: 10
     raw-data: 10
     statistics: 10
+    annotators: 10
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:
@@ -16,6 +17,7 @@ development:
     projects: 10
     raw-data: 10
     statistics: 10
+    annotators: 10
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:
@@ -28,6 +30,7 @@ production:
     projects: 10
     raw-data: 10
     statistics: 10
+    annotators: 10
   annotation-interface:
     container-class-name: annotation-interface
   timeouts:

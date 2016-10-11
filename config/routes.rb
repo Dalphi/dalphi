@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   root to: redirect('/projects')
 
-  devise_for :annotators
-  devise_for :admins
+  # Authentification
+
+  scope '/auth' do
+    devise_for :annotators
+    devise_for :admins
+  end
 
   # API
 
@@ -102,9 +106,10 @@ Rails.application.routes.draw do
   # Interface Types
 
   resources :interface_types, only: [:edit, :update]
-  # get '/interface_types/:id',
-  #     to: 'interface_types#edit',
-  #     as: 'interface_type'
+
+  # Annotators
+
+  resources :annotators, only: [:index, :edit, :update, :new, :create, :destroy]
 
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html
