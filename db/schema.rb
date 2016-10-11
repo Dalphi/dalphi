@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923141257) do
+ActiveRecord::Schema.define(version: 20161011130154) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -42,6 +42,24 @@ ActiveRecord::Schema.define(version: 20160923141257) do
     t.index ["interface_type_id"], name: "index_annotation_documents_on_interface_type_id"
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
+  end
+
+  create_table "annotators", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "name"
+    t.index ["email"], name: "index_annotators_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_annotators_on_reset_password_token", unique: true
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -80,6 +98,7 @@ ActiveRecord::Schema.define(version: 20160923141257) do
     t.datetime "updated_at",                     null: false
     t.text     "compiled_stylesheet"
     t.text     "compiled_java_script"
+    t.integer  "interface_type_id"
     t.string   "template_file_name"
     t.string   "template_content_type"
     t.integer  "template_file_size"
@@ -92,7 +111,6 @@ ActiveRecord::Schema.define(version: 20160923141257) do
     t.string   "java_script_content_type"
     t.integer  "java_script_file_size"
     t.datetime "java_script_updated_at"
-    t.integer  "interface_type_id"
     t.index ["interface_type_id"], name: "index_interfaces_on_interface_type_id"
   end
 

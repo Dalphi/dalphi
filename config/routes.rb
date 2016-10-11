@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: redirect('/projects')
 
+  devise_for :annotators
   devise_for :admins
 
   # API
