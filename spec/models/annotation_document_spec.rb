@@ -148,4 +148,6 @@ RSpec.describe AnnotationDocument, type: :model do
       expect(@annotation_document).to be_valid
     end
   end
+
+  it { should belong_to(:annotable) }
 end

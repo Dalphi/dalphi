@@ -6,6 +6,7 @@ class AnnotationDocument < ApplicationRecord
   belongs_to :project
   belongs_to :raw_datum
   belongs_to :interface_type
+  belongs_to :annotable, polymorphic: true
 
   before_validation do
     self.project = raw_datum.project if raw_datum

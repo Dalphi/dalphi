@@ -16,6 +16,7 @@ class Project < ApplicationRecord
   has_many :annotation_documents
 
   has_and_belongs_to_many :interfaces
+  has_and_belongs_to_many :annotators
 
   validates :title,
     presence: true

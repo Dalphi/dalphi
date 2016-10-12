@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923141257) do
+ActiveRecord::Schema.define(version: 20161011144622) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -39,9 +39,37 @@ ActiveRecord::Schema.define(version: 20160923141257) do
     t.boolean  "skipped"
     t.datetime "requested_at"
     t.integer  "interface_type_id"
+    t.string   "annotable_type"
+    t.integer  "annotable_id"
+    t.index ["annotable_type", "annotable_id"], name: "index_annotation_documents_on_annotable_type_and_annotable_id"
     t.index ["interface_type_id"], name: "index_annotation_documents_on_interface_type_id"
     t.index ["project_id"], name: "index_annotation_documents_on_project_id"
     t.index ["raw_datum_id"], name: "index_annotation_documents_on_raw_datum_id"
+  end
+
+  create_table "annotators", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "name"
+    t.index ["email"], name: "index_annotators_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_annotators_on_reset_password_token", unique: true
+  end
+
+  create_table "annotators_projects", id: false, force: :cascade do |t|
+    t.integer "annotator_id", null: false
+    t.integer "project_id",   null: false
+    t.index ["annotator_id", "project_id"], name: "index_annotators_projects_on_annotator_id_and_project_id"
+    t.index ["project_id", "annotator_id"], name: "index_annotators_projects_on_project_id_and_annotator_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
