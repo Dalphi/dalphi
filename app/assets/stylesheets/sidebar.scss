@@ -62,7 +62,14 @@
       top: 0;
     }
 
+    .dalphi-logo {
+      path {
+        fill: $color-0;
+      }
+    }
+
     h1 {
+      color: $color-0;
       margin-top: $sidebar-header-h1-margin-top;
     }
   }
