@@ -1,5 +1,5 @@
 en:
-  user-edit:
+  admin-edit:
     necessary-password-for-confirmation: We need your current password to confirm your changes.
     password-blank-hint: leave it blank if you don't want to change it
   devise:

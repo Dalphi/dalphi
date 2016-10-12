@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Problem identifier check", type: :request do
   before(:each) do
     @project = FactoryGirl.create(:project)
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'shows an empty set of associated problem identifiers if no service is set' do

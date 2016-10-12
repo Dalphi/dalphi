@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'RawData', type: :request do
   before(:each) do
     @raw_datum = FactoryGirl.create(:raw_datum)
-    sign_in(@raw_datum.project.user)
+    sign_in(@raw_datum.project.admin)
   end
 
   it 'shows raw data' do

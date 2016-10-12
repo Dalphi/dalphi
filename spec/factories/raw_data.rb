@@ -10,8 +10,8 @@ FactoryGirl.define do
       data File.new("#{Rails.root}/spec/fixtures/text/ipsum.txt")
     end
 
-    factory :raw_datum_with_different_user do
-      project { FactoryGirl.create(:project_with_different_user) }
+    factory :raw_datum_with_different_admin do
+      project { FactoryGirl.create(:project_with_different_admin) }
     end
   end
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'InterfaceType edit payload for testing', type: :request do
   before(:each) do
     @project = FactoryGirl.create(:project)
-    sign_in(@project.user)
+    sign_in(@project.admin)
     @interface_type = FactoryGirl.create(:interface_type,
                                         test_payload: '')
     @interface = FactoryGirl.create(:interface,

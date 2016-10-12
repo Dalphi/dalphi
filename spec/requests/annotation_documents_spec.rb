@@ -8,7 +8,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
   before(:each) do
     @annotation_document = FactoryGirl.create(:annotation_document)
     @project = @annotation_document.project
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'returns an annotation document if no count is specified' do

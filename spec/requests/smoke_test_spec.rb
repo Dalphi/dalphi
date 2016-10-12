@@ -6,7 +6,7 @@ RSpec.describe "GET routes", type: :request do
     @statistic = FactoryGirl.create :statistic
     @raw_datum = @annotation_document.raw_datum
     @project = @raw_datum.project
-    @user = @project.user
+    @admin = @project.admin
 
     @iterate_service = FactoryGirl.create :iterate_service
     @merge_service = FactoryGirl.create :merge_service
@@ -17,7 +17,7 @@ RSpec.describe "GET routes", type: :request do
     @project.interfaces = [@interface]
     @project.save!
 
-    sign_in(@user)
+    sign_in(@admin)
   end
 
   it 'should be error-free' do

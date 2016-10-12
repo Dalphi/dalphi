@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe User, :type => :model do
+RSpec.describe Admin, :type => :model do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @admin = FactoryGirl.create(:admin)
   end
 
   it 'should have a valid factory' do
-    expect(@user).to be_valid
+    expect(@admin).to be_valid
   end
 
   it { should have_many(:projects).dependent(:destroy) }

@@ -1,7 +1,7 @@
 - if controller_name != 'sessions'
   - if controller_name == 'passwords' && action_name == 'edit'
     = render 'shared/button',
-             href: new_user_session_path,
+             href: new_admin_session_path,
              label: t('devise.sign-in'),
              icon: 'sign-in'
   - else

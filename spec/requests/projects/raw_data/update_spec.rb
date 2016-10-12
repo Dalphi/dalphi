@@ -7,7 +7,7 @@ RSpec.describe 'RawData update', type: :request do
                                     data: File.new("#{Rails.root}/spec/fixtures/text/valid1.md"),
                                     filename: 'valid1.md',
                                     project: @project
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'updates a raw datum' do

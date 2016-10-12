@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['projects']
-    @projects = Project.where(user: current_user)
+    @projects = Project.where(admin: current_admin)
                        .paginate(
                          page: params[:page],
                          per_page: objects_per_page
@@ -52,7 +52,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   def create
     @project = Project.new(params_with_associated_models)
-    @project.user = current_user
+    @project.admin = current_admin
     @project.connect_services
     if @project.save
       redirect_to project_raw_data_path(@project), notice: I18n.t('projects.action.create.success')

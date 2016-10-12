@@ -1,5 +1,5 @@
 class Project < ApplicationRecord
-  belongs_to :user
+  belongs_to :admin
   belongs_to :iterate_service,
              class_name: 'Service',
              foreign_type: 'iterate_service'

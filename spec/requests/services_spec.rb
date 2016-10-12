@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "Service registration", type: :request do
   before(:each) do
     Service.destroy_all
-    user = FactoryGirl.build(:user)
-    sign_in(user)
+    admin = FactoryGirl.build(:admin)
+    sign_in(admin)
   end
 
   it 'should register interface types' do

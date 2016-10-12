@@ -4,8 +4,8 @@ RSpec.describe 'Project setup', type: :request do
   before(:each) do
     Service.destroy_all
     project = FactoryGirl.build(:project)
-    @current_user = project.user
-    sign_in(@current_user)
+    @current_admin = project.admin
+    sign_in(@current_admin)
   end
 
   describe 'new project & project creation' do
@@ -26,7 +26,7 @@ RSpec.describe 'Project setup', type: :request do
                :id => nil,
                :title => 'Test project',
                :description => 'A test project for testing purposes only.',
-               :user_id => @current_user,
+               :admin_id => @current_admin,
                :iterate_service_id => nil,
                :machine_learning_service_id => nil,
                :merge_service_id => nil
@@ -39,7 +39,7 @@ RSpec.describe 'Project setup', type: :request do
       project = Project.first
       expect(project.title).to eq('Test project')
       expect(project.description).to eq('A test project for testing purposes only.')
-      expect(project.user).to eq(@current_user)
+      expect(project.admin).to eq(@current_admin)
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe 'Project setup', type: :request do
                :description => "A test project for testing purposes only.",
                :created_at => nil,
                :updated_at => nil,
-               :user_id => 1,
+               :admin_id => 1,
                :iterate_service_id => nil,
                :machine_learning_service_id => nil,
                :merge_service_id => nil
@@ -78,7 +78,7 @@ RSpec.describe 'Project setup', type: :request do
                :description => "A test project for testing purposes only.",
                :created_at => nil,
                :updated_at => nil,
-               :user_id => 1,
+               :admin_id => 1,
                :iterate_service_id => nil,
                :machine_learning_service_id => nil,
                :merge_service_id => nil
@@ -105,7 +105,7 @@ RSpec.describe 'Project setup', type: :request do
                :description => "A test project for testing purposes only.",
                :created_at => nil,
                :updated_at => nil,
-               :user_id => 1,
+               :admin_id => 1,
                :iterate_service_id => nil,
                :machine_learning_service_id => nil,
                :merge_service_id => nil

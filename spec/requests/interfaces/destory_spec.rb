@@ -4,7 +4,7 @@ RSpec.describe 'Interface destroy', type: :request do
   before(:each) do
     @project = FactoryGirl.create(:project)
     @interface = FactoryGirl.create(:interface)
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'destroys an interface' do

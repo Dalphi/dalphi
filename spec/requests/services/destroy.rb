@@ -4,7 +4,7 @@ RSpec.describe 'Service destroy', type: :request do
   before(:each) do
     @project = FactoryGirl.create(:project)
     @service = FactoryGirl.create(:service)
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'destroys an service' do

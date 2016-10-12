@@ -68,7 +68,7 @@ Teaspoon.configure do |config|
       if Rails.env.test?
         require 'factory_girl_rails'
 
-        User.destroy_all
+        Admin.destroy_all
         Project.destroy_all
 
         FactoryGirl.definition_file_paths = ['./spec/factories']

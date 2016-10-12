@@ -24,7 +24,7 @@ RSpec.describe 'Project iterate', type: :request do
     @response_body = @annotation_document.as_json
     @response_body[:interface_type] = @interface_type.name
 
-    sign_in(@project.user)
+    sign_in(@project.admin)
   end
 
   it 'generates annotation documents by sending raw data to an iterate service' do
