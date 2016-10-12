@@ -79,6 +79,7 @@ class AnnotationDocumentManager
   loadAnnotationDocuments: (postUpdateCallback) ->
     requestOptions = {
       type: 'PATCH',
+      dataType: 'json',
       url: "#{this.dalphiBaseUrl}/projects/#{_this.projectId}/annotation_documents/next",
       data: {
         count: _this.maxAnnotationDocumentsToLoad
@@ -96,6 +97,7 @@ class AnnotationDocumentManager
     baseUrl = "#{this.dalphiBaseUrl}/api/#{this.apiVersion}"
     requestOptions = {
       type: 'GET',
+      dataType: 'json',
       url: "#{baseUrl}/annotation_documents/#{annotationDocumentId}"
     }
 
@@ -108,11 +110,13 @@ class AnnotationDocumentManager
 
   patchCurrentDocument: (postUpdateCallback) ->
     baseUrl = "#{this.dalphiBaseUrl}/api/#{this.apiVersion}"
+    payloadToSend = { annotation_document: this.currentDocument }
 
     requestOptions = {
       type: 'PATCH',
+      dataType: 'text',
       url: "#{baseUrl}/annotation_documents/#{this.currentDocument.id}",
-      data: { annotation_document: this.currentDocument }
+      data: JSON.stringify(payloadToSend)
     }
 
     this.apiCall requestOptions, postUpdateCallback
@@ -134,10 +138,11 @@ class AnnotationDocumentManager
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
     $.ajax
-      type: requestOptions.type,
       url: requestOptions.url,
-      dataType: 'json',
-      data: requestOptions.data,
+      type: requestOptions.type,
+      dataType: requestOptions.dataType,
+      contentType: 'application/json',
+      data: JSON.stringify(requestOptions.data),
       async: _this.asynchronousRequest,
 
       success: (data) ->
