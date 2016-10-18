@@ -3,6 +3,10 @@ en:
     action:
       create:
         success: Annotator was successfully created.
+      update:
+        success: Annotator was successfully updated.
+      destroy:
+        success: Annotator was successfully destroyed.
     blank-slate:
       title: 'No annotators added yet'
       text: 'To create some users use the button below.'

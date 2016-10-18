@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
+    redirect_to annotators_path, notice: I18n.t('projects.action.destroy.success')
   end
 
   # GET /projects/1/check_compatibility
