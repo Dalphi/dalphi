@@ -1,16 +1,31 @@
 .container.annotators
-  .row.row-add-annotator
-    .col-xs-12
-      = simple_form_for @annotator
-        .input-group
-          input.form-control name='annotator[name]' type='text' placeholder="#{t('annotators.placeholders.name')}"
-          input.form-control name='annotator[email]' type='text' placeholder="#{t('annotators.placeholders.email')}"
-          input.form-control name='annotator[password]' type='password' placeholder="#{t('annotators.placeholders.password')}"
-          span.input-group-btn
-            = render 'shared/button',
-                     type: 'submit',
-                     label: t('activerecord.actions.annotator.new'),
-                     icon: 'plus'
+  - if @project
+    = render 'shared/project_header',
+             project: @project,
+             active_label: 'annotators'
+    .row.row-add-annotator
+      .col-xs-12
+        = simple_form_for @annotator
+          .input-group
+            input.form-control name='annotator[name]' type='text' placeholder="#{t('annotators.placeholders.name')}"
+            span.input-group-btn
+              = render 'shared/button',
+                       type: 'submit',
+                       label: t('activerecord.actions.annotator.add'),
+                       icon: 'plus'
+  - else
+    .row.row-create-annotator
+      .col-xs-12
+        = simple_form_for @annotator
+          .input-group
+            input.form-control name='annotator[name]' type='text' placeholder="#{t('annotators.placeholders.name')}"
+            input.form-control name='annotator[email]' type='text' placeholder="#{t('annotators.placeholders.email')}"
+            input.form-control name='annotator[password]' type='password' placeholder="#{t('annotators.placeholders.password')}"
+            span.input-group-btn
+              = render 'shared/button',
+                       type: 'submit',
+                       label: t('activerecord.actions.annotator.new'),
+                       icon: 'plus'
   .row
     .col-xs-12
       - if @annotators.any?

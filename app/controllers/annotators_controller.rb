@@ -1,10 +1,12 @@
 class AnnotatorsController < ApplicationController
   before_action :set_annotator, only: [:edit, :update, :destroy]
+  before_action :set_project
 
   # GET /annotators
   def index
     @annotator = Annotator.new
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['annotators']
+    where = {}
     @annotators = Annotator.all
                            .order(name: :asc)
                            .paginate(
@@ -49,6 +51,10 @@ class AnnotatorsController < ApplicationController
 
   def set_annotator
     @annotator = Annotator.find(params[:id])
+  end
+
+  def set_project
+    @project = Project.find(params[:project_id]) if params[:project_id]
   end
 
   def annotator_params
