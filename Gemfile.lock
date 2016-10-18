@@ -243,6 +243,9 @@ GEM
       loofah (~> 2.0)
     rails-jquery-autocomplete (1.0.3)
       rails (>= 3.2)
+    rails-timeago (2.15.0)
+      actionpack (>= 3.1)
+      activesupport (>= 3.1)
     rails_best_practices (1.17.0)
       activesupport
       code_analyzer (>= 0.4.3)
@@ -440,6 +443,7 @@ DEPENDENCIES
   rails-assets-tether
   rails-controller-testing
   rails-jquery-autocomplete
+  rails-timeago
   rails_best_practices
   reek
   rspec-rails

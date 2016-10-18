@@ -3,17 +3,14 @@ class AnnotatorsController < ApplicationController
 
   # GET /annotators
   def index
+    @annotator = Annotator.new
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['annotators']
     @annotators = Annotator.all
+                           .order(name: :asc)
                            .paginate(
                              page: params[:page],
                              per_page: objects_per_page
                            )
-  end
-
-  # GET /annotators/new
-  def new
-    @annotator = Annotator.new
   end
 
   # POST /annotators
@@ -45,7 +42,7 @@ class AnnotatorsController < ApplicationController
   # DELETE /annotators/1
   def destroy
     @annotator.destroy
-    redirect_to projects_path, notice: I18n.t('annotators.action.destroy.success')
+    redirect_to annotators_path, notice: I18n.t('annotators.action.destroy.success')
   end
 
   private

@@ -21,6 +21,7 @@
 #= require Chart.bundle
 #= require chartkick
 #= require clipboard
+#= require rails-timeago
 
 $ ->
   new FastClick(document.body)

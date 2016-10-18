@@ -58,6 +58,12 @@ en:
       raw-datum:
         data-file-name: file name
         shape: shape
+      annotator:
+        name: name
+        email: email
+        password: password
+        projects: projects
+        last_sign_in_at: last sign in
     errors:
       models:
         annotation_document:

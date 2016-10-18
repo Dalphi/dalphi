@@ -1,10 +1,11 @@
 .container.annotators
   .row.row-add-annotator
     .col-xs-12
-      form action="#{new_service_path}" method="get"
+      = simple_form_for @annotator
         .input-group
-          input.form-control name='uri' type='text' placeholder='awesome-service.example.com:1234/api/v1'
-          input.form-control name='uri' type='text' placeholder='awesome-service.example.com:1234/api/v1'
+          input.form-control name='annotator[name]' type='text' placeholder="#{t('annotators.placeholders.name')}"
+          input.form-control name='annotator[email]' type='text' placeholder="#{t('annotators.placeholders.email')}"
+          input.form-control name='annotator[password]' type='password' placeholder="#{t('annotators.placeholders.password')}"
           span.input-group-btn
             = render 'shared/button',
                      type: 'submit',
@@ -16,13 +17,17 @@
         table.table.table-striped.table-hover
           thead.thead-default
             tr
-              th = t('activerecord.attributes.annotator.title')
-              th = t('activerecord.attributes.annotator.description')
+              th = t('activerecord.attributes.annotator.name')
+              th = t('activerecord.attributes.annotator.email')
+              th = t('activerecord.attributes.annotator.projects')
+              th = t('activerecord.attributes.annotator.last_sign_in_at')
           tbody
             - @annotators.each do |annotator|
               tr data-href="#{edit_annotator_path(annotator)}"
                 td = annotator.name
                 td = annotator.email
+                td = annotator.projects.count
+                td = timeago_tag annotator.last_sign_in_at, default: '—'
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()
       - else
@@ -31,20 +36,7 @@
             = t('annotators.blank-slate.title')
           p.lead
             = t('annotators.blank-slate.text')
-          hr.m-y-2
-          = render 'shared/button',
-                   type: 'primary',
-                   label: t('activerecord.actions.annotator.new'),
-                   href: new_annotator_path,
-                   icon: 'plus'
   - if @annotators.any?
-    .row.btn-row
-      .col-xs-12
-        = render 'shared/button',
-                 type: 'primary',
-                 label: t('activerecord.actions.annotator.new'),
-                 href: new_annotator_path,
-                 icon: 'plus'
     .row.pagination
       .col-xs-12
         = will_paginate @annotators
