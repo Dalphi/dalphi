@@ -7,6 +7,7 @@ linters:
       - Lint/EndAlignment
       - Lint/UselessAssignment
       - Lint/Void
+      - Metrics/BlockLength
       - Metrics/LineLength
       - Style/AlignArray
       - Style/AlignHash

@@ -206,8 +206,23 @@ module API
                  }
         end
 
+        def create_params_from_plaintext_payload
+          parsed_params = JSON.parse(params['_json'])
+          parsed_document = parsed_params['annotation_document']
+
+          {
+            id: parsed_document['id'],
+            payload: parsed_document['payload'].to_json,
+            rank: parsed_document['rank'],
+            raw_datum_id: parsed_document['raw_datum_id'],
+            skipped: parsed_document['skipped'],
+            interface_type: InterfaceType.find_or_create_by(
+              name: parsed_document['interface_type']
+            )
+          }
+        end
+
         def annotation_document_params
-          params_annotation_document = params[:annotation_document]
           parameters = params.require(:annotation_document).permit(
             :id,
             :interface_type,
@@ -216,11 +231,14 @@ module API
             :raw_datum_id,
             :skipped
           )
+          params_annotation_document = params[:annotation_document]
           parameters[:payload] = params_annotation_document[:payload].to_json
           parameters[:interface_type] = InterfaceType.find_or_create_by(
                                           name: params_annotation_document[:interface_type]
                                         )
           parameters
+        rescue ActionController::ParameterMissing
+          create_params_from_plaintext_payload
         end
     end
   end
