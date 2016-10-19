@@ -6,8 +6,10 @@ class AnnotatorsController < ApplicationController
   def index
     @annotator = Annotator.new
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['annotators']
-    where = {}
-    @annotators = Annotator.all
+    ids = Annotator.all
+                   .select { |annotator| !@project || annotator.projects.include?(@project) }
+                   .map(&:id)
+    @annotators = Annotator.where(id: ids)
                            .order(name: :asc)
                            .paginate(
                              page: params[:page],
@@ -54,7 +56,8 @@ class AnnotatorsController < ApplicationController
   end
 
   def set_project
-    @project = Project.find(params[:project_id]) if params[:project_id]
+    project_id = params[:project_id]
+    @project = Project.find(project_id) if project_id
   end
 
   def annotator_params

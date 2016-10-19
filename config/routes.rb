@@ -65,7 +65,7 @@ Rails.application.routes.draw do
       resources :annotation_documents, only: [:index, :show]
     end
 
-    resources :annotators
+    resources :annotators, only: [:index, :edit]
 
     resources :annotation_documents, only: [:index, :show]
 
