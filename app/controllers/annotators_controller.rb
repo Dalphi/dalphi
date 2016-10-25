@@ -51,8 +51,14 @@ class AnnotatorsController < ApplicationController
 
   # DELETE /annotators/1
   def destroy
-    @annotator.destroy
-    redirect_to annotators_path, notice: I18n.t('annotators.action.destroy.success')
+    if @project
+      @annotator.projects.delete(@project.id)
+      redirect_to project_annotators_path(@project),
+                  notice: I18n.t('annotators.action.unassign.success')
+    else
+      @annotator.destroy
+      redirect_to annotators_path, notice: I18n.t('annotators.action.destroy.success')
+    end
   end
 
   private

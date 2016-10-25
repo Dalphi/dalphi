@@ -11,6 +11,8 @@ en:
         success: Annotator was successfully updated.
       destroy:
         success: Annotator was successfully destroyed.
+      unassign:
+        success: Annotator was successfully unassigned.
     blank-slate:
       title: 'No annotators added yet'
       text: 'To create some annotators use the form above.'

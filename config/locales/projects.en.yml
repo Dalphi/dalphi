@@ -1,5 +1,6 @@
 en:
   projects:
+    current: 'current project'
     project-tabs:
       dashboard: 'Dashboard'
       raw-data: 'Raw Data'

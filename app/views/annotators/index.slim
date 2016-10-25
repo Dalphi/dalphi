@@ -7,7 +7,9 @@
       .col-xs-12
         = simple_form_for @project do
           .input-group
-            select#project_annotator.form-control.select.optional name='project[annotator]' disabled="#{@unassigned_annotators.empty?}"
+            - attributes = {}
+            - attributes[:disabled] = true if @unassigned_annotators.empty?
+            select#project_annotator.form-control.select.optional name='project[annotator]' *attributes
               - if @unassigned_annotators.empty?
                 option
                   = t('annotators.blank-slate.no-unassigned-available')
