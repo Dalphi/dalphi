@@ -1,0 +1,42 @@
+.container.annotators
+  .row
+    .col-xs-12.text-xs-center
+      .card
+        .card-block
+          h4.card-title
+            = @annotator.name
+        = gravatar_image_tag(@annotator.email, gravatar: { size: '256' })
+        .card-block
+          = render 'shared/button',
+                   label: @annotator.email,
+                   href: "mailto:#{@annotator.email}",
+                   icon: 'envelope'
+          = render 'shared/button',
+                   type: 'danger',
+                   label: t('activerecord.actions.annotator.remove-from-project'),
+                   href: project_annotator_path(@project, @annotator),
+                   icon: 'trash',
+                   method: 'delete',
+                   confirm: t('delete-confirm')
+    .col-xs-12
+      .card
+        h3.card-header
+          = t('activerecord.attributes.annotator.projects')
+        - if @annotator.projects.any?
+          .card-block.table
+            table.table.table-striped.table-hover
+              thead.thead-default
+                tr
+                  th = t('activerecord.attributes.project.title')
+                  th = t('activerecord.attributes.project.description')
+              tbody
+                - @annotator.projects.each do |project|
+                  tr data-href="#{project_path(project)}"
+                    td = project.title
+                    td = project.description
+                coffee:
+                  window.clickableTableRow = new window.ClickableTableRow()
+        - else
+          .card-block
+            p.card-text
+              = t('annotators.projects.blank-slate')

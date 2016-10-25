@@ -10,6 +10,8 @@ en:
     actions:
       annotator:
         new: New annotator
+        add: Add annotator
+        remove-from-project: Remove annotator from project
       admin:
         edit: Edit admin profile
         sign-out: Sign out

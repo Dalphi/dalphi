@@ -14,5 +14,6 @@ en:
     blank-slate:
       title: 'No annotators added yet'
       text: 'To create some annotators use the form above.'
+      no-unassigned-available: 'No unassigned annotators available'
     projects:
       blank-slate: Annotator is not associated with any projects.

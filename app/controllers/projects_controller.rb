@@ -64,7 +64,12 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(params_with_associated_models)
+    additional_annotator = Annotator.find_by(id: params[:project][:annotator])
+    if additional_annotator
+      @project.annotators << additional_annotator
+      @project.save
+      redirect_to project_annotators_path(@project)
+    elsif @project.update(params_with_associated_models)
       redirect_to project_path(@project), notice: I18n.t('projects.action.update.success')
     else
       flash.now[:error] = I18n.t('simple_form.error_notification.default_message')

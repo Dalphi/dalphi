@@ -5,12 +5,19 @@
              active_label: 'annotators'
     .row.row-add-annotator
       .col-xs-12
-        = simple_form_for @annotator
+        = simple_form_for @project do
           .input-group
-            input.form-control name='annotator[name]' type='text' placeholder="#{t('annotators.placeholders.name')}"
+            select#project_annotator.form-control.select.optional name='project[annotator]' disabled="#{@unassigned_annotators.empty?}"
+              - if @unassigned_annotators.empty?
+                option
+                  = t('annotators.blank-slate.no-unassigned-available')
+              - @unassigned_annotators.each do |unassigned_annotator|
+                option value="#{unassigned_annotator.id}"
+                  = "#{unassigned_annotator.name} (#{unassigned_annotator.email})"
             span.input-group-btn
               = render 'shared/button',
                        type: 'submit',
+                       disabled: @unassigned_annotators.empty?,
                        label: t('activerecord.actions.annotator.add'),
                        icon: 'plus'
   - else
@@ -32,16 +39,23 @@
         table.table.table-striped.table-hover
           thead.thead-default
             tr
+              th
               th = t('activerecord.attributes.annotator.name')
               th = t('activerecord.attributes.annotator.email')
-              th = t('activerecord.attributes.annotator.projects')
+              - unless @project
+                th = t('activerecord.attributes.annotator.projects')
               th = t('activerecord.attributes.annotator.last_sign_in_at')
           tbody
             - @annotators.each do |annotator|
-              tr data-href="#{edit_annotator_path(annotator)}"
+              ruby:
+                href = edit_annotator_path(annotator)
+                href = project_annotator_path(@project, annotator) if @project
+              tr data-href="#{href}"
+                td = gravatar_image_tag(annotator.email, gravatar: { size: '24' })
                 td = annotator.name
                 td = annotator.email
-                td = annotator.projects.count
+                - unless @project
+                  td = annotator.projects.count
                 td = timeago_tag annotator.last_sign_in_at, default: '—'
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()

@@ -10,4 +10,8 @@ class Annotator < ApplicationRecord
 
   validates :name,
             presence: true
+
+  def label
+    name
+  end
 end

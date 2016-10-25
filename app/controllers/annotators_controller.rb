@@ -1,14 +1,16 @@
 class AnnotatorsController < ApplicationController
-  before_action :set_annotator, only: [:edit, :update, :destroy]
+  before_action :set_annotator, only: [:show, :edit, :update, :destroy]
   before_action :set_project
 
   # GET /annotators
+  # GET /projects/1/annotators
   def index
     @annotator = Annotator.new
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['annotators']
     ids = Annotator.all
                    .select { |annotator| !@project || annotator.projects.include?(@project) }
                    .map(&:id)
+    @unassigned_annotators = Annotator.where.not(id: ids)
     @annotators = Annotator.where(id: ids)
                            .order(name: :asc)
                            .paginate(
@@ -27,6 +29,10 @@ class AnnotatorsController < ApplicationController
       flash.now[:error] = I18n.t('simple_form.error_notification.default_message')
       render :new
     end
+  end
+
+  # GET /projects/1/annotators/1
+  def show
   end
 
   # GET /annotators/1/edit
