@@ -3,6 +3,6 @@
 
 <%= t 'mailers.annotator-project-assignment.assign.message',
       annotator: @annotator.name,
-      project_link: "#{@project.name} (#{project_path(@project)})" %>
+      project_link: "#{@project.title} (#{project_url(@project)})" %>
 
 <%= t 'mailers.annotator-project-assignment.assign.salutation' %>
