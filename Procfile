@@ -1,5 +1,5 @@
 web: rails s puma -p 3000 -b 0.0.0.0
-worker: rake jobs:work
-iterate: while true; do nc -l 3001 < spec/fixtures/service_headers/iterate; done
-merge: while true; do nc -l 3002 < spec/fixtures/service_headers/merge; done
-machine_learning: while true; do nc -l 3003 < spec/fixtures/service_headers/machine_learning; done
+worker: rails jobs:work
+iterate: rails dummy_service:iterate
+merge: rails dummy_service:merge
+machine_learning: rails dummy_service:machine_learning
