@@ -108,7 +108,6 @@ ActiveRecord::Schema.define(version: 20161011144622) do
     t.datetime "updated_at",                     null: false
     t.text     "compiled_stylesheet"
     t.text     "compiled_java_script"
-    t.integer  "interface_type_id"
     t.string   "template_file_name"
     t.string   "template_content_type"
     t.integer  "template_file_size"
@@ -121,6 +120,7 @@ ActiveRecord::Schema.define(version: 20161011144622) do
     t.string   "java_script_content_type"
     t.integer  "java_script_file_size"
     t.datetime "java_script_updated_at"
+    t.integer  "interface_type_id"
     t.index ["interface_type_id"], name: "index_interfaces_on_interface_type_id"
   end
 
