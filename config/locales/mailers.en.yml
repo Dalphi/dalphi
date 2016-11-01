@@ -1,5 +1,18 @@
 en:
   mailers:
+    annotator-welcome:
+      with-password:
+        subject: 'Welcome to Dalphi'
+        greeting: 'Hello %{annotator},'
+        message: 'we would like to welcome you to Dalphi. You can %{login_link} any time with your provided credentials.'
+        login_link_label: 'log in'
+        salutation: 'Best regards, your Dalphi team'
+      without-password:
+        subject: 'Welcome to Dalphi'
+        greeting: 'Hello %{annotator},'
+        message: 'we would like to welcome you to Dalphi. You can start by %{setup_password_link}.'
+        setup_password_link_label: 'setting up your password'
+        salutation: 'Best regards, your Dalphi team'
     annotator-project-assignment:
       assign:
         subject: 'You have been assigned to %{project}'

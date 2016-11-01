@@ -22,7 +22,6 @@ class AnnotatorsController < ApplicationController
   # POST /annotators
   def create
     @annotator = Annotator.new(annotator_params)
-    @annotator.password = SecureRandom.hex unless @annotator.password.present?
     if @annotator.save
       redirect_to annotators_path, notice: I18n.t('annotators.action.create.success')
     else
