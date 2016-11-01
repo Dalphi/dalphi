@@ -43,7 +43,7 @@
                              include_blank: t('projects.action.form.services-card.no-service-selected'),
                              input_html: { class: 'c-select',
                                            name: "project[interfaces][#{interface_type}]" },
-                             label_method: -> (interface) { interface.title },
+                             label_method: ->(interface) { interface.title },
                              label: false,
                              selected: selected
 
@@ -69,13 +69,14 @@
     .col-xs-12
       .btn-row
         = render 'shared/button', type: 'back'
-        = render 'shared/button',
-                 type: 'danger',
-                 label: t('activerecord.actions.project.delete'),
-                 href: project_path(project),
-                 icon: 'trash',
-                 method: 'delete',
-                 confirm: t('delete-confirm') if action_name == 'edit'
+        - if action_name == 'edit'
+          = render 'shared/button',
+                   type: 'danger',
+                   label: t('activerecord.actions.project.delete'),
+                   href: project_path(project),
+                   icon: 'trash',
+                   method: 'delete',
+                   confirm: t('delete-confirm')
         = render 'shared/button',
                   type: 'submit',
                   label: t('save'),

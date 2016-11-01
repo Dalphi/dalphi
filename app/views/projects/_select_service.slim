@@ -18,7 +18,7 @@ ruby:
           collection: available_services,
           include_blank: t('projects.action.form.services-card.no-service-selected'),
           input_html: { class: 'c-select' },
-          label_method: -> (service_instance) { service_instance.title },
+          label_method: ->(service_instance) { service_instance.title },
           label: false,
           name: service_name_with_postfix,
           selected: selected_id
