@@ -12,7 +12,7 @@ class Annotator < ApplicationRecord
                           after_remove: :unassign_from_project
 
   before_validation(on: :create) do |annotator|
-    unless annotator.encrypted_password.present?
+    unless annotator.encrypted_password?
       annotator.password = SecureRandom.hex
       @without_password = true
     end

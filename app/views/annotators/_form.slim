@@ -13,13 +13,14 @@
       .btn-row
         = render 'shared/button',
                  type: 'back'
-        = render 'shared/button',
-                 type: 'danger',
-                 label: t('activerecord.actions.annotator.delete'),
-                 href: annotator_path(annotator),
-                 icon: 'trash',
-                 method: 'delete',
-                 confirm: t('delete-confirm') if annotator.id
+        - if annotator.id
+          = render 'shared/button',
+                   type: 'danger',
+                   label: t('activerecord.actions.annotator.delete'),
+                   href: annotator_path(annotator),
+                   icon: 'trash',
+                   method: 'delete',
+                   confirm: t('delete-confirm')
         = render 'shared/button',
                  type: 'submit',
                  label: t('save'),
