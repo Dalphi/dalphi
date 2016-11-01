@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Authentification
 
   scope '/auth' do
-    devise_for :annotators
+    devise_for :annotators, controllers: { sessions: 'sessions' }
     devise_for :admins
   end
 
