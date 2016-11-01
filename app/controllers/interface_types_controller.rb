@@ -11,7 +11,7 @@ class InterfaceTypesController < ApplicationController
 
   # PATCH/PUT /interface_types/1
   def update
-    if @interface_type.update(interface_type_params)
+    if @interface_type.update(preprocessed_params)
       flash[:notice] = t('interfaces.action.update.success')
       redirect_to edit_interface_type_path(@interface_type)
     else
@@ -23,6 +23,12 @@ class InterfaceTypesController < ApplicationController
   private
     def set_interface_type
       @interface_type = InterfaceType.find(params[:id])
+    end
+
+    def preprocessed_params
+      {
+        test_payload: interface_type_params[:test_payload].strip
+      }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
