@@ -1,7 +1,7 @@
 .container.projects
   = render 'shared/project_header',
            project: @project,
-           active_label: 'dashboard'
+           active_label: :dashboard
 
   .dashboard.row.row-eq-height
     = render 'projects/dashboard/services',

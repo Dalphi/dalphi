@@ -15,13 +15,17 @@ nav.topbar.navbar
         a href="#{breadcrumb[:path]}"
           = breadcrumb[:label]
 
-  - if admin_signed_in?
+  - if user_signed_in?
     ul.nav.navbar-nav.icon-bar
+      - if admin_signed_in?
+        li.nav-item
+          a.nav-link href="#{edit_admin_registration_path}" data-toggle='tooltip' data-placement='bottom' title="#{t('activerecord.actions.admin.edit')}"
+            = fa_icon('user')
       li.nav-item
-        a.nav-link href="#{edit_admin_registration_path}" data-toggle='tooltip' data-placement='bottom' title="#{t('activerecord.actions.admin.edit')}"
-          = fa_icon('user')
-      li.nav-item
-        a.nav-link.sign-out href="#{destroy_admin_session_path}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{t('activerecord.actions.admin.sign-out')}"
+        ruby:
+          href = destroy_annotator_session_path
+          href = destroy_admin_session_path if admin_signed_in?
+        a.nav-link.sign-out href="#{href}" data-method='delete' rel='nofollow' data-toggle='tooltip' data-placement='bottom' title="#{t("activerecord.actions.#{user_role}.sign-out")}"
           = fa_icon('sign-out')
 
     coffee:

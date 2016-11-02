@@ -1,6 +1,10 @@
 class ProjectsController < ApplicationController
   include ServiceRoles
 
+  before_action :authenticate_user,
+                only: [:index, :show]
+  before_action :authenticate_admin!,
+                except: [:index, :show]
   before_action :set_project, only: [
     :iterate,
     :check_interfaces,
@@ -11,6 +15,9 @@ class ProjectsController < ApplicationController
     :show,
     :update,
     :update_service
+  ]
+  before_action :set_projects, only: [
+    :index
   ]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
   before_action :set_available_services, only: [
@@ -29,15 +36,15 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['projects']
-    @projects = Project.where(admin: current_admin)
-                       .paginate(
-                         page: params[:page],
-                         per_page: objects_per_page
-                       )
+    @projects = @projects.paginate(
+                           page: params[:page],
+                           per_page: objects_per_page
+                         )
   end
 
   # GET /projects/1
   def show
+    redirect_to project_annotate_path(@project)
   end
 
   # GET /projects/new
@@ -129,6 +136,14 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+    end
+
+    def set_projects
+      if current_admin
+        @projects = Project.where(admin: current_admin)
+      else
+        @projects = Project.where(id: current_annotator.projects.map(&:id))
+      end
     end
 
     def set_additional_annotator

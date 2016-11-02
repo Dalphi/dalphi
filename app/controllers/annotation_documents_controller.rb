@@ -1,4 +1,8 @@
 class AnnotationDocumentsController < ApplicationController
+  before_action :authenticate_user,
+                only: [:next]
+  before_action :authenticate_admin!,
+                except: [:next]
   before_action :set_project,
                 only: [
                   :next,
@@ -9,8 +13,6 @@ class AnnotationDocumentsController < ApplicationController
                only: [:index]
   before_action :set_annotation_document,
                 only: [:show]
-  skip_before_action :authenticate_admin!,
-                     only: :next if Rails.env.test?
 
   # GET /projects/1/annotation_documents
   # GET /projects/1/raw_data/1/annotation_documents

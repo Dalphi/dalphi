@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
-  before_action :authenticate_admin!
   before_action :set_locale
   before_action :set_turbolinks
   before_action :bake_breadcrumbs
@@ -11,6 +10,11 @@ class ApplicationController < ActionController::Base
   before_action :set_copyright_year
 
   private
+
+  def authenticate_user
+    return authenticate_annotator! unless current_admin
+    authenticate_admin!
+  end
 
   def set_locale
     I18n.locale = params[:locale].to_sym

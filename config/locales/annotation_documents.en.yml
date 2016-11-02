@@ -1,14 +1,20 @@
 en:
   annotation-documents:
     blank-slate:
-      index:
-        title: 'No documents'
-        text: 'To generate some annotation documents use the button below.'
-        button-label: 'Generate annotation documents'
-      annotate:
-        title: 'No documents left'
-        text: 'To generate some more annotation documents, merge the annotated ones and start a new iteration.'
-        button-back-to-documents-label: 'Back to annotation documents overview'
+      admin:
+        index:
+          title: 'No documents'
+          text: 'To generate some annotation documents use the button below.'
+          button-label: 'Generate annotation documents'
+        annotate:
+          title: 'No documents left'
+          text: 'To generate some more annotation documents, merge the annotated ones and start a new iteration.'
+          back-button: 'Back to annotation documents overview'
+      annotator:
+        annotate:
+          title: 'No documents available'
+          text: 'To annotate more annotation documents, try again later or ask your Dalphi administrator.'
+          back-button: 'Back to projects overview'
     errors:
       set-project:
         not-found: no project with the given project id found

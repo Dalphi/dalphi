@@ -2,18 +2,20 @@ ruby:
   table = true
   graphs = false
   table, graphs = graphs, table if request.query_parameters.keys.include?('graphs')
-  items = [
-    { label_key: 'dashboard', path: project_path(project), icon: 'tachometer' },
-    { label_key: 'raw-data', path: project_raw_data_path(project), icon: 'database' },
-    { label_key: 'annotation-documents', path: project_annotation_documents_path(project), icon: 'file', disabled: project.raw_data.empty? },
-    { label_key: 'annotators', path: project_annotators_path(project), icon: 'users' },
-    { label_key: 'statistics', path: '#', icon: 'line-chart', disabled: project.statistics.empty?, children: [
-      { label_key: 'table', path: project_statistics_path(project, table: ''), icon: 'table' },
-      { label_key: 'graphs', path: project_statistics_path(project, graphs: ''), icon: 'area-chart' }
-    ] }
-  ]
-  items.select { |i| i[:label_key] == active_label }.first[:active] = true
-  items.map { |i| i[:label_key] = "projects.project-tabs.#{i[:label_key]}" }
+  items = ActiveSupport::OrderedHash.new
+  items[:dashboard] = { path: project_path(project), icon: 'tachometer' }
+  items[:raw_data] = { path: project_raw_data_path(project), icon: 'database' } if admin_signed_in?
+  items[:annotation_documents] = { path: project_annotation_documents_path(project), icon: 'file', disabled: project.raw_data.empty? }
+  items[:annotators] = { path: project_annotators_path(project), icon: 'users' } if admin_signed_in?
+  if admin_signed_in?
+    statistic_items = ActiveSupport::OrderedHash.new
+    statistic_items[:table] = { path: project_statistics_path(project, table: ''), icon: 'table' }
+    statistic_items[:graphs] = { path: project_statistics_path(project, graphs: ''), icon: 'area-chart' }
+    statistic_items.each { |key, item| item[:label] = t("projects.project-tabs.#{key.to_s.tr('_', '-')}") }
+    items[:statistics] = { path: '#', icon: 'line-chart', disabled: project.statistics.empty?, children: statistic_items }
+  end
+  items[active_label][:active] = true
+  items.each { |key, item| item[:label] = t("projects.project-tabs.#{key.to_s.tr('_', '-')}") }
 
 = render 'shared/tabs',
          items: items
