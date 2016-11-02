@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
-    redirect_to project_annotate_path(@project)
+    redirect_to project_annotate_path(@project) if annotator_signed_in?
   end
 
   # GET /projects/new

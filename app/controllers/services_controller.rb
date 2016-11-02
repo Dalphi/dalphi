@@ -122,7 +122,7 @@ class ServicesController < ApplicationController
       interface_types = []
 
       interface_type_ids.each do |interface_type_id|
-        interface_types << InterfaceType.find_or_create_by(id: interface_type_id)
+        interface_types << InterfaceType.find(interface_type_id)
       end
 
       converted_params[:interface_types] = interface_types
