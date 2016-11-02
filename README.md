@@ -90,7 +90,7 @@ foreman start
 
 **TL;DR:**
 You will get all annotation document's payload data as a rendered mustache.js template.
-You will have to write back your changes with `saveChanges` of interited classes of `AnnotationIteration`.
+You will have to write back your changes with `saveChanges` of inherited classes of `AnnotationIteration`.
 
 Create a template to render your data in order to be annotated by users.
 
@@ -107,7 +107,7 @@ Create a template to render your data in order to be annotated by users.
 ```
 
 It is allowed to use any valid HTML syntax in combination with the [mustache.js](https://github.com/janl/mustache.js/) templating language.
-The example template above can be avaluated with the following incoming annotation document.
+The example template above can be evaluated with the following incoming annotation document.
 
 ```javascript
 {
