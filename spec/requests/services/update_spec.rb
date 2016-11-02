@@ -7,7 +7,7 @@ RSpec.describe 'Service update', type: :request do
     sign_in(@project.admin)
   end
 
-  it 'updates a service' do
+  it 'updates a service with valid data' do
     expect(Service.count).to eq(1)
 
     put service_path(@service),
@@ -35,5 +35,26 @@ RSpec.describe 'Service update', type: :request do
     expect(service.problem_id).to eq('ner')
     expect(service.url).to eq('http://localhost:3001')
     expect(service.interface_types.map(&:id).sort).to eq(@service.interface_types.map(&:id).sort)
+  end
+
+  it 'rejects an update invalid data' do
+    expect(Service.count).to eq(1)
+
+    put service_path(@service),
+        params: {
+          service: {
+            id: @service.id,
+            title: '',
+            version: '1.0',
+            description: 'test service description',
+            role: 'iterate',
+            url: 'http://',
+            interface_types: []
+          }
+        }
+
+    expect(Service.count).to eq(1)
+    service = Service.first
+    expect(service).to eq(@service)
   end
 end

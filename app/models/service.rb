@@ -2,6 +2,10 @@ class Service < ApplicationRecord
   include UrlResponseChecker
   include Swagger::Blocks
 
+  after_destroy do
+    InterfaceType.destroy_abandoned
+  end
+
   swagger_schema :Service do
     property :role do
       key :type, :string

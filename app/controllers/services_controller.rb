@@ -58,8 +58,10 @@ class ServicesController < ApplicationController
   def create
     @service = Service.new(converted_attributes)
     if @service.save
-      redirect_to services_url, notice: 'Service was successfully created.'
+      redirect_to services_url,
+                  notice: I18n.t('services.create.success')
     else
+      flash.now[:error] = I18n.t('services.create.error')
       render :new
     end
   end
@@ -67,8 +69,10 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1
   def update
     if @service.update(converted_attributes)
-      redirect_to services_url, notice: 'Service was successfully updated.'
+      redirect_to services_url,
+                  notice: I18n.t('services.update.success')
     else
+      flash.now[:error] = I18n.t('services.update.error')
       render :edit
     end
   end
@@ -90,8 +94,8 @@ class ServicesController < ApplicationController
   # DELETE /services/1
   def destroy
     @service.destroy
-    InterfaceType.destroy_abandoned
-    redirect_to services_url, notice: 'Service was successfully destroyed.'
+    redirect_to services_url,
+                notice: I18n.t('services.destroy.success')
   end
 
   private
