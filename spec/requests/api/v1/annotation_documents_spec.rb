@@ -90,8 +90,8 @@ RSpec.describe "AnnotationDocuments API", type: :request do
     annotation_document_definition = IO.read(file_path)
 
     patch "/api/v1/annotation_documents/#{annotation_document.id}",
-          annotation_document_definition,
-          {
+          params: annotation_document_definition,
+          headers: {
             'CONTENT_TYPE' => 'application/json',
             'ACCEPT' => 'application/json'
           }

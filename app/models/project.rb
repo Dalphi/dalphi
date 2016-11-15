@@ -77,12 +77,12 @@ class Project < ApplicationRecord
   end
 
   def update_merged_raw_datum(params)
-    raw_datum = self.raw_data.find(params['raw_datum_id'])
+    raw_datum = self.raw_data.find_by(id: params['raw_datum_id'])
+    return unless raw_datum
+
     File.open(raw_datum.data.path, 'w') do |file|
       file.write(Base64.decode64(params['content']).force_encoding('utf-8'))
     end
-  rescue
-    nil
   end
 
   def label
