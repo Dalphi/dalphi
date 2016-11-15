@@ -58,6 +58,11 @@ class Service < ApplicationRecord
     false
   end
 
+  def update_from_url(url)
+    return true if self.update(Service.params_from_url(url))
+    false
+  end
+
   def self.params_from_url(url)
     timeout = 3
     Timeout::timeout(timeout) do

@@ -79,16 +79,14 @@ class ServicesController < ApplicationController
 
   # GET /services/1/refresh
   def refresh
-    new_params = Service.params_from_url(@service.url)
-    redirect_target = edit_service_path(@service)
-
-    if @service.update(new_params)
-      redirect_to redirect_target,
+    if @service.update_from_url(@service.url)
+      redirect_to edit_service_path(@service),
                   notice: I18n.t('services.refresh.success')
     else
-      redirect_to redirect_target,
-                  error: I18n.t('services.refresh.error')
+      error_redirect_to_edit_service_path
     end
+  rescue
+    error_redirect_to_edit_service_path
   end
 
   # DELETE /services/1
@@ -116,6 +114,11 @@ class ServicesController < ApplicationController
         return I18n.t('services.searching.no-url')
       end
       nil
+    end
+
+    def error_redirect_to_edit_service_path
+      flash[:error] = I18n.t('services.refresh.error')
+      redirect_to edit_service_path(@service)
     end
 
     def converted_attributes
