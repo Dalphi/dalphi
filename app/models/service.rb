@@ -48,7 +48,7 @@ class Service < ApplicationRecord
     }
 
   validate do |service|
-    HttpResponseValidator.validate(service) if service.url
+    HttpResponseValidator.validate(service)
     ServiceInterfaceTypesValidator.validate(service)
   end
 
