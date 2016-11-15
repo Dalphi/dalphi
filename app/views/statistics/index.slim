@@ -5,7 +5,7 @@ ruby:
 .container.statistics
   = render 'shared/project_header',
            project: @project,
-           active_label: 'statistics'
+           active_label: :statistics
   .row
     .col-xs-12
       - if @statistics.any?

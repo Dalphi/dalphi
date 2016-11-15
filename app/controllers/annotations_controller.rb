@@ -1,4 +1,5 @@
 class AnnotationsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_project,
                 only: [
                   :annotate

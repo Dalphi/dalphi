@@ -12,6 +12,7 @@ en:
         new: New annotator
         add: Add annotator
         unassign: Unassign annotator from project
+        sign-out: Sign out
       admin:
         edit: Edit admin profile
         sign-out: Sign out

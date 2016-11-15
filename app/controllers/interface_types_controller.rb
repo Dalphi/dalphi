@@ -1,4 +1,5 @@
 class InterfaceTypesController < ApplicationController
+  before_action :authenticate_admin!
   before_action :set_interface_type,
                 only: [
                   :edit,

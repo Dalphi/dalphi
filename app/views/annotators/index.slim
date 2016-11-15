@@ -2,7 +2,7 @@
   - if @project
     = render 'shared/project_header',
              project: @project,
-             active_label: 'annotators'
+             active_label: :annotators
     .row.row-add-annotator
       .col-xs-12
         = simple_form_for @project do

@@ -1,4 +1,5 @@
 class StatisticsController < ApplicationController
+  before_action :authenticate_admin!
   before_action :set_project, only: [:index]
 
   # GET /statistics

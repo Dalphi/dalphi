@@ -1,6 +1,7 @@
 class ServicesController < ApplicationController
   include ServiceRoles
 
+  before_action :authenticate_admin!
   before_action :set_service,
                 only: [
                   :check_connectivity,

@@ -9,7 +9,10 @@
               th = t('activerecord.attributes.project.description')
           tbody
             - @projects.each do |project|
-              tr data-href="#{project_path(project)}"
+              ruby:
+                table_row_href = project_annotate_path(project)
+                table_row_href = project_path(project) if admin_signed_in?
+              tr data-href="#{table_row_href}"
                 td = project.title
                 td = project.description
             coffee:
@@ -26,7 +29,7 @@
                    label: t('activerecord.actions.project.new'),
                    href: new_project_path,
                    icon: 'plus'
-  - if @projects.any?
+  - if @projects.any? && admin_signed_in?
     .row.btn-row
       .col-xs-12
         = render 'shared/button',

@@ -19,4 +19,13 @@ module ApplicationHelper
     return fa_icon('check') if boolean_value
     fa_icon('times')
   end
+
+  def user_signed_in?
+    annotator_signed_in? || admin_signed_in?
+  end
+
+  def user_role
+    return 'annotator' if annotator_signed_in?
+    return 'admin' if admin_signed_in?
+  end
 end

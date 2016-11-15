@@ -1,4 +1,5 @@
 class InterfacesController < ApplicationController
+  before_action :authenticate_admin!
   before_action :set_tempfiles,
                 only: [
                   :create,

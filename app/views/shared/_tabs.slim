@@ -1,5 +1,5 @@
 ul.nav.nav-tabs
-  - items.each do |item|
+  - items.each do |_, item|
     ruby:
       active = item[:active]
       disabled = defined?(item[:disabled]) && item[:disabled]
@@ -10,12 +10,12 @@ ul.nav.nav-tabs
         - if item[:icon]
           = fa_icon(item[:icon])
           | &nbsp;
-        = t(item[:label_key])
+        = item[:label]
       - if item[:children]
         .dropdown-menu
-          - item[:children].each do |child|
+          - item[:children].each do |_, child|
             a.dropdown-item href="#{child[:path]}"
               - if child[:icon]
                 = fa_icon(child[:icon])
                 | &nbsp;
-              = t(child[:label_key])
+              = child[:label]
