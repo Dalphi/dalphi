@@ -54,6 +54,27 @@ RSpec.describe 'Project iterate', type: :request do
     end
   end
 
+  it 'generates no annotation documents when iterate service does not respond with such' do
+    stub_request(:post, 'http://example.com/iterate')
+      .with(
+        body: @project.iterate_data.to_json,
+        headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'application/json', 'User-Agent' => 'Ruby' }
+      )
+      .to_return(
+        status: 200,
+        body: {
+          'annotation_documents' => []
+        }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+    expect(AnnotationDocument.count).to eq(0)
+
+    post project_iterate_path(@project)
+
+    expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_annotation_documents_url(@project))
+    expect(AnnotationDocument.count).to eq(0)
+  end
+
   it 'generates statistics by sending raw data to an iterate service' do
     stub_request(:post, 'http://example.com/iterate')
       .with(
