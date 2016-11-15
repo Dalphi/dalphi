@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./bin/helpers/message "CODE CLIMATE COVERAGE"
+CODECLIMATE_REPO_TOKEN=94963d52eba7794ca798f92bf7b2a239d942e6bfbbe0c72be47952918f90ec31 codeclimate-test-reporter
