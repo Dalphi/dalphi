@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
     :edit,
     :new
   ]
+  before_action :set_additional_annotator, only: [:update]
 
   # GET /projects
   def index
@@ -64,7 +65,11 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(params_with_associated_models)
+    if @additional_annotator
+      @project.annotators << @additional_annotator
+      @project.save
+      redirect_to project_annotators_path(@project)
+    elsif @project.update(params_with_associated_models)
       redirect_to project_path(@project), notice: I18n.t('projects.action.update.success')
     else
       flash.now[:error] = I18n.t('simple_form.error_notification.default_message')
@@ -124,6 +129,12 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+    end
+
+    def set_additional_annotator
+      @additional_annotator = Annotator.find(params[:project][:annotator])
+    rescue
+      @additional_annotator = nil
     end
 
     def set_available_services

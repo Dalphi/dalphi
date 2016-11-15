@@ -1,10 +1,12 @@
 en:
   projects:
+    current: 'current project'
     project-tabs:
       dashboard: 'Dashboard'
       raw-data: 'Raw Data'
       annotation-documents: 'Annotation Documents'
       statistics: 'Statistics'
+      annotators: 'Annotators'
     merge:
       title: Merge
       tooltip: combine labeled annotation documents with correspondig raw data

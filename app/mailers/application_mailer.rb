@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: Rails.configuration.x.dalphi['mailer']['default-from']
   layout 'mailer'
 end

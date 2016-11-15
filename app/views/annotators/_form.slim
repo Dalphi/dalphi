@@ -1,5 +1,8 @@
 = simple_form_for annotator do |f|
   .row
+    .col-xs-12.text-xs-center
+      = gravatar_image_tag(annotator.email, gravatar: { size: '256' })
+  .row
     .col-xs-12
       .form-inputs
         = f.input :name

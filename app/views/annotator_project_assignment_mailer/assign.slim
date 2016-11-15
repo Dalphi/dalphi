@@ -1,0 +1,9 @@
+p
+  = t 'mailers.annotator-project-assignment.assign.greeting',
+      annotator: @annotator.name
+p
+  == t 'mailers.annotator-project-assignment.assign.message',
+       annotator: @annotator.name,
+       project_link: link_to(@project.title, project_url(@project))
+p
+  = t 'mailers.annotator-project-assignment.assign.salutation'

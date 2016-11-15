@@ -5,9 +5,9 @@ NestedIterators:
 TooManyStatements:
   max_statements: 10
 TooManyMethods:
-  max_methods: 25
+  max_methods: 30
 TooManyInstanceVariables:
-  max_instance_variables: 6
+  max_instance_variables: 7
 InstanceVariableAssumption:
   enabled: false
 UncommunicativeModuleName:

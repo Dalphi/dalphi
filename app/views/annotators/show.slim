@@ -1,0 +1,23 @@
+.container.annotators
+  .row
+    .col-xs-12.text-xs-center
+      .card
+        .card-block
+          h4.card-title
+            = @annotator.name
+        = gravatar_image_tag(@annotator.email, gravatar: { size: '256' })
+        .card-block
+          = render 'shared/button',
+                   label: @annotator.email,
+                   href: "mailto:#{@annotator.email}",
+                   icon: 'envelope'
+          = render 'shared/button',
+                   type: 'danger',
+                   label: t('activerecord.actions.annotator.unassign'),
+                   href: project_annotator_path(@project, @annotator),
+                   icon: 'chain-broken',
+                   method: 'delete',
+                   confirm: t('delete-confirm')
+  == render 'projects',
+            annotator: @annotator,
+            current_project: @project

@@ -13,6 +13,7 @@ ruby:
   button_content = render 'shared/button_content',
                           icon: icon,
                           label: label
+  disabled = false unless defined?(disabled) && disabled
 
   if type == 'submit' || (defined?(disable_with) && disable_with == true)
     disable_with = render 'shared/button_content',
@@ -39,7 +40,8 @@ ruby:
   attributes[:rel] = 'nofollow' unless method == 'get'
   attributes[:title] = title unless title == ''
 
-  class_name += 'btn'
+  class_name += ' btn'
+  class_name += ' disabled' if disabled && !(type == 'submit' && href == '#')
 
 - if defined?(group)
   .btn-group role='group' aria-label="#{aria_label}"
@@ -48,7 +50,10 @@ ruby:
 
 - elsif type == 'submit'
     - if href == '#'
-      button.btn.btn-primary class="#{class_name}" name='button' type='submit' data=data
+      ruby:
+        attributes = {}
+        attributes[:disabled] = true if disabled
+      button.btn.btn-primary class="#{class_name}" name='button' type='submit' data=data *attributes
         == button_content
 
     - else

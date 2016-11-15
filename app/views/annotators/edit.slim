@@ -1,26 +1,6 @@
 .container.annotators
   == render 'form',
             annotator: @annotator
-  .row
-    .col-xs-12
-      .card
-        h3.card-header
-          = t('activerecord.attributes.annotator.projects')
-        - if @annotator.projects.any?
-          .card-block.table
-            table.table.table-striped.table-hover
-              thead.thead-default
-                tr
-                  th = t('activerecord.attributes.project.title')
-                  th = t('activerecord.attributes.project.description')
-              tbody
-                - @annotator.projects.each do |project|
-                  tr data-href="#{project_path(project)}"
-                    td = project.title
-                    td = project.description
-                coffee:
-                  window.clickableTableRow = new window.ClickableTableRow()
-        - else
-          .card-block
-            p.card-text
-              = t('annotators.projects.blank-slate')
+  == render 'projects',
+            annotator: @annotator,
+            current_project: @project

@@ -16,7 +16,9 @@ class Project < ApplicationRecord
   has_many :annotation_documents
 
   has_and_belongs_to_many :interfaces
-  has_and_belongs_to_many :annotators
+  has_and_belongs_to_many :annotators,
+                          after_add: :assign_to_project,
+                          after_remove: :unassign_from_project
 
   validates :title,
     presence: true
@@ -26,6 +28,14 @@ class Project < ApplicationRecord
     ProjectServiceValidator.validate_machine_learning_service(project)
     ProjectServiceValidator.validate_merge_service(project)
     ProjectInterfacesValidator.validate(project)
+  end
+
+  def assign_to_project(annotator)
+    AnnotatorProjectAssignmentMailer.assign(annotator, self).deliver_later
+  end
+
+  def unassign_from_project(annotator)
+    AnnotatorProjectAssignmentMailer.unassign(annotator, self).deliver_later
   end
 
   def associated_problem_identifiers

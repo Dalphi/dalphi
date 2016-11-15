@@ -1,0 +1,8 @@
+<%= t 'mailers.annotator-project-assignment.assign.greeting',
+      annotator: @annotator.name %>
+
+<%= t 'mailers.annotator-project-assignment.assign.message',
+      annotator: @annotator.name,
+      project_link: "#{@project.title} (#{project_url(@project)})" %>
+
+<%= t 'mailers.annotator-project-assignment.assign.salutation' %>

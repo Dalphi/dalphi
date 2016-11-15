@@ -3,9 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .annotators {
+  .row-create-annotator,
   .row-add-annotator {
     margin-bottom: 1rem;
+  }
 
+  .row-create-annotator {
     input {
       margin-right: -1px;
       width: calc(33.3333% + 1px);
