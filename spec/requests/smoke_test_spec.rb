@@ -12,6 +12,8 @@ RSpec.describe "GET routes", type: :request do
     @merge_service = FactoryGirl.create :merge_service
     @interface = FactoryGirl.create :interface
 
+    @annotator = FactoryGirl.create :annotator
+
     @project.iterate_service = @iterate_service
     @project.merge_service = @merge_service
     @project.interfaces = [@interface]

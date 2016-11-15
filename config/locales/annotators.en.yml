@@ -1,0 +1,18 @@
+en:
+  annotators:
+    placeholders:
+      name: Name
+      email: Email
+      password: Password
+    action:
+      create:
+        success: Annotator was successfully created.
+      update:
+        success: Annotator was successfully updated.
+      destroy:
+        success: Annotator was successfully destroyed.
+    blank-slate:
+      title: 'No annotators added yet'
+      text: 'To create some annotators use the form above.'
+    projects:
+      blank-slate: Annotator is not associated with any projects.

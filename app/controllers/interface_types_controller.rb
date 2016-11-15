@@ -13,10 +13,11 @@ class InterfaceTypesController < ApplicationController
   def update
     if @interface_type.update(preprocessed_params)
       flash[:notice] = t('interfaces.action.update.success')
+      redirect_to edit_interface_type_path(@interface_type)
     else
-      flash[:error] = t('interfaces.action.update.error')
+      flash.now[:error] = t('interfaces.action.update.error')
+      render :edit
     end
-    redirect_to edit_interface_type_path(@interface_type)
   end
 
   private

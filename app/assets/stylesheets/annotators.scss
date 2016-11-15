@@ -1,0 +1,14 @@
+// Place all the styles related to the annotators controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.annotators {
+  .row-add-annotator {
+    margin-bottom: 1rem;
+
+    input {
+      margin-right: -1px;
+      width: calc(33.3333% + 1px);
+    }
+  }
+}

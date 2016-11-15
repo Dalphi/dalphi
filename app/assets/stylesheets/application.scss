@@ -26,16 +26,17 @@
 @import 'font-awesome';
 
 // partial styling
-@import 'content-container';
-@import 'topbar';
-@import 'sidebar';
-@import 'services';
-@import 'styleguide';
-@import 'projects';
-@import 'interfaces';
-@import 'connectivity-indicator';
 @import 'annotations';
+@import 'annotators';
+@import 'connectivity-indicator';
+@import 'content-container';
+@import 'interfaces';
+@import 'projects';
+@import 'services';
+@import 'sidebar';
 @import 'statistics';
+@import 'styleguide';
+@import 'topbar';
 
 html,
 body {
@@ -123,6 +124,7 @@ p {
 }
 
 .btn-row {
+  margin-bottom: 1rem;
   text-align: right;
 
   .btn,

@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to project_raw_data_path(@project), notice: I18n.t('projects.action.create.success')
     else
-      flash[:error] = I18n.t('simple_form.error_notification.default_message')
+      flash.now[:error] = I18n.t('simple_form.error_notification.default_message')
       render :new
     end
   end
@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
     if @project.update(params_with_associated_models)
       redirect_to project_path(@project), notice: I18n.t('projects.action.update.success')
     else
-      flash[:error] = I18n.t('simple_form.error_notification.default_message')
+      flash.now[:error] = I18n.t('simple_form.error_notification.default_message')
       render :edit
     end
   end
@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_path, notice: I18n.t('projects.action.destroy.success')
+    redirect_to annotators_path, notice: I18n.t('projects.action.destroy.success')
   end
 
   # GET /projects/1/check_compatibility

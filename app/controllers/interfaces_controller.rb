@@ -51,7 +51,7 @@ class InterfacesController < ApplicationController
         redirect_to edit_interface_path(@interface),
                     notice: t('interfaces.action.create.success')
       else
-        flash[:error] = t('interfaces.action.create.error')
+        flash.now[:error] = t('interfaces.action.create.error')
         render :new
       end
     ensure
