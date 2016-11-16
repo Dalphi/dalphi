@@ -128,10 +128,6 @@ class RawDatum < ApplicationRecord
     self.filename
   end
 
-  def size?
-    File.size? self.data.path
-  end
-
   def self.valid_zip?(file)
     zip = Zip::File.open(file)
     true
