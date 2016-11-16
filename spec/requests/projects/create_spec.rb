@@ -29,7 +29,7 @@ RSpec.describe 'Project create', type: :request do
     post projects_path,
          params: {
            project: {
-             description: 'new project to be created without mandotory title'
+             description: 'new project to be created without mandatory title'
            }
          }
 
