@@ -11,7 +11,7 @@ class WebsiteComponentsValidator < ActiveModel::Validator
     nested_stylesheet = ".#{container_class} { #{stylesheet_contents} }"
     sass_engine = Sass::Engine.new(nested_stylesheet, syntax: :scss)
     compilate = sass_engine.render
-    record.set_validator_compiled_stylesheet = compilate
+    record.validator_compiled_stylesheet = compilate
 
   rescue Sass::SyntaxError
     error_message = I18n.t('activerecord.errors.models.interface.attributes' \
@@ -23,7 +23,7 @@ class WebsiteComponentsValidator < ActiveModel::Validator
     return if record.java_script.path.nil?
 
     compilate = CoffeeScript.compile(Paperclip.io_adapters.for(record.java_script).read)
-    record.set_validator_compiled_java_script = compilate
+    record.validator_compiled_java_script = compilate
 
   rescue ExecJS::RuntimeError
     error_message = I18n.t('activerecord.errors.models.interface.attributes' \
