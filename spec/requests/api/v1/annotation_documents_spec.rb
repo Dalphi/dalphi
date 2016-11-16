@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "AnnotationDocuments API", type: :request do
+RSpec.describe 'AnnotationDocuments API', type: :request do
   it 'shows an annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
     get "/api/v1/annotation_documents/#{annotation_document.id}"

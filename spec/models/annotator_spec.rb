@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Annotator, type: :model do
   before(:each) do
-    @annotator = FactoryGirl.create(:annotator)
+    @annotator = FactoryGirl.create :annotator
   end
 
   it 'should have a valid factory' do
@@ -19,6 +19,7 @@ RSpec.describe Annotator, type: :model do
     end
 
     it 'can be extended by assigning an annotator' do
+      @annotator.save!
       @project = FactoryGirl.create :project
       expect(@annotator.projects.count).to eq(0)
 
@@ -31,6 +32,7 @@ RSpec.describe Annotator, type: :model do
     end
 
     it 'can be reduced by unassigning an annotator' do
+      @annotator.save!
       @project = FactoryGirl.create :project
       @annotator.projects << @project
       @annotator.save!
