@@ -15,8 +15,8 @@ RSpec.describe 'Annotation annotate', type: :request do
   it 'renders a annotation document' do
     raw_datum = FactoryGirl.create :raw_datum,
                                    project: @project
-    annotation_document = FactoryGirl.create :annotation_document,
-                                             raw_datum: raw_datum
+    FactoryGirl.create :annotation_document,
+                       raw_datum: raw_datum
 
     get project_annotate_path(@project)
 
