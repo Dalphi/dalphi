@@ -21,7 +21,7 @@
           = @raw_datum.label
         .card-block.editor
           .code-input#raw-data
-            = File.new(@raw_datum.data.path).read
+            = Paperclip.io_adapters.for(@raw_datum.data).read if request.get?
           coffee:
             window.rawDataEditor = new window.RawDataEditor()
   .row
