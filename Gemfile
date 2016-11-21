@@ -47,13 +47,16 @@ end
 
 group :test do
   gem 'brakeman', require: false
+  gem 'capybara'
   gem 'codeclimate-test-reporter', require: false
   gem 'coffeelint'
+  gem 'database_cleaner'
   gem 'listen'
+  gem 'poltergeist'
   gem 'rails_best_practices'
   gem 'reek'
-  gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop', require: false
   gem 'scss_lint', require: false
   gem 'shoulda-matchers'
   gem 'slim_lint'

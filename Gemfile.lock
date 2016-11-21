@@ -71,10 +71,18 @@ GEM
     brakeman (3.4.1)
     builder (3.2.2)
     byebug (9.0.6)
+    capybara (2.7.1)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
     chartkick (2.1.1)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     clipboard-rails (1.5.15)
+    cliver (0.3.2)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     code_analyzer (0.4.7)
@@ -100,6 +108,7 @@ GEM
     concurrent-ruby (1.0.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     delayed_job (4.1.2)
       activesupport (>= 3.0, < 5.1)
@@ -211,6 +220,10 @@ GEM
     parser (2.3.1.4)
       ast (~> 2.2)
     phantomjs (2.1.1.0)
+    poltergeist (1.11.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
     public_suffix (2.0.4)
     puma (3.6.0)
@@ -396,6 +409,8 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will_paginate (3.1.5)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -409,11 +424,13 @@ DEPENDENCIES
   bootstrap_tokenfield_rails
   brakeman
   byebug
+  capybara
   chartkick
   clipboard-rails
   codeclimate-test-reporter
   coffee-rails
   coffeelint
+  database_cleaner
   delayed_job_active_record
   devise
   dotenv-rails
@@ -437,6 +454,7 @@ DEPENDENCIES
   normalize-rails
   paperclip
   phantomjs
+  poltergeist
   puma
   rack-mini-profiler
   rails (~> 5.0.0)
