@@ -1,0 +1,3 @@
+en:
+  devise:
+    role-sign-in: "%{role} sign in"

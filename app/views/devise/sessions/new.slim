@@ -4,7 +4,7 @@
     .row
       .col-xs-12.offset-sm-3.col-sm-6.offset-lg-4.col-lg-4
         h2
-          = t('devise.sign-in')
+          = t('devise.role-sign-in', role: resource_name)
         .form-inputs
           = f.input :email, required: false, autofocus: true
           = f.input :password, required: false
@@ -12,4 +12,7 @@
     .row.btn-row
       .col-xs-12.offset-sm-3.col-sm-6.offset-lg-4.col-lg-4
         = render 'devise/shared/links'
-        = render 'shared/button', type: 'submit', label: t('devise.sign-in'), icon: 'sign-in'
+        = render 'shared/button',
+                  type: 'submit',
+                  label: t('devise.sign-in'),
+                  icon: 'sign-in'
