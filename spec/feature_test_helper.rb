@@ -49,3 +49,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+def current_path
+  URI.parse(current_url).path
+end
