@@ -13,7 +13,7 @@ class AnnotationsController < ApplicationController
   def annotate
     if @project.annotation_documents.empty?
       flash[:alert] = I18n.t 'projects.annotate.errors.no-annotation-documents'
-      redirect_to project_path(@project)
+      render :blankslate
     end
 
     @container_class = Rails.configuration.x.dalphi['annotation-interface']['container-class-name']
