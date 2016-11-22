@@ -507,7 +507,7 @@ RSpec.describe Project, type: :model do
           # every zip file exists in raw_data
           zip_file.each do |entry|
             raw_datum = @project.raw_data.find_by(filename: entry.name)
-            expect(entry.get_input_stream.read).to eq(File.new(raw_datum.data.path).read)
+            expect(entry.get_input_stream.read.force_encoding('utf-8')).to eq(File.new(raw_datum.data.path).read)
           end
 
           # every raw_datum exist in zip files
