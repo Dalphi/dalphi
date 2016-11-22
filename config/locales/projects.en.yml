@@ -23,8 +23,12 @@ en:
       success: '%{success_count} of %{record_count} annotation documents have successfully been generated'
       error: An error occured after sending raw data to the iterate service
     blank-slate:
-      title: 'No projects added yet'
-      text: 'To start with a new project use the button below.'
+      admin:
+        title: 'No projects added yet'
+        text: 'To start with a new project use the button below.'
+      annotator:
+        title: 'No projects assigned yet'
+        text: 'Please get in touch with your administrator in order to get assigned to a project.'
       no-description: No description provided.
     action:
       create:
