@@ -35,11 +35,11 @@ class Interface < ApplicationRecord
   @validator_compiled_stylesheet = nil
   @validator_compiled_java_script = nil
 
-  def set_validator_compiled_stylesheet=(val)
+  def validator_compiled_stylesheet=(val)
     @validator_compiled_stylesheet = val
   end
 
-  def set_validator_compiled_java_script=(val)
+  def validator_compiled_java_script=(val)
     @validator_compiled_java_script = val
   end
 
@@ -50,18 +50,10 @@ class Interface < ApplicationRecord
   private
 
     def compile_stylesheet
-      if self.stylesheet
-        self.compiled_stylesheet = @validator_compiled_stylesheet
-      else
-        self.compiled_stylesheet = nil
-      end
+      self.compiled_stylesheet = @validator_compiled_stylesheet
     end
 
     def compile_java_script
-      if self.java_script
-        self.compiled_java_script = @validator_compiled_java_script
-      else
-        self.compiled_java_script = nil
-      end
+      self.compiled_java_script = @validator_compiled_java_script
     end
 end

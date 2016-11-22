@@ -58,8 +58,10 @@ class ServicesController < ApplicationController
   def create
     @service = Service.new(converted_attributes)
     if @service.save
-      redirect_to services_url, notice: 'Service was successfully created.'
+      redirect_to services_url,
+                  notice: I18n.t('services.create.success')
     else
+      flash.now[:error] = I18n.t('services.create.error')
       render :new
     end
   end
@@ -67,31 +69,31 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1
   def update
     if @service.update(converted_attributes)
-      redirect_to services_url, notice: 'Service was successfully updated.'
+      redirect_to services_url,
+                  notice: I18n.t('services.update.success')
     else
+      flash.now[:error] = I18n.t('services.update.error')
       render :edit
     end
   end
 
   # GET /services/1/refresh
   def refresh
-    new_params = Service.params_from_url(@service.url)
-    redirect_target = edit_service_path(@service)
-
-    if @service.update(new_params)
-      redirect_to redirect_target,
+    if @service.update_from_url(@service.url)
+      redirect_to edit_service_path(@service),
                   notice: I18n.t('services.refresh.success')
     else
-      redirect_to redirect_target,
-                  error: I18n.t('services.refresh.error')
+      error_redirect_to_edit_service_path
     end
+  rescue
+    error_redirect_to_edit_service_path
   end
 
   # DELETE /services/1
   def destroy
     @service.destroy
-    InterfaceType.destroy_abandoned
-    redirect_to services_url, notice: 'Service was successfully destroyed.'
+    redirect_to services_url,
+                notice: I18n.t('services.destroy.success')
   end
 
   private
@@ -114,6 +116,11 @@ class ServicesController < ApplicationController
       nil
     end
 
+    def error_redirect_to_edit_service_path
+      flash[:error] = I18n.t('services.refresh.error')
+      redirect_to edit_service_path(@service)
+    end
+
     def converted_attributes
       interface_type_ids = service_params[:interface_types]
       return service_params unless interface_type_ids and interface_type_ids.any?
@@ -122,7 +129,7 @@ class ServicesController < ApplicationController
       interface_types = []
 
       interface_type_ids.each do |interface_type_id|
-        interface_types << InterfaceType.find_or_create_by(id: interface_type_id)
+        interface_types << InterfaceType.find(interface_type_id)
       end
 
       converted_params[:interface_types] = interface_types

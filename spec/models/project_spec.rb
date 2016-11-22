@@ -202,7 +202,39 @@ RSpec.describe Project, type: :model do
     end
   end
 
-  it { should have_and_belong_to_many(:annotators) }
+  describe 'annotators' do
+    it 'should have and belong to many' do
+      should have_and_belong_to_many(:annotators)
+    end
+
+    it 'can be assigned' do
+      @project.save!
+      @annotator = FactoryGirl.create :annotator
+      expect(@project.annotators.count).to eq(0)
+
+      @project.annotators << @annotator
+      @project.save!
+      @annotator.reload
+
+      expect(@project.annotators.count).to eq(1)
+      expect(@annotator.projects).to include(@project)
+    end
+
+    it 'can be unassigned' do
+      @project.save!
+      @annotator = FactoryGirl.create :annotator
+      @project.annotators << @annotator
+      @project.save!
+      expect(@project.annotators.count).to eq(1)
+
+      @project.annotators.delete(@annotator)
+      @project.save!
+      @annotator.reload
+
+      expect(@project.annotators.count).to eq(0)
+      expect(@annotator.projects).not_to include(@project)
+    end
+  end
 
   it { should have_many(:raw_data).dependent(:destroy) }
 

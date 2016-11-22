@@ -35,6 +35,57 @@ RSpec.describe InterfaceType, type: :model do
     end
   end
 
+  describe 'label' do
+    it "is the interface's name" do
+      @interface_type.name = 'fancy interface'
+      expect(@interface_type.label).to eq(@interface_type.name)
+    end
+  end
+
+  describe 'destroy_abandoned' do
+    it 'should destroy abandoned interface types' do
+      InterfaceType.destroy_all
+      @interface_type = FactoryGirl.create :interface_type,
+                                           interfaces: [],
+                                           services: [],
+                                           annotation_documents: []
+      expect(InterfaceType.count).to eq(1)
+      InterfaceType.destroy_abandoned
+      expect(InterfaceType.count).to eq(0)
+    end
+  end
+
+  describe 'convert_interface_types' do
+    it 'should return [] for nil argument' do
+      expect(InterfaceType.convert_interface_types(nil)).to eq([])
+    end
+
+    it 'should return [] for empty list argument' do
+      expect(InterfaceType.convert_interface_types([])).to eq([])
+    end
+
+    it 'should return interface types which are identified by the list of names' do
+      InterfaceType.destroy_all
+      @first_interface_type = FactoryGirl.create :interface_type,
+                                                 name: 'First interface type'
+      @second_interface_type = FactoryGirl.create :interface_type,
+                                                  name: 'Second interface type'
+      expect(
+        InterfaceType.convert_interface_types(
+          [
+            'First interface type',
+            'Second interface type'
+          ]
+        )
+      ).to eq(
+        [
+          @first_interface_type,
+          @second_interface_type
+        ]
+      )
+    end
+  end
+
   describe 'test_payload' do
     it 'can be nil' do
       @interface_type.test_payload = nil

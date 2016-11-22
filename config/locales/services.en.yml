@@ -23,6 +23,14 @@ en:
       iterate: Iterate
       machine-learning: Machine Learning
       merge: Merge
+    destroy:
+      success: Service was successfully destroyed.
+    create:
+      success: Service was successfully created.
+      error: An error occured while creating the service.
+    update:
+      success: Service was successfully updated.
+      error: An error occured while updating the service.
     refresh:
       button-label: Refresh
       success: Service was successfully refreshed.

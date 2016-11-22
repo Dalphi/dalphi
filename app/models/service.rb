@@ -2,6 +2,10 @@ class Service < ApplicationRecord
   include UrlResponseChecker
   include Swagger::Blocks
 
+  after_destroy do
+    InterfaceType.destroy_abandoned
+  end
+
   swagger_schema :Service do
     property :role do
       key :type, :string
@@ -44,13 +48,18 @@ class Service < ApplicationRecord
     }
 
   validate do |service|
-    HttpResponseValidator.validate(service) if service.url
+    HttpResponseValidator.validate(service)
     ServiceInterfaceTypesValidator.validate(service)
   end
 
   def self.new_from_url(url)
     Service.new(params_from_url(url))
   rescue
+    false
+  end
+
+  def update_from_url(url)
+    return true if self.update(Service.params_from_url(url))
     false
   end
 
