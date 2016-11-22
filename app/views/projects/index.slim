@@ -19,16 +19,22 @@
               window.clickableTableRow = new window.ClickableTableRow()
       - else
         .jumbotron
-          h1.display-3
-            = t('projects.blank-slate.title')
-          p.lead
-            = t('projects.blank-slate.text')
-          hr.m-y-2
-          = render 'shared/button',
-                   type: 'primary',
-                   label: t('activerecord.actions.project.new'),
-                   href: new_project_path,
-                   icon: 'plus'
+          - if admin_signed_in?
+            h1.display-3
+              = t('projects.blank-slate.admin.title')
+            p.lead
+              = t('projects.blank-slate.admin.text')
+            hr.m-y-2
+            = render 'shared/button',
+                     type: 'primary',
+                     label: t('activerecord.actions.project.new'),
+                     href: new_project_path,
+                     icon: 'plus'
+          - else
+            h1.display-3
+              = t('projects.blank-slate.annotator.title')
+            p.lead
+              = t('projects.blank-slate.annotator.text')
   - if @projects.any? && admin_signed_in?
     .row.btn-row
       .col-xs-12
