@@ -38,23 +38,23 @@ feature 'Project selection from projects index view' do
       expect(page).to have_content(@project.description)
     end
 
-    describe 'Visiting the annotation view after clicking on a listed project having' do
-      scenario 'no annotation documents present.' do
+    describe 'Visiting the annotation view after clicking on a listed project' do
+      scenario 'having no annotation documents present.' do
         visit projects_path
         @project.raw_data = []
         @project.save!
 
         click_on @project.title
-        expect(current_path).to eq(project_annotate(@project))
+        expect(current_path).to eq(project_annotate_path(@project))
       end
 
-      scenario 'annotation documents present.' do
+      scenario 'having annotation documents present.' do
         visit projects_path
         annotation_document = FactoryGirl.create(:annotation_document_with_different_admin)
         @project.raw_data = [annotation_document.raw_datum]
 
         click_on @project.title
-        expect(current_path).to eq(project_annotate_document(@project, annotation_document))
+        expect(current_path).to eq(project_annotate_path(@project))
       end
     end
   end
