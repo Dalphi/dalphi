@@ -6,8 +6,11 @@ RSpec.describe 'Service create', type: :request do
     sign_in(@project.admin)
   end
 
-  it 'creates a service' do
+  it 'creates a service with valid data' do
     expect(Service.count).to eq(0)
+
+    interface_type_text_nominal = FactoryGirl.create(:interface_type_text_nominal)
+    interface_type_ner_complete = FactoryGirl.create(:interface_type_ner_complete)
 
     post services_path,
          params: {
@@ -18,7 +21,10 @@ RSpec.describe 'Service create', type: :request do
              role: 'iterate',
              problem_id: 'ner',
              url: 'http://localhost:3001',
-             interface_types: %w(test_type another_test_type)
+             interface_types: [
+               interface_type_text_nominal.id,
+               interface_type_ner_complete.id
+             ]
            }
          }
 
@@ -32,6 +38,6 @@ RSpec.describe 'Service create', type: :request do
     expect(service.role).to eq('iterate')
     expect(service.problem_id).to eq('ner')
     expect(service.url).to eq('http://localhost:3001')
-    expect(service.interface_types.sort).to eq(%w(test_type another_test_type).sort)
+    expect(service.interface_types.sort).to eq([interface_type_text_nominal, interface_type_ner_complete].sort)
   end
 end
