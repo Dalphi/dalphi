@@ -29,6 +29,9 @@ en:
         edit: Edit interface
         delete: Delete interface
     models:
+      admin:
+        one: Admin
+        other: Admins
       annotator:
         one: Annotator
         other: Annotators
