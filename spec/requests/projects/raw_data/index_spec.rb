@@ -19,9 +19,9 @@ RSpec.describe 'RawData', type: :request do
          'shape' => 'text',
          'created_at' => json_datetime(@raw_datum.created_at),
          'updated_at' => json_datetime(@raw_datum.updated_at),
-         'data_file_name' => 'lorem.txt',
+         'data_file_name' => '2000-06-08-com.handelsblatt.www.in9r34todujsm7zd5sk4ba0n.txt',
          'data_content_type' => 'text/plain',
-         'data_file_size' => 1302,
+         'data_file_size' => 5665,
          'data_updated_at' => json_datetime(@raw_datum.data_updated_at),
          'project_id' => 1,
          'filename' => 'file.md'

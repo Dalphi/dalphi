@@ -21,7 +21,7 @@
           = @raw_datum.label
         .card-block.editor
           .code-input#raw-data
-            = Paperclip.io_adapters.for(@raw_datum.data).read if request.get?
+            = Paperclip.io_adapters.for(@raw_datum.data).read.force_encoding('utf-8') if request.get?
           coffee:
             window.rawDataEditor = new window.RawDataEditor()
   .row
