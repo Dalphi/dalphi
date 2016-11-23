@@ -29,6 +29,9 @@ en:
         edit: Edit interface
         delete: Delete interface
     models:
+      admin:
+        one: Admin
+        other: Admins
       annotator:
         one: Annotator
         other: Annotators
@@ -67,6 +70,9 @@ en:
         password: password
         projects: projects
         last_sign_in_at: last sign in
+      admin:
+        email: email
+        password: password
     errors:
       models:
         annotation_document:

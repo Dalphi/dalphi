@@ -1,15 +1,29 @@
-.container
+.container.login-container
   - resource.email = @default_email
   = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .row
-      .col-xs-12.offset-sm-3.col-sm-6.offset-lg-4.col-lg-4
+      .col-xs-12.offset-sm-1.col-sm-10.offset-lg-3.col-lg-6
         h2
-          = t('devise.sign-in')
+          = t('devise.role-sign-in', role: resource_name)
+
+        - if resource_name.to_s == 'admin'
+          = link_to "#{t('activerecord.models.annotator.one')}?",
+                    new_annotator_session_path,
+                    class: 'role-switch'
+        - else
+          = link_to "#{t('activerecord.models.admin.one')}?",
+                    new_admin_session_path,
+                    class: 'role-switch'
+
         .form-inputs
           = f.input :email, required: false, autofocus: true
           = f.input :password, required: false
           = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+
     .row.btn-row
-      .col-xs-12.offset-sm-3.col-sm-6.offset-lg-4.col-lg-4
+      .col-xs-12.offset-sm-1.col-sm-10.offset-lg-3.col-lg-6
         = render 'devise/shared/links'
-        = render 'shared/button', type: 'submit', label: t('devise.sign-in'), icon: 'sign-in'
+        = render 'shared/button',
+                  type: 'submit',
+                  label: t('devise.sign-in'),
+                  icon: 'sign-in'

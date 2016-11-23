@@ -13,8 +13,10 @@
                 table_row_href = project_annotate_path(project)
                 table_row_href = project_path(project) if admin_signed_in?
               tr data-href="#{table_row_href}"
-                td = project.title
-                td = project.description
+                td = link_to project.title,
+                             table_row_href
+                td = link_to project.description,
+                             table_row_href
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()
       - else

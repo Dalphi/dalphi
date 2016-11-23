@@ -1,4 +1,12 @@
 .projects {
+  table {
+    td {
+      a {
+        color: $color-2;
+      }
+    }
+  }
+
   .card {
     .card-titleo {
       margin-bottom: $input-label-margin-bottom;

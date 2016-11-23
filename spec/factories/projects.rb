@@ -13,5 +13,11 @@ FactoryGirl.define do
       description 'A second test project for testing purposes only.'
       admin { FactoryGirl.create(:admin_3) }
     end
+
+    factory :project_with_annotator do
+      after(:create) do |project|
+        project.annotators = FactoryGirl.create_list(:annotator, 1)
+      end
+    end
   end
 end

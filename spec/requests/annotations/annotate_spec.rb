@@ -9,7 +9,7 @@ RSpec.describe 'Annotation annotate', type: :request do
   it 'does not break for non-existing annotation documents' do
     get project_annotate_path(@project)
 
-    expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_url(@project))
+    expect(response).to be_success
   end
 
   it 'renders a annotation document' do
