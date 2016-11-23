@@ -70,6 +70,9 @@ en:
         password: password
         projects: projects
         last_sign_in_at: last sign in
+      admin:
+        email: email
+        password: password
     errors:
       models:
         annotation_document:
