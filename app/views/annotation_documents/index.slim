@@ -10,7 +10,7 @@
                  project: @project,
                  annotation_documents: @annotation_documents
       - elsif @project.raw_data.any?
-        - role = admin_signed_in?? 'admin' : 'annotator'
+        - role = admin_signed_in? ? 'admin' : 'annotator'
         = render 'shared/blank_slates/annotation_documents',
                  project: @project,
                  role: role
