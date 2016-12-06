@@ -5,6 +5,8 @@ cache: bundler
 rvm:
   - 2.3.1
 script: ./bin/ci
+services:
+  - redis-server
 addons:
   code_climate:
     repo_token: 94963d52eba7794ca798f92bf7b2a239d942e6bfbbe0c72be47952918f90ec31

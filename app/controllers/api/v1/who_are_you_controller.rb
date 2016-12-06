@@ -1,6 +1,8 @@
 module API
   module V1
     class WhoAreYouController < BaseController
+      skip_before_action :authenticate
+
       include Swagger::Blocks
 
       swagger_path '/' do

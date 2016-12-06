@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
   before_action :set_title
   before_action :set_copyright_year
 
+  def self.generate_auth_token
+    auth_token = SecureRandom.hex
+    $redis.hset(:auth_token, auth_token, Time.zone.now)
+    auth_token
+  end
+
   private
 
   def authenticate_user
