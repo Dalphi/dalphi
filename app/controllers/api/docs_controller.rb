@@ -33,13 +33,20 @@ module API
         key :name, 'AnnotationDocuments'
         key :description, 'Listing all interactions with annotation documents'
       end
+
+      tag do
+        key :name, 'Statistics'
+        key :description, 'Listing all interactions with statistics'
+      end
     end
 
     SWAGGERED_CLASSES = [
       API::V1::AnnotationDocumentsController,
+      API::V1::StatisticsController,
       API::V1::WhoAreYouController,
       API::V1::ErrorModel,
       AnnotationDocument,
+      Statistic,
       Service,
       self,
     ].freeze
