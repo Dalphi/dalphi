@@ -151,16 +151,15 @@ module API
 
       # POST /api/v1/statistics
       def create
-        ActiveRecord::Base.transaction do
-          statistics = []
-          statistics_params.each do |ad_params|
-            @statistic = Statistic.new(ad_params)
-            @statistic.save!
-            statistics << @statistic.relevant_attributes
-          end
-          statistics = statistics.first if statistics.count == 1
+        if params[:statistics].present?
+          create_bulk
           render status: 200,
-                 json: statistics
+                 json: @statistics
+        else
+          @statistic = Statistic.new(statistic_params)
+          @statistic.save!
+          render status: 200,
+                 json: @statistic.relevant_attributes
         end
       rescue ArgumentError
         return_parameter_type_mismatch
@@ -178,7 +177,7 @@ module API
 
       # PATCH/PUT /api/v1/statistics/1
       def update
-        if @statistic.update(converted_statistic_params)
+        if @statistic.update(statistic_params)
           render json: @statistic.relevant_attributes
         else
           render status: 400,
@@ -200,62 +199,50 @@ module API
 
       private
 
-        def set_statistic
-          @statistic = Statistic.find(params[:id])
-        rescue
-          render status: 400,
-                 json: {
-                   message: I18n.t('api.statistic.show.error')
-                 }
-        end
+      def set_statistic
+        @statistic = Statistic.find(params[:id])
+      rescue
+        render status: 400,
+               json: {
+                 message: I18n.t('api.statistic.show.error')
+               }
+      end
 
-        def return_parameter_type_mismatch
-          render status: 400,
-                 json: {
-                   message: I18n.t('api.statistic.general-errors.parameter-type-mismatch')
-                 }
-        end
-
-        def statistics_params
-          converted_params = []
-          params_statistics = params[:statistics]
-          if params_statistics.present?
-            params_statistics.each do |statistic|
-              converted_params << converted_statistic_params(statistic).permit!
-            end
-          else
-            converted_params << converted_statistic_params
+      def create_bulk
+        @statistics = []
+        ActiveRecord::Base.transaction do
+          statistics_params.each do |s_params|
+            statistic = Statistic.new(s_params)
+            statistic.save!
+            @statistics << statistic.relevant_attributes
           end
-          converted_params
         end
+      end
 
-        def statistic_params_from_json
-          JSON.parse(params['_json'])['statistic']
-        end
+      def statistics_params
+        params.permit(statistics: [
+            :key,
+            :value,
+            :iteration_index,
+            :project_id
+          ]
+        )[:statistics]
+      end
 
-        def statistic_params
-          return statistic_params_from_json if params['_json']
-          parameters = params.require(:statistic).permit(
-            :id,
-            :interface_type,
-            :payload,
-            :rank,
-            :raw_datum_id,
-            :skipped
-          )
-          parameters[:payload] = params[:statistic][:payload]
-          parameters
-        end
+      def statistic_params
+        return statistic_params_from_json if params['_json']
+        params.require(:statistic).permit(
+          :id,
+          :key,
+          :value,
+          :iteration_index,
+          :project_id
+        )
+      end
 
-        # this method smells of :reek:FeatureEnvy
-        def converted_statistic_params(statistic = nil)
-          statistic ||= statistic_params
-          statistic['payload'] = statistic['payload'].to_json
-          statistic['interface_type'] = InterfaceType.find_or_create_by(
-                                                    name: statistic['interface_type']
-                                                  )
-          statistic
-        end
+      def statistic_params_from_json
+        JSON.parse(params['_json'])['statistic']
+      end
     end
   end
 end

@@ -209,13 +209,6 @@ module API
                  }
         end
 
-        def return_parameter_type_mismatch
-          render status: 400,
-                 json: {
-                   message: I18n.t('api.annotation_document.general-errors.parameter-type-mismatch')
-                 }
-        end
-
         def annotation_documents_params
           converted_params = []
           params_annotation_documents = params[:annotation_documents]

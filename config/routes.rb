@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get '/' => 'who_are_you#who_are_you'
 
       resources :annotation_documents, only: [:create, :show, :update, :destroy]
+      resources :statistics, only: [:create, :show, :update, :destroy]
     end
   end
 

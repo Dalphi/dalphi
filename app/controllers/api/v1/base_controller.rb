@@ -5,6 +5,13 @@ module API
 
       private
 
+      def return_parameter_type_mismatch
+        render status: 400,
+               json: {
+                 message: I18n.t('api.statistic.general-errors.parameter-type-mismatch')
+               }
+      end
+
       def authenticate
         if $redis.hdel(:auth_token, params['auth_token']) != 1
           return render json: {
