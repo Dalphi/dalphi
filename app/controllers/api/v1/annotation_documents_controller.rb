@@ -147,9 +147,9 @@ module API
       def create
         ActiveRecord::Base.transaction do
           annotation_documents = []
-          annotation_documents_params.each do |annotation_document_params|
-            @annotation_document = AnnotationDocument.new(annotation_document_params)
-            raise ActiveRecord::Rollback unless @annotation_document.save
+          annotation_documents_params.each do |ad_params|
+            @annotation_document = AnnotationDocument.new(ad_params)
+            @annotation_document.save!
             annotation_documents << @annotation_document.relevant_attributes
           end
           annotation_documents = annotation_documents.first if annotation_documents.count == 1
@@ -161,8 +161,7 @@ module API
       rescue
         render status: 400,
                json: {
-                 message: I18n.t('api.annotation_document.create.error'),
-                 validationErrors: @annotation_document.errors.full_messages
+                 message: I18n.t('api.annotation_document.create.error')
                }
       end
 
@@ -214,9 +213,9 @@ module API
         def annotation_documents_params
           converted_params = []
           params_annotation_documents = params[:annotation_documents]
-          if params_annotation_documents
+          if params_annotation_documents.present?
             params_annotation_documents.each do |annotation_document|
-              converted_params << converted_annotation_document_params(annotation_document)
+              converted_params << converted_annotation_document_params(annotation_document).permit!
             end
           else
             converted_params << converted_annotation_document_params

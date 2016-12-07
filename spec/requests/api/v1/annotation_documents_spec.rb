@@ -26,7 +26,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
 
   it 'creates an annotation document' do
     raw_datum = FactoryGirl.create(:raw_datum)
-    expect(AnnotationDocument.all.count).to eq(0)
+    expect(AnnotationDocument.count).to eq(0)
 
     post api_v1_annotation_documents_path(auth_token: @auth_token),
          params: {
@@ -51,12 +51,135 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
         'skipped' => nil
       }
     )
-    expect(AnnotationDocument.all.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(1)
+  end
+
+  describe 'bulk creation' do
+    it 'creates no annotation documents for an empty list' do
+      raw_datum = FactoryGirl.create(:raw_datum)
+      expect(AnnotationDocument.count).to eq(0)
+
+      post api_v1_annotation_documents_path(auth_token: @auth_token),
+           params: {
+             annotation_documents: []
+           }
+
+      expect(response).not_to be_success
+    end
+
+    it 'creates one annotation document for a singleton' do
+      raw_datum = FactoryGirl.create(:raw_datum)
+      expect(AnnotationDocument.count).to eq(0)
+
+      post api_v1_annotation_documents_path(auth_token: @auth_token),
+           params: {
+             annotation_documents: [
+               {
+                 'rank' => 0,
+                 'raw_datum_id' => raw_datum.id,
+                 'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
+                 'skipped' => nil,
+                 'interface_type' => 'type_name'
+               }
+             ]
+           }
+
+      expect(response).to be_success
+      json = JSON.parse(response.body)
+      expect(json).to eq(
+        {
+          'id' => 1,
+          'interface_type' => 'type_name',
+          'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
+          'rank' => 0,
+          'raw_datum_id' => raw_datum.id,
+          'skipped' => nil
+        }
+      )
+      expect(AnnotationDocument.count).to eq(1)
+    end
+
+    it 'creates multiple annotation documents for list of valid annotation documents' do
+      raw_datum = FactoryGirl.create(:raw_datum)
+      expect(AnnotationDocument.count).to eq(0)
+
+      post api_v1_annotation_documents_path(auth_token: @auth_token),
+           params: {
+             annotation_documents: [
+               {
+                 'rank' => 0,
+                 'raw_datum_id' => raw_datum.id,
+                 'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
+                 'skipped' => nil,
+                 'interface_type' => 'type_name'
+               },
+               {
+                 'rank' => 1,
+                 'raw_datum_id' => raw_datum.id,
+                 'payload' => JSON.parse("{\"label\":\"anotherlabel\",\"options\":[\"option1\",\"option2\",\"option3\"],\"content\":\"othercontent\"}"),
+                 'skipped' => nil,
+                 'interface_type' => 'type_name'
+               }
+             ]
+           }
+
+      expect(response).to be_success
+      json = JSON.parse(response.body)
+      expect(json).to eq(
+        [
+          {
+            'id' => 1,
+            'interface_type' => 'type_name',
+            'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
+            'rank' => 0,
+            'raw_datum_id' => raw_datum.id,
+            'skipped' => nil
+          },
+          {
+            'id' => 2,
+            'interface_type' => 'type_name',
+            'payload' => JSON.parse("{\"label\":\"anotherlabel\",\"options\":[\"option1\",\"option2\",\"option3\"],\"content\":\"othercontent\"}"),
+            'rank' => 1,
+            'raw_datum_id' => raw_datum.id,
+            'skipped' => nil
+          },
+        ]
+      )
+      expect(AnnotationDocument.count).to eq(2)
+    end
+
+    it 'creates no annotation documents for list of partly valid annotation documents' do
+      raw_datum = FactoryGirl.create(:raw_datum)
+      expect(AnnotationDocument.count).to eq(0)
+
+      post api_v1_annotation_documents_path(auth_token: @auth_token),
+           params: {
+             annotation_documents: [
+               {
+                 'rank' => 0,
+                 'raw_datum_id' => raw_datum.id,
+                 'payload' => nil,
+                 'skipped' => nil,
+                 'interface_type' => 'type_name'
+               },
+               {
+                 'rank' => 1,
+                 'raw_datum_id' => raw_datum.id,
+                 'payload' => JSON.parse("{\"label\":\"anotherlabel\",\"options\":[\"option1\",\"option2\",\"option3\"],\"content\":\"othercontent\"}"),
+                 'skipped' => nil,
+                 'interface_type' => 'type_name'
+               }
+             ]
+           }
+
+      expect(response).not_to be_success
+      expect(AnnotationDocument.count).to eq(0)
+    end
   end
 
   it 'patches an annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
-    expect(AnnotationDocument.all.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(1)
 
     patch api_v1_annotation_document_path(annotation_document, auth_token: @auth_token),
           params: {
@@ -69,7 +192,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
           }
 
     expect(response).to be_success
-    expect(AnnotationDocument.all.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(1)
 
     json = JSON.parse(response.body)
     expect(json).to eq(
@@ -90,7 +213,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
 
   it 'patches a JSON stringify encoded annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
-    expect(AnnotationDocument.all.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(1)
 
     file_path = Rails.root.join('spec/fixtures/text/annotation_documnent_payload_real_world.txt')
     annotation_document_definition = IO.read(file_path)
@@ -103,7 +226,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
           }
 
     expect(response).to be_success
-    expect(AnnotationDocument.all.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(1)
 
     json = JSON.parse(response.body)
     expect(json['interface_type']).to eq('ner_complete')
@@ -124,12 +247,12 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
 
   it 'destroys an annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
-    expect(AnnotationDocument.all.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(1)
 
     delete api_v1_annotation_document_path(annotation_document, auth_token: @auth_token)
 
     expect(response).to be_success
-    expect(AnnotationDocument.all.count).to eq(0)
+    expect(AnnotationDocument.count).to eq(0)
     json = JSON.parse(response.body)
     expect(json).to eq(
       {
