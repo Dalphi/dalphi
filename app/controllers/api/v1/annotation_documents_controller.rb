@@ -145,20 +145,25 @@ module API
 
       # POST /api/v1/annotation_documents
       def create
-        @annotation_document = AnnotationDocument.new(annotation_document_params)
-
-        if @annotation_document.save
+        ActiveRecord::Base.transaction do
+          annotation_documents = []
+          annotation_documents_params.each do |annotation_document_params|
+            @annotation_document = AnnotationDocument.new(annotation_document_params)
+            raise ActiveRecord::Rollback unless @annotation_document.save
+            annotation_documents << @annotation_document.relevant_attributes
+          end
+          annotation_documents = annotation_documents.first if annotation_documents.count == 1
           render status: 200,
-                 json: @annotation_document.relevant_attributes
-        else
-          render status: 400,
-                 json: {
-                   message: I18n.t('api.annotation_document.create.error'),
-                   validationErrors: @annotation_document.errors.full_messages
-                 }
+                 json: annotation_documents
         end
       rescue ArgumentError
         return_parameter_type_mismatch
+      rescue
+        render status: 400,
+               json: {
+                 message: I18n.t('api.annotation_document.create.error'),
+                 validationErrors: @annotation_document.errors.full_messages
+               }
       end
 
       # GET /api/v1/annotation_documents/1
@@ -168,7 +173,7 @@ module API
 
       # PATCH/PUT /api/v1/annotation_documents/1
       def update
-        if @annotation_document.update(annotation_document_params)
+        if @annotation_document.update(converted_annotation_document_params)
           render json: @annotation_document.relevant_attributes
         else
           render status: 400,
@@ -206,23 +211,25 @@ module API
                  }
         end
 
-        def create_params_from_plaintext_payload
-          parsed_params = JSON.parse(params['_json'])
-          parsed_document = parsed_params['annotation_document']
+        def annotation_documents_params
+          converted_params = []
+          params_annotation_documents = params[:annotation_documents]
+          if params_annotation_documents
+            params_annotation_documents.each do |annotation_document|
+              converted_params << converted_annotation_document_params(annotation_document)
+            end
+          else
+            converted_params << converted_annotation_document_params
+          end
+          converted_params
+        end
 
-          {
-            id: parsed_document['id'],
-            payload: parsed_document['payload'].to_json,
-            rank: parsed_document['rank'],
-            raw_datum_id: parsed_document['raw_datum_id'],
-            skipped: parsed_document['skipped'],
-            interface_type: InterfaceType.find_or_create_by(
-              name: parsed_document['interface_type']
-            )
-          }
+        def annotation_document_params_from_json
+          JSON.parse(params['_json'])['annotation_document']
         end
 
         def annotation_document_params
+          return annotation_document_params_from_json if params['_json']
           parameters = params.require(:annotation_document).permit(
             :id,
             :interface_type,
@@ -231,14 +238,18 @@ module API
             :raw_datum_id,
             :skipped
           )
-          params_annotation_document = params[:annotation_document]
-          parameters[:payload] = params_annotation_document[:payload].to_json
-          parameters[:interface_type] = InterfaceType.find_or_create_by(
-                                          name: params_annotation_document[:interface_type]
-                                        )
+          parameters[:payload] = params[:annotation_document][:payload]
           parameters
-        rescue ActionController::ParameterMissing
-          create_params_from_plaintext_payload
+        end
+
+        # this method smells of :reek:FeatureEnvy
+        def converted_annotation_document_params(annotation_document = nil)
+          annotation_document ||= annotation_document_params
+          annotation_document['payload'] = annotation_document['payload'].to_json
+          annotation_document['interface_type'] = InterfaceType.find_or_create_by(
+                                                    name: annotation_document['interface_type']
+                                                  )
+          annotation_document
         end
     end
   end
