@@ -11,10 +11,10 @@ en:
       general-errors:
         parameter-type-mismatch: a given parameter has the wrong type
       create:
-        description: Creates a new annotation document and returns it
-        response-200: respond with the created annotation document
+        description: Creates one or more new annotation documents and returns them
+        response-200: responds with the created annotation documents
         response-400: parameters for annotation document are not satisfying
-        error: unable to create a new annotation document
+        error: unable to create new annotation documents
       show:
         description: Returns an annotation document
         response-200: respond with the requested annotation document

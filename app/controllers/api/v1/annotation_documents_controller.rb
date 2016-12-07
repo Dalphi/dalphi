@@ -53,14 +53,20 @@ module API
             key :in, :body
             key :required, true
             schema do
-              key :'$ref', :AnnotationDocument
+              key :type, :array
+              items do
+                key :'$ref', :AnnotationDocument
+              end
             end
           end
 
           response 200 do
             key :description, I18n.t('api.annotation_document.create.response-200')
             schema do
-              key :'$ref', :AnnotationDocument
+              key :type, :array
+              items do
+                key :'$ref', :AnnotationDocument
+              end
             end
           end
 
