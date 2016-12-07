@@ -3,7 +3,7 @@ env:
 language: ruby
 cache: bundler
 rvm:
-  - 2.3.1
+  - 2.3.3
 script: ./bin/ci
 addons:
   code_climate:
