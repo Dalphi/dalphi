@@ -1,9 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'AnnotationDocuments API', type: :request do
+  before(:each) do
+    @auth_token = ApplicationController.generate_auth_token
+  end
+
   it 'shows an annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
-    get "/api/v1/annotation_documents/#{annotation_document.id}"
+
+    get api_v1_annotation_document_path(annotation_document, auth_token: @auth_token)
+
     expect(response).to be_success
     json = JSON.parse(response.body)
     expect(json).to eq(
@@ -22,7 +28,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     raw_datum = FactoryGirl.create(:raw_datum)
     expect(AnnotationDocument.all.count).to eq(0)
 
-    post '/api/v1/annotation_documents',
+    post api_v1_annotation_documents_path(auth_token: @auth_token),
          params: {
            annotation_document: {
              'rank' => 0,
@@ -52,7 +58,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     annotation_document = FactoryGirl.create(:annotation_document)
     expect(AnnotationDocument.all.count).to eq(1)
 
-    patch "/api/v1/annotation_documents/#{annotation_document.id}",
+    patch api_v1_annotation_document_path(annotation_document, auth_token: @auth_token),
           params: {
             annotation_document: {
               'interface_type' => 'type_name',
@@ -89,7 +95,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     file_path = Rails.root.join('spec/fixtures/text/annotation_documnent_payload_real_world.txt')
     annotation_document_definition = IO.read(file_path)
 
-    patch "/api/v1/annotation_documents/#{annotation_document.id}",
+    patch api_v1_annotation_document_path(annotation_document, auth_token: @auth_token),
           params: annotation_document_definition,
           headers: {
             'CONTENT_TYPE' => 'application/json',
@@ -120,11 +126,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     annotation_document = FactoryGirl.create(:annotation_document)
     expect(AnnotationDocument.all.count).to eq(1)
 
-    delete "/api/v1/annotation_documents/#{annotation_document.id}"
+    delete api_v1_annotation_document_path(annotation_document, auth_token: @auth_token)
 
     expect(response).to be_success
     expect(AnnotationDocument.all.count).to eq(0)
-
     json = JSON.parse(response.body)
     expect(json).to eq(
       {
