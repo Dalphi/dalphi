@@ -1,4 +1,4 @@
-FROM ruby:2.3.1
+FROM ruby:2.3.3
 RUN apt-get update
 RUN apt-get install -y netcat
 RUN mkdir /app
