@@ -16,7 +16,14 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
       {
         'id' => 1,
         'interface_type' => 'type_name',
-        'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
+        'payload' => {
+          'label' => 'testlabel',
+          'options' => [
+            'option1',
+            'option2'
+          ],
+          'content' => 'testcontent'
+        },
         'rank' => nil,
         'raw_datum_id' => 1,
         'skipped' => nil

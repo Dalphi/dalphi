@@ -5,33 +5,17 @@ class ProjectsController < ApplicationController
                 only: [:index, :show]
   before_action :authenticate_admin!,
                 except: [:index, :show]
-  before_action :set_project, only: [
-    :iterate,
-    :check_interfaces,
-    :check_problem_identifiers,
-    :destroy,
-    :edit,
-    :merge,
-    :show,
-    :update,
-    :update_service
-  ]
-  before_action :set_projects, only: [
-    :index
-  ]
+  before_action :set_project,
+                except: [:create, :index, :new]
+  before_action :set_projects,
+                only: [:index]
   before_action :set_roles # defined in 'concerns/service_roles.rb'
-  before_action :set_available_services, only: [
-    :create,
-    :edit,
-    :new,
-    :show
-  ]
-  before_action :set_interfaces, only: [
-    :create,
-    :edit,
-    :new
-  ]
-  before_action :set_additional_annotator, only: [:update]
+  before_action :set_available_services,
+                only: [:create, :edit, :new, :show]
+  before_action :set_interfaces,
+                only: [:create, :edit, :new]
+  before_action :set_additional_annotator,
+                only: [:update]
 
   # GET /projects
   def index
@@ -175,18 +159,33 @@ class ProjectsController < ApplicationController
     def process_iteration_data(raw_data)
       @annotation_documents = false
       iterate_service = @project.iterate_service
-      response = json_post_request(iterate_service.url, raw_data)
+      response = json_post_request iterate_service.url,
+                                   process_iteration_data_response_hash(raw_data)
       response_body = JSON.parse(response.body) if response.kind_of? Net::HTTPSuccess
-      @statistics = response_body['statistics']
-      @annotation_documents = response_body['annotation_documents']
+      if response_body['status'] == 'async'
+        @statistics = @annotation_documents = []
+      else
+        @statistics = response_body['statistics']
+        @annotation_documents = response_body['annotation_documents']
+      end
     rescue
       @annotation_documents = false
     end
 
+    def process_iteration_data_response_hash(raw_data)
+      tokens = ApplicationController.generate_auth_token(2)
+      {
+        raw_data: raw_data,
+        callback_urls: [
+          api_v1_annotation_documents_url(auth_token: tokens.first),
+          api_v1_statistics_url(auth_token: tokens.second)
+        ]
+      }
+    end
+
     # this method smells of :reek:FeatureEnvy
     def save_annotation_documents
-      record_count = 0
-      error_count = 0
+      record_count = error_count = 0
       @annotation_documents.each do |annotation_document|
         type_name = annotation_document['interface_type']
         annotation_document['interface_type'] = InterfaceType.find_or_create_by(name: type_name)
