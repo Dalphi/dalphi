@@ -201,10 +201,10 @@ class ProjectsController < ApplicationController
       Statistic.transaction do
         iteration_index = Statistic.where(project: @project).maximum(:iteration_index) || 0
         iteration_index += 1
-        @statistics.each do |key, value|
+        @statistics.each do |statistic|
           statistic = Statistic.new(
-                        key: key,
-                        value: value,
+                        key: statistic['key'],
+                        value: statistic['value'],
                         iteration_index: iteration_index,
                         project: @project
                       )

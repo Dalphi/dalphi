@@ -68,12 +68,12 @@ RSpec.describe 'Project iterate', type: :request do
       .to_return(
         status: 200,
         body: {
-          'statistics' => {
-            precision: 0.6284480772625486,
-            recall: 0.3800804335583704,
-            f1_score: 0.4736818346968625,
-            num_annotations: 4
-          },
+          'statistics' => [
+            { 'key' => 'precision', 'value' => 0.6284480772625486 },
+            { 'key' => 'recall', 'value' => 0.3800804335583704 },
+            { 'key' => 'f1_score', 'value' => 0.4736818346968625 },
+            { 'key' => 'num_annotations', 'value': 4 }
+          ],
           'annotation_documents' => [@response_body]
         }.to_json
       )

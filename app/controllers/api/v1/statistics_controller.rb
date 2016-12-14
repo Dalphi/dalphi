@@ -250,11 +250,12 @@ module API
         s_params
       end
 
+      # this method smells of :reek:FeatureEnvy
       def converted_statistic_params(s_params = nil)
         s_params ||= statistic_params
         raw_data_ids = s_params[:raw_data_ids]
         if raw_data_ids.present?
-          project_ids = RawDatum.where(id: raw_data_ids).map(&:project_id)
+          project_ids = RawDatum.where(id: raw_data_ids).map(&:project_id).uniq
           s_params[:project_id] = project_ids.first if project_ids.count == 1
           s_params.delete :raw_data_ids
         end
