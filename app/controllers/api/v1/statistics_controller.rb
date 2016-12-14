@@ -156,7 +156,7 @@ module API
           render status: 200,
                  json: @statistics
         else
-          @statistic = Statistic.new(statistic_params)
+          @statistic = Statistic.new(converted_statistic_params)
           @statistic.save!
           render status: 200,
                  json: @statistic.relevant_attributes
@@ -211,7 +211,7 @@ module API
       def create_bulk
         @statistics = []
         ActiveRecord::Base.transaction do
-          statistics_params.each do |s_params|
+          converted_statistics_params.each do |s_params|
             statistic = Statistic.new(s_params)
             statistic.save!
             @statistics << statistic.relevant_attributes
@@ -224,7 +224,8 @@ module API
             :key,
             :value,
             :iteration_index,
-            :project_id
+            :project_id,
+            raw_data_ids: []
           ]
         )[:statistics]
       end
@@ -236,8 +237,28 @@ module API
           :key,
           :value,
           :iteration_index,
-          :project_id
+          :project_id,
+          raw_data_ids: []
         )
+      end
+
+      def converted_statistics_params
+        s_params = []
+        statistics_params.each do |s_param|
+          s_params << converted_statistic_params(s_param)
+        end
+        s_params
+      end
+
+      def converted_statistic_params(s_params = nil)
+        s_params ||= statistic_params
+        raw_data_ids = s_params[:raw_data_ids]
+        if raw_data_ids.present?
+          project_ids = RawDatum.where(id: raw_data_ids).map(&:project_id)
+          s_params[:project_id] = project_ids.first if project_ids.count == 1
+          s_params.delete :raw_data_ids
+        end
+        s_params
       end
 
       def statistic_params_from_json

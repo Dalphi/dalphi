@@ -75,7 +75,6 @@ RSpec.describe 'Statistics API', type: :request do
 
     expect(response).to be_success
     expect(Statistic.count).to eq(1)
-
     json = JSON.parse(response.body)
     statistic = Statistic.first
     expect(json).to eq(
@@ -85,6 +84,37 @@ RSpec.describe 'Statistics API', type: :request do
         'value' => statistic.value,
         'iteration_index' => statistic.iteration_index,
         'project_id' => statistic.project_id
+      }
+    )
+  end
+
+  it 'associates newly created statistic with the right project from raw_data ids' do
+    raw_datum = FactoryGirl.create(:raw_datum)
+    project = raw_datum.project
+    statistic = FactoryGirl.build(:statistic, project: project)
+    expect(Statistic.count).to eq(0)
+
+    post api_v1_statistics_path(auth_token: @auth_token),
+         params: {
+           statistic: {
+            'key' => statistic.key,
+            'value' => statistic.value,
+            'iteration_index' => statistic.iteration_index,
+            'raw_data_ids' => [raw_datum.id]
+           }
+         }
+
+    expect(response).to be_success
+    expect(Statistic.count).to eq(1)
+    json = JSON.parse(response.body)
+    statistic = Statistic.first
+    expect(json).to eq(
+      {
+        'id' => statistic.id,
+        'key' => statistic.key,
+        'value' => statistic.value,
+        'iteration_index' => statistic.iteration_index,
+        'project_id' => project.id
       }
     )
   end
@@ -161,8 +191,8 @@ RSpec.describe 'Statistics API', type: :request do
 
       expect(response).to be_success
       json = JSON.parse(response.body)
-      statistic_1 = Statistic.find(1)
-      statistic_2 = Statistic.find(2)
+      statistic_1 = Statistic.first
+      statistic_2 = Statistic.second
       expect(json).to eq(
         [
           {
@@ -209,6 +239,56 @@ RSpec.describe 'Statistics API', type: :request do
 
       expect(response).not_to be_success
       expect(Statistic.count).to eq(0)
+    end
+
+    it 'associates every statistic with the right project from raw_data ids' do
+      raw_datum = FactoryGirl.create(:raw_datum)
+      project = raw_datum.project
+      statistic_1 = FactoryGirl.build(:statistic, key: 'compliance', project: project)
+      statistic_2 = FactoryGirl.build(:statistic, key: 'precision', project: project)
+      expect(Statistic.count).to eq(0)
+
+      post api_v1_statistics_path(auth_token: @auth_token),
+           params: {
+             statistics: [
+               {
+                'key' => statistic_1.key,
+                'value' => statistic_1.value,
+                'iteration_index' => statistic_1.iteration_index,
+                'raw_data_ids' => [raw_datum.id]
+               },
+               {
+                'key' => statistic_2.key,
+                'value' => statistic_2.value,
+                'iteration_index' => statistic_2.iteration_index,
+                'raw_data_ids' => [raw_datum.id]
+               }
+             ]
+           }
+
+      expect(response).to be_success
+      expect(Statistic.count).to eq(2)
+      json = JSON.parse(response.body)
+      statistic_1 = Statistic.first
+      statistic_2 = Statistic.second
+      expect(json).to eq(
+        [
+          {
+            'id' => statistic_1.id,
+            'key' => statistic_1.key,
+            'value' => statistic_1.value,
+            'iteration_index' => statistic_1.iteration_index,
+            'project_id' => project.id
+          },
+          {
+            'id' => statistic_2.id,
+            'key' => statistic_2.key,
+            'value' => statistic_2.value,
+            'iteration_index' => statistic_2.iteration_index,
+            'project_id' => project.id
+          },
+        ]
+      )
     end
   end
 
