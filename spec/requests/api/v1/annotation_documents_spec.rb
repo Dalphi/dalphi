@@ -11,7 +11,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     get api_v1_annotation_document_path(annotation_document, auth_token: @auth_token)
 
     expect(response).to be_success
-    json = JSON.parse(response.body)
+    json = JSON.parse(response.body)['response']
     expect(json).to eq(
       {
         'id' => 1,
@@ -47,7 +47,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
          }
 
     expect(response).to be_success
-    json = JSON.parse(response.body)
+    json = JSON.parse(response.body)['response']
     expect(json).to eq(
       {
         'id' => 1,
@@ -92,7 +92,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
            }
 
       expect(response).to be_success
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['response']
       expect(json).to eq(
         {
           'id' => 1,
@@ -131,7 +131,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
            }
 
       expect(response).to be_success
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['response']
       expect(json).to eq(
         [
           {
@@ -201,7 +201,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     expect(response).to be_success
     expect(AnnotationDocument.count).to eq(1)
 
-    json = JSON.parse(response.body)
+    json = JSON.parse(response.body)['response']
     expect(json).to eq(
       'id' => 1,
       'interface_type' => 'type_name',
@@ -235,7 +235,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     expect(response).to be_success
     expect(AnnotationDocument.count).to eq(1)
 
-    json = JSON.parse(response.body)
+    json = JSON.parse(response.body)['response']
     expect(json['interface_type']).to eq('ner_complete')
     expect(json['raw_datum_id']).to eq(1)
     expect(json['rank']).to eq(27)
@@ -260,7 +260,7 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
 
     expect(response).to be_success
     expect(AnnotationDocument.count).to eq(0)
-    json = JSON.parse(response.body)
+    json = JSON.parse(response.body)['response']
     expect(json).to eq(
       {
         'id' => 1,
