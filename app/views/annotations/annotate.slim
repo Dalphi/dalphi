@@ -5,7 +5,8 @@
 ruby:
   data_hash = {
     dalphi_base_url: request.base_url,
-    project_id: @project.id
+    project_id: @project.id,
+    request_auth_token: @auth_token
   }
   data_hash[:annotation_document_id] = @annotation_document.id if @annotation_document
 

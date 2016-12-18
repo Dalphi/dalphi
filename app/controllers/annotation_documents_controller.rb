@@ -44,7 +44,10 @@ class AnnotationDocumentsController < ApplicationController
       render_error_response 404, 'next.no-documents'
 
     elsif documents.update(requested_at: Time.zone.now)
-      render json: documents.map{ |document| document.relevant_attributes }
+      render json: {
+        response: documents.map{ |document| document.relevant_attributes },
+        auth_token: ApplicationController.generate_auth_token
+      }
 
     else
       render_error_response 500, 'next.update-failed'

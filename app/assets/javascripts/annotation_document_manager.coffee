@@ -10,6 +10,7 @@ class AnnotationDocumentManager
     this.currentDocument = undefined
     this.maxAnnotationDocumentsToLoad = 1
     this.apiVersion = 'v1'
+    this.nextRequestAuthToken = undefined
     this.asynchronousRequest = !synchronousRequest
     this.waitingForApi = false
     this.requestNextDocumentCallback = undefined
@@ -68,6 +69,7 @@ class AnnotationDocumentManager
     $.ajaxSetup
       headers:
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    this.nextRequestAuthToken = $('.interfaces-staging').data('request-auth-token')
 
   initialAnnotationDocumentPreloading: ->
     documentId = $('.interfaces-staging').data('annotation-document-id')
@@ -86,11 +88,12 @@ class AnnotationDocumentManager
       }
     }
 
-    this.waitingForApi = true
     responseProcessor = (data) ->
       console.log "AnnotationDocumentManager: loaded new annotation document (id: #{data[0].id})"
       _this.documentStore.push annotationDocument for annotationDocument in data
       _this.waitingForApi = false
+
+    this.waitingForApi = true
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
   loadAnnotationDocumentWithId: (annotationDocumentId, postUpdateCallback) ->
@@ -138,7 +141,7 @@ class AnnotationDocumentManager
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
     $.ajax
-      url: requestOptions.url,
+      url: _this.authTokenToUrl(requestOptions.url),
       type: requestOptions.type,
       dataType: requestOptions.dataType,
       contentType: 'application/json',
@@ -146,7 +149,10 @@ class AnnotationDocumentManager
       async: _this.asynchronousRequest,
 
       success: (data) ->
-        responseProcessor(data) if responseProcessor
+        response = _this.extractDocumentsAndAuthToken(data)
+        console.log 'SUCCESS RESPONSE', response
+        console.log 'SUCCESS DATA', data
+        responseProcessor(response) if responseProcessor
         _this.generalResponseHandlingWithObject(postUpdateCallback, _this.next())
 
       error: (a, b, c) ->
@@ -160,6 +166,14 @@ class AnnotationDocumentManager
                       "(#{b} #{a.status}; #{c}) - request options & jqXHR:",
                       JSON.stringify(requestOptions),
                       JSON.stringify(a)
+
+  authTokenToUrl: (url) ->
+    return "#{url}&auth_token=#{this.nextRequestAuthToken}" if '?' in url
+    "#{url}?auth_token=#{this.nextRequestAuthToken}"
+
+  extractDocumentsAndAuthToken: (jsonResponse) ->
+    this.nextRequestAuthToken = jsonResponse['auth_token']
+    return jsonResponse['response']
 
   generalResponseHandlingWithObject: (postUpdateCallback, responseObject) ->
     if this.requestNextDocumentCallback

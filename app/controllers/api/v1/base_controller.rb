@@ -14,7 +14,8 @@ module API
 
       def authenticate
         if $redis.hdel(:auth_token, params['auth_token']) != 1
-          return render json: {
+          return render status: :unauthorized,
+                        json: {
                           error: I18n.t('api-errors.unauthorized'),
                           status: :unauthorized
                         }
