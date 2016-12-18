@@ -150,8 +150,6 @@ class AnnotationDocumentManager
 
       success: (data) ->
         response = _this.extractDocumentsAndAuthToken(data)
-        console.log 'SUCCESS RESPONSE', response
-        console.log 'SUCCESS DATA', data
         responseProcessor(response) if responseProcessor
         _this.generalResponseHandlingWithObject(postUpdateCallback, _this.next())
 

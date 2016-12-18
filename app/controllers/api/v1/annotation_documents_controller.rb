@@ -2,6 +2,7 @@ module API
   module V1
     class AnnotationDocumentsController < BaseController
       include Swagger::Blocks
+      include APIHelper
 
       before_action :set_annotation_document,
                     only: [
@@ -207,13 +208,6 @@ module API
                  json: {
                    message: I18n.t('api.annotation_document.show.error')
                  }
-        end
-
-        def response_with_auth_token(response)
-          {
-            response: response,
-            auth_token: ApplicationController.generate_auth_token
-          }.to_json
         end
 
         def annotation_documents_params
