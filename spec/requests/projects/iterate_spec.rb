@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Project iterate', type: :request do
   before(:each) do
     stub_request(:get, 'http://example.com/iterate')
-      .with(:headers => { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host' => 'example.com', 'User-Agent' => 'Ruby' })
-      .to_return(status: 200, body: '', headers: {})
-
+      .to_return(status: 200, body: '')
     @project = FactoryGirl.create :project,
                                   iterate_service: FactoryGirl.create(:iterate_service_request_test)
     @interface_type = @project.iterate_service.interface_types.first
@@ -28,17 +26,12 @@ RSpec.describe 'Project iterate', type: :request do
   end
 
   it 'generates annotation documents by sending raw data to an iterate service' do
-    stub_request(:post, 'http://example.com/iterate')
-      .with(
-        body: @project.iterate_data.to_json,
-        headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'application/json', 'User-Agent' => 'Ruby' }
-      )
+    stub_request(:post, @project.iterate_service.url)
       .to_return(
         status: 200,
         body: {
           'annotation_documents' => [@response_body]
-        }.to_json,
-        headers: { 'Content-Type' => 'application/json' }
+        }.to_json
       )
 
     expect(AnnotationDocument.count).to eq(0)
@@ -55,17 +48,12 @@ RSpec.describe 'Project iterate', type: :request do
   end
 
   it 'generates no annotation documents when iterate service does not respond with such' do
-    stub_request(:post, 'http://example.com/iterate')
-      .with(
-        body: @project.iterate_data.to_json,
-        headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'application/json', 'User-Agent' => 'Ruby' }
-      )
+    stub_request(:post, @project.iterate_service.url)
       .to_return(
         status: 200,
         body: {
           'annotation_documents' => []
-        }.to_json,
-        headers: { 'Content-Type' => 'application/json' }
+        }.to_json
       )
     expect(AnnotationDocument.count).to eq(0)
 
@@ -76,23 +64,18 @@ RSpec.describe 'Project iterate', type: :request do
   end
 
   it 'generates statistics by sending raw data to an iterate service' do
-    stub_request(:post, 'http://example.com/iterate')
-      .with(
-        body: @project.iterate_data.to_json,
-        headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'application/json', 'User-Agent' => 'Ruby' }
-      )
+    stub_request(:post, @project.iterate_service.url)
       .to_return(
         status: 200,
         body: {
-                'statistics' => {
-                  precision: 0.6284480772625486,
-                  recall: 0.3800804335583704,
-                  f1_score: 0.4736818346968625,
-                  num_annotations: 4
-                },
-                'annotation_documents' => [@response_body]
-              }.to_json,
-        headers: { 'Content-Type' => 'application/json' }
+          'statistics' => [
+            { 'key' => 'precision', 'value' => 0.6284480772625486 },
+            { 'key' => 'recall', 'value' => 0.3800804335583704 },
+            { 'key' => 'f1_score', 'value' => 0.4736818346968625 },
+            { 'key' => 'num_annotations', 'value': 4 }
+          ],
+          'annotation_documents' => [@response_body]
+        }.to_json
       )
 
     expect(Statistic.count).to eq(0)

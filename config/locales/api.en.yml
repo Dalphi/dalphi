@@ -1,5 +1,34 @@
 en:
   api:
+    statistic:
+      description:
+        id: Internal id for DALPHI's database; set after a statistic was saved
+        key: Key of the statistic's metric
+        value: Value of the statistic's metric
+        iteration_index: Index of the iteration where this statistic was generated
+        project_id: Id of the corresponding project to which this statistic belongs to
+      general-errors:
+        parameter-type-mismatch: a given parameter has the wrong type
+      create:
+        description: Creates one or more new statistics and returns them
+        response-200: responds with the created statistics
+        response-400: parameters for statistic are not satisfying
+        error: unable to create new statistics
+      show:
+        description: Returns a statistic
+        response-200: respond with the requested statistic
+        response-400: parameters (id) for statistic are not satisfying
+        error: unable to get a statistic for the given parameters
+      update:
+        description: Updates an existing statistic and returns the new values
+        response-200: respond with the updated statistic
+        response-400: parameters (id) for statistic are not satisfying
+        error: unable to update the statistic with the given parameters
+      destroy:
+        description: Destroys an existing statistic
+        response-200: respond with an acknowledgment
+        response-400: parameters (id) for statistic are not satisfying
+        success: Statistic successfully deleted
     annotation_document:
       description:
         payload: Payload of the annotation document
@@ -11,10 +40,10 @@ en:
       general-errors:
         parameter-type-mismatch: a given parameter has the wrong type
       create:
-        description: Creates a new annotation document and returns it
-        response-200: respond with the created annotation document
+        description: Creates one or more new annotation documents and returns them
+        response-200: responds with the created annotation documents
         response-400: parameters for annotation document are not satisfying
-        error: unable to create a new annotation document
+        error: unable to create new annotation documents
       show:
         description: Returns an annotation document
         response-200: respond with the requested annotation document
