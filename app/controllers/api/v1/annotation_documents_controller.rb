@@ -244,7 +244,7 @@ module API
         # this method smells of :reek:FeatureEnvy
         def converted_annotation_document_params(annotation_document = nil)
           annotation_document ||= annotation_document_params
-          annotation_document['payload'] = annotation_document['payload'].to_json
+          annotation_document['payload'].permit! unless annotation_document['payload'].class == Hash
           annotation_document['interface_type'] = InterfaceType.find_or_create_by(
                                                     name: annotation_document['interface_type']
                                                   )
