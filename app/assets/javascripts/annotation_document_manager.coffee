@@ -10,7 +10,6 @@ class AnnotationDocumentManager
     this.currentDocument = undefined
     this.maxAnnotationDocumentsToLoad = 1
     this.apiVersion = 'v1'
-    this.nextRequestAuthToken = undefined
     this.asynchronousRequest = !synchronousRequest
     this.waitingForApi = false
     this.requestNextDocumentCallback = undefined
@@ -69,7 +68,6 @@ class AnnotationDocumentManager
     $.ajaxSetup
       headers:
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    this.nextRequestAuthToken = $('.interfaces-staging').data('request-auth-token')
 
   initialAnnotationDocumentPreloading: ->
     documentId = $('.interfaces-staging').data('annotation-document-id')
@@ -141,7 +139,7 @@ class AnnotationDocumentManager
 
   apiCall: (requestOptions, responseProcessor = false, postUpdateCallback = false) ->
     $.ajax
-      url: _this.authTokenToUrl(requestOptions.url),
+      url: requestOptions.url,
       type: requestOptions.type,
       dataType: requestOptions.dataType,
       contentType: 'application/json',
@@ -149,8 +147,7 @@ class AnnotationDocumentManager
       async: _this.asynchronousRequest,
 
       success: (data) ->
-        response = _this.extractDocumentsAndAuthToken(data)
-        responseProcessor(response) if responseProcessor
+        responseProcessor(data) if responseProcessor
         _this.generalResponseHandlingWithObject(postUpdateCallback, _this.next())
 
       error: (a, b, c) ->
@@ -164,14 +161,6 @@ class AnnotationDocumentManager
                       "(#{b} #{a.status}; #{c}) - request options & jqXHR:",
                       JSON.stringify(requestOptions),
                       JSON.stringify(a)
-
-  authTokenToUrl: (url) ->
-    return "#{url}&auth_token=#{this.nextRequestAuthToken}" if '?' in url
-    "#{url}?auth_token=#{this.nextRequestAuthToken}"
-
-  extractDocumentsAndAuthToken: (jsonResponse) ->
-    this.nextRequestAuthToken = jsonResponse['auth_token']
-    return jsonResponse['response']
 
   generalResponseHandlingWithObject: (postUpdateCallback, responseObject) ->
     if this.requestNextDocumentCallback

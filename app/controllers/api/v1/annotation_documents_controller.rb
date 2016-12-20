@@ -2,7 +2,6 @@ module API
   module V1
     class AnnotationDocumentsController < BaseController
       include Swagger::Blocks
-      include APIHelper
 
       before_action :set_annotation_document,
                     only: [
@@ -161,7 +160,7 @@ module API
           end
           annotation_documents = annotation_documents.first if annotation_documents.count == 1
           render status: 200,
-                 json: response_with_auth_token(annotation_documents)
+                 json: annotation_documents
         end
       rescue ArgumentError
         return_parameter_type_mismatch
@@ -174,13 +173,13 @@ module API
 
       # GET /api/v1/annotation_documents/1
       def show
-        render json: response_with_auth_token(@annotation_document.relevant_attributes)
+        render json: @annotation_document.relevant_attributes
       end
 
       # PATCH/PUT /api/v1/annotation_documents/1
       def update
         if @annotation_document.update(converted_annotation_document_params)
-          render json: response_with_auth_token(@annotation_document.relevant_attributes)
+          render json: @annotation_document.relevant_attributes
         else
           render status: 400,
                  json: {
@@ -196,7 +195,7 @@ module API
       def destroy
         @annotation_document.destroy
         render status: 200,
-               json: response_with_auth_token(@annotation_document.relevant_attributes)
+               json: @annotation_document.relevant_attributes
       end
 
       private

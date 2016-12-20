@@ -17,7 +17,6 @@ class AnnotationsController < ApplicationController
     end
 
     @container_class = Rails.configuration.x.dalphi['annotation-interface']['container-class-name']
-    @auth_token = ApplicationController.generate_auth_token
   end
 
   private

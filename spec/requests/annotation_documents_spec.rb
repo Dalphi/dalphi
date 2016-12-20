@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.configure do |c|
-  c.include AnnotationDocumentHelper
+RSpec.configure do |config|
+  config.include AnnotationDocumentHelper
 end
 
 RSpec.describe 'AnnotationDocuments internal API', type: :request do
@@ -16,7 +16,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
     patch "/projects/#{@project.id}/annotation_documents/next"
 
     expect(response).to be_success
-    json = JSON.parse(response.body)['response']
+    json = JSON.parse(response.body)
     compare_annotation_document_with_json_response(@annotation_document, json.first)
   end
 
@@ -33,7 +33,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
           }
 
     expect(response).to be_success
-    json = JSON.parse(response.body)['response']
+    json = JSON.parse(response.body)
     expect(json.count).to eq(2)
     compare_annotation_document_with_json_response(@annotation_document, json.first)
     compare_annotation_document_with_json_response(another_annotation_document, json.last)
@@ -52,7 +52,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
           }
 
     expect(response).to be_success
-    json = JSON.parse(response.body)['response']
+    json = JSON.parse(response.body)
     expect(json.count).to eq(2)
     compare_annotation_document_with_json_response(@annotation_document, json.first)
     compare_annotation_document_with_json_response(another_annotation_document, json.last)
@@ -71,7 +71,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
           }
 
     expect(response).to be_success
-    json = JSON.parse(response.body)['response']
+    json = JSON.parse(response.body)
     first_response_id = json.first['id']
     expect(first_response_id).to eq(@annotation_document.id)
 
@@ -81,7 +81,7 @@ RSpec.describe 'AnnotationDocuments internal API', type: :request do
           }
 
     expect(response).to be_success
-    json = JSON.parse(response.body)['response']
+    json = JSON.parse(response.body)
     second_response_id = json.first['id']
     expect(second_response_id).to eq(another_annotation_document.id)
     expect(first_response_id).not_to eq(second_response_id)
