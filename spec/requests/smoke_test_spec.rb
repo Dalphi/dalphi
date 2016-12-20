@@ -29,7 +29,6 @@ RSpec.describe "GET routes", type: :request do
       path.gsub!(/:role/, 'iterate')
       path.gsub!(/:annotation_document_id/, '1')
       get path
-      next if response.status == 401 && path.include?('api/v1')
       expect([200, 301, 302]).to include(response.status)
     end
   end
