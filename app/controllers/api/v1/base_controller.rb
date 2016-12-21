@@ -13,8 +13,11 @@ module API
       end
 
       def authenticate
-        if $redis.hdel(:auth_token, params['auth_token']) != 1
-          return render json: {
+        if !admin_signed_in? &&
+           !annotator_signed_in? &&
+           $redis.hdel(:auth_token, params['auth_token']) != 1
+          return render status: :unauthorized,
+                        json: {
                           error: I18n.t('api-errors.unauthorized'),
                           status: :unauthorized
                         }

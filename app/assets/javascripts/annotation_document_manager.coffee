@@ -86,11 +86,12 @@ class AnnotationDocumentManager
       }
     }
 
-    this.waitingForApi = true
     responseProcessor = (data) ->
       console.log "AnnotationDocumentManager: loaded new annotation document (id: #{data[0].id})"
       _this.documentStore.push annotationDocument for annotationDocument in data
       _this.waitingForApi = false
+
+    this.waitingForApi = true
     this.apiCall requestOptions, responseProcessor, postUpdateCallback
 
   loadAnnotationDocumentWithId: (annotationDocumentId, postUpdateCallback) ->

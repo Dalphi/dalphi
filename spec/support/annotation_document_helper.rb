@@ -6,7 +6,7 @@ module AnnotationDocumentHelper
       {
         'id' => model_instance.id,
         'interface_type' => model_instance.interface_type.name,
-        'payload' => JSON.parse(model_instance.payload),
+        'payload' => model_instance.payload,
         'rank' => model_instance.rank,
         'raw_datum_id' => model_instance.raw_datum.id,
         'skipped' => model_instance.skipped

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.configure do |c|
-  c.include AnnotationDocumentHelper
+RSpec.configure do |config|
+  config.include AnnotationDocumentHelper
 end
 
 RSpec.describe 'AnnotationDocuments internal API', type: :request do

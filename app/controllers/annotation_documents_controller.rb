@@ -33,7 +33,6 @@ class AnnotationDocumentsController < ApplicationController
   def show
   end
 
-
   INITIAL_DALPHI_COMMIT_DATETIME = DateTime.parse '07.03.2016 09:39:24 MEZ'
 
   # PATCH /projects/1/annotation_documents/next?count=10
