@@ -10,7 +10,7 @@
           = t('activerecord.attributes.annotation_document.payload')
         .card-block.editor
           .code-input#annotation-documents
-            = @annotation_document.payload
+            = @annotation_document.payload.to_json
 
           coffee:
             window.annotationDocumentsEditor = new window.AnnotationDocumentsEditor()
