@@ -44,7 +44,7 @@ class Statistic < ApplicationRecord
             presence: true
 
   validates_uniqueness_of :key,
-                          scope: :iteration_index
+                          scope: [:iteration_index, :project]
 
   def relevant_attributes
     {
