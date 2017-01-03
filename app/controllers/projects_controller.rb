@@ -217,10 +217,15 @@ class ProjectsController < ApplicationController
       record_count = error_count = 0
       @project.merge_data.each do |merge_datum|
         merge_service = @project.merge_service
-        response = json_post_request(merge_service.url, merge_datum)
-
+        response = json_post_request merge_service.url,
+                                     {
+                                       merge_datum: merge_datum,
+                                       callback_url: api_v1_raw_data_url(auth_token: ApplicationController.generate_auth_token)
+                                     }
         if response.kind_of? Net::HTTPSuccess
-          process_merged_data(JSON.parse(response.body))
+          response_body = JSON.parse(response.body)
+          next if response_body['status'] == 'async'
+          process_merged_data(JSON.parse(response_body))
         else
           error_count += 1
         end
