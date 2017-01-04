@@ -19,7 +19,10 @@ RSpec.describe Statistic, type: :model do
 
   it { should validate_presence_of(:key) }
 
-  it { should validate_uniqueness_of(:key).scoped_to(:iteration_index) }
+  it { should validate_uniqueness_of(:key).scoped_to([:iteration_index, :project_id]) }
+  # this spec is only a work around and should be rewritten as:
+  # it { should validate_uniqueness_of(:key).scoped_to([:iteration_index, :project]) }
+  # https://github.com/thoughtbot/shoulda-matchers/issues/814
 
   it { should belong_to(:project) }
 end

@@ -188,7 +188,9 @@ class ProjectsController < ApplicationController
       record_count = error_count = 0
       @annotation_documents.each do |annotation_document|
         type_name = annotation_document['interface_type']
-        annotation_document['interface_type'] = InterfaceType.find_or_create_by(name: type_name)
+        interface_type = InterfaceType.find_or_create_by(name: type_name)
+        annotation_document['interface_type'] = interface_type
+        annotation_document['interface_type_id'] = interface_type.id
         new_annotation_document = AnnotationDocument.new(annotation_document)
         error_count += 1 unless new_annotation_document.save
         record_count += 1
