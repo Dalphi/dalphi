@@ -53,298 +53,178 @@ RSpec.describe 'RawData API', type: :request do
     )
   end
 
-  it 'creates a JSON stringify encoded raw_datum' do
+  describe 'bulk creation' do
+    it 'creates no raw_data for an empty list' do
+      expect(RawDatum.count).to eq(0)
+
+      post api_v1_raw_data_path(auth_token: @auth_token),
+           params: {
+             raw_data: []
+           }
+
+      expect(response).not_to be_success
+    end
+
+    it 'creates one raw_datum for a singleton' do
+      project = FactoryGirl.create(:project)
+      raw_datum = FactoryGirl.build(:raw_datum, project: project)
+      expect(RawDatum.count).to eq(0)
+
+      post api_v1_raw_data_path(auth_token: @auth_token),
+           params: {
+             raw_data: [
+               {
+                 'shape' => raw_datum.shape,
+                 'data' => fixture_file_upload("#{Rails.root}/spec/fixtures/text/valid2.md", 'text/plain'),
+                 'project_id' => raw_datum.project.id
+               }
+             ]
+           }
+
+      expect(response).to be_success
+      json = JSON.parse(response.body)
+      expect(RawDatum.count).to eq(1)
+      raw_datum = RawDatum.first
+      expect(json).to eq(
+        {
+          'id' => raw_datum.id,
+          'shape' => raw_datum.shape,
+          'data' => Base64.encode64(File.read("#{Rails.root}/spec/fixtures/text/valid2.md")),
+          'filename' => raw_datum.filename,
+          'project_id' => raw_datum.project.id
+        }
+      )
+    end
+
+    it 'creates multiple raw_data for a list of valid raw_data' do
+      project = FactoryGirl.create(:project)
+      raw_datum_1 = FactoryGirl.build(:raw_datum, project: project)
+      raw_datum_2 = FactoryGirl.build(:raw_datum, project: project)
+      expect(RawDatum.count).to eq(0)
+
+      post api_v1_raw_data_path(auth_token: @auth_token),
+           params: {
+             raw_data: [
+               {
+                 'shape' => raw_datum_1.shape,
+                 'data' => fixture_file_upload("#{Rails.root}/spec/fixtures/text/valid1.md", 'text/plain'),
+                 'project_id' => raw_datum_1.project.id
+               },
+               {
+                 'shape' => raw_datum_2.shape,
+                 'data' => fixture_file_upload("#{Rails.root}/spec/fixtures/text/valid2.md", 'text/plain'),
+                 'project_id' => raw_datum_2.project.id
+               }
+             ]
+           }
+
+      expect(response).to be_success
+      json = JSON.parse(response.body)
+      raw_datum_1 = RawDatum.first
+      raw_datum_2 = RawDatum.second
+      expect(json).to eq(
+        [
+          {
+            'id' => raw_datum_1.id,
+            'shape' => raw_datum_1.shape,
+            'data' => Base64.encode64(File.read("#{Rails.root}/spec/fixtures/text/valid1.md")),
+            'filename' => raw_datum_1.filename,
+            'project_id' => raw_datum_1.project.id
+          },
+          {
+            'id' => raw_datum_2.id,
+            'shape' => raw_datum_2.shape,
+            'data' => Base64.encode64(File.read("#{Rails.root}/spec/fixtures/text/valid2.md")),
+            'filename' => raw_datum_2.filename,
+            'project_id' => raw_datum_2.project.id
+          },
+        ]
+      )
+      expect(RawDatum.count).to eq(2)
+    end
+
+    it 'creates no raw_data for list of partly valid raw_data' do
+      project = FactoryGirl.create(:project)
+      raw_datum_1 = FactoryGirl.build(:raw_datum, project: project)
+      raw_datum_2 = FactoryGirl.build(:raw_datum, project: project)
+      expect(RawDatum.count).to eq(0)
+
+      post api_v1_raw_data_path(auth_token: @auth_token),
+           params: {
+             raw_data: [
+               {
+                 'shape' => raw_datum_1.shape,
+                 'data' => fixture_file_upload("#{Rails.root}/spec/fixtures/text/invalid.bin", 'application/octet-stream'),
+                 'project_id' => raw_datum_1.project.id
+               },
+               {
+                 'shape' => raw_datum_2.shape,
+                 'data' => fixture_file_upload("#{Rails.root}/spec/fixtures/text/valid2.md", 'text/plain'),
+                 'project_id' => raw_datum_2.project.id
+               }
+             ]
+           }
+
+      expect(response).not_to be_success
+      expect(RawDatum.count).to eq(0)
+    end
+  end
+
+  it 'patches a raw_datum' do
     project = FactoryGirl.create(:project)
-    raw_datum = FactoryGirl.build(:raw_datum, project: project)
-    expect(RawDatum.count).to eq(0)
+    raw_datum = FactoryGirl.create(:raw_datum, project: project)
+    raw_datum.data = File.new("#{Rails.root}/spec/fixtures/text/valid1.md")
+    raw_datum.save!
+    expect(RawDatum.count).to eq(1)
 
-    json_string = "{\"raw_datum\":{" \
-                  "\"shape\":\"#{raw_datum.shape}\"," \
-                  "\"data\":\"#{fixture_file_upload("#{Rails.root}/spec/fixtures/text/valid2.md", 'text/plain')}\"" \
-                  "\"project_id\".\"#{raw_datum.project.id}\"" \
-                  "}}"
-
-    post api_v1_raw_data_path(auth_token: @auth_token),
-         params: json_string,
-         headers: {
-           'CONTENT_TYPE' => 'application/json',
-           'ACCEPT' => 'application/json'
-         }
+    patch api_v1_raw_datum_path(raw_datum, auth_token: @auth_token),
+          params: {
+            raw_datum: {
+              'shape' => raw_datum.shape,
+              'data' => fixture_file_upload("#{Rails.root}/spec/fixtures/text/valid2.md", 'text/plain'),
+              'project_id' => raw_datum.project.id
+            }
+          }
 
     expect(response).to be_success
     expect(RawDatum.count).to eq(1)
+    updated_raw_datum = RawDatum.first
     json = JSON.parse(response.body)
-    raw_datum = RawDatum.first
+    expect(json).to eq(
+      {
+        'id' => updated_raw_datum.id,
+        'shape' => updated_raw_datum.shape,
+        'data' => Base64.encode64(File.read("#{Rails.root}/spec/fixtures/text/valid2.md")),
+        'filename' => updated_raw_datum.filename,
+        'project_id' => updated_raw_datum.project.id
+      }
+    )
+    expect(updated_raw_datum.id).to eq(raw_datum.id)
+    expect(updated_raw_datum.shape).to eq(raw_datum.shape)
+    expect(Paperclip.io_adapters.for(updated_raw_datum.data).read).to eq(File.read("#{Rails.root}/spec/fixtures/text/valid2.md"))
+    expect(updated_raw_datum.filename).to eq('valid2.md')
+    expect(updated_raw_datum.project_id).to eq(raw_datum.project_id)
+  end
+
+  it 'destroys a raw_datum' do
+    project = FactoryGirl.create(:project)
+    raw_datum = FactoryGirl.create(:raw_datum, project: project)
+    data = Base64.encode64(Paperclip.io_adapters.for(raw_datum.data).read)
+    expect(RawDatum.count).to eq(1)
+
+    delete api_v1_raw_datum_path(raw_datum, auth_token: @auth_token)
+
+    expect(response).to be_success
+    expect(RawDatum.count).to eq(0)
+    json = JSON.parse(response.body)
     expect(json).to eq(
       {
         'id' => raw_datum.id,
         'shape' => raw_datum.shape,
-        'data' => Base64.encode64(File.read("#{Rails.root}/spec/fixtures/text/valid2.md")),
+        'data' => data,
         'filename' => raw_datum.filename,
         'project_id' => raw_datum.project.id
       }
     )
   end
-
-  # describe 'bulk creation' do
-  #   it 'creates no raw_data for an empty list' do
-  #     expect(RawDatum.count).to eq(0)
-
-  #     post api_v1_raw_data_path(auth_token: @auth_token),
-  #          params: {
-  #            raw_data: []
-  #          }
-
-  #     expect(response).not_to be_success
-  #   end
-
-  #   it 'creates one raw_datum for a singleton' do
-  #     project = FactoryGirl.create(:project)
-  #     raw_datum = FactoryGirl.build(:raw_datum, project: project)
-  #     expect(RawDatum.count).to eq(0)
-
-  #     post api_v1_raw_data_path(auth_token: @auth_token),
-  #          params: {
-  #            raw_data: [
-  #              {
-  #                'key' => raw_datum.key,
-  #                'value' => raw_datum.value,
-  #                'iteration_index' => raw_datum.iteration_index,
-  #                'project_id' => raw_datum.project_id
-  #              }
-  #            ]
-  #          }
-
-  #     expect(response).to be_success
-  #     json = JSON.parse(response.body)
-  #     expect(RawDatum.count).to eq(1)
-  #     raw_datum = RawDatum.first
-  #     expect(json).to eq(
-  #       [
-  #         {
-  #           'id' => raw_datum.id,
-  #           'key' => raw_datum.key,
-  #           'value' => raw_datum.value,
-  #           'iteration_index' => raw_datum.iteration_index,
-  #           'project_id' => raw_datum.project_id
-  #         }
-  #       ]
-  #     )
-  #   end
-
-  #   it 'creates multiple raw_data for a list of valid raw_data' do
-  #     project = FactoryGirl.create(:project)
-  #     raw_datum_1 = FactoryGirl.build(:raw_datum, key: 'compliance', project: project)
-  #     raw_datum_2 = FactoryGirl.build(:raw_datum, key: 'precision', project: project)
-  #     expect(RawDatum.count).to eq(0)
-
-  #     post api_v1_raw_data_path(auth_token: @auth_token),
-  #          params: {
-  #            raw_data: [
-  #              {
-  #                'key' => raw_datum_1.key,
-  #                'value' => raw_datum_1.value,
-  #                'iteration_index' => raw_datum_1.iteration_index,
-  #                'project_id' => raw_datum_1.project_id
-  #              },
-  #              {
-  #                'key' => raw_datum_2.key,
-  #                'value' => raw_datum_2.value,
-  #                'iteration_index' => raw_datum_2.iteration_index,
-  #                'project_id' => raw_datum_2.project_id
-  #              }
-  #            ]
-  #          }
-
-  #     expect(response).to be_success
-  #     json = JSON.parse(response.body)
-  #     raw_datum_1 = RawDatum.first
-  #     raw_datum_2 = RawDatum.second
-  #     expect(json).to eq(
-  #       [
-  #         {
-  #           'id' => raw_datum_1.id,
-  #           'key' => raw_datum_1.key,
-  #           'value' => raw_datum_1.value,
-  #           'iteration_index' => raw_datum_1.iteration_index,
-  #           'project_id' => raw_datum_1.project_id
-  #         },
-  #         {
-  #           'id' => raw_datum_2.id,
-  #           'key' => raw_datum_2.key,
-  #           'value' => raw_datum_2.value,
-  #           'iteration_index' => raw_datum_2.iteration_index,
-  #           'project_id' => raw_datum_2.project_id
-  #         },
-  #       ]
-  #     )
-  #     expect(RawDatum.count).to eq(2)
-  #   end
-
-  #   it 'creates no raw_data for list of partly valid raw_data' do
-  #     project = FactoryGirl.create(:project)
-  #     raw_datum_1 = FactoryGirl.build(:raw_datum, key: 'compliance', project: project)
-  #     raw_datum_2 = FactoryGirl.build(:raw_datum, key: 'precision', project: project)
-  #     expect(RawDatum.count).to eq(0)
-
-  #     post api_v1_raw_data_path(auth_token: @auth_token),
-  #          params: {
-  #            raw_data: [
-  #              {
-  #                'key' => raw_datum_1.key,
-  #                'value' => raw_datum_1.value,
-  #                'iteration_index' => raw_datum_1.iteration_index,
-  #                'project_id' => raw_datum_1.project_id
-  #              },
-  #              {
-  #                'value' => raw_datum_2.value,
-  #                'iteration_index' => raw_datum_2.iteration_index,
-  #                'project_id' => raw_datum_2.project_id
-  #              }
-  #            ]
-  #          }
-
-  #     expect(response).not_to be_success
-  #     expect(RawDatum.count).to eq(0)
-  #   end
-
-  #   it 'associates every raw_datum with the right project from raw_data ids' do
-  #     raw_datum = FactoryGirl.create(:raw_datum)
-  #     project = raw_datum.project
-  #     raw_datum_1 = FactoryGirl.build(:raw_datum, key: 'compliance', project: project)
-  #     raw_datum_2 = FactoryGirl.build(:raw_datum, key: 'precision', project: project)
-  #     expect(RawDatum.count).to eq(0)
-
-  #     post api_v1_raw_data_path(auth_token: @auth_token),
-  #          params: {
-  #            raw_data: [
-  #              {
-  #               'key' => raw_datum_1.key,
-  #               'value' => raw_datum_1.value,
-  #               'iteration_index' => raw_datum_1.iteration_index,
-  #               'raw_data_ids' => [raw_datum.id]
-  #              },
-  #              {
-  #               'key' => raw_datum_2.key,
-  #               'value' => raw_datum_2.value,
-  #               'iteration_index' => raw_datum_2.iteration_index,
-  #               'raw_data_ids' => [raw_datum.id]
-  #              }
-  #            ]
-  #          }
-
-  #     expect(response).to be_success
-  #     expect(RawDatum.count).to eq(2)
-  #     json = JSON.parse(response.body)
-  #     raw_datum_1 = RawDatum.first
-  #     raw_datum_2 = RawDatum.second
-  #     expect(json).to eq(
-  #       [
-  #         {
-  #           'id' => raw_datum_1.id,
-  #           'key' => raw_datum_1.key,
-  #           'value' => raw_datum_1.value,
-  #           'iteration_index' => raw_datum_1.iteration_index,
-  #           'project_id' => project.id
-  #         },
-  #         {
-  #           'id' => raw_datum_2.id,
-  #           'key' => raw_datum_2.key,
-  #           'value' => raw_datum_2.value,
-  #           'iteration_index' => raw_datum_2.iteration_index,
-  #           'project_id' => project.id
-  #         },
-  #       ]
-  #     )
-  #   end
-  # end
-
-  # it 'patches a raw_datum' do
-  #   project = FactoryGirl.create(:project)
-  #   raw_datum = FactoryGirl.create(:raw_datum, project: project)
-  #   expect(RawDatum.count).to eq(1)
-
-  #   patch api_v1_raw_datum_path(raw_datum, auth_token: @auth_token),
-  #         params: {
-  #           raw_datum: {
-  #             'key' => 'new_key',
-  #             'value' => '0.987654321',
-  #             'iteration_index' => 23
-  #           }
-  #         }
-
-  #   expect(response).to be_success
-  #   expect(RawDatum.count).to eq(1)
-
-  #   json = JSON.parse(response.body)
-  #   expect(json).to eq(
-  #     {
-  #       'id' => raw_datum.id,
-  #       'key' => 'new_key',
-  #       'value' => '0.987654321',
-  #       'iteration_index' => 23,
-  #       'project_id' => raw_datum.project_id
-  #     }
-  #   )
-  #   raw_datum.reload
-  #   expect(raw_datum.key).to eq('new_key')
-  #   expect(raw_datum.value).to eq('0.987654321')
-  #   expect(raw_datum.iteration_index).to eq(23)
-  # end
-
-  # it 'patches a JSON stringify encoded raw_datum' do
-  #   project = FactoryGirl.create(:project)
-  #   raw_datum = FactoryGirl.create(:raw_datum, project: project)
-  #   expect(RawDatum.count).to eq(1)
-
-  #   json_string = "{\"raw_datum\":" \
-  #                 "{\"id\":#{raw_datum.id}," \
-  #                 "\"key\":\"#{raw_datum.key}\"," \
-  #                 "\"value\":\"#{raw_datum.value}\"," \
-  #                 "\"iteration_index\":#{raw_datum.iteration_index}," \
-  #                 "\"project_id\":#{raw_datum.project_id}}}"
-
-  #   patch api_v1_raw_datum_path(raw_datum, auth_token: @auth_token),
-  #         params: json_string,
-  #         headers: {
-  #           'CONTENT_TYPE' => 'application/json',
-  #           'ACCEPT' => 'application/json'
-  #         }
-
-  #   expect(response).to be_success
-  #   expect(RawDatum.count).to eq(1)
-
-  #   json = JSON.parse(response.body)
-  #   raw_datum.reload
-  #   expect(json).to eq(
-  #     {
-  #       'id' => raw_datum.id,
-  #       'key' => raw_datum.key,
-  #       'value' => raw_datum.value,
-  #       'iteration_index' => raw_datum.iteration_index,
-  #       'project_id' => raw_datum.project_id
-  #     }
-  #   )
-  # end
-
-  # it 'destroys a raw_datum' do
-  #   project = FactoryGirl.create(:project)
-  #   raw_datum = FactoryGirl.create(:raw_datum, project: project)
-  #   expect(RawDatum.count).to eq(1)
-
-  #   delete api_v1_raw_datum_path(raw_datum, auth_token: @auth_token)
-
-  #   expect(response).to be_success
-  #   expect(RawDatum.count).to eq(0)
-  #   json = JSON.parse(response.body)
-  #   expect(json).to eq(
-  #     {
-  #       'id' => raw_datum.id,
-  #       'key' => raw_datum.key,
-  #       'value' => raw_datum.value,
-  #       'iteration_index' => raw_datum.iteration_index,
-  #       'project_id' => raw_datum.project_id
-  #     }
-  #   )
-  # end
 end

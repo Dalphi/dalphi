@@ -29,6 +29,12 @@ en:
         response-200: respond with an acknowledgment
         response-400: parameters (id) for statistic are not satisfying
         success: Statistic successfully deleted
+    raw_datum:
+      create:
+        description: Creates one or more new raw data and returns them
+        response-200: responds with the created raw data
+        response-400: parameters for raw datum are not satisfying
+        error: unable to create new raw data
     annotation_document:
       description:
         payload: Payload of the annotation document

@@ -107,21 +107,36 @@ class RawDatum < ApplicationRecord
   def self.batch_create(project, data)
     batch_result = { success: [], error: [] }
     data.each do |datum|
-      filename = datum[:filename]
-      raw_datum = RawDatum.new(
-        project: project,
-        shape: SHAPES.first,
-        filename: filename.force_encoding('utf-8'),
-        data: File.open(datum[:path])
-      )
-      raw_datum.data_file_name = filename
-      if raw_datum.save
-        batch_result[:success] << filename
+      raw_datum = RawDatum.create_with_safe_filename(project, datum)
+      if raw_datum
+        batch_result[:success] << raw_datum.filename
       else
-        batch_result[:error] << filename
+        batch_result[:error] << datum[:filename]
       end
     end
     batch_result
+  end
+
+  def update_with_safe_filename(datum)
+    filename = datum[:filename]
+    self.filename = filename.force_encoding('utf-8')
+    self.data = File.open(datum[:path])
+    self.data_file_name = self.filename
+    return self if self.save
+    nil
+  end
+
+  def self.create_with_safe_filename(project, datum)
+    filename = datum[:filename]
+    raw_datum = RawDatum.new(
+      project: project,
+      shape: SHAPES.first,
+      filename: filename.force_encoding('utf-8'),
+      data: File.open(datum[:path])
+    )
+    raw_datum.data_file_name = filename
+    return raw_datum if raw_datum.save
+    nil
   end
 
   def label
@@ -135,6 +150,16 @@ class RawDatum < ApplicationRecord
     false
   ensure
     zip.close if zip
+  end
+
+  def relevant_attributes
+    {
+      id: id,
+      shape: shape,
+      data: Base64.encode64(Paperclip.io_adapters.for(data).read),
+      filename: filename,
+      project_id: project_id
+    }
   end
 
   private
