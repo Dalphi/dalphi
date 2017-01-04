@@ -207,7 +207,7 @@ GEM
       railties (>= 3.1, <= 5.1)
     mysql2 (0.4.5)
     nio4r (1.2.1)
-    nokogiri (1.7.0)
+    nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
     normalize-rails (4.1.1)
     orm_adapter (0.5.0)
