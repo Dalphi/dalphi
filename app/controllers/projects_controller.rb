@@ -20,10 +20,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['projects']
-    @projects = @projects.paginate(
-                           page: params[:page],
-                           per_page: objects_per_page
-                         )
+    @projects = @projects.paginate page: params[:page],
+                                   per_page: objects_per_page
   end
 
   # GET /projects/1
@@ -204,12 +202,10 @@ class ProjectsController < ApplicationController
         iteration_index = Statistic.where(project: @project).maximum(:iteration_index) || 0
         iteration_index += 1
         @statistics.each do |statistic|
-          statistic = Statistic.new(
-                        key: statistic['key'],
-                        value: statistic['value'],
-                        iteration_index: iteration_index,
-                        project: @project
-                      )
+          statistic = Statistic.new key: statistic['key'],
+                                    value: statistic['value'],
+                                    iteration_index: iteration_index,
+                                    project: @project
           statistic.save!
         end
       end
@@ -218,12 +214,7 @@ class ProjectsController < ApplicationController
     def merge_annotation_documents
       record_count = error_count = 0
       @project.merge_data.each do |merge_datum|
-        merge_service = @project.merge_service
-        response = json_post_request merge_service.url,
-                                     {
-                                       merge_datum: merge_datum,
-                                       callback_url: api_v1_raw_data_url(auth_token: ApplicationController.generate_auth_token)
-                                     }
+        response = merge_request merge_datum
         if response.kind_of? Net::HTTPSuccess
           response_body = JSON.parse(response.body)
           next if response_body['status'] == 'async'
@@ -233,10 +224,19 @@ class ProjectsController < ApplicationController
         end
         record_count += 1
       end
-
       return record_count, error_count
     rescue
       false
+    end
+
+    def merge_request(merge_datum)
+      merge_service = @project.merge_service
+      callback_url = api_v1_raw_data_url auth_token: ApplicationController.generate_auth_token
+      json_post_request merge_service.url,
+                        {
+                          merge_datum: merge_datum,
+                          callback_url: callback_url
+                        }
     end
 
     def process_merged_data(response_body)

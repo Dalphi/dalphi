@@ -43,16 +43,15 @@ RSpec.describe 'Project merge', type: :request do
 
     stub_request(:post, 'http://example.com/merge')
       .with(
-        body: @project.merge_data.first.to_json(except: %w(created_at updated_at project_id requested_at)),
-        headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'application/json', 'User-Agent' => 'Ruby' }
+        body: {
+          merge_datum: @project.merge_data.first.to_json(except: %w(created_at updated_at project_id requested_at))
+        }
       )
       .to_return(
-        status: 200,
         body: {
           content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/merged.txt").read),
           raw_datum_id: raw_datum.id
-        }.to_json,
-        headers: { 'Content-Type' => 'application/json' }
+        }.to_json
       )
 
     expect(RawDatum.count).to eq(1)

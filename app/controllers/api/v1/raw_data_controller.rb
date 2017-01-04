@@ -18,11 +18,7 @@ module API
         ActiveRecord::Base.transaction do
           raw_data = []
           raw_data_params.each do |rd_params|
-            @raw_datum = RawDatum.create_with_safe_filename Project.find(rd_params[:project_id]),
-                                                            {
-                                                              filename: rd_params[:data].original_filename,
-                                                              path: rd_params[:data].tempfile
-                                                            }
+            @raw_datum = raw_datum_from_params(rd_params)
             raise 'invalid' unless @raw_datum
             raw_data << @raw_datum.relevant_attributes
           end
@@ -41,10 +37,12 @@ module API
 
       # PATCH/PUT /api/v1/raw_data/1
       def update
-        if @raw_datum.update_with_safe_filename({
-                                                  filename: raw_datum_params[:data].original_filename,
-                                                  path: raw_datum_params[:data].tempfile
-                                                })
+        raw_datum_params_data = raw_datum_params[:data]
+        data = {
+                 filename: raw_datum_params_data.original_filename,
+                 path: raw_datum_params_data.tempfile
+               }
+        if @raw_datum.update_with_safe_filename(data)
           render json: @raw_datum.relevant_attributes
         else
           render status: 400,
@@ -65,6 +63,17 @@ module API
       end
 
       private
+
+      def raw_datum_from_params(rd_params)
+        project = Project.find(rd_params[:project_id])
+        rd_params_data = rd_params[:data]
+        data = {
+                 filename: rd_params_data.original_filename,
+                 path: rd_params_data.tempfile
+               }
+        @raw_datum = RawDatum.create_with_safe_filename project, data
+        @raw_datum
+      end
 
       def set_raw_datum
         @raw_datum = RawDatum.find(params[:id])
