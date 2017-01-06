@@ -70,7 +70,7 @@ class Project < ApplicationRecord
                      File.new(raw_datum.data.path).read
                    )
         },
-        annotation_documents: annotation_documents
+        annotation_documents: annotation_documents.map { |document| document.relevant_attributes }
       }
     end
     data
