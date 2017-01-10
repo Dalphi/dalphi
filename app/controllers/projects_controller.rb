@@ -230,13 +230,10 @@ class ProjectsController < ApplicationController
     end
 
     def merge_request(merge_datum)
+      merge_datum[:callback_url] = api_v1_raw_data_url auth_token: ApplicationController.generate_auth_token
       merge_service = @project.merge_service
-      callback_url = api_v1_raw_data_url auth_token: ApplicationController.generate_auth_token
       json_post_request merge_service.url,
-                        {
-                          merge_datum: merge_datum,
-                          callback_url: callback_url
-                        }
+                        merge_datum
     end
 
     def process_merged_data(response_body)
