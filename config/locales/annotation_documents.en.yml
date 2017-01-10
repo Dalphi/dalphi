@@ -1,5 +1,9 @@
 en:
   annotation-documents:
+    delete-all: 'Delete all'
+    action:
+      destroy:
+        success: Annotation documents were successfully destroyed.
     blank-slate:
       admin:
         index:

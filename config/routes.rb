@@ -66,9 +66,13 @@ Rails.application.routes.draw do
       resources :annotation_documents, only: [:index, :show]
     end
 
+    delete '/raw_data', to: 'raw_data#destroy_all'
+
     resources :annotators, only: [:index, :show, :destroy]
 
     resources :annotation_documents, only: [:index, :show]
+
+    delete '/annotation_documents', to: 'annotation_documents#destroy_all'
 
     # Annotation Documents
 

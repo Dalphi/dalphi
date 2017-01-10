@@ -40,9 +40,16 @@
       .col-xs-12
          = render 'shared/button', type: 'back'
          = render 'shared/button',
-                  label: t('raw-data.download'),
-                  href: project_raw_data_path(@project, format: :zip),
-                  icon: 'download'
+                  group: [{ label: t('raw-data.download'),
+                            href: project_raw_data_path(@project, format: :zip),
+                            icon: 'download' }]
+         = render 'shared/button',
+                  group: [{ label: t('raw-data.delete-all'),
+                            href: project_raw_data_path(@project),
+                            icon: 'trash',
+                            type: 'danger',
+                            confirm: t('delete-confirm'),
+                            method: 'delete' }]
          = render 'shared/button',
                   type: 'primary',
                   label: t('activerecord.actions.raw-datum.new'),
