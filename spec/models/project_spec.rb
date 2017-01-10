@@ -440,7 +440,7 @@ RSpec.describe Project, type: :model do
         )
       )
       expect(merge_data[:annotation_documents].size).to eq(1)
-      expect(merge_data[:annotation_documents].first).to eq(annotation_document)
+      expect(merge_data[:annotation_documents].first).to eq(annotation_document.relevant_attributes)
     end
   end
 
