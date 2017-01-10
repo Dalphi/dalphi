@@ -78,9 +78,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    chartkick (2.2.1)
-    climate_control (0.0.3)
-      activesupport (>= 3.0)
+    chartkick (2.2.2)
+    climate_control (0.1.0)
     clipboard-rails (1.5.16)
     cliver (0.3.2)
     cocaine (0.5.8)
@@ -302,7 +301,7 @@ GEM
       parser (~> 2.3.1, >= 2.3.1.2)
       rainbow (~> 2.0)
     ref (2.0.0)
-    require_all (1.3.3)
+    require_all (1.4.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rspec-core (3.5.4)
@@ -341,7 +340,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    scss_lint (0.51.0)
+    scss_lint (0.52.0)
       rake (>= 0.9, < 13)
       sass (~> 3.4.20)
     sdoc (0.4.2)
@@ -350,7 +349,7 @@ GEM
     sexp_processor (4.7.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
-    simple_form (3.3.1)
+    simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
     simplecov (0.12.0)
@@ -379,7 +378,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.12)
+    sqlite3 (1.3.13)
     swagger-blocks (2.0.0)
     sysexits (1.2.0)
     temple (0.7.7)
@@ -387,8 +386,8 @@ GEM
       tins (~> 1.0)
     terminal-table (1.7.3)
       unicode-display_width (~> 1.1.1)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
       ref
     thor (0.19.4)
     thread (0.2.2)
@@ -437,7 +436,7 @@ DEPENDENCIES
   autoprefixer-rails
   awesome_print
   better_errors
-  bootstrap (~> 4.0.0.alpha3)
+  bootstrap (= 4.0.0.alpha5)
   bootstrap_tokenfield_rails
   brakeman
   byebug
