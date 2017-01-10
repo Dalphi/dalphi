@@ -64,6 +64,54 @@ RSpec.describe 'Project merge', type: :request do
     )
   end
 
+  it 'handles asynchronous processing of the merge service' do
+    arbitrary_interface_type = FactoryGirl.create(:interface_type)
+    raw_datum = FactoryGirl.create :raw_datum,
+                                   data: File.new("#{Rails.root}/spec/fixtures/text/unmerged.txt"),
+                                   project: @project
+    annotation_documents = [
+      FactoryGirl.create(:annotation_document,
+                       raw_datum: raw_datum,
+                       interface_type: arbitrary_interface_type,
+                       rank: 1,
+                       payload: {
+                         options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
+                         label: "Enthält Personennamen",
+                         content: "par1",
+                         paragraph_index: 0
+                       }),
+      FactoryGirl.create(:annotation_document,
+                       raw_datum: raw_datum,
+                       interface_type: arbitrary_interface_type,
+                       rank: 2,
+                       payload: {
+                         options: ['Enthält Personennamen', 'Enthält keine Personennamen'],
+                         label: "Enthält Personennamen",
+                         content: "par2",
+                         paragraph_index: 2
+                       })
+    ]
+
+    expect(@project.merge_data.count).to eq(1)
+
+    stub_request(:post, @project.merge_service.url)
+      .to_return(
+        status: 200,
+        body: {
+          'status' => 'async'
+        }.to_json
+      )
+
+    expect(RawDatum.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(2)
+
+    post project_merge_path(@project)
+    expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_annotation_documents_url(@project))
+
+    expect(RawDatum.count).to eq(1)
+    expect(AnnotationDocument.count).to eq(2)
+  end
+
   it 'handles errors of merge service' do
     arbitrary_interface_type = FactoryGirl.create(:interface_type)
     raw_datum = FactoryGirl.create :raw_datum,

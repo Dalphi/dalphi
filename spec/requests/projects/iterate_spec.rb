@@ -33,7 +33,6 @@ RSpec.describe 'Project iterate', type: :request do
           'annotation_documents' => [@response_body]
         }.to_json
       )
-
     expect(AnnotationDocument.count).to eq(0)
 
     post project_iterate_path(@project)
@@ -45,6 +44,22 @@ RSpec.describe 'Project iterate', type: :request do
     %w(interface_type raw_datum_id project_id payload rank skipped requested_at).each do |attribute|
       expect(generated_annotation_document.send(attribute)).to eq(@annotation_document.send(attribute))
     end
+  end
+
+  it 'handles asynchronous processing of the iterate service' do
+    stub_request(:post, @project.iterate_service.url)
+      .to_return(
+        status: 200,
+        body: {
+          'status' => 'async'
+        }.to_json
+      )
+    expect(AnnotationDocument.count).to eq(0)
+
+    post project_iterate_path(@project)
+    expect(response.header['Location'].gsub(/\?.*/, '')).to eq(project_annotation_documents_url(@project))
+
+    expect(AnnotationDocument.count).to eq(0)
   end
 
   it 'generates no annotation documents when iterate service does not respond with such' do
