@@ -5,20 +5,21 @@ class AnnotationDocumentsController < ApplicationController
                 except: [:next]
   before_action :set_project,
                 only: [
-                  :next,
+                  :destroy_all,
                   :index,
+                  :next,
                   :show
                 ]
   before_action :set_raw_datum,
                only: [:index]
+  before_action :set_annotation_documents, only: [:index, :destroy_all]
   before_action :set_annotation_document,
                 only: [:show]
 
   # GET /projects/1/annotation_documents
   # GET /projects/1/raw_data/1/annotation_documents
   def index
-    annotation_documents = AnnotationDocument.where(project: @project)
-                                             .order(rank: :asc)
+    annotation_documents = @annotation_documents.order(rank: :asc)
     annotation_documents = annotation_documents.where(raw_datum: @raw_datum) if @raw_datum
     per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['annotation-documents']
     @annotation_documents = annotation_documents
@@ -50,6 +51,12 @@ class AnnotationDocumentsController < ApplicationController
     end
   end
 
+  def destroy_all
+    @annotation_documents.destroy_all
+    redirect_to project_annotation_documents_path(@project),
+                notice: I18n.t('annotation-documents.action.destroy.success')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
@@ -67,6 +74,10 @@ class AnnotationDocumentsController < ApplicationController
 
     def set_annotation_document
       @annotation_document = AnnotationDocument.find(params[:id])
+    end
+
+    def set_annotation_documents
+      @annotation_documents = AnnotationDocument.where(project: @project)
     end
 
     def annotation_documents(count)

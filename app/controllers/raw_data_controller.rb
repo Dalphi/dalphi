@@ -1,11 +1,11 @@
 class RawDataController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_raw_datum, only: [:show, :edit, :update, :destroy]
   before_action :set_project
+  before_action :set_raw_data, only: [:index, :destroy_all]
+  before_action :set_raw_datum, only: [:show, :edit, :update, :destroy]
 
   # GET /raw_data
   def index
-    @raw_data = RawDatum.where(project: @project)
     respond_to do |format|
       format.js { render json: @raw_data }
       format.zip do
@@ -63,10 +63,20 @@ class RawDataController < ApplicationController
     redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.destroy.success')
   end
 
+  # DELETE /raw_data
+  def destroy_all
+    @raw_data.destroy_all
+    redirect_to project_raw_data_path(@project), notice: I18n.t('raw-data.action.destroy.success')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_raw_datum
       @raw_datum = RawDatum.find(params[:id])
+    end
+
+    def set_raw_data
+      @raw_data = RawDatum.where(project: @project)
     end
 
     def set_project

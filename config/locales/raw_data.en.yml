@@ -3,6 +3,7 @@ en:
     edit-title: Edit %{raw_datum_label}
     new-title: New raw datum
     download: Download raw data
+    delete-all: Delete all
     annotation-documents:
       title: Associated annotation documents
       blank-slate: No annotation documents associated.
