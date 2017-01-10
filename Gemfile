@@ -4,7 +4,7 @@ ruby '2.3.3'
 
 gem 'ace-rails-ap'
 gem 'autoprefixer-rails'
-gem 'bootstrap', '~> 4.0.0.alpha3'
+gem 'bootstrap', '= 4.0.0.alpha5'
 gem 'bootstrap_tokenfield_rails'
 gem 'chartkick'
 gem 'clipboard-rails'
