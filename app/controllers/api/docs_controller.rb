@@ -42,12 +42,14 @@ module API
 
     SWAGGERED_CLASSES = [
       API::V1::AnnotationDocumentsController,
+      API::V1::ErrorModel,
+      API::V1::RawDataController,
       API::V1::StatisticsController,
       API::V1::WhoAreYouController,
-      API::V1::ErrorModel,
       AnnotationDocument,
-      Statistic,
+      RawDatum,
       Service,
+      Statistic,
       self,
     ].freeze
 

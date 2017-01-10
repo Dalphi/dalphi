@@ -30,11 +30,34 @@ en:
         response-400: parameters (id) for statistic are not satisfying
         success: Statistic successfully deleted
     raw_datum:
+      description:
+        id: Internal id for DALPHI's database; set after a raw datum was saved
+        shape: Shape of the given raw datum
+        data: Actual base64 encoded data of the given raw datum
+        filename: Filename of the data during its upload
+        project_id: Id of the corresponding project to which this raw datum belongs
       create:
         description: Creates one or more new raw data and returns them
         response-200: responds with the created raw data
         response-400: parameters for raw datum are not satisfying
         error: unable to create new raw data
+      general-errors:
+        parameter-type-mismatch: a given parameter has the wrong type
+      show:
+        description: Returns a raw datum
+        response-200: respond with the requested raw datum
+        response-400: parameters (id) for raw datum not satisfying
+        error: unable to get a raw datum for the given parameters
+      update:
+        description: Updates an existing raw datum and returns the new values
+        response-200: respond with the updated raw datum
+        response-400: parameters (id) for raw datum are not satisfying
+        error: unable to update the raw datum with the given parameters
+      destroy:
+        description: Destroys an existing raw datum
+        response-200: respond with an acknowledgment
+        response-400: parameters (id) for raw datum are not satisfying
+        success: Raw datum successfully deleted
     annotation_document:
       description:
         payload: Payload of the annotation document

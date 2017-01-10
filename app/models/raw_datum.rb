@@ -1,4 +1,6 @@
 class RawDatum < ApplicationRecord
+  include Swagger::Blocks
+
   MIME_TYPES = {
     text: [
       'text/plain',
@@ -17,6 +19,42 @@ class RawDatum < ApplicationRecord
   has_attached_file :data
   before_create :destroy_raw_datum_with_same_filename
   before_update :set_filename
+
+  swagger_schema :RawDatum do
+    key :required,
+        [
+          :shape,
+          :data,
+          :project_id,
+          :filename
+        ]
+
+    property :id do
+      key :description, I18n.t('api.raw_datum.description.id')
+      key :type, :integer
+    end
+
+    property :shape do
+      key :description, I18n.t('api.raw_datum.description.shape')
+      key :type, :string
+    end
+
+    property :data do
+      key :description, I18n.t('api.raw_datum.description.data')
+      key :example, 'RGkgMTAuIEphbiAxNTozMDowNCBDRVQgMjAxNwo='
+      key :type, :string
+    end
+
+    property :filename do
+      key :description, I18n.t('api.raw_datum.description.filename')
+      key :type, :string
+    end
+
+    property :project_id do
+      key :description, I18n.t('api.raw_datum.description.project_id')
+      key :type, :integer
+    end
+  end
 
   validates :project,
     presence: true

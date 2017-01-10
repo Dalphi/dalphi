@@ -1,6 +1,8 @@
 module API
   module V1
     class RawDataController < BaseController
+      include Swagger::Blocks
+
       before_action :set_raw_datum,
                     only: [
                       :show,
@@ -8,9 +10,78 @@ module API
                       :destroy
                     ]
 
+      swagger_path '/raw_data/{id}' do
+        operation :get do
+          key :comsumes, ['application/json']
+          key :description, I18n.t('api.raw_datum.show.description')
+          key :operationId, 'raw_datum_read'
+          key :produces, ['application/json']
+          key :tags, ['RawData']
+
+          parameter name: :id do
+            key :in, :path
+            key :required, true
+            key :type, :integer
+            key :format, :int32
+          end
+
+          response 200 do
+            key :description, I18n.t('api.raw_datum.show.response-200')
+            schema do
+              key :'$ref', :RawDatum
+            end
+          end
+
+          response 400 do
+            key :description, I18n.t('api.raw_datum.show.response-400')
+            schema do
+              key :'$ref', :ErrorModel
+            end
+          end
+        end
+      end
+
       # GET /api/v1/raw_data/1
       def show
         render json: @raw_datum.relevant_attributes
+      end
+
+      swagger_path '/raw_data' do
+        operation :post do
+          key :comsumes, ['application/json']
+          key :description, I18n.t('api.raw_datum.create.description')
+          key :operationId, 'raw_datum_create'
+          key :produces, ['application/json']
+          key :tags, ['RawData']
+
+          parameter name: :json_object do
+            key :in, :body
+            key :required, true
+            schema do
+              key :type, :array
+              items do
+                key :'$ref', :RawDatum
+              end
+            end
+          end
+
+          response 200 do
+            key :description, I18n.t('api.raw_datum.create.response-200')
+            schema do
+              key :type, :array
+              items do
+                key :'$ref', :RawDatum
+              end
+            end
+          end
+
+          response 400 do
+            key :description, I18n.t('api.raw_datum.create.response-400')
+            schema do
+              key :'$ref', :ErrorModel
+            end
+          end
+        end
       end
 
       # POST /api/v1/raw_data
@@ -35,6 +106,45 @@ module API
                }
       end
 
+      swagger_path '/raw_data/{id}' do
+        operation :patch do
+          key :comsumes, ['application/json']
+          key :description, I18n.t('api.raw_datum.update.description')
+          key :operationId, 'raw_datum_update'
+          key :produces, ['application/json']
+          key :tags, ['RawData']
+
+          parameter name: :id do
+            key :in, :path
+            key :required, true
+            key :type, :integer
+            key :format, :int32
+          end
+
+          parameter name: :json_object do
+            key :in, :body
+            key :required, true
+            schema do
+              key :'$ref', :RawDatum
+            end
+          end
+
+          response 200 do
+            key :description, I18n.t('api.raw_datum.update.response-200')
+            schema do
+              key :'$ref', :RawDatum
+            end
+          end
+
+          response 400 do
+            key :description, I18n.t('api.raw_datum.update.response-400')
+            schema do
+              key :'$ref', :ErrorModel
+            end
+          end
+        end
+      end
+
       # PATCH/PUT /api/v1/raw_data/1
       def update
         raw_datum_params_data = raw_datum_params[:data]
@@ -53,6 +163,37 @@ module API
         end
       rescue ArgumentError
         return_parameter_type_mismatch
+      end
+
+      swagger_path '/raw_data/{id}' do
+        operation :delete do
+          key :comsumes, ['application/json']
+          key :description, I18n.t('api.raw_datum.destroy.description')
+          key :operationId, 'raw_datum_destroy'
+          key :produces, ['application/json']
+          key :tags, ['RawData']
+
+          parameter name: :id do
+            key :in, :path
+            key :required, true
+            key :type, :integer
+            key :format, :int32
+          end
+
+          response 200 do
+            key :description, I18n.t('api.raw_datum.destroy.response-200')
+            schema do
+              key :'$ref', :RawDatum
+            end
+          end
+
+          response 400 do
+            key :description, I18n.t('api.raw_datum.destroy.response-400')
+            schema do
+              key :'$ref', :ErrorModel
+            end
+          end
+        end
       end
 
       def destroy
