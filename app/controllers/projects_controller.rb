@@ -218,7 +218,7 @@ class ProjectsController < ApplicationController
         if response.kind_of? Net::HTTPSuccess
           response_body = JSON.parse(response.body)
           next if response_body['status'] == 'async'
-          process_merged_data(JSON.parse(response_body))
+          process_merged_data(response_body)
         else
           error_count += 1
         end

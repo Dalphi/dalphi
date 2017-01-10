@@ -64,8 +64,8 @@ class Project < ApplicationRecord
     data = []
     self.annotation_documents.group_by(&:raw_datum).each do |raw_datum, annotation_documents|
       data << {
-        corpus_document: {
-          raw_datum_id: raw_datum.id,
+        raw_datum: {
+          id: raw_datum.id,
           content: Base64.encode64(
                      File.new(raw_datum.data.path).read
                    )
