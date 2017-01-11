@@ -369,7 +369,7 @@ RSpec.describe Project, type: :model do
       expect(@project.iterate_data).to eq([])
     end
 
-    it 'should contain raw_datum_id and base64 encoded content for one present raw datum' do
+    it 'should contain raw_datum.id and base64 encoded data for one present raw datum' do
       raw_datum = FactoryGirl.create :raw_datum,
                                      project: @project
 
@@ -377,8 +377,8 @@ RSpec.describe Project, type: :model do
       expect(@project.iterate_data.size).to eq(1)
 
       iterate_data = @project.iterate_data.first
-      expect(iterate_data[:raw_datum_id]).to eq(raw_datum.id)
-      expect(iterate_data[:content]).to eq(
+      expect(iterate_data[:id]).to eq(raw_datum.id)
+      expect(iterate_data[:data]).to eq(
         Base64.encode64(
           File.new(raw_datum.data.path).read
         )
@@ -402,8 +402,8 @@ RSpec.describe Project, type: :model do
       expect(@project.iterate_data.size).to eq(2)
 
       @project.iterate_data.each_with_index do |iterate_data, i|
-        expect(iterate_data[:raw_datum_id]).to eq(raw_data[i].id)
-        expect(iterate_data[:content]).to eq(
+        expect(iterate_data[:id]).to eq(raw_data[i].id)
+        expect(iterate_data[:data]).to eq(
           Base64.encode64(
             File.new(raw_data[i].data.path).read
           )
@@ -451,8 +451,8 @@ RSpec.describe Project, type: :model do
       @project.raw_data = [raw_datum]
       @project.update_merged_raw_datum(
         {
-          'raw_datum_id' => (raw_datum.id + 1),
-          'content' => Base64.encode64('{"new":"content"}')
+          'id' => (raw_datum.id + 1),
+          'data' => Base64.encode64('{"new":"content"}')
         }
       )
       expect(File.new(raw_datum.data.path).read).not_to eq('{"new":"content"}')
@@ -464,8 +464,8 @@ RSpec.describe Project, type: :model do
       @project.raw_data = [raw_datum]
       @project.update_merged_raw_datum(
         {
-          'raw_datum_id' => raw_datum.id,
-          'content' => Base64.encode64('{"new":"content"}')
+          'id' => raw_datum.id,
+          'data' => Base64.encode64('{"new":"content"}')
         }
       )
       expect(File.new(raw_datum.data.path).read).to eq('{"new":"content"}')

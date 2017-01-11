@@ -179,11 +179,7 @@ RSpec.describe 'RawData API', type: :request do
 
     patch api_v1_raw_datum_path(raw_datum, auth_token: @auth_token),
           params: {
-            raw_datum: {
-              'shape' => raw_datum.shape,
-              'data' => fixture_file_upload("#{Rails.root}/spec/fixtures/text/valid2.md", 'text/plain'),
-              'project_id' => raw_datum.project.id
-            }
+            'data' => Base64.encode64(File.read("#{Rails.root}/spec/fixtures/text/valid2.md"))
           }
 
     expect(response).to be_success
@@ -202,7 +198,7 @@ RSpec.describe 'RawData API', type: :request do
     expect(updated_raw_datum.id).to eq(raw_datum.id)
     expect(updated_raw_datum.shape).to eq(raw_datum.shape)
     expect(Paperclip.io_adapters.for(updated_raw_datum.data).read).to eq(File.read("#{Rails.root}/spec/fixtures/text/valid2.md"))
-    expect(updated_raw_datum.filename).to eq('valid2.md')
+    expect(updated_raw_datum.filename).to eq(raw_datum.filename)
     expect(updated_raw_datum.project_id).to eq(raw_datum.project_id)
   end
 

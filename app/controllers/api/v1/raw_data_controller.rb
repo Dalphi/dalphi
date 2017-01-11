@@ -147,12 +147,11 @@ module API
 
       # PATCH/PUT /api/v1/raw_data/1
       def update
-        raw_datum_params_data = raw_datum_params[:data]
-        data = {
-                 filename: raw_datum_params_data.original_filename,
-                 path: raw_datum_params_data.tempfile
-               }
-        if @raw_datum.update_with_safe_filename(data)
+        params_data = params['data']
+        if params_data.present?
+          File.write @raw_datum.data.path,
+                     Base64.decode64(params_data).force_encoding('utf-8')
+          @raw_datum.touch
           render json: @raw_datum.relevant_attributes
         else
           render status: 400,

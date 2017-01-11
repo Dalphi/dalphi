@@ -230,7 +230,9 @@ class ProjectsController < ApplicationController
     end
 
     def merge_request(merge_datum)
-      merge_datum[:callback_url] = api_v1_raw_data_url auth_token: ApplicationController.generate_auth_token
+      auth_token = ApplicationController.generate_auth_token
+      merge_datum[:callback_url] = api_v1_raw_datum_url merge_datum[:raw_datum][:id],
+                                                        auth_token: auth_token
       merge_service = @project.merge_service
       json_post_request merge_service.url,
                         merge_datum
@@ -238,7 +240,6 @@ class ProjectsController < ApplicationController
 
     def process_merged_data(response_body)
       @project.update_merged_raw_datum(response_body)
-      AnnotationDocument.where(raw_datum_id: response_body['raw_datum_id']).delete_all
     end
 
     def params_with_associated_models

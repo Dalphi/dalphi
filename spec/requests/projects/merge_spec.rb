@@ -44,8 +44,8 @@ RSpec.describe 'Project merge', type: :request do
     stub_request(:post, @project.merge_service.url)
       .to_return(
         body: {
-          content: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/merged.txt").read),
-          raw_datum_id: raw_datum.id
+          data: Base64.encode64(File.new("#{Rails.root}/spec/fixtures/text/merged.txt").read),
+          id: raw_datum.id
         }.to_json
       )
 

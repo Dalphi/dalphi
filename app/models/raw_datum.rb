@@ -19,6 +19,8 @@ class RawDatum < ApplicationRecord
   has_attached_file :data
   before_create :destroy_raw_datum_with_same_filename
   before_update :set_filename
+  after_update :destroy_annotation_documents
+  after_touch :destroy_annotation_documents
 
   swagger_schema :RawDatum do
     key :required,
@@ -155,15 +157,6 @@ class RawDatum < ApplicationRecord
     batch_result
   end
 
-  def update_with_safe_filename(datum)
-    filename = datum[:filename]
-    self.filename = filename.force_encoding('utf-8')
-    self.data = File.open(datum[:path])
-    self.data_file_name = self.filename
-    return self if self.save
-    nil
-  end
-
   def self.create_with_safe_filename(project, datum)
     filename = datum[:filename]
     raw_datum = RawDatum.new(
@@ -211,5 +204,9 @@ class RawDatum < ApplicationRecord
 
   def set_filename
     self.filename = self.data.original_filename
+  end
+
+  def destroy_annotation_documents
+    AnnotationDocument.where(raw_datum_id: self.id).delete_all
   end
 end
