@@ -8,7 +8,7 @@
 [![Issue Count](https://codeclimate.com/github/Dalphi/dalphi/badges/issue_count.svg)](https://codeclimate.com/github/Dalphi/dalphi)
 [![Test Coverage](https://codeclimate.com/github/Dalphi/dalphi/badges/coverage.svg)](https://codeclimate.com/github/Dalphi/dalphi/coverage)
 
-![DALPHI](https://github.com/Dalphi/dalphi/blob/master/app/assets/images/dalphi-logo.png)
+![DALPHI](https://raw.githubusercontent.com/Dalphi/dalphi/master/app/assets/images/dalphi-logo.png)
 DALPHI - Active Learning Platform for Human Interaction
 
 ## Introduction
@@ -217,7 +217,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -227,7 +227,7 @@ limitations under the License.
 
 ## About Implisense
 
-![Implisense](https://github.com/Dalphi/dalphi/blob/master/app/assets/images/implisense-logo.png)
+![Implisense](https://raw.githubusercontent.com/Dalphi/dalphi/master/app/assets/images/implisense-logo.png)
 
 DALPHI is maintained and funded by [Implisense](http://implisense.com/).
 
