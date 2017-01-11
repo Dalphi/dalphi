@@ -66,9 +66,9 @@ class Project < ApplicationRecord
       data << {
         raw_datum: {
           id: raw_datum.id,
-          content: Base64.encode64(
-                     File.new(raw_datum.data.path).read
-                   )
+          data: Base64.encode64(
+                  File.new(raw_datum.data.path).read
+                )
         },
         annotation_documents: annotation_documents.map { |document| document.relevant_attributes }
       }

@@ -423,7 +423,7 @@ RSpec.describe Project, type: :model do
       expect(@project.merge_data).to eq([])
     end
 
-    it 'should contain raw_datum, raw_datum.content, raw_datum.id and annotation_documents' do
+    it 'should contain raw_datum, raw_datum.data, raw_datum.id and annotation_documents' do
       raw_datum = FactoryGirl.create :raw_datum,
                                      project: @project
       annotation_document = FactoryGirl.create :annotation_document,
@@ -434,7 +434,7 @@ RSpec.describe Project, type: :model do
 
       merge_data = @project.merge_data.first
       expect(merge_data[:raw_datum][:id]).to eq(raw_datum.id)
-      expect(merge_data[:raw_datum][:content]).to eq(
+      expect(merge_data[:raw_datum][:data]).to eq(
         Base64.encode64(
           File.new(raw_datum.data.path).read
         )
@@ -458,7 +458,7 @@ RSpec.describe Project, type: :model do
       expect(File.new(raw_datum.data.path).read).not_to eq('{"new":"content"}')
     end
 
-    it 'should update the content of a raw_datum' do
+    it 'should update the data of a raw_datum' do
       raw_datum = FactoryGirl.create :raw_datum,
                                      project: @project
       @project.raw_data = [raw_datum]
