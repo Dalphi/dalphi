@@ -20,10 +20,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     objects_per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['projects']
-    @projects = @projects.paginate(
-                           page: params[:page],
-                           per_page: objects_per_page
-                         )
+    @projects = @projects.paginate page: params[:page],
+                                   per_page: objects_per_page
   end
 
   # GET /projects/1
@@ -204,12 +202,10 @@ class ProjectsController < ApplicationController
         iteration_index = Statistic.where(project: @project).maximum(:iteration_index) || 0
         iteration_index += 1
         @statistics.each do |statistic|
-          statistic = Statistic.new(
-                        key: statistic['key'],
-                        value: statistic['value'],
-                        iteration_index: iteration_index,
-                        project: @project
-                      )
+          statistic = Statistic.new key: statistic['key'],
+                                    value: statistic['value'],
+                                    iteration_index: iteration_index,
+                                    project: @project
           statistic.save!
         end
       end
@@ -218,25 +214,32 @@ class ProjectsController < ApplicationController
     def merge_annotation_documents
       record_count = error_count = 0
       @project.merge_data.each do |merge_datum|
-        merge_service = @project.merge_service
-        response = json_post_request(merge_service.url, merge_datum)
-
+        response = merge_request merge_datum
         if response.kind_of? Net::HTTPSuccess
-          process_merged_data(JSON.parse(response.body))
+          response_body = JSON.parse(response.body)
+          next if response_body['status'] == 'async'
+          process_merged_data(response_body)
         else
           error_count += 1
         end
         record_count += 1
       end
-
       return record_count, error_count
     rescue
       false
     end
 
+    def merge_request(merge_datum)
+      auth_token = ApplicationController.generate_auth_token
+      merge_datum[:callback_url] = api_v1_raw_datum_url merge_datum[:raw_datum][:id],
+                                                        auth_token: auth_token
+      merge_service = @project.merge_service
+      json_post_request merge_service.url,
+                        merge_datum
+    end
+
     def process_merged_data(response_body)
       @project.update_merged_raw_datum(response_body)
-      AnnotationDocument.where(raw_datum_id: response_body['raw_datum_id']).delete_all
     end
 
     def params_with_associated_models

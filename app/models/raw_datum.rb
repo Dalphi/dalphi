@@ -1,4 +1,6 @@
 class RawDatum < ApplicationRecord
+  include Swagger::Blocks
+
   MIME_TYPES = {
     text: [
       'text/plain',
@@ -17,6 +19,44 @@ class RawDatum < ApplicationRecord
   has_attached_file :data
   before_create :destroy_raw_datum_with_same_filename
   before_update :set_filename
+  after_update :destroy_annotation_documents
+  after_touch :destroy_annotation_documents
+
+  swagger_schema :RawDatum do
+    key :required,
+        [
+          :shape,
+          :data,
+          :project_id,
+          :filename
+        ]
+
+    property :id do
+      key :description, I18n.t('api.raw_datum.description.id')
+      key :type, :integer
+    end
+
+    property :shape do
+      key :description, I18n.t('api.raw_datum.description.shape')
+      key :type, :string
+    end
+
+    property :data do
+      key :description, I18n.t('api.raw_datum.description.data')
+      key :example, 'RGkgMTAuIEphbiAxNTozMDowNCBDRVQgMjAxNwo='
+      key :type, :string
+    end
+
+    property :filename do
+      key :description, I18n.t('api.raw_datum.description.filename')
+      key :type, :string
+    end
+
+    property :project_id do
+      key :description, I18n.t('api.raw_datum.description.project_id')
+      key :type, :integer
+    end
+  end
 
   validates :project,
     presence: true
@@ -107,21 +147,27 @@ class RawDatum < ApplicationRecord
   def self.batch_create(project, data)
     batch_result = { success: [], error: [] }
     data.each do |datum|
-      filename = datum[:filename]
-      raw_datum = RawDatum.new(
-        project: project,
-        shape: SHAPES.first,
-        filename: filename.force_encoding('utf-8'),
-        data: File.open(datum[:path])
-      )
-      raw_datum.data_file_name = filename
-      if raw_datum.save
-        batch_result[:success] << filename
+      raw_datum = RawDatum.create_with_safe_filename(project, datum)
+      if raw_datum
+        batch_result[:success] << raw_datum.filename
       else
-        batch_result[:error] << filename
+        batch_result[:error] << datum[:filename]
       end
     end
     batch_result
+  end
+
+  def self.create_with_safe_filename(project, datum)
+    filename = datum[:filename]
+    raw_datum = RawDatum.new(
+      project: project,
+      shape: SHAPES.first,
+      filename: filename.force_encoding('utf-8'),
+      data: File.open(datum[:path])
+    )
+    raw_datum.data_file_name = filename
+    return raw_datum if raw_datum.save
+    nil
   end
 
   def label
@@ -137,6 +183,16 @@ class RawDatum < ApplicationRecord
     zip.close if zip
   end
 
+  def relevant_attributes
+    {
+      id: id,
+      shape: shape,
+      data: Base64.encode64(Paperclip.io_adapters.for(data).read),
+      filename: filename,
+      project_id: project_id
+    }
+  end
+
   private
 
   def destroy_raw_datum_with_same_filename
@@ -148,5 +204,9 @@ class RawDatum < ApplicationRecord
 
   def set_filename
     self.filename = self.data.original_filename
+  end
+
+  def destroy_annotation_documents
+    AnnotationDocument.where(raw_datum_id: self.id).delete_all
   end
 end

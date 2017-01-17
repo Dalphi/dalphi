@@ -51,10 +51,10 @@ class Project < ApplicationRecord
     data = []
     self.raw_data.each do |raw_datum|
       data << {
-        raw_datum_id: raw_datum.id,
-        content: Base64.encode64(
-                   File.new(raw_datum.data.path).read
-                 )
+        id: raw_datum.id,
+        data: Base64.encode64(
+                File.new(raw_datum.data.path).read
+              )
       }
     end
     data
@@ -64,11 +64,11 @@ class Project < ApplicationRecord
     data = []
     self.annotation_documents.group_by(&:raw_datum).each do |raw_datum, annotation_documents|
       data << {
-        corpus_document: {
-          raw_datum_id: raw_datum.id,
-          content: Base64.encode64(
-                     File.new(raw_datum.data.path).read
-                   )
+        raw_datum: {
+          id: raw_datum.id,
+          data: Base64.encode64(
+                  File.new(raw_datum.data.path).read
+                )
         },
         annotation_documents: annotation_documents.map { |document| document.relevant_attributes }
       }
@@ -77,12 +77,10 @@ class Project < ApplicationRecord
   end
 
   def update_merged_raw_datum(params)
-    raw_datum = self.raw_data.find_by(id: params['raw_datum_id'])
+    raw_datum = self.raw_data.find_by(id: params['id'])
     return unless raw_datum
-
-    File.open(raw_datum.data.path, 'w') do |file|
-      file.write(Base64.decode64(params['content']).force_encoding('utf-8'))
-    end
+    File.write(raw_datum.data.path, Base64.decode64(params['data']).force_encoding('utf-8'))
+    raw_datum.touch
   end
 
   def label
