@@ -9,7 +9,8 @@ module AnnotationDocumentHelper
         'payload' => model_instance.payload,
         'rank' => model_instance.rank,
         'raw_datum_id' => model_instance.raw_datum.id,
-        'skipped' => model_instance.skipped
+        'skipped' => model_instance.skipped,
+        'meta' => model_instance.meta
       }
     )
   end

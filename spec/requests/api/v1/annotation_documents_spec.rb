@@ -35,7 +35,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
         'content' => 'testcontent'
       },
       'skipped' => nil,
-      'interface_type' => 'type_name'
+      'interface_type' => 'type_name',
+      'meta' => {
+        'annotator_twitter_handles' => ['@john']
+      }
     }
     post api_v1_annotation_documents_path(auth_token: @auth_token),
          params: {
@@ -75,7 +78,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
                  'raw_datum_id' => raw_datum.id,
                  'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
                  'skipped' => nil,
-                 'interface_type' => 'type_name'
+                 'interface_type' => 'type_name',
+                 'meta' => {
+                   'annotator_twitter_handles' => ['@john']
+                 }
                }
              ]
            }
@@ -89,7 +95,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
           'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
           'rank' => 0,
           'raw_datum_id' => raw_datum.id,
-          'skipped' => nil
+          'skipped' => nil,
+          'meta' => {
+            'annotator_twitter_handles' => ['@john']
+          }
         }
       )
       expect(AnnotationDocument.count).to eq(1)
@@ -107,14 +116,20 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
                  'raw_datum_id' => raw_datum.id,
                  'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
                  'skipped' => nil,
-                 'interface_type' => 'type_name'
+                 'interface_type' => 'type_name',
+                 'meta' => {
+                   'annotator_twitter_handles' => ['@john']
+                 }
                },
                {
                  'rank' => 1,
                  'raw_datum_id' => raw_datum.id,
                  'payload' => JSON.parse("{\"label\":\"anotherlabel\",\"options\":[\"option1\",\"option2\",\"option3\"],\"content\":\"othercontent\"}"),
                  'skipped' => nil,
-                 'interface_type' => 'type_name'
+                 'interface_type' => 'type_name',
+                 'meta' => {
+                   'annotator_twitter_handles' => ['@john', '@jane']
+                 }
                }
              ]
            }
@@ -129,7 +144,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
             'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
             'rank' => 0,
             'raw_datum_id' => raw_datum.id,
-            'skipped' => nil
+            'skipped' => nil,
+            'meta' => {
+              'annotator_twitter_handles' => ['@john']
+            }
           },
           {
             'id' => 2,
@@ -137,7 +155,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
             'payload' => JSON.parse("{\"label\":\"anotherlabel\",\"options\":[\"option1\",\"option2\",\"option3\"],\"content\":\"othercontent\"}"),
             'rank' => 1,
             'raw_datum_id' => raw_datum.id,
-            'skipped' => nil
+            'skipped' => nil,
+            'meta' => {
+              'annotator_twitter_handles' => ['@john', '@jane']
+            }
           },
         ]
       )
@@ -156,14 +177,20 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
                  'raw_datum_id' => raw_datum.id,
                  'payload' => nil,
                  'skipped' => nil,
-                 'interface_type' => 'type_name'
+                 'interface_type' => 'type_name',
+                 'meta' => {
+                   'annotator_twitter_handles' => ['@john']
+                 }
                },
                {
                  'rank' => 1,
                  'raw_datum_id' => raw_datum.id,
                  'payload' => JSON.parse("{\"label\":\"anotherlabel\",\"options\":[\"option1\",\"option2\",\"option3\"],\"content\":\"othercontent\"}"),
                  'skipped' => nil,
-                 'interface_type' => 'type_name'
+                 'interface_type' => 'type_name',
+                 'meta' => {
+                   'annotator_twitter_handles' => ['@john', '@jane']
+                 }
                }
              ]
            }
@@ -186,7 +213,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
               'interface_type' => 'type_name',
               'rank' => 123,
               'payload' => payload,
-              'skipped' => true
+              'skipped' => true,
+              'meta' => {
+                'annotator_twitter_handles' => ['@john', '@jane']
+              }
             }
           }
 
@@ -200,7 +230,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
       'raw_datum_id' => 1,
       'payload' => payload,
       'rank' => 123,
-      'skipped' => true
+      'skipped' => true,
+      'meta' => {
+        'annotator_twitter_handles' => ['@john', '@jane']
+      }
     )
 
     annotation_document.reload
@@ -260,7 +293,10 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
         'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
-        'skipped' => nil
+        'skipped' => nil,
+        'meta' => {
+          'annotator_twitter_handles' => ['@john']
+        }
       }
     )
   end

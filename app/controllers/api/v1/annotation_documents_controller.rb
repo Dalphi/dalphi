@@ -234,9 +234,11 @@ module API
             :payload,
             :rank,
             :raw_datum_id,
-            :skipped
+            :skipped,
+            :meta
           )
           parameters[:payload] = params[:annotation_document][:payload]
+          parameters[:meta] = params[:annotation_document][:meta]
           parameters
         end
 
@@ -245,6 +247,8 @@ module API
           annotation_document ||= annotation_document_params
           payload = annotation_document['payload']
           payload.permit! unless payload.class == Hash
+          meta = annotation_document['meta']
+          meta.permit! unless meta.class == Hash
           annotation_document['interface_type'] = InterfaceType.find_or_create_by(
                                                     name: annotation_document['interface_type']
                                                   )

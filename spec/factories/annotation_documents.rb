@@ -16,12 +16,18 @@ payload_2 = {
   content: "awesome text"
 }
 
+meta = {
+  'annotator_twitter_handles': ['@john']
+}
+
+
 FactoryGirl.define do
   factory :annotation_document do
     raw_datum { FactoryGirl.create(:raw_datum) }
     interface_type { FactoryGirl.create(:interface_type) }
     payload payload_1
     requested_at nil
+    meta meta
 
     factory :annotation_document_with_different_admin do
       raw_datum { FactoryGirl.create(:raw_datum_with_different_admin) }
