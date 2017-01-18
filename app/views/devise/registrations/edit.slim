@@ -1,7 +1,7 @@
 .container
   .row
     .col-xs-12.text-xs-center
-      = gravatar_image_tag(current_admin.email, size: '128')
+      = gravatar_image_tag(current_admin.email, gravatar: { size: '256', secure: true })
   = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
     .row
       .col-xs-12

@@ -5,7 +5,7 @@
         .card-block
           h4.card-title
             = @annotator.name
-        = gravatar_image_tag(@annotator.email, gravatar: { size: '256' })
+        = gravatar_image_tag(@annotator.email, gravatar: { size: '256', secure: true })
         .card-block
           = render 'shared/button',
                    label: @annotator.email,
