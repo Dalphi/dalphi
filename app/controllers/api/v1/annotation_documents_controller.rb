@@ -237,8 +237,9 @@ module API
             :skipped,
             :meta
           )
-          parameters[:payload] = params[:annotation_document][:payload]
-          parameters[:meta] = params[:annotation_document][:meta]
+          params_annotation_document = params[:annotation_document]
+          parameters[:payload] = params_annotation_document[:payload]
+          parameters[:meta] = params_annotation_document[:meta]
           parameters
         end
 
