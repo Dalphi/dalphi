@@ -1,20 +1,36 @@
-code_analysis:
-  stage: test
-  script:
-    - bin/code-analyzers
+cache:
+  paths:
+    - .bundle
+    - vendor/
+  key: c98bd0bf8b709c6dceee3bdcddc0eef5
+
+before_script:
+  - gem install bundler --no-ri --no-rdoc
+  - RAILS_ENV=test bundle install --path vendor/
+
+stages:
+  - linting
+  - code_analysis
+  - testing
+  - deployment
 
 linting:
-  stage: test
+  stage: linting
   script:
     - bin/linters
 
+code_analysis:
+  stage: code_analysis
+  script:
+    - bin/code-analyzers
+
 testing:
-  stage: test
+  stage: testing
   script:
     - bin/testing
 
 deployment:
-  stage: deploy
+  stage: deployment
   script:
     - bin/deploy
   only:
