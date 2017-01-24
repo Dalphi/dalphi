@@ -12,7 +12,10 @@
                 th = t('activerecord.attributes.project.description')
             tbody
               - annotator.projects.each do |project|
-                tr data-href="#{project_path(project)}"
+                ruby:
+                  data = {}
+                  data = { href: project_path(project) } if current_role.projects.include?(project)
+                tr data=data
                   td
                     = project.title
                     - if project == current_project
