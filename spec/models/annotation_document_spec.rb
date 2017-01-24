@@ -34,6 +34,23 @@ RSpec.describe AnnotationDocument, type: :model do
     it { should belong_to(:interface_type) }
   end
 
+  describe 'meta' do
+    it 'can be nil' do
+      @annotation_document.meta = nil
+      expect(@annotation_document).to be_valid
+    end
+
+    it 'can be empty' do
+      @annotation_document.meta = ''
+      expect(@annotation_document).to be_valid
+    end
+
+    it 'can be a valid JSON' do
+      @annotation_document.meta = { foo: 'bar', foobar: 1.23 }
+      expect(@annotation_document).to be_valid
+    end
+  end
+
   describe 'payload' do
     it 'should not be nil' do
       @annotation_document.payload = nil

@@ -2,6 +2,7 @@ class AnnotationDocument < ApplicationRecord
   include Swagger::Blocks
 
   serialize :payload, JSON
+  serialize :meta, JSON
 
   belongs_to :project
   belongs_to :raw_datum
@@ -17,7 +18,8 @@ class AnnotationDocument < ApplicationRecord
         [
           :interface_type,
           :payload,
-          :raw_datum_id
+          :raw_datum_id,
+          :meta
         ]
 
     property :id do
@@ -40,6 +42,15 @@ class AnnotationDocument < ApplicationRecord
       key :example,
           JSON.parse(
             '{"label":"testlabel","options":["option1","option2"],"content":"testcontent"}'
+          )
+      key :type, :string
+    end
+
+    property :meta do
+      key :description, I18n.t('api.annotation_document.description.meta')
+      key :example,
+          JSON.parse(
+            '{"annotator_twitter_handles":["@john"]}'
           )
       key :type, :string
     end
@@ -81,7 +92,8 @@ class AnnotationDocument < ApplicationRecord
       payload: payload,
       rank: rank,
       raw_datum_id: raw_datum_id,
-      skipped: skipped
+      skipped: skipped,
+      meta: meta
     }
   end
 end

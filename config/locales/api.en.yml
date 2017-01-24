@@ -61,6 +61,7 @@ en:
     annotation_document:
       description:
         payload: Payload of the annotation document
+        meta: Meta of the annotation document
         id: Internal id for DALPHI's database; set after an annotation document was saved
         raw_datum_id: Id of the corresponding raw datum of which this annotation document is a subset of
         interface_type: Interface type definition
