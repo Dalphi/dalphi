@@ -1,7 +1,7 @@
 class AnnotatorsController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_annotator, only: [:show, :edit, :update, :destroy]
   before_action :set_project
+  before_action :set_annotator, only: [:show, :edit, :update, :destroy]
 
   # GET /annotators
   # GET /projects/1/annotators
@@ -64,12 +64,12 @@ class AnnotatorsController < ApplicationController
   private
 
   def set_annotator
-    @annotator = Annotator.find(params[:id])
+    @annotator = @project.annotators.find(params[:id])
   end
 
   def set_project
     project_id = params[:project_id]
-    @project = Project.find(project_id) if project_id
+    @project = current_role.projects.find(project_id) if project_id
   end
 
   def annotator_params

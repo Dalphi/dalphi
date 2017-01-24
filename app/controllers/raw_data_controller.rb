@@ -71,16 +71,16 @@ class RawDataController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_raw_datum
-      @raw_datum = RawDatum.find(params[:id])
+    def set_project
+      @project = current_role.projects.find(params[:project_id])
     end
 
     def set_raw_data
-      @raw_data = RawDatum.where(project: @project)
+      @raw_data = @project.raw_data
     end
 
-    def set_project
-      @project = Project.find(params[:project_id])
+    def set_raw_datum
+      @raw_datum = @project.raw_data.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -60,9 +60,7 @@ class AnnotationDocumentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params[:project_id])
-    rescue
-      render_error_response 400, 'set-project.not-found'
+      @project = current_role.projects.find(params[:project_id])
     end
 
     def set_raw_datum
@@ -73,11 +71,11 @@ class AnnotationDocumentsController < ApplicationController
     end
 
     def set_annotation_document
-      @annotation_document = AnnotationDocument.find(params[:id])
+      @annotation_document = @project.annotation_documents.find(params[:id])
     end
 
     def set_annotation_documents
-      @annotation_documents = AnnotationDocument.where(project: @project)
+      @annotation_documents = @project.annotation_documents
     end
 
     def annotation_documents(count)
@@ -85,11 +83,10 @@ class AnnotationDocumentsController < ApplicationController
       timeout = Rails.configuration.x.dalphi['timeouts']['annotation-document-edit-time']
       time_range = INITIAL_DALPHI_COMMIT_DATETIME..(Time.zone.now - timeout.minutes)
 
-      AnnotationDocument.where(project: @project,
-                               skipped: nil,
-                               requested_at: [nil, time_range])
-                        .order(rank: :asc)
-                        .limit(count)
+      @project.annotation_documents.where(skipped: nil,
+                                          requested_at: [nil, time_range])
+                                   .order(rank: :asc)
+                                   .limit(count)
     end
 
     def render_error_response(code, locale_key)
