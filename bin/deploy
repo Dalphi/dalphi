@@ -2,4 +2,16 @@
 
 ./bin/helpers/message "DEPLOYMENT"
 
-echo "skipping due to no present configuration"
+cd /home/dalphi/dalphi
+
+git stash
+git reset --hard HEAD
+git pull
+
+bundle install
+bundle exec rails assets:precompile
+bundle rails db:migrate
+
+sudo systemctl stop dalphi.target
+sudo systemctl start dalphi.target
+

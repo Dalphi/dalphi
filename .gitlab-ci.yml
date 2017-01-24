@@ -1,0 +1,31 @@
+before_script:
+  - gem install bundler --no-ri --no-rdoc
+  - RAILS_ENV=test bundle install
+
+stages:
+  - linting
+  - code_analysis
+  - testing
+  - deployment
+
+linting:
+  stage: linting
+  script:
+    - bin/linters
+
+code_analysis:
+  stage: code_analysis
+  script:
+    - bin/code-analyzers
+
+testing:
+  stage: testing
+  script:
+    - bin/test
+
+deployment:
+  stage: deployment
+  script:
+    - bin/deploy
+  only:
+    - master
