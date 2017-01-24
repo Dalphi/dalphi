@@ -249,7 +249,7 @@ module API
           payload = annotation_document['payload']
           payload.permit! unless payload.class == Hash
           meta = annotation_document['meta']
-          meta.permit! unless meta.class == Hash
+          meta.permit! if meta && meta.class != Hash
           annotation_document['interface_type'] = InterfaceType.find_or_create_by(
                                                     name: annotation_document['interface_type']
                                                   )
