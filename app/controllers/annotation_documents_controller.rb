@@ -1,4 +1,6 @@
 class AnnotationDocumentsController < ApplicationController
+  include ErrorResponse
+
   # the order of the following before actions matters, since setters rely on each other
   before_action :authenticate_user,
                 only: [:next]
@@ -42,13 +44,13 @@ class AnnotationDocumentsController < ApplicationController
     documents = annotation_documents(annotation_document_params['count'])
 
     if documents.count == 0
-      render_error_response 404, 'next.no-documents'
+      render_annotation_document_errors 404, 'next.no-documents'
 
     elsif documents.update(requested_at: Time.zone.now)
       render json: documents.map{ |document| document.relevant_attributes }
 
     else
-      render_error_response 500, 'next.update-failed'
+      render_annotation_document_errors 500, 'next.update-failed'
     end
   end
 
@@ -63,7 +65,7 @@ class AnnotationDocumentsController < ApplicationController
     def set_project
       @project = current_role.projects.find(params[:project_id])
     rescue
-      render_error_response 400, 'set-project.not-found'
+      render_annotation_document_errors 400, 'set-project.not-found'
     end
 
     def set_raw_datum
@@ -90,13 +92,6 @@ class AnnotationDocumentsController < ApplicationController
                                           requested_at: [nil, time_range])
                                    .order(rank: :asc)
                                    .limit(count)
-    end
-
-    def render_error_response(code, locale_key)
-      render status: code,
-             json: {
-               message: I18n.t("annotation-documents.errors.#{locale_key}")
-             }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
