@@ -1,20 +1,20 @@
 code_analysis:
-  stage: code-analysis
+  stage: test
   script:
     - bin/code-analyzers
 
 linting:
-  stage: linting
+  stage: test
   script:
     - bin/linters
 
 testing:
-  stage: testing
+  stage: test
   script:
     - bin/testing
 
 deployment:
-  stage: deployment
+  stage: deploy
   script:
     - bin/deploy
   only:
