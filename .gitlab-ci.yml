@@ -1,9 +1,3 @@
-cache:
-  paths:
-    - .bundle
-    - vendor/
-  key: c98bd0bf8b709c6dceee3bdcddc0eef5
-
 before_script:
   - gem install bundler --no-ri --no-rdoc
   - RAILS_ENV=test bundle install --path vendor/
