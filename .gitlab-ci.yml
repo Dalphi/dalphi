@@ -1,6 +1,6 @@
 before_script:
   - gem install bundler --no-ri --no-rdoc
-  - RAILS_ENV=test bundle install --path vendor/
+  - RAILS_ENV=test bundle install
 
 stages:
   - linting

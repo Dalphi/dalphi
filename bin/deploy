@@ -3,12 +3,15 @@
 ./bin/helpers/message "DEPLOYMENT"
 
 cd /home/dalphi/dalphi
+
 git stash
 git reset --hard HEAD
 git pull
-bundle
+
+bundle install
 bundle exec rails assets:precompile
 bundle rails db:migrate
+
 sudo systemctl stop dalphi.target
 sudo systemctl start dalphi.target
 
