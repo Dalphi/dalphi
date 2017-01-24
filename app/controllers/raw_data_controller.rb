@@ -1,8 +1,11 @@
 class RawDataController < ApplicationController
+  # the order of the following before actions matters, since setters rely on each other
   before_action :authenticate_admin!
   before_action :set_project
-  before_action :set_raw_data, only: [:index, :destroy_all]
-  before_action :set_raw_datum, only: [:show, :edit, :update, :destroy]
+  before_action :set_raw_data,
+                only: [:index, :destroy_all]
+  before_action :set_raw_datum,
+                only: [:show, :edit, :update, :destroy]
 
   # GET /raw_data
   def index
@@ -71,16 +74,16 @@ class RawDataController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_raw_datum
-      @raw_datum = RawDatum.find(params[:id])
+    def set_project
+      @project = current_role.projects.find(params[:project_id])
     end
 
     def set_raw_data
-      @raw_data = RawDatum.where(project: @project)
+      @raw_data = @project.raw_data
     end
 
-    def set_project
-      @project = Project.find(params[:project_id])
+    def set_raw_datum
+      @raw_datum = @project.raw_data.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

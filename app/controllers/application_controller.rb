@@ -27,6 +27,12 @@ class ApplicationController < ActionController::Base
     authenticate_admin!
   end
 
+  def current_role
+    return current_admin if admin_signed_in?
+    return current_annotator if annotator_signed_in?
+    nil
+  end
+
   def set_locale
     I18n.locale = params[:locale].to_sym
   rescue

@@ -117,15 +117,11 @@ class ProjectsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params[:id])
+      @project = current_role.projects.find(params[:id])
     end
 
     def set_projects
-      if current_admin
-        @projects = Project.where(admin: current_admin)
-      else
-        @projects = Project.where(id: current_annotator.projects.map(&:id))
-      end
+      @projects = current_role.projects
     end
 
     def set_additional_annotator

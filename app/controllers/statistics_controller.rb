@@ -4,7 +4,7 @@ class StatisticsController < ApplicationController
 
   # GET /statistics
   def index
-    @statistics = Statistic.where(project: @project)
+    @statistics = @project.statistics
     per_page = Rails.configuration.x.dalphi['paginated-objects-per-page']['statistics']
     per_page *= @statistics.map(&:key).uniq.count
     @statistics = @statistics.paginate(
@@ -16,6 +16,6 @@ class StatisticsController < ApplicationController
   private
 
   def set_project
-    @project = Project.find(params[:project_id])
+    @project = current_role.projects.find(params[:project_id])
   end
 end
