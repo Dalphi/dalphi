@@ -61,6 +61,8 @@ class AnnotationDocumentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = current_role.projects.find(params[:project_id])
+    rescue
+      render_error_response 400, 'set-project.not-found'
     end
 
     def set_raw_datum

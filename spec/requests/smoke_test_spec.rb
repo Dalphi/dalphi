@@ -17,6 +17,7 @@ RSpec.describe "GET routes", type: :request do
     @project.iterate_service = @iterate_service
     @project.merge_service = @merge_service
     @project.interfaces = [@interface]
+    @project.annotators = [@annotator]
     @project.save!
 
     sign_in(@admin)

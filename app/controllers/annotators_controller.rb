@@ -64,7 +64,9 @@ class AnnotatorsController < ApplicationController
   private
 
   def set_annotator
-    @annotator = @project.annotators.find(params[:id])
+    annotators = Annotator.all
+    annotators = @project.annotators if @project
+    @annotator = annotators.find(params[:id])
   end
 
   def set_project
