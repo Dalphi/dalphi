@@ -2,6 +2,7 @@ module API
   module V1
     class AnnotationDocumentsController < BaseController
       include Swagger::Blocks
+      include ErrorResponse
 
       before_action :set_annotation_document,
                     only: [
@@ -173,7 +174,11 @@ module API
 
       # GET /api/v1/annotation_documents/1
       def show
-        render json: @annotation_document.relevant_attributes
+        if @annotation_document.update(requested_at: Time.zone.now)
+          render json: @annotation_document.relevant_attributes
+        else
+          render_annotation_document_errors 500, 'next.update-failed'
+        end
       end
 
       # PATCH/PUT /api/v1/annotation_documents/1

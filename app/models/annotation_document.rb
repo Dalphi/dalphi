@@ -89,11 +89,13 @@ class AnnotationDocument < ApplicationRecord
     {
       id: id,
       interface_type: interface_type.name,
+      meta: meta,
       payload: payload,
       rank: rank,
       raw_datum_id: raw_datum_id,
+      requested_at: requested_at.to_s,
       skipped: skipped,
-      meta: meta
+      updated_at: updated_at.to_s
     }
   end
 end

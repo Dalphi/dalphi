@@ -48,9 +48,11 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     expect(response).to be_success
     expect(AnnotationDocument.count).to eq(1)
 
-    json = JSON.parse(response.body)
-    annotation_document['id'] = 1
-    expect(json).to eq(annotation_document)
+    json_object = JSON.parse(response.body)
+    object_subset = json_object.except('requested_at')
+                               .except('updated_at')
+                               .except('id')
+    expect(object_subset).to eq(annotation_document)
   end
 
   describe 'bulk creation' do
@@ -95,7 +97,9 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
           'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
           'rank' => 0,
           'raw_datum_id' => raw_datum.id,
+          'requested_at' => '',
           'skipped' => nil,
+          'updated_at' => Time.zone.now.to_s,
           'meta' => {
             'annotator_twitter_handles' => ['@john']
           }
@@ -144,7 +148,9 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
             'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
             'rank' => 0,
             'raw_datum_id' => raw_datum.id,
+            'requested_at' => '',
             'skipped' => nil,
+            'updated_at' => Time.zone.now.to_s,
             'meta' => {
               'annotator_twitter_handles' => ['@john']
             }
@@ -155,7 +161,9 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
             'payload' => JSON.parse("{\"label\":\"anotherlabel\",\"options\":[\"option1\",\"option2\",\"option3\"],\"content\":\"othercontent\"}"),
             'rank' => 1,
             'raw_datum_id' => raw_datum.id,
+            'requested_at' => '',
             'skipped' => nil,
+            'updated_at' => Time.zone.now.to_s,
             'meta' => {
               'annotator_twitter_handles' => ['@john', '@jane']
             }
@@ -228,9 +236,11 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
       'id' => 1,
       'interface_type' => 'type_name',
       'raw_datum_id' => 1,
+      'requested_at' => '',
       'payload' => payload,
       'rank' => 123,
       'skipped' => true,
+      'updated_at' => Time.zone.now.to_s,
       'meta' => {
         'annotator_twitter_handles' => ['@john', '@jane']
       }
@@ -293,7 +303,9 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
         'payload' => JSON.parse("{\"label\":\"testlabel\",\"options\":[\"option1\",\"option2\"],\"content\":\"testcontent\"}"),
         'rank' => nil,
         'raw_datum_id' => 1,
+        'requested_at' => '',
         'skipped' => nil,
+        'updated_at' => Time.zone.now.to_s,
         'meta' => {
           'annotator_twitter_handles' => ['@john']
         }
