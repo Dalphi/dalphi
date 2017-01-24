@@ -28,4 +28,10 @@ module ApplicationHelper
     return 'annotator' if annotator_signed_in?
     return 'admin' if admin_signed_in?
   end
+
+  def current_role
+    return current_annotator if annotator_signed_in?
+    return current_admin if admin_signed_in?
+    nil
+  end
 end
