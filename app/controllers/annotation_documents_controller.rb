@@ -1,4 +1,5 @@
 class AnnotationDocumentsController < ApplicationController
+  # the order of the following before actions matters, since setters rely on each other
   before_action :authenticate_user,
                 only: [:next]
   before_action :authenticate_admin!,

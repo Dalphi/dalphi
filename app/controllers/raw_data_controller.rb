@@ -1,8 +1,11 @@
 class RawDataController < ApplicationController
+  # the order of the following before actions matters, since setters rely on each other
   before_action :authenticate_admin!
   before_action :set_project
-  before_action :set_raw_data, only: [:index, :destroy_all]
-  before_action :set_raw_datum, only: [:show, :edit, :update, :destroy]
+  before_action :set_raw_data,
+                only: [:index, :destroy_all]
+  before_action :set_raw_datum,
+                only: [:show, :edit, :update, :destroy]
 
   # GET /raw_data
   def index
