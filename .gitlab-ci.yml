@@ -21,7 +21,7 @@ code_analysis:
 testing:
   stage: testing
   script:
-    - bin/testing
+    - bin/test
 
 deployment:
   stage: deployment
