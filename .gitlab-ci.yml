@@ -12,16 +12,22 @@ linting:
   stage: linting
   script:
     - bin/linters
+  tags:
+    - dalphi
 
 code_analysis:
   stage: code_analysis
   script:
     - bin/code-analyzers
+  tags:
+    - dalphi
 
 testing:
   stage: testing
   script:
     - bin/test
+  tags:
+    - dalphi
 
 deployment:
   stage: deployment
@@ -29,3 +35,5 @@ deployment:
     - bin/deploy
   only:
     - master
+  tags:
+    - dalphi
