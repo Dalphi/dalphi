@@ -253,6 +253,39 @@ RSpec.describe 'AnnotationDocuments API', type: :request do
     expect(annotation_document.skipped).to eq(true)
   end
 
+  it 'PATCH updates updated_at attribute' do
+    annotation_document = FactoryGirl.create(:annotation_document)
+    expect(AnnotationDocument.count).to eq(1)
+
+    annotation_document.updated_at = Time.zone.yesterday.beginning_of_day
+    annotation_document.save!
+
+    time_delta = (Time.zone.now - annotation_document.updated_at).seconds
+    expect(time_delta).to be > (60 * 60 * 24)
+
+    patch api_v1_annotation_document_path(annotation_document, auth_token: @auth_token),
+          params: {
+            annotation_document: {
+              'interface_type' => 'type_name',
+              'rank' => 123,
+              'payload' => {
+                'new' => 'payload'
+              },
+              'skipped' => true,
+              'meta' => {
+                'annotator_twitter_handles' => ['@john', '@jane']
+              }
+            }
+          }
+
+    expect(response).to be_success
+    expect(AnnotationDocument.count).to eq(1)
+    annotation_document.reload
+
+    time_delta = (Time.zone.now - annotation_document.updated_at).seconds
+    expect(time_delta).to be < 1.0
+  end
+
   it 'patches a JSON stringify encoded annotation document' do
     annotation_document = FactoryGirl.create(:annotation_document)
     expect(AnnotationDocument.count).to eq(1)
