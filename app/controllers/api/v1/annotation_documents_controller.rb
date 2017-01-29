@@ -258,6 +258,7 @@ module API
           annotation_document['interface_type'] = InterfaceType.find_or_create_by(
                                                     name: annotation_document['interface_type']
                                                   )
+          annotation_document['updated_at'] = Time.zone.now
           annotation_document
         end
     end
