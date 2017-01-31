@@ -43,6 +43,7 @@
                              include_blank: t('projects.action.form.services-card.no-service-selected'),
                              input_html: { class: 'c-select',
                                            name: "project[interfaces][#{interface_type}]" },
+                             wrapper_html: { class: interface_type.name },
                              label_method: ->(interface) { interface.title },
                              label: false,
                              selected: selected
