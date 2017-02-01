@@ -152,17 +152,17 @@ module API
 
       # POST /api/v1/annotation_documents
       def create
-        ActiveRecord::Base.transaction do
-          annotation_documents = []
-          annotation_documents_params.each do |ad_params|
-            @annotation_document = AnnotationDocument.new(ad_params)
-            @annotation_document.save!
+        ActionController::Parameters.permit_all_parameters = true
+        annotation_documents = []
+        annotation_documents_params.each do |ad_params|
+          @annotation_document = AnnotationDocument.new(ad_params)
+          if @annotation_document.save
             annotation_documents << @annotation_document.relevant_attributes
           end
-          annotation_documents = annotation_documents.first if annotation_documents.count == 1
-          render status: 200,
-                 json: annotation_documents
         end
+        annotation_documents = annotation_documents.first if annotation_documents.count == 1
+        render status: 200,
+               json: annotation_documents
       rescue ArgumentError
         return_parameter_type_mismatch
       rescue
