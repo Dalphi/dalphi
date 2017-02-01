@@ -54,7 +54,9 @@
                 href = project_annotator_path(@project, annotator) if @project
               tr data-href="#{href}"
                 td = gravatar_image_tag(annotator.email, gravatar: { size: '24', secure: true })
-                td = annotator.name
+                td
+                  a href="#{href}"
+                    = annotator.name
                 td = annotator.email
                 - unless @project
                   td = annotator.projects.count

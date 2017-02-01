@@ -124,6 +124,15 @@ p {
   display: inline-block;
 }
 
+table {
+  td {
+    a,
+    a:hover {
+      color: $color-2;
+    }
+  }
+}
+
 .btn-row {
   margin-bottom: 1rem;
   text-align: right;
