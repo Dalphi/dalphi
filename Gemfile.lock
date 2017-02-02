@@ -52,7 +52,7 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
     ast (2.3.0)
-    autoprefixer-rails (6.7.1)
+    autoprefixer-rails (6.7.2)
       execjs
     awesome_print (1.7.0)
     axiom-types (0.1.1)
@@ -68,7 +68,7 @@ GEM
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
     bootstrap_tokenfield_rails (0.12.1)
-    brakeman (3.4.1)
+    brakeman (3.5.0)
     builder (3.2.3)
     byebug (9.0.6)
     capybara (2.12.0)
@@ -153,8 +153,8 @@ GEM
     hammerjs-rails (2.0.4)
     hashdiff (0.3.2)
     highline (1.7.8)
-    i18n (0.7.0)
-    i18n-tasks (0.9.9)
+    i18n (0.8.0)
+    i18n-tasks (0.9.11)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
       easy_translate (>= 0.5.0)
@@ -343,7 +343,7 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    sexp_processor (4.7.0)
+    sexp_processor (4.8.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
     simple_form (3.4.0)
@@ -502,4 +502,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.13.6
+   1.13.7
