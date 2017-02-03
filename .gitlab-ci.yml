@@ -1,5 +1,5 @@
 before_script:
-  - gem install bundler --no-ri --no-rdoc --version=1.13.7
+  - gem install bundler --no-ri --no-rdoc
   - RAILS_ENV=test bundle install
 
 stages:
