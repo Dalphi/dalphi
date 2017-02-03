@@ -1,6 +1,7 @@
 env:
   - RAILS_ENV=test
 language: ruby
+cache: bundler
 rvm:
   - 2.4.0
 script: ./bin/ci
