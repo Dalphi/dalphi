@@ -4,6 +4,9 @@ language: ruby
 cache: bundler
 rvm:
   - 2.4.0
+install:
+  - gem update --system
+  - bundle install --jobs=4
 script: ./bin/ci
 services:
   - redis-server
