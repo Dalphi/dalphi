@@ -25,7 +25,10 @@ class AnnotationLifecycle
   init: ->
     dalphiBaseUrl = $('.interfaces-staging').data('dalphi-base-url')
     projectId = $('.interfaces-staging').data('project-id')
-    this.annotationDocumentManager = new window.AnnotationDocumentManager(dalphiBaseUrl, projectId)
+    synchronousRequest = $('.interfaces-staging').data('synchronous-request')
+    this.annotationDocumentManager = new window.AnnotationDocumentManager(
+      dalphiBaseUrl, projectId, synchronousRequest
+    )
 
     $.each($('.template', '.interfaces-staging'), (index, template) ->
       interfaceType = $(template).data('interface-type')

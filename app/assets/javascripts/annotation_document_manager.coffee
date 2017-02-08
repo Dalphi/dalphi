@@ -72,7 +72,6 @@ class AnnotationDocumentManager
   initialAnnotationDocumentPreloading: ->
     documentId = $('.interfaces-staging').data('annotation-document-id')
     documentId = this.documentIdFromUrl() unless documentId
-
     this.loadAnnotationDocumentWithId(documentId) if documentId
     this.loadAnnotationDocuments() unless documentId
 
