@@ -85,3 +85,7 @@ group :development, :test do
   gem 'teaspoon-jasmine', git: 'https://github.com/modeset/teaspoon'
   gem 'webmock'
 end
+
+group :production do
+  gem 'pg'
+end

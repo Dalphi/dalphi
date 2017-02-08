@@ -217,6 +217,7 @@ GEM
       mimemagic (~> 0.3.0)
     parser (2.3.3.1)
       ast (~> 2.2)
+    pg (0.19.0)
     phantomjs (2.1.1.0)
     poltergeist (1.13.0)
       capybara (~> 2.1)
@@ -463,6 +464,7 @@ DEPENDENCIES
   mustache-js-rails
   normalize-rails
   paperclip
+  pg
   phantomjs
   poltergeist
   puma
