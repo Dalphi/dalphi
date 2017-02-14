@@ -33,7 +33,7 @@ class AnnotationLifecycle
     $.each($('.template', '.interfaces-staging'), (index, template) ->
       interfaceType = $(template).data('interface-type')
       _this.templates[interfaceType] = template
-      # $(this).remove()
+      $(this).remove()
     )
 
     this.$blankSlate = $('.no-annotation-document-blank-slate')
