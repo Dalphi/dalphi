@@ -36,8 +36,9 @@ class AnnotationLifecycle
       $(this).remove()
     )
 
-    this.$blankSlate = $('.no-annotation-document-blank-slate')
-    this.$blankSlate.css('display', 'none')
+    $blankSlate = $('.no-annotation-document-blank-slate')
+    this.blankSlateTemplate = $blankSlate[0].outerHTML
+    $blankSlate.remove()
 
   startIteration: ->
     console.log 'AnnotationLifecycle: start new iteration & clean DOM container'
@@ -52,7 +53,7 @@ class AnnotationLifecycle
     $('.interfaces-staging > div:not(.template)').remove()
 
     if data.code == 404
-      _this.$blankSlate.fadeIn()
+      $('.interfaces-staging').append(_this.blankSlateTemplate)
       return
 
     for interfaceType, payload of data
