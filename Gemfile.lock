@@ -80,7 +80,7 @@ GEM
       xpath (~> 2.0)
     chartkick (2.2.2)
     climate_control (0.1.0)
-    clipboard-rails (1.5.16)
+    clipboard-rails (1.6.0)
     cliver (0.3.2)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -155,7 +155,7 @@ GEM
     hashdiff (0.3.2)
     highline (1.7.8)
     i18n (0.8.0)
-    i18n-tasks (0.9.11)
+    i18n-tasks (0.9.12)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
       easy_translate (>= 0.5.0)
@@ -227,7 +227,7 @@ GEM
     public_suffix (2.0.5)
     puma (3.7.0)
     rack (2.0.1)
-    rack-mini-profiler (0.10.1)
+    rack-mini-profiler (0.10.2)
       rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -330,7 +330,7 @@ GEM
       rubocop (>= 0.42.0)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.4.23)
     sass-rails (5.0.6)
@@ -505,4 +505,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.13.7
+   1.14.3
