@@ -58,12 +58,12 @@ docker-compose up
 
 ### Starting for development
 
-DALPHI requires Ruby 2.3.3 to work properly.
+DALPHI requires Ruby 2.4.0 to work properly.
 With `rvm` it can be installed by running the following.
 
 ```bash
-rvm install ruby-2.3.3
-rvm use ruby-2.3.3
+rvm install ruby-2.4.0
+rvm use ruby-2.4.0
 ```
 
 Get DALPHI by cloning the official repository.
