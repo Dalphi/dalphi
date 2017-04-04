@@ -20,6 +20,7 @@ linters:
       - Style/IndentationConsistency
       - Style/IndentationWidth
       - Style/Next
+      - Style/PercentLiteralDelimiters
       - Style/SpaceInsideHashLiteralBraces
       - Style/TrailingBlankLines
       - Style/TrailingWhitespace

@@ -3,4 +3,4 @@
     h3.card-header
       = key
     .card-block
-      = area_chart key_statistics.map { |s| [s.iteration_index, s.value] }
+      = area_chart(key_statistics.map { |s| [s.iteration_index, s.value] })
