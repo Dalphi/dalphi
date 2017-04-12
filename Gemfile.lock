@@ -166,7 +166,7 @@ GEM
       rainbow (~> 2.2)
       terminal-table (>= 1.5.1)
     ice_nine (0.11.2)
-    inline_svg (1.0.1)
+    inline_svg (1.1.0)
       activesupport (>= 3.0)
       nokogiri (>= 1.6)
     jbuilder (2.6.3)
@@ -409,7 +409,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webmock (2.3.2)
+    webmock (3.0.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
