@@ -166,7 +166,7 @@ GEM
       rainbow (~> 2.2)
       terminal-table (>= 1.5.1)
     ice_nine (0.11.2)
-    inline_svg (1.1.0)
+    inline_svg (1.2.0)
       activesupport (>= 3.0)
       nokogiri (>= 1.6)
     jbuilder (2.6.3)
