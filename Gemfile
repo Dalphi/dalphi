@@ -26,7 +26,7 @@ gem 'mustache-js-rails'
 gem 'normalize-rails'
 gem 'paperclip'
 gem 'puma'
-gem 'rails'
+gem 'rails', '< 5.1'
 gem 'rails-assets-tether'
 gem 'rails-jquery-autocomplete'
 gem 'rails-timeago'
@@ -58,7 +58,7 @@ group :test do
   gem 'rails_best_practices'
   gem 'reek'
   gem 'rubocop-rspec', require: false
-  gem 'rubocop', require: false
+  gem 'rubocop', '< 0.49.0', require: false
   gem 'scss_lint', require: false
   gem 'shoulda-matchers'
   gem 'slim_lint'
