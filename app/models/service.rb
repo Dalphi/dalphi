@@ -28,7 +28,7 @@ class Service < ApplicationRecord
     end
   end
 
-  enum role: [:iterate, :merge, :machine_learning]
+  enum role: [:iterate_service, :merge_service, :machine_learning_service]
 
   has_many :projects
   has_and_belongs_to_many :interface_types

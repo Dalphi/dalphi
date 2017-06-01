@@ -1,4 +1,4 @@
-class AddAttachmentTemplateToInterfaces < ActiveRecord::Migration
+class AddAttachmentTemplateToInterfaces < ActiveRecord::Migration[5.0]
   def self.up
     remove_column :interfaces, :template
     change_table :interfaces do |t|

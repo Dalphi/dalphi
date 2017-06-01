@@ -1,4 +1,4 @@
-class AddAttachmentJavaScriptToInterfaces < ActiveRecord::Migration
+class AddAttachmentJavaScriptToInterfaces < ActiveRecord::Migration[5.0]
   def self.up
     remove_column :interfaces, :java_script
     change_table :interfaces do |t|

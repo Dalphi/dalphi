@@ -1,4 +1,4 @@
-class AddAttachmentStylesheetToInterfaces < ActiveRecord::Migration
+class AddAttachmentStylesheetToInterfaces < ActiveRecord::Migration[5.0]
   def self.up
     remove_column :interfaces, :stylesheet
     change_table :interfaces do |t|
