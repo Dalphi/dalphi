@@ -13,7 +13,7 @@ RSpec.describe "Service registration", type: :request do
     post services_path,
          params: {
            service: {
-             role: 'iterate',
+             role: 'iterate_service',
              description: 'An iterate dummy service that just implements the Who Are You API',
              problem_id: 'ner',
              url: 'http://localhost:3001',
@@ -33,7 +33,7 @@ RSpec.describe "Service registration", type: :request do
     post services_path,
          params: {
            service: {
-             role: 'iterate',
+             role: 'iterate_service',
              description: 'An iterate dummy service that just implements the Who Are You API',
              problem_id: 'ner',
              url: 'http://localhost:3001',
