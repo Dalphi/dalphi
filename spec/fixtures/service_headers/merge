@@ -5,6 +5,6 @@ Content-Type: application/json
 	"title":	"Test Merge Service",
 	"version":	"1.0",
 	"description":	"A merge dummy service that just implements the Who Are You API",
-	"role":		"merge",
+	"role":		"merge_service",
 	"problem_id":	"ner"
 }

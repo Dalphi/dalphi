@@ -41,17 +41,17 @@ RSpec.describe Service, type: :model do
     end
 
     it 'can be string iterate' do
-      role_is_valid @iterate_service, 'iterate', 0
+      role_is_valid @iterate_service, 'iterate_service', 0
     end
 
     it 'can be string merge' do
       @merge_service.interface_types = []
-      role_is_valid @merge_service, 'merge', 1
+      role_is_valid @merge_service, 'merge_service', 1
     end
 
     it 'can be string machine_learning' do
       @merge_service.interface_types = []
-      role_is_valid @ml_service, 'machine_learning', 2
+      role_is_valid @ml_service, 'machine_learning_service', 2
     end
   end
 

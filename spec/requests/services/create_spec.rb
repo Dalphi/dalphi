@@ -18,7 +18,7 @@ RSpec.describe 'Service create', type: :request do
              title: 'Testtitle',
              version: '1.0',
              description: 'test service description',
-             role: 'iterate',
+             role: 'iterate_service',
              problem_id: 'ner',
              url: 'http://localhost:3001',
              interface_types: [

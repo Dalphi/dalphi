@@ -17,7 +17,7 @@ RSpec.describe 'Service update', type: :request do
             title: 'Testtitle',
             version: '1.0',
             description: 'test service description',
-            role: 'iterate',
+            role: 'iterate_service',
             problem_id: 'ner',
             url: 'http://localhost:3001',
             interface_types: @service.interface_types.map(&:id)
@@ -31,7 +31,7 @@ RSpec.describe 'Service update', type: :request do
     expect(service.title).to eq('Testtitle')
     expect(service.version).to eq('1.0')
     expect(service.description).to eq('test service description')
-    expect(service.role).to eq('iterate')
+    expect(service.role).to eq('iterate_service')
     expect(service.problem_id).to eq('ner')
     expect(service.url).to eq('http://localhost:3001')
     expect(service.interface_types.map(&:id).sort).to eq(@service.interface_types.map(&:id).sort)
@@ -47,7 +47,7 @@ RSpec.describe 'Service update', type: :request do
             title: '',
             version: '1.0',
             description: 'test service description',
-            role: 'iterate',
+            role: 'iterate_service',
             url: 'http://',
             interface_types: []
           }

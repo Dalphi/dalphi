@@ -8,7 +8,7 @@ RSpec.describe 'Service refresh', type: :request do
       .to_return(
         status: 200,
         body: {
-          "role" => "iterate",
+          "role" => "iterate_service",
           "title" => "NER Example",
           "description" => "Iterate Service for dummy NER service",
           "version" => "0.1",
@@ -30,7 +30,7 @@ RSpec.describe 'Service refresh', type: :request do
       .to_return(
         status: 200,
         body: {
-          "role" => "iterate",
+          "role" => "iterate_service",
           "title" => "NER Example new",
           "description" => "Iterate Service for dummy NER service to be refreshed",
           "version" => "0.2",
@@ -54,7 +54,7 @@ RSpec.describe 'Service refresh', type: :request do
     expect(service.title).to eq('NER Example new')
     expect(service.version).to eq('0.2')
     expect(service.description).to eq('Iterate Service for dummy NER service to be refreshed')
-    expect(service.role).to eq('iterate')
+    expect(service.role).to eq('iterate_service')
     expect(service.problem_id).to eq('ner')
     expect(service.url).to eq('http://example.com/iterate')
     expect(service.interface_types.map(&:id).sort).to eq(@service.interface_types.map(&:id).sort)
@@ -67,7 +67,7 @@ RSpec.describe 'Service refresh', type: :request do
       .to_return(
         status: 200,
         body: {
-          "role" => "iterate",
+          "role" => "iterate_service",
           "title" => "NER Example new",
           "description" => "Iterate Service for dummy NER service to be refreshed",
           "version" => "0.2",
