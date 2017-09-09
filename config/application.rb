@@ -14,7 +14,7 @@ module Dalphi
     config.active_job.queue_adapter = :delayed_job
 
     config.cache_store = :redis_store,
-                         'redis://localhost:6379/0/cache',
+                         "redis://#{ENV.fetch('REDIS_HOST', 'localhost')}:6379/0/cache",
                          { expires_in: 90.minutes }
 
     # Add the custom config
