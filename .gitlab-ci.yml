@@ -50,7 +50,7 @@ release:
   image: docker:git
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.implisense.com
-    - docker build -t $CONTAINER_PRODUCTION_IMAGE --build-arg RAILS_ENV=test .
+    - docker build -t $CONTAINER_PRODUCTION_IMAGE --build-arg RAILS_ENV=production .
     - docker push $CONTAINER_PRODUCTION_IMAGE
   only:
     - master
