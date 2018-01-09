@@ -8,6 +8,9 @@ stages:
 variables:
   CONTAINER_TEST_IMAGE: docker.implisense.com/dalphi/dalphi:$CI_BUILD_REF_NAME
   CONTAINER_PRODUCTION_IMAGE: docker.implisense.com/dalphi/dalphi:latest
+  POSTGRES_DB: dalphi
+  POSTGRES_USER: dalphi
+  POSTGRES_PASSWORD: 45f9579672d4154d176c873e36b3c4cc
 
 build:
   stage: build
@@ -40,6 +43,20 @@ testing:
   tags:
     - build
   image: $CONTAINER_TEST_IMAGE
+  environment:
+    - DATABASE_HOST=database
+    - DATABASE_NAME=dalphi
+    - DATABASE_PASSWORD=45f9579672d4154d176c873e36b3c4cc
+    - DATABASE_PORT=5432
+    - DATABASE_USERNAME=dalphi
+    - RAILS_ENV=production
+    - RAILS_SERVE_STATIC_FILES=true
+    - REDIS_HOST=redis
+    - SECRET_KEY_BASE=e5bb42a3bbde48364ecb397b978cc0b3
+    - HOST=dalphi
+  services:
+    - postgres
+    - redis
   script:
     - bin/test
 
