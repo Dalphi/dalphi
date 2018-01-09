@@ -1,39 +1,56 @@
-before_script:
-  - gem install bundler --no-ri --no-rdoc
-  - RAILS_ENV=test bundle install
-
 stages:
+  - build
   - linting
   - code_analysis
   - testing
-  - deployment
+  - release
+
+variables:
+  CONTAINER_TEST_IMAGE: docker.implisense.com/dalphi/dalphi:$CI_BUILD_REF_NAME
+  CONTAINER_PRODUCTION_IMAGE: docker.implisense.com/dalphi/dalphi:latest
+
+build:
+  stage: build
+  tags:
+    - build
+  image: docker:git
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.implisense.com
+    - docker build -t $CONTAINER_TEST_IMAGE --build-arg RAILS_ENV=test .
+    - docker push $CONTAINER_TEST_IMAGE
 
 linting:
   stage: linting
+  tags:
+    - build
+  image: $CONTAINER_TEST_IMAGE
   script:
     - bin/linters
-  tags:
-    - dalphi
 
 code_analysis:
   stage: code_analysis
+  tags:
+    - build
+  image: $CONTAINER_TEST_IMAGE
   script:
     - bin/code-analyzers
-  tags:
-    - dalphi
 
 testing:
   stage: testing
+  tags:
+    - build
+  image: $CONTAINER_TEST_IMAGE
   script:
     - bin/test
-  tags:
-    - dalphi
 
-deployment:
-  stage: deployment
+build:
+  stage: release
+  tags:
+    - build
+  image: docker:git
   script:
-    - bin/deploy
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.implisense.com
+    - docker build -t $CONTAINER_PRODUCTION_IMAGE --build-arg RAILS_ENV=test .
+    - docker push $CONTAINER_PRODUCTION_IMAGE
   only:
     - master
-  tags:
-    - dalphi

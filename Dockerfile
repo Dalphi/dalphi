@@ -1,19 +1,8 @@
-FROM ruby:2.4.0
-
-RUN \
-	apt-get update && \
-	apt-get install -y netcat && \
-	mkdir /app
-
-ADD Gemfile* /tmp/
-RUN \
-	cd /tmp && \
-	bundle install
+FROM ruby:2.5.0
 
 WORKDIR /usr/src/app
-ADD . /usr/src/app
-RUN bundle exec rails assets:precompile
-
-EXPOSE 3000
+COPY Gemfile* /usr/src/app/
+RUN bundle install
+COPY . /usr/src/app
 
 CMD ["bin/start"]

@@ -60,7 +60,7 @@
                 td = annotator.email
                 - unless @project
                   td = annotator.projects.count
-                td = timeago_tag annotator.last_sign_in_at, default: '—'
+                td = timeago_tag annotator.last_sign_in_at, default: "\u2014"
             coffee:
               window.clickableTableRow = new window.ClickableTableRow()
       - else
