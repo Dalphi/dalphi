@@ -52,7 +52,7 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     arel (7.1.4)
     ast (2.3.0)
-    autoprefixer-rails (7.2.4)
+    autoprefixer-rails (7.2.5)
       execjs
     awesome_print (1.8.0)
     axiom-types (0.1.1)
@@ -80,6 +80,8 @@ GEM
       rack-test (>= 0.5.4)
       xpath (>= 2.0, < 4.0)
     chartkick (2.2.5)
+    childprocess (0.8.0)
+      ffi (~> 1.0, >= 1.0.11)
     climate_control (0.2.0)
     clipboard-rails (1.7.1)
     cliver (0.3.2)
@@ -146,7 +148,7 @@ GEM
       railties (>= 3.0.0)
     fastclick-rails (1.0.1)
     ffi (1.9.18)
-    font-awesome-rails (4.7.0.2)
+    font-awesome-rails (4.7.0.3)
       railties (>= 3.2, < 5.2)
     foreman (0.84.0)
       thor (~> 0.19.1)
@@ -184,7 +186,7 @@ GEM
     json (1.8.6)
     launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.5.0)
+    letter_opener (1.6.0)
       launchy (~> 2.2)
     libv8 (3.16.14.19)
     listen (3.1.5)
@@ -205,7 +207,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.1)
     modernizr-rails (2.7.1)
-    multi_json (1.13.0)
+    multi_json (1.13.1)
     mustache-js-rails (2.0.6)
       railties (>= 3.1, <= 5.1)
     nio4r (2.2.0)
@@ -222,7 +224,6 @@ GEM
     parser (2.4.0.2)
       ast (~> 2.3)
     pg (0.21.0)
-    phantomjs (2.1.1.0)
     poltergeist (1.17.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -355,6 +356,9 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    selenium-webdriver (3.8.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
     sexp_processor (4.10.0)
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
@@ -471,8 +475,7 @@ DEPENDENCIES
   mustache-js-rails
   normalize-rails
   paperclip
-  pg
-  phantomjs
+  pg (~> 0.21)
   poltergeist
   puma
   rack-mini-profiler
@@ -492,6 +495,7 @@ DEPENDENCIES
   sass-rails
   scss_lint
   sdoc
+  selenium-webdriver
   shoulda-matchers
   simple_form
   slim-rails

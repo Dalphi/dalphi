@@ -79,13 +79,13 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'phantomjs'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'selenium-webdriver'
   gem 'teaspoon-jasmine', git: 'https://github.com/modeset/teaspoon'
   gem 'webmock'
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 0.21'
 end

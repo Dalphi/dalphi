@@ -1,9 +1,14 @@
 require 'capybara/rspec'
 require 'rails_helper'
 
-# set the poltergeist webdriver for Capybara JS tests
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+require 'selenium-webdriver'
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless disable-gpu no-sandbox]
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+Capybara.javascript_driver = :chrome
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
