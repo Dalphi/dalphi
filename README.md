@@ -35,9 +35,8 @@ This may be a simple closed question like "Is there a cat on the picture?" or "I
 Or it may require custom rendering asking for complex feedback.
 Therefore you have to register a custom HTML interface to render complex questions.
 We are still working on the concrete API documentation and example services.
-These are planned to be available by December 2016.
 
-Check also out our [DALPHI product presentation](https://dalphi.github.io/presentation/).
+Check also out our [DALPHI product presentation](https://dalphi.github.io/presentation/), or read a paper regarding DALPHI's pre-annotation assistance system ["The DALPHI annotation framework & how its pre-annotations can improve annotator efficiency" (Robert Greinacher and Franziska Horn, 2018)](https://arxiv.org/abs/1808.05558)
 
 ## Getting started
 
@@ -201,7 +200,7 @@ The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integratio
 ./bin/ci
 ```
 
-## Contributing
+## Contributing & Citing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
@@ -209,9 +208,20 @@ The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integratio
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+If any of this code was helpful for your research, please consider citing it:
+
+```
+@article{greinacher2018dalphi,
+  title     = {The DALPHI annotation framework \& how its pre-annotations can improve annotator efficiency},
+  author    = {Greinacher, Robert and Horn, Franziska},
+  journal   = {arXiv preprint arXiv:1808.05558},
+  year      = {2018}
+}
+```
+
 ## License
 
-Copyright 2016 Implisense GmbH
+Copyright 2018 Implisense GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
